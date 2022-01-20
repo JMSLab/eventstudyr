@@ -9,7 +9,12 @@ pacman::p_load(tidyverse,
 
 PATH_TO_DATA <- "C:/Users/c1nhs01/Downloads/Burda-Harding.csv"
 
+NUM_REPLICATIONS <- 100
+
 df_raw <- read_csv(PATH_TO_DATA) %>% 
+  mutate(
+    YEAR_FIRM = (YEAR * 1000) + FIRM # unique year-firm combination for clustering
+  ) %>% 
   glimpse()
 
 str_response <- "LSALES1"
@@ -75,11 +80,62 @@ RunPlm <- function(se_method) {
   
 }
 
-estimatr_stata <- benchmark(estimatr::lm_robust(fe_formula, data = df_raw, fixed_effects = ~ FIRM + YEAR, se_type = "stata"), replications = 1000)
-estimatr_HC0 <- benchmark(estimatr::lm_robust(fe_formula, data = df_raw, fixed_effects = ~ FIRM + YEAR, se_type = "HC0"), replications = 1000)
 
-fixest_HC1<- benchmark(fixest::feols(fe_formula, data = df_raw, fixef = c("FIRM", "YEAR"), vcov = "HC1"), replications = 1000)
-fixest_twoway <- benchmark(fixest::feols(fe_formula, data = df_raw, fixef = c("FIRM", "YEAR"), vcov = "twoway"), replications = 1000)
+
+estimatr_stata_firm <- benchmark(estimatr::lm_robust(fe_formula, data = df_raw, fixed_effects = ~ FIRM + YEAR, se_type = "stata", clusters = FIRM), 
+                            replications = NUM_REPLICATIONS)
+
+estimatr_stata_year <- benchmark(estimatr::lm_robust(fe_formula, data = df_raw, fixed_effects = ~ FIRM + YEAR, se_type = "stata", clusters = YEAR), 
+                                 replications = NUM_REPLICATIONS)
+
+estimatr_stata_year_firm <- benchmark(estimatr::lm_robust(fe_formula, data = df_raw, fixed_effects = ~ FIRM + YEAR, se_type = "stata", clusters = YEAR_FIRM), 
+                                 replications = NUM_REPLICATIONS)
+
+
+fixest_firm <- benchmark(fixest::feols(fe_formula, data = df_raw, fixef = c("FIRM", "YEAR"), cluster = "FIRM"), 
+                       replications = NUM_REPLICATIONS)
+
+fixest_year <- benchmark(fixest::feols(fe_formula, data = df_raw, fixef = c("FIRM", "YEAR"), cluster = "YEAR"), 
+                           replications = NUM_REPLICATIONS)
+
+fixest_year_firm <- benchmark(fixest::feols(fe_formula, data = df_raw, fixef = c("FIRM", "YEAR"), cluster = "YEAR_FIRM"), 
+                         replications = NUM_REPLICATIONS)
+
+RunEstimatrCluster <- function(cluster) {
+  
+  string_cluster <- deparse(substitute(cluster))
+  reg_table <- estimatr::lm_robust(fe_formula, data = df_raw, fixed_effects = ~ FIRM + YEAR, se_type = "stata", clusters = !!enquo(cluster)) %>% 
+    tidy() %>% 
+    mutate(
+      package = "estimatr",
+      se_type = "stata",
+      cluster_level = string_cluster
+    ) %>% 
+    select(package, term, cluster_level, se_type, estimate, std.error, statistic, p.value, df)
+  
+  return(reg_table)
+}
+
+RunFixestCluster <- function(string_cluster) {
+  
+  reg <- fixest::feols(fe_formula, data = df_raw, fixef = c("FIRM", "YEAR"), cluster = string_cluster)
+  
+  df <- degrees_freedom(reg, type = "t")
+  
+  reg_table <- reg %>%
+    tidy() %>% 
+    mutate(
+      package = "fixest",
+      se_type = "clustered",
+      df = df,
+      cluster_level = string_cluster
+    ) %>% 
+    select(package, term, cluster_level, se_type, estimate, std.error, statistic, p.value, df)
+  
+  return(reg_table)
+  
+}
+
 
 CalcAvgRuntime <- function(benchmark_data) {
   
@@ -91,23 +147,27 @@ CalcAvgRuntime <- function(benchmark_data) {
 }
 
 
-`avg_run_time (s)` <- c(CalcAvgRuntime(estimatr_stata), 
-                        CalcAvgRuntime(fixest_HC1), 
-                        CalcAvgRuntime(estimatr_HC0), 
-                        CalcAvgRuntime(fixest_twoway)) %>% 
+`avg_run_time (s)` <- c(CalcAvgRuntime(estimatr_stata_firm),
+                        CalcAvgRuntime(estimatr_stata_year),
+                        CalcAvgRuntime(estimatr_stata_year_firm),
+                        CalcAvgRuntime(fixest_firm), 
+                        CalcAvgRuntime(fixest_year), 
+                        CalcAvgRuntime(fixest_year_firm)) %>% 
   rep(., each = 3)
 
 df_results <- bind_rows(
-  RunEstimatr("stata"),
-  RunFixest("HC1"),
-  RunEstimatr("HC0"),
-  RunFixest("twoway")
+  RunEstimatrCluster(FIRM),
+  RunEstimatrCluster(YEAR),
+  RunEstimatrCluster(YEAR_FIRM),
+  RunFixestCluster("FIRM"),
+  RunFixestCluster("YEAR"),
+  RunFixestCluster("YEAR_FIRM"),
 ) %>% 
   mutate(
     `avg_run_time (s)`
   )
 
-kable(df_results, digits = 4, format = "simple", row.names = TRUE) 
+kable(df_results, digits = c(0, 0, 0, 0, 4, 6, 4, 4, 0, 3), format = "simple", row.names = TRUE) 
 
 
 

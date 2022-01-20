@@ -1,20 +1,14 @@
-     package    term       se_type    estimate   std.error   statistic   p.value      df
----  ---------  ---------  --------  ---------  ----------  ----------  --------  ------
-1    estimatr   PAT_ANY    stata        0.0640      0.0119      5.3894    0.0000   12176
-2    estimatr   LGMALSPI   stata       -0.4434      0.0943     -4.7003    0.0000   12176
-3    estimatr   LGMALSPT   stata        0.4359      0.0299     14.5918    0.0000   12176
-4    fixest     PAT_ANY    HC1          0.0640      0.0119      5.3894    0.0000   12176
-5    fixest     LGMALSPI   HC1         -0.4434      0.0943     -4.7003    0.0000   12176
-6    fixest     LGMALSPT   HC1          0.4359      0.0299     14.5918    0.0000   12176
-7    estimatr   PAT_ANY    HC0          0.0640      0.0115      5.5533    0.0000   12176
-8    estimatr   LGMALSPI   HC0         -0.4434      0.0915     -4.8432    0.0000   12176
-9    estimatr   LGMALSPT   HC0          0.4359      0.0290     15.0356    0.0000   12176
-10   fixest     PAT_ANY    twoway       0.0640      0.0252      2.5368    0.0196      20
-11   fixest     LGMALSPI   twoway      -0.4434      0.3150     -1.4077    0.1746      20
-12   fixest     LGMALSPT   twoway       0.4359      0.0840      5.1869    0.0000      20
-13   plm        PAT_ANY    HC0          0.0003      0.0166      0.0175    0.9860   12196
-14   plm        LGMALSPI   HC0          1.0397      0.0994     10.4568    0.0000   12196
-15   plm        LGMALSPT   HC0          0.4741      0.0837      5.6616    0.0000   12196
-16   plm        PAT_ANY    HC1          0.0003      0.0166      0.0175    0.9860   12196
-17   plm        LGMALSPI   HC1          1.0397      0.0994     10.4556    0.0000   12196
-18   plm        LGMALSPT   HC1          0.4741      0.0838      5.6609    0.0000   12196
+ package    term       se_type    estimate   std.error   statistic   p.value      df   avg_run_time (s)
+---  ---------  ---------  --------  ---------  ----------  ----------  --------  ------  -----------------
+1    estimatr   PAT_ANY    stata        0.0640      0.0119      5.3894    0.0000   12176             0.1323
+2    estimatr   LGMALSPI   stata       -0.4434      0.0943     -4.7003    0.0000   12176             0.1323
+3    estimatr   LGMALSPT   stata        0.4359      0.0299     14.5918    0.0000   12176             0.1323
+4    fixest     PAT_ANY    HC1          0.0640      0.0119      5.3894    0.0000   12176             0.0135
+5    fixest     LGMALSPI   HC1         -0.4434      0.0943     -4.7003    0.0000   12176             0.0135
+6    fixest     LGMALSPT   HC1          0.4359      0.0299     14.5918    0.0000   12176             0.0135
+7    estimatr   PAT_ANY    HC0          0.0640      0.0115      5.5533    0.0000   12176             0.1334
+8    estimatr   LGMALSPI   HC0         -0.4434      0.0915     -4.8432    0.0000   12176             0.1334
+9    estimatr   LGMALSPT   HC0          0.4359      0.0290     15.0356    0.0000   12176             0.1334
+10   fixest     PAT_ANY    twoway       0.0640      0.0252      2.5368    0.0196      20             0.0150
+11   fixest     LGMALSPI   twoway      -0.4434      0.3150     -1.4077    0.1746      20             0.0150
+12   fixest     LGMALSPT   twoway       0.4359      0.0840      5.1869    0.0000      20             0.0150

@@ -1,20 +1,11 @@
      package    term       cluster_level   se_type      estimate   std.error   statistic   p.value      df   avg_run_time (s)
 ---  ---------  ---------  --------------  ----------  ---------  ----------  ----------  --------  ------  -----------------
-1    estimatr   PAT_ANY    FIRM            stata          0.0640    0.018922      3.3840    0.0008     728              0.171
-2    estimatr   LGMALSPI   FIRM            stata         -0.4434    0.244366     -1.8144    0.0700     728              0.171
-3    estimatr   LGMALSPT   FIRM            stata          0.4359    0.086052      5.0650    0.0000     728              0.171
-4    estimatr   PAT_ANY    YEAR            stata          0.0640    0.021191      3.0217    0.0067      20              0.167
-5    estimatr   LGMALSPI   YEAR            stata         -0.4434    0.228081     -1.9439    0.0661      20              0.167
-6    estimatr   LGMALSPT   YEAR            stata          0.4359    0.025828     16.8755    0.0000      20              0.167
-7    estimatr   PAT_ANY    YEAR_FIRM       stata          0.0640    0.011881      5.3894    0.0000   12927              0.180
-8    estimatr   LGMALSPI   YEAR_FIRM       stata         -0.4434    0.094330     -4.7003    0.0000   12927              0.180
-9    estimatr   LGMALSPT   YEAR_FIRM       stata          0.4359    0.029870     14.5918    0.0000   12927              0.180
-10   fixest     PAT_ANY    FIRM            clustered      0.0640    0.018380      3.4837    0.0005     728              0.022
-11   fixest     LGMALSPI   FIRM            clustered     -0.4434    0.237372     -1.8678    0.0622     728              0.022
-12   fixest     LGMALSPT   FIRM            clustered      0.4359    0.083589      5.2142    0.0000     728              0.022
-13   fixest     PAT_ANY    YEAR            clustered      0.0640    0.021174      3.0241    0.0067      20              0.015
-14   fixest     LGMALSPI   YEAR            clustered     -0.4434    0.227894     -1.9455    0.0659      20              0.015
-15   fixest     LGMALSPT   YEAR            clustered      0.4359    0.025806     16.8893    0.0000      20              0.015
-16   fixest     PAT_ANY    YEAR_FIRM       clustered      0.0640    0.011881      5.3894    0.0000   12927              0.025
-17   fixest     LGMALSPI   YEAR_FIRM       clustered     -0.4434    0.094330     -4.7003    0.0000   12927              0.025
-18   fixest     LGMALSPT   YEAR_FIRM       clustered      0.4359    0.029870     14.5918    0.0000   12927              0.025
+1   estimatr   PAT_ANY    FIRM            stata          0.0640    0.018922      3.3840    0.0008     728              0.171
+2   fixest     PAT_ANY    FIRM            clustered      0.0640    0.018380      3.4837    0.0005     728              0.022
+3   base S     PAT_ANY    FIRM		  ---------      0.0640    0.018922      3.38      0.001    728                ----
+4   estimatr   PAT_ANY    YEAR            stata          0.0640    0.021191      3.0217    0.0067      20              0.167
+5   fixest     PAT_ANY    YEAR            clustered      0.0640    0.021174      3.0241    0.0067      20              0.015
+6   base s     PAT_ANY    YEAR            ---------      0.0640    0.0211913     3.02      .007     20                 ----
+7   estimatr   PAT_ANY    YEAR_FIRM       stata          0.0640    0.011881      5.3894    0.0000   12927              0.180
+8   fixest     PAT_ANY    YEAR_FIRM       clustered      0.0640    0.011881      5.3894    0.0000   12927              0.025
+9   base S     PAT_ANY    YEAR_FIRM       ---------      0.0640    0.0118812     5.39      0.000    12927              ----

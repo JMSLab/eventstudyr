@@ -21,21 +21,21 @@
 
 
 PrepareLags <- function(df, groupvar = NULL, timevar, leadvar, nlags) {
-    df <- setDT(df)
-    
+    df <- data.table::setDT(df)
+
     if (is.null(groupvar)) {
         print(timevar)
-        setorderv(df_test, cols = timevar)
-        print(is.data.table(df))
+        data.table::setorderv(df_test, cols = timevar)
+        print(data.table::is.data.table(df))
         df <- df[, paste0(leadvar, "_lag", 1L:nlags) :=
-                 shift(get(leadvar), 1L:nlags, type = "lag")]
+                     data.table::shift(get(leadvar), 1L:nlags, type = "lag")]
     } else {
-        setorderv(df_test, cols = c(groupvar, timevar))
+        data.table::setorderv(df_test, cols = c(groupvar, timevar))
         df <- df[, paste0(leadvar, "_lag", 1L:nlags) :=
-                 shift(get(leadvar), 1L:nlags, type = "lag"),
+                     data.table::shift(get(leadvar), 1L:nlags, type = "lag"),
                  by = groupvar]
     }
-        
+
     df <- as.data.frame(df)
     return(df)
 }

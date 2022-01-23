@@ -4,7 +4,7 @@
 \alias{PrepareLeads}
 \title{Adds leads of a variable as new columns}
 \usage{
-PrepareLeads(df, groupvar = NULL, timevar, leadvar, nleads)
+PrepareLeads(df, groupvar = NULL, timevar, leadvar, leads)
 }
 \arguments{
 \item{df}{Data frame that will be modified}
@@ -15,7 +15,7 @@ PrepareLeads(df, groupvar = NULL, timevar, leadvar, nleads)
 
 \item{leadvar}{Variable whose leads will be added.}
 
-\item{nleads}{Number of leads to be added.}
+\item{leads}{Numeric vector specifying the leads to be computed.}
 }
 \description{
 Adds leads of a variable as new columns

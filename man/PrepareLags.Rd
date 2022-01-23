@@ -4,7 +4,7 @@
 \alias{PrepareLags}
 \title{Adds lags of a variable as new columns}
 \usage{
-PrepareLags(df, groupvar = NULL, timevar, leadvar, nlags)
+PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 }
 \arguments{
 \item{df}{Data frame that will be modified}
@@ -13,9 +13,9 @@ PrepareLags(df, groupvar = NULL, timevar, leadvar, nlags)
 
 \item{timevar}{Variable indicating time periods.}
 
-\item{leadvar}{Variable whose lags will be added.}
+\item{lagvar}{Variable whose lags will be added.}
 
-\item{nleads}{Number of lags to be added.}
+\item{lags}{Numeric vector specifying the lags to be computed.}
 }
 \description{
 Adds lags of a variable as new columns
@@ -23,7 +23,7 @@ Adds lags of a variable as new columns
 \examples{
 \dontrun{
 #Compute lags of minimum wage in a panel data of states
-PrepareLeads(df, groupvar = "state", timevar = "year", leadvar = "minwage", 5)
+PrepareLags(df, groupvar = "state", timevar = "year", lagvar = "minwage", 1:5)
 }
 
 }

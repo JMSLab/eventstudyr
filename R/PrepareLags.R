@@ -3,15 +3,15 @@
 #' @param df Data frame that will be modified
 #' @param groupvar Optional grouping variable.
 #' @param timevar Variable indicating time periods.
-#' @param leadvar Variable whose lags will be added.
-#' @param nleads Number of lags to be added.
+#' @param lagvar Variable whose lags will be added.
+#' @param lags Numeric vector specifying the lags to be computed.
 #'
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
 #' \dontrun{
 #' #Compute lags of minimum wage in a panel data of states
-#' PrepareLeads(df, groupvar = "state", timevar = "year", leadvar = "minwage", 5)
+#' PrepareLags(df, groupvar = "state", timevar = "year", lagvar = "minwage", 1:5)
 #' }
 #'
 #' @importFrom data.table setDT
@@ -20,19 +20,19 @@
 #' @export
 
 
-PrepareLags <- function(df, groupvar = NULL, timevar, leadvar, nlags) {
+PrepareLags <- function(df, groupvar = NULL, timevar, lagvar, lags) {
     df <- data.table::setDT(df)
 
     if (is.null(groupvar)) {
         print(timevar)
         data.table::setorderv(df_test, cols = timevar)
         print(data.table::is.data.table(df))
-        df <- df[, paste0(leadvar, "_lag", 1L:nlags) :=
-                     data.table::shift(get(leadvar), 1L:nlags, type = "lag")]
+        df <- df[, paste0(lagvar, "_lag", lags) :=
+                     data.table::shift(get(lagvar), lags, type = "lag")]
     } else {
         data.table::setorderv(df_test, cols = c(groupvar, timevar))
-        df <- df[, paste0(leadvar, "_lag", 1L:nlags) :=
-                     data.table::shift(get(leadvar), 1L:nlags, type = "lag"),
+        df <- df[, paste0(lagvar, "_lag", lags) :=
+                     data.table::shift(get(lagvar), lags, type = "lag"),
                  by = groupvar]
     }
 

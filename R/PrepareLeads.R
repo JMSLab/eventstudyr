@@ -4,7 +4,7 @@
 #' @param groupvar Optional grouping variable.
 #' @param timevar Variable indicating time periods.
 #' @param leadvar Variable whose leads will be added.
-#' @param nleads Number of leads to be added.
+#' @param leads Numeric vector specifying the leads to be computed.
 #'
 #' @seealso \link[data.table]{shift}
 #'
@@ -20,19 +20,19 @@
 #' @export
 
 
-PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, nleads) {
+PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
     df <- setDT(df)
     
     if (is.null(groupvar)) {
         print(timevar)
         setorderv(df_test, cols = timevar)
         print(is.data.table(df))
-        df <- df[, paste0(leadvar, "_lead", 1L:nleads) :=
-                 shift(get(leadvar), 1L:nleads, type = "lead")]
+        df <- df[, paste0(leadvar, "_lead", leads) :=
+                 shift(get(leadvar), leads, type = "lead")]
     } else {
         setorderv(df_test, cols = c(groupvar, timevar))
-        df <- df[, paste0(leadvar, "_lead", 1L:nleads) :=
-                 shift(get(leadvar), 1L:nleads, type = "lead"),
+        df <- df[, paste0(leadvar, "_lead", leads) :=
+                 shift(get(leadvar), leads, type = "lead"),
                  by = groupvar]
     }
         

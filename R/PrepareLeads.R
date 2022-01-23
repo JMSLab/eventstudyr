@@ -13,26 +13,22 @@
 #' #Compute leads of minimum wage in a panel data of states
 #' PrepareLeads(df, groupvar = "state", timevar = "year", leadvar = "minwage", 5)
 #' }
+#' @import data.table
 #'
-#' @importFrom data.table setDT
-#' @importFrom data.table shift
-#' @importFrom data.table setorderv
 #' @export
 
 
 PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
-    df <- setDT(df)
+    df <- data.table::setDT(df)
     
     if (is.null(groupvar)) {
-        print(timevar)
-        setorderv(df_test, cols = timevar)
-        print(is.data.table(df))
+        data.table::setorderv(df, cols = timevar)
         df <- df[, paste0(leadvar, "_lead", leads) :=
-                 shift(get(leadvar), leads, type = "lead")]
+                 data.table::shift(get(leadvar), leads, type = "lead")]
     } else {
-        setorderv(df_test, cols = c(groupvar, timevar))
+        data.table::setorderv(df, cols = c(groupvar, timevar))
         df <- df[, paste0(leadvar, "_lead", leads) :=
-                 shift(get(leadvar), leads, type = "lead"),
+                 data.table::shift(get(leadvar), leads, type = "lead"),
                  by = groupvar]
     }
         

@@ -25,7 +25,6 @@ Adds leads of a variable as new columns
 #Compute leads of minimum wage in a panel data of states
 PrepareLeads(df, groupvar = "state", timevar = "year", leadvar = "minwage", 5)
 }
-
 }
 \seealso{
 \link[data.table]{shift}

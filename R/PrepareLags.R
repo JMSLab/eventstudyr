@@ -13,10 +13,7 @@
 #' #Compute lags of minimum wage in a panel data of states
 #' PrepareLags(df, groupvar = "state", timevar = "year", lagvar = "minwage", 1:5)
 #' }
-#'
-#' @importFrom data.table setDT
-#' @importFrom data.table shift
-#' @importFrom data.table setorderv
+#' @import data.table
 #' @export
 
 
@@ -24,13 +21,11 @@ PrepareLags <- function(df, groupvar = NULL, timevar, lagvar, lags) {
     df <- data.table::setDT(df)
 
     if (is.null(groupvar)) {
-        print(timevar)
-        data.table::setorderv(df_test, cols = timevar)
-        print(data.table::is.data.table(df))
+        data.table::setorderv(df, cols = timevar)
         df <- df[, paste0(lagvar, "_lag", lags) :=
                      data.table::shift(get(lagvar), lags, type = "lag")]
     } else {
-        data.table::setorderv(df_test, cols = c(groupvar, timevar))
+        data.table::setorderv(df, cols = c(groupvar, timevar))
         df <- df[, paste0(lagvar, "_lag", lags) :=
                      data.table::shift(get(lagvar), lags, type = "lag"),
                  by = groupvar]

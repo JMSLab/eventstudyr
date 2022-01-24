@@ -9,11 +9,11 @@ PrepareLeads(df, groupvar = NULL, timevar, leadvar, leads)
 \arguments{
 \item{df}{Data frame that will be modified}
 
-\item{groupvar}{Optional grouping variable.}
+\item{groupvar}{Optional grouping variable, should be a character.}
 
-\item{timevar}{Variable indicating time periods.}
+\item{timevar}{Variable indicating time periods, should be a character.}
 
-\item{leadvar}{Variable whose leads will be added.}
+\item{leadvar}{Variable whose leads will be added, should be a character.}
 
 \item{leads}{Numeric vector specifying the leads to be computed.}
 }

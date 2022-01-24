@@ -9,11 +9,11 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 \arguments{
 \item{df}{Data frame that will be modified}
 
-\item{groupvar}{Optional grouping variable.}
+\item{groupvar}{Optional grouping variable, should be a character.}
 
-\item{timevar}{Variable indicating time periods.}
+\item{timevar}{Variable indicating time periods, should be a character.}
 
-\item{lagvar}{Variable whose lags will be added.}
+\item{lagvar}{Variable whose lags will be added, should be a character.}
 
 \item{lags}{Numeric vector specifying the lags to be computed.}
 }

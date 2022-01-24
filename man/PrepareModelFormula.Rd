@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrepareModelFormula.R
 \name{PrepareModelFormula}
 \alias{PrepareModelFormula}
-\title{Title}
+\title{Prepares a formula object for use in EventStudyOLS or EventStudyFHS}
 \usage{
 PrepareModelFormula(
   estimator,
@@ -25,11 +25,62 @@ PrepareModelFormula(
 )
 }
 \arguments{
-\item{cluster}{}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.}
+
+\item{data}{The data frame that contains the variables of interest.}
+
+\item{outcomevar}{Variable indicating outcomme variable y, should be a character.}
+
+\item{policyvar}{Variable indicating policy variable z, should be a character.}
+
+\item{idvar}{Variable indicating units, should be a character.}
+
+\item{timevar}{Variable indicating time periods, should be a character.}
+
+\item{controls}{Optional vector of controls q, should be a character.}
+
+\item{proxy}{Variable that is thought to be affected by the confoud but not by the policy.
+Should be specified if and only if estimator is specified as "FHS". Should be a character.}
+
+\item{proxyIV}{Variables to be used as an instrument. For the case of a single proxy,
+defaults to the strongest lead of the policy variable based on the first stage.
+Should be specified if an only if estimator is specified as "FHS".
+Should be a character}
+
+\item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
+
+\item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
+
+\item{M}{The number of periods in the past before which the past values of the policy
+are not supposed to affect the value of the outcome. Should be a positive integer.}
+
+\item{LM}{Optional number of event times after M to be included in estimation. Defaults to 1.
+Should be a positive integer.}
+
+\item{G}{Optional number of periods in the future after which the future values of the policy are
+not supposed to affect the value of the outcome today. Should be a positive integer.}
+
+\item{LG}{Optional number of event times earlier than -G to be included in estimation. Should be an integer
+greater than G.}
+
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -1.
+Should be an integer. Should be one of TRUE or FALSE.}
+
+\item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use
+unclustered heteroskedasticity-robust standard errors. Defaults to TRUE. Should be one of TRUE or FALSE.}
 }
 \value{
-
+A formula object to be passed to EventStudy
 }
 \description{
-Title
+Prepares a formula object for use in EventStudyOLS or EventStudyFHS
+}
+\examples{
+\dontrun{
+PrepareModelFormula <- function(estimator = "OLS", data, outcomevar = "employment rate",
+policyvar = "minimum wage", idvar = "state", timevar = "year", controls = NULL,
+proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M = 3, LM = 3, G = 4, LG = 5,
+normalize = -1, cluster = TRUE)
+
+}
 }

@@ -14,14 +14,11 @@ PrepareModelFormula(
   controls = NULL,
   proxy = NULL,
   proxyIV = NULL,
-  FE = TRUE,
-  TFE = TRUE,
   M,
   LM = 1,
   G,
   LG = 1,
-  normalize = -1,
-  cluster = TRUE
+  normalize = -1
 )
 }
 \arguments{
@@ -47,10 +44,6 @@ defaults to the strongest lead of the policy variable based on the first stage.
 Should be specified if an only if estimator is specified as "FHS".
 Should be a character}
 
-\item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
-
-\item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
-
 \item{M}{The number of periods in the past before which the past values of the policy
 are not supposed to affect the value of the outcome. Should be a positive integer.}
 
@@ -65,9 +58,6 @@ greater than G.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -1.
 Should be an integer. Should be one of TRUE or FALSE.}
-
-\item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use
-unclustered heteroskedasticity-robust standard errors. Defaults to TRUE. Should be one of TRUE or FALSE.}
 }
 \value{
 A formula object to be passed to EventStudy
@@ -77,10 +67,9 @@ Prepares a formula object for use in EventStudyOLS or EventStudyFHS
 }
 \examples{
 \dontrun{
-PrepareModelFormula <- function(estimator = "OLS", data, outcomevar = "employment rate",
-policyvar = "minimum wage", idvar = "state", timevar = "year", controls = NULL,
-proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M = 3, LM = 3, G = 4, LG = 5,
-normalize = -1, cluster = TRUE)
+PrepareModelFormula("OLS", gapminder::gapminder, outcomevar = "lifeExp",
+policyvar = "pop", idvar = "continent", timevar = "year",
+controls = "gdpPercap", M = 3, G = 2, LG = 3, LM = 4)
 
 }
 }

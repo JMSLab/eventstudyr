@@ -30,6 +30,7 @@
 #' unclustered heteroskedasticity-robust standard errors. Defaults to TRUE. Should be one of TRUE or FALSE.
 #'
 #' @return A formula object to be passed to EventStudy
+#' @import estimatr
 #' @export
 #'
 #' @examples
@@ -70,6 +71,21 @@ PrepareModelFormula <- function(estimator, data, outcomevar, policyvar, idvar, t
     # should normalize be a negative integer?
     if (!is.numeric(normalize)) {stop("normalize should be numeric.")}
     if (! is.logical(cluster)) {stop("cluster should be TRUE or FALSE")}
+
+    # v_policy_leads <- PrepareLeads(data, groupvar = idvar, timevar = timevar, leadvar = policyvar, leads = 1:M)
+    v_policy_lags <- PrepareLags(data, groupvar = idvar, timevar = timevar, lagvar = policyvar, lags = 1:G)
+
+    return(v_policy_lags)
+
+    # reg_formula <- reformulate(termlabels = c(policyvar, controls),
+    #                            response = outcomevar)
+    #
+    # estimatr::lm_robust(
+    #     formula = reg_formula,
+    #     data = data,
+    #     fixed_effects = get(idvar) ~ get(timevar)
+    # )
+
 
 
 

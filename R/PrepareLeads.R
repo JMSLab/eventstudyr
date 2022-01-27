@@ -22,11 +22,11 @@ PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}
     if ((! is.null(groupvar)) & (! is.character(groupvar))) {stop("groupvar should be a character.")}
     if (! is.character(timevar)) {stop("timevar should be a character.")}
-    if (! is.character(lagvar)) {stop("lagvar should be a character.")}
-    if (! is.numeric(lags)) {stop("lags should be numeric.")}
-    
+    if (! is.character(leadvar)) {stop("lagvar should be a character.")}
+    if (! is.numeric(leads)) {stop("lags should be numeric.")}
+
     df <- data.table::setDT(df)
-    
+
     if (is.null(groupvar)) {
         data.table::setorderv(df, cols = timevar)
         df <- df[, paste0(leadvar, "_lead", leads) :=
@@ -37,7 +37,7 @@ PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
                  data.table::shift(get(leadvar), leads, type = "lead"),
                  by = groupvar]
     }
-        
+
     df <- as.data.frame(df)
     return(df)
 }

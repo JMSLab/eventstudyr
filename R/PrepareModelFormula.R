@@ -72,10 +72,10 @@ PrepareModelFormula <- function(estimator, data, outcomevar, policyvar, idvar, t
     if (!is.numeric(normalize)) {stop("normalize should be numeric.")}
     if (! is.logical(cluster)) {stop("cluster should be TRUE or FALSE")}
 
-    # v_policy_leads <- PrepareLeads(data, groupvar = idvar, timevar = timevar, leadvar = policyvar, leads = 1:M)
+    v_policy_leads <- PrepareLeads(data, groupvar = idvar, timevar = timevar, leadvar = policyvar, leads = 1:M)
     v_policy_lags <- PrepareLags(data, groupvar = idvar, timevar = timevar, lagvar = policyvar, lags = 1:G)
 
-    return(v_policy_lags)
+    return(v_policy_leads)
 
     # reg_formula <- reformulate(termlabels = c(policyvar, controls),
     #                            response = outcomevar)

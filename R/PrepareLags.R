@@ -13,7 +13,7 @@
 #' #Compute lags of minimum wage in a panel data of states
 #' PrepareLags(df, groupvar = "state", timevar = "year", lagvar = "minwage", 1:5)
 #' }
-#' @import data.table
+#' @rawNamespace import(data.table, except=c(last, first, between))
 #' @export
 
 

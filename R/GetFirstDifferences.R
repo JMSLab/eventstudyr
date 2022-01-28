@@ -1,3 +1,19 @@
+#' Adds first difference of a variable as a new column
+#'
+#' @param df Data frame that will be modified
+#' @param groupvar Optional grouping variable, should be a character.
+#' @param timevar Variable indicating time periods, should be a character.
+#' @param diffvar Variable whose first difference will be taken, should be a character.
+#'
+#' @seealso \link[data.table]{shift}
+#'
+#' @examples
+#' \dontrun{
+#' #Compute first differences of minimum wage in a panel data of states
+#' GetFirstDifferences(df, groupvar = "state", timevar = "year", diffvar = "minwage")
+#' }
+#' @rawNamespace import(data.table, except=c(last, first, between))
+
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
     df <- data.table::setDT(df)
     if (is.null(groupvar)) {

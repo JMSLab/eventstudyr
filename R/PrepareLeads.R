@@ -13,7 +13,7 @@
 #' #Compute leads of minimum wage in a panel data of states
 #' PrepareLeads(df, groupvar = "state", timevar = "year", leadvar = "minwage", 5)
 #' }
-#' @import data.table
+#' @rawNamespace import(data.table, except=c(last, first, between))
 #'
 #' @export
 

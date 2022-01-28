@@ -3,6 +3,8 @@
 export(PrepareLags)
 export(PrepareLeads)
 export(PrepareModelFormula)
-import(data.table)
+import(data.table, except=c(last, first, between))
+import(data.table, except=c(last, first, between))
+
 import(dplyr)
 import(estimatr)

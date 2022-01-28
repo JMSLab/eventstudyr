@@ -18,10 +18,10 @@
 #' are not supposed to affect the value of the outcome. Should be a positive integer.
 #' @param LM Optional number of event times after M to be included in estimation. Defaults to 1.
 #' Should be a positive integer.
-#' @param G Optional number of periods in the future after which the future values of the policy are
+#' @param G Number of periods in the future after which the future values of the policy are
 #' not supposed to affect the value of the outcome today. Should be a positive integer.
-#' @param LG Optional number of event times earlier than -G to be included in estimation. Should be an integer
-#' greater than G.
+#' @param LG Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
+#' Should be a positive integer.
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to -1.
 #' Should be an integer. Should be one of TRUE or FALSE.
 #'
@@ -40,7 +40,7 @@
 
 
 PrepareModelFormula <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
-                                proxy = NULL, proxyIV = NULL, M, LM = 1, G, LG = 1,
+                                proxy = NULL, proxyIV = NULL, M, LM = 1, G, LG = M + G,
                                 normalize = -1) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -57,11 +57,9 @@ PrepareModelFormula <- function(estimator, data, outcomevar, policyvar, idvar, t
     if (! (is.numeric(M) & M > 0)) {stop("M should be a positive integer.")}
     # should LM be > 0?
     if (! (is.numeric(LM) & LM > 0)) {stop("LM should be a positive integer.")}
-    # should G be > 0?
     if (! (is.numeric(G) & G > 0)) {stop("G should be a positive integer.")}
     # should LG be > 0?
     if (! (is.numeric(LG) & LG > 0)) {stop("LG should be a positive integer.")}
-    if (LG < G) {stop("LG should be greater than G")}
     # should normalize be a negative integer?
     if (!is.numeric(normalize)) {stop("normalize should be numeric.")}
 

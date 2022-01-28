@@ -17,7 +17,7 @@ PrepareModelFormula(
   M,
   LM = 1,
   G,
-  LG = 1,
+  LG = M + G,
   normalize = -1
 )
 }
@@ -50,11 +50,11 @@ are not supposed to affect the value of the outcome. Should be a positive intege
 \item{LM}{Optional number of event times after M to be included in estimation. Defaults to 1.
 Should be a positive integer.}
 
-\item{G}{Optional number of periods in the future after which the future values of the policy are
+\item{G}{Number of periods in the future after which the future values of the policy are
 not supposed to affect the value of the outcome today. Should be a positive integer.}
 
-\item{LG}{Optional number of event times earlier than -G to be included in estimation. Should be an integer
-greater than G.}
+\item{LG}{Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
+Should be a positive integer.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -1.
 Should be an integer. Should be one of TRUE or FALSE.}

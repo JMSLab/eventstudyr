@@ -1,56 +1,66 @@
 test_that("correctly recognizes wrong variable type for grouping variable", {
     df_test <- read.csv("./input/df_test.csv")
 
-    expect_error(PrepareLeads(df_test, country, "periods", "values", 2))
+    expect_error(PrepareLags(df_test, country, "periods", "values", 2))
 })
 
-test_that("correctly recognizes wrong variable type for leads variable", {
+test_that("correctly recognizes wrong variable type for lags variable", {
     df_test <- read.csv("./input/df_test.csv")
 
-    expect_error(PrepareLeads(df_test, country, "periods", "values", "2"))
+    expect_error(PrepareLags(df_test, "country", "periods", "values", "2"))
 })
 
-test_that("correctly adds the desired number of leads when there is no groupvar", {
+test_that("correctly adds the desired number of lags when there is no groupvar", {
     df_test <- read.csv("./input/df_test.csv")
 
-    expect_equal(ncol(PrepareLeads(df_test, timevar = "periods", leadvar = "values", leads = 2)),
+    expect_equal(ncol(PrepareLags(df_test, timevar = "periods", lagvar = "values", lags = 2)),
                  ncol(df_test) + 1)
 })
 
-test_that("correctly adds the desired number of leads when there is a groupvar", {
+test_that("correctly adds the desired number of lags when there is a groupvar", {
     df_test <- read.csv("./input/df_test.csv")
 
-    expect_equal(ncol(PrepareLeads(df_test, groupvar = "country", timevar = "periods", leadvar = "values", leads = 2)),
+    expect_equal(ncol(PrepareLags(df_test, groupvar = "country", timevar = "periods", lagvar = "values", lags = 2)),
                  ncol(df_test) + 1)
 })
 
-test_that("correctly adds the desired number of leads when leads are specified as a vector", {
+test_that("correctly adds the desired number of lags when lags are specified as a vector", {
     df_test <- read.csv("./input/df_test.csv")
 
-    expect_equal(ncol(PrepareLeads(df_test, groupvar = "country", timevar = "periods", leadvar = "values", c(1,3))),
+    expect_equal(ncol(PrepareLags(df_test, groupvar = "country", timevar = "periods", lagvar = "values", c(1,3))),
                  ncol(df_test) + 2)
 })  
 
-test_that("leads are correctly taken when there is no groupvar", {
+test_that("the columns added have _lag suffix", {
+    df_test <- read.csv("./input/df_test.csv")
+
+    df_lags <- PrepareLags(df_test, groupvar = "country", timevar = "periods", lagvar = "values", c(1,3))
+    
+    v_newvars <- setdiff(colnames(df_lags), colnames(df_test))
+    
+    expect_true(all(grepl("_lag", v_newvars)))
+})  
+
+test_that("lags are correctly taken when there is no groupvar", {
     df_test <- read.csv("./input/df_test.csv")
     
-    df_leads <- PrepareLeads(df_test, timevar = "periods", leadvar = "values", leads = 1)
-    lead1_package <- na.omit(dplyr::pull(df_leads, values_lead1))
+    df_lags <- PrepareLags(df_test, timevar = "periods", lagvar = "values", lags = 1)
+    v_lag1_package <- na.omit(dplyr::pull(df_lags, values_lag1))
     
-    lead1_alternate <- na.omit(dplyr::lead(dplyr::pull(df_test, values)))
+    v_lag1_alternative <- na.omit(dplyr::lag(dplyr::pull(df_test, values)))
     
-    expect_equal(lead1_package, lead1_alternate)
+    expect_equal(v_lag1_package, v_lag1_alternative)
 })
 
-test_that("leads are correctly taken when there is a groupvar", {
+test_that("lags are correctly taken when there is a groupvar", {
     df_test <- read.csv("./input/df_test.csv")
     
-    df_leads <- PrepareLeads(df_test, groupvar = "country", timevar = "periods", leadvar = "values", leads = 1)
-    lead1_package <- dplyr::filter(df_leads, country == "B")
-    lead1_package <- na.omit(dplyr::pull(lead1_package, values_lead1))
+    df_lags <- PrepareLags(df_test, groupvar = "country", timevar = "periods", lagvar = "values", lags = 1)
+    v_lag1_package <- dplyr::filter(df_lags, country == "B")
+    v_lag1_package <- na.omit(dplyr::pull(v_lag1_package, values_lag1))
                                                                             
-    lead1_alternate <- na.omit(dplyr::lead(dplyr::pull(dplyr::filter(df_test, country == "B"), values)))
+    v_lag1_alternative <- na.omit(dplyr::lag(dplyr::pull(dplyr::filter(df_test, country == "B"), values)))
     
-    expect_equal(lead1_package, lead1_alternate)
+    expect_equal(v_lag1_package, v_lag1_alternative)
 })
 

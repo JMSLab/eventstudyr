@@ -15,6 +15,11 @@
 #' @rawNamespace import(data.table, except=c(last, first, between))
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
+    if (! is.data.frame(df)) {stop("df should be a data frame.")}
+    if ((! is.null(groupvar)) & (! is.character(groupvar))) {stop("groupvar should be a character.")}
+    if (! is.character(timevar)) {stop("timevar should be a character.")}
+    if (! is.character(diffvar)) {stop("diffvar should be a character.")}
+
     df <- data.table::setDT(df)
     if (is.null(groupvar)) {
         data.table::setorderv(df, cols = timevar)

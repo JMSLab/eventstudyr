@@ -22,8 +22,8 @@ PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}
     if ((! is.null(groupvar)) & (! is.character(groupvar))) {stop("groupvar should be a character.")}
     if (! is.character(timevar)) {stop("timevar should be a character.")}
-    if (! is.character(leadvar)) {stop("lagvar should be a character.")}
-    if (! is.numeric(leads)) {stop("lags should be numeric.")}
+    if (! is.character(leadvar)) {stop("leadvar should be a character.")}
+    if (! is.numeric(leads)) {stop("leads should be numeric.")}
 
     df <- data.table::setDT(df)
 

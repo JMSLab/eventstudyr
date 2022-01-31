@@ -69,7 +69,7 @@ Prepares a formula object for use in EventStudyOLS or EventStudyFHS
 \dontrun{
 PrepareModelFormula("OLS", gapminder::gapminder, outcomevar = "lifeExp",
 policyvar = "pop", idvar = "continent", timevar = "year",
-controls = "gdpPercap", M = 3, G = 2, LG = 3, LM = 4)
+controls = "gdpPercap", M = 3, G = 2, LG = 5, LM = 4)
 
 }
 }

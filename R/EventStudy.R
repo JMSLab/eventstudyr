@@ -65,19 +65,15 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     num_fd_lead_periods <- G + LG
     num_fd_lag_periods <- M + LM - 1
 
-    last_lead_period <- num_fd_lead_periods + 1
     first_lag_period <- num_fd_lag_periods + 1
-
-    # names_lead_periods <- paste0("_lead", 1:(num_lead_periods - 1))
-    # names_lag_periods <- paste0("_lag", 1:(num_lag_periods - 1))
 
     df_first_diff_leads <- PrepareLeads(df_first_diff, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"), leads = 1:num_fd_lead_periods)
     df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar, lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
 
-    df_lead <- PrepareLeads(df_first_diff_leads_lags, groupvar = idvar, timevar, leadvar = policyvar, leads = last_lead_period)
+    df_lead <- PrepareLeads(df_first_diff_leads_lags, groupvar = idvar, timevar, leadvar = policyvar, leads = num_fd_lead_periods)
     df_lead_lag <- PrepareLags(df_lead, groupvar = idvar, timevar, lagvar = policyvar, lags = first_lag_period)
 
-    column_subtract_1 <- paste0(policyvar, "_lead", last_lead_period)
+    column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)
     df_lead_lag[column_subtract_1] <- 1 - df_lead_lag[column_subtract_1]
 
     normalization_column <- paste0(policyvar, "_fd_lead", normalize)

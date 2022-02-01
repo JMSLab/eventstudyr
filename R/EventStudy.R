@@ -14,6 +14,10 @@
 #' defaults to the strongest lead of the policy variable based on the first stage.
 #' Should be specified if an only if estimator is specified as "FHS".
 #' Should be a character
+#' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
+#' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
+#' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
+#' heteroskedasticity-robust standard errors. Defaults to TRUE.
 #' @param M The number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Should be a positive integer.
 #' @param LM Optional number of event times after M to be included in estimation. Defaults to 1.
@@ -31,17 +35,14 @@
 #' @export
 #'
 #' @examples
-#'
 #' EventStudy("OLS", gapminder::gapminder, outcomevar = "lifeExp",
 #' policyvar = "pop", idvar = "continent", timevar = "year",
-#' controls = "gdpPercap", M = 3, G = 2, LG = 4, LM = 5)
-#'
-#'
-
+#' controls = "gdpPercap", FE = TRUE, TFE = TRUE,
+#' M = 3, G = 2, LG = 4, LM = 5, normalize = -1, cluster = TRUE)
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = G + 1, cluster = TRUE) {
+                       normalize = -1, cluster = TRUE) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
@@ -76,31 +77,42 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)
     df_lead_lag[column_subtract_1] <- 1 - df_lead_lag[column_subtract_1]
 
-    normalization_column <- paste0(policyvar, "_fd_lead", normalize)
+    normalization_column <- paste0(policyvar, "_fd_lag", (-1 * normalize))
 
     str_policy_fd <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
     str_policy_lead <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lead"))))
     str_policy_lag <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
-    PrepareModelFormula(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag, outcomevar)
+    event_study_formula <- PrepareModelFormula(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag, outcomevar)
 
-    # as.formula(
-    #     estimatr::lm_robust(
-    #     formula = reg_formula,
-    #     data = df_leads_lags,
-    #     fixed_effects = get(idvar) ~ get(timevar)
-    #     )
+    if (estimator == "OLS") {
 
+        OLS_model <- EventStudyOLS(event_study_formula, df_lead_lag, idvar, timevar, FE, TFE, cluster)
+        event_study_args <- list("estimator" = estimator,
+                              "data" = data,
+                              "outcomevar" = outcomevar,
+                              "policyvar" = policyvar,
+                              "idvar" = idvar,
+                              "timevar" = timevar,
+                              "controls" = controls,
+                              "proxy" = proxy,
+                              "proxyIV" = proxyIV,
+                              "FE" = FE,
+                              "TFE" = TFE,
+                              "M" = M,
+                              "LM" = LM,
+                              "G" = G,
+                              "LG" = LG,
+                              "normalize" = normalize,
+                              "cluster" = cluster)
 
-    # if (estimator == "OLS") {
-    #
-    #
-    #
-    #     PrepareModelFormula(reg_formula)
-    #
-    #
-    #
-    #
-    # }
+        return(list(OLS_model, event_study_args))
+
+    }
 
 }
+
+
+
+
+

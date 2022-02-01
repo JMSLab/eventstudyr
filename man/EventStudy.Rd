@@ -20,7 +20,7 @@ EventStudy(
   LM = 1,
   G,
   LG = M + G,
-  normalize = G + 1,
+  normalize = -1,
   cluster = TRUE
 )
 }
@@ -47,6 +47,10 @@ defaults to the strongest lead of the policy variable based on the first stage.
 Should be specified if an only if estimator is specified as "FHS".
 Should be a character}
 
+\item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
+
+\item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
+
 \item{M}{The number of periods in the past before which the past values of the policy
 are not supposed to affect the value of the outcome. Should be a positive integer.}
 
@@ -61,6 +65,9 @@ Should be a positive integer.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -1.
 Should be an integer. Should be one of TRUE or FALSE.}
+
+\item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
+heteroskedasticity-robust standard errors. Defaults to TRUE.}
 }
 \value{
 A list that contains the estimation output and an object containing the arguments passed to the function
@@ -69,10 +76,8 @@ A list that contains the estimation output and an object containing the argument
 Estimates Equation (2) in Freyaldenhoven et al. (2021)
 }
 \examples{
-
 EventStudy("OLS", gapminder::gapminder, outcomevar = "lifeExp",
 policyvar = "pop", idvar = "continent", timevar = "year",
-controls = "gdpPercap", M = 3, G = 2, LG = 4, LM = 5)
-
-
+controls = "gdpPercap", FE = TRUE, TFE = TRUE,
+M = 3, G = 2, LG = 4, LM = 5, normalize = -1, cluster = TRUE)
 }

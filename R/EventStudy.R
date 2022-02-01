@@ -31,17 +31,17 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'
 #' EventStudy("OLS", gapminder::gapminder, outcomevar = "lifeExp",
 #' policyvar = "pop", idvar = "continent", timevar = "year",
 #' controls = "gdpPercap", M = 3, G = 2, LG = 4, LM = 5)
 #'
-#' }
+#'
 
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = -1, cluster = TRUE) {
+                       normalize = G + 1, cluster = TRUE) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
@@ -60,35 +60,40 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(LG) & LG > 0)) {stop("LG should be a positive integer.")}
     if (!is.numeric(normalize)) {stop("normalize should be numeric.")}
 
-    num_lead_periods <- G + LG + 1
-    num_lag_periods <- M + LM
+    df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
-    names_lead_periods <- paste0("_lead", 1:(num_lead_periods - 1))
-    names_lag_periods <- paste0("_lag", 1:(num_lag_periods - 1))
+    num_fd_lead_periods <- G + LG
+    num_fd_lag_periods <- M + LM - 1
 
-    df_policy_leads <- PrepareLeads(data, groupvar = idvar, timevar = timevar, leadvar = policyvar, leads = 1:num_lead_periods)
-    df_policy_lags <- PrepareLags(data, groupvar = idvar, timevar = timevar, lagvar = policyvar, lags = 1:num_lag_periods)
+    last_lead_period <- num_fd_lead_periods + 1
+    first_lag_period <- num_fd_lag_periods + 1
 
+    # names_lead_periods <- paste0("_lead", 1:(num_lead_periods - 1))
+    # names_lag_periods <- paste0("_lag", 1:(num_lag_periods - 1))
 
-    df_leads_lags <- cbind(data, df_policy_leads, df_policy_lags)
+    df_first_diff_leads <- PrepareLeads(df_first_diff, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"), leads = 1:num_fd_lead_periods)
+    df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar, lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
 
-    for (lead_var in names_lead_periods) {
+    df_lead <- PrepareLeads(df_first_diff_leads_lags, groupvar = idvar, timevar, leadvar = policyvar, leads = last_lead_period)
+    df_lead_lag <- PrepareLags(df_lead, groupvar = idvar, timevar, lagvar = policyvar, lags = first_lag_period)
 
-        df_leads_lags <- GetFirstDifferences(df = df_leads_lags, groupvar = NULL, timevar = timevar, diffvar = paste0(policyvar, lead_var))
+    column_subtract_1 <- paste0(policyvar, "_lead", last_lead_period)
+    df_lead_lag[column_subtract_1] <- 1 - df_lead_lag[column_subtract_1]
 
-    }
+    normalization_column <- paste0(policyvar, "_fd_lead", normalize)
 
-    for (lag_var in names_lag_periods) {
-
-        df_leads_lags <- GetFirstDifferences(df = df_leads_lags, groupvar = NULL, timevar = timevar, diffvar = paste0(policyvar, lag_var))
-
-    }
-
-    str_policy_fd <- names(dplyr::select(df_leads_lags, dplyr::ends_with("_fd")))
-    str_policy_lead <- names(dplyr::select(df_leads_lags, dplyr::ends_with(paste0("_lead", num_lead_periods))))
-    str_policy_lag <- names(dplyr::select(df_leads_lags, dplyr::ends_with(paste0("_lag", num_lag_periods))))
+    str_policy_fd <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
+    str_policy_lead <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lead"))))
+    str_policy_lag <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
     PrepareModelFormula(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag, outcomevar)
+
+    # as.formula(
+    #     estimatr::lm_robust(
+    #     formula = reg_formula,
+    #     data = df_leads_lags,
+    #     fixed_effects = get(idvar) ~ get(timevar)
+    #     )
 
 
     # if (estimator == "OLS") {

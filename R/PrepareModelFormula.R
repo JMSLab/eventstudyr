@@ -27,7 +27,7 @@ PrepareModelFormula <- function(outcomevar, policyvar, str_policy_fd, str_policy
 
     reg_formula <- reformulate(termlabels = c(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag),
                                response = outcomevar,
-                               intercept = TRUE)
+                               intercept = FALSE)
 
     return(reg_formula)
 

@@ -76,8 +76,8 @@ A list that contains the estimation output and an object containing the argument
 Estimates Equation (2) in Freyaldenhoven et al. (2021)
 }
 \examples{
-EventStudy("OLS", gapminder::gapminder, outcomevar = "lifeExp",
-policyvar = "pop", idvar = "continent", timevar = "year",
-controls = "gdpPercap", FE = TRUE, TFE = TRUE,
+EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+policyvar = "z", idvar = "id", timevar = "t",
+controls = "x_r", FE = TRUE, TFE = TRUE,
 M = 3, G = 2, LG = 4, LM = 5, normalize = -1, cluster = TRUE)
 }

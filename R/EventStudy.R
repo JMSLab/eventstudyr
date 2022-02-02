@@ -35,9 +35,9 @@
 #' @export
 #'
 #' @examples
-#' EventStudy("OLS", gapminder::gapminder, outcomevar = "lifeExp",
-#' policyvar = "pop", idvar = "continent", timevar = "year",
-#' controls = "gdpPercap", FE = TRUE, TFE = TRUE,
+#' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' policyvar = "z", idvar = "id", timevar = "t",
+#' controls = "x_r", FE = TRUE, TFE = TRUE,
 #' M = 3, G = 2, LG = 4, LM = 5, normalize = -1, cluster = TRUE)
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
@@ -55,11 +55,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "FHS" & ! is.character(proxy))) {stop("proxy should be a character.")}
     if ((estimator == "OLS" & ! is.null(proxyIV))) {stop("proxyIV should only be specified when estimator = 'FHS'.")}
     if ((estimator == "FHS" & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
+    if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
+    if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
     if (! (is.numeric(M) & M > 0)) {stop("M should be a positive integer.")}
     if (! (is.numeric(LM) & LM > 0)) {stop("LM should be a positive integer.")}
-    if (! (is.numeric(G) & G > 0)) {stop("G should be a positive integer.")}
+    if (! (is.numeric(G) & G >= 0)) {stop("G should be a whole number.")}
     if (! (is.numeric(LG) & LG > 0)) {stop("LG should be a positive integer.")}
-    if (!is.numeric(normalize)) {stop("normalize should be numeric.")}
+    if (! (is.numeric(normalize) & normalize < 0)) {stop("normalize should be a negative integer.")}
+    if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
@@ -83,7 +86,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     str_policy_lead <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lead"))))
     str_policy_lag <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
-    event_study_formula <- PrepareModelFormula(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag, outcomevar)
+    event_study_formula <- PrepareModelFormula(outcomevar, policyvar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     if (estimator == "OLS") {
 

@@ -18,6 +18,14 @@
 
 EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar, FE, TFE, cluster) {
 
+    if (! inherits(prepared_model_formula, "formula")) {stop("prepared_model_formula should be a formula")}
+    if (! is.data.frame(prepared_data)) {stop("data should be a data frame.")}
+    if (! is.character(idvar)) {stop("idvar should be a character.")}
+    if (! is.character(timevar)) {stop("timevar should be a character.")}
+    if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
+    if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
+    if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
+
     if (FE & TFE & cluster) {
 
         estimatr::lm_robust(

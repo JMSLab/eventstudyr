@@ -8,10 +8,8 @@
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
-#' \dontrun{
-#' #Compute first differences of minimum wage in a panel data of states
-#' GetFirstDifferences(df, groupvar = "state", timevar = "year", diffvar = "minwage")
-#' }
+#' GetFirstDifferences(df_sample_dynamic, groupvar = "id", timevar = "t", diffvar = "z")
+#'
 #' @rawNamespace import(data.table, except=c(last, first, between))
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {

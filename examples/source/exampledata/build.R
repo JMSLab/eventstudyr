@@ -2,11 +2,11 @@ library(dplyr)
 library(haven)
 
 indir  <- 'examples/source/raw/eventstudy_illustration_data/orig'
-outdir <- 'examples/output/exampledata'
+outdir <- 'data'
 
-df_dynamic <- read_dta(sprintf('%s/simulation_data_dynamic.dta', indir))
-saveRDS(df_dynamic, sprintf('%s/simulation_data_dynamic.RDS', outdir))
+df_sample_dynamic <- read_dta(sprintf('%s/simulation_data_dynamic.dta', indir))
+save(df_sample_dynamic, file = sprintf('%s/df_sample_dynamic.RData', outdir))
 
-df_static  <- read_dta(sprintf('%s/simulation_data_static.dta', indir))
-saveRDS(df_static, sprintf('%s/simulation_data_static.RDS', outdir))
+df_sample_static  <- read_dta(sprintf('%s/simulation_data_static.dta', indir))
+save(df_sample_static, file = sprintf('%s/df_sample_static.RData', outdir))
 

@@ -9,10 +9,8 @@
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
-#' \dontrun{
-#' #Compute leads of minimum wage in a panel data of states
-#' PrepareLeads(df, groupvar = "state", timevar = "year", leadvar = "minwage", 5)
-#' }
+#' PrepareLeads(df_sample_dynamic, groupvar = "id", timevar = "t", leadvar = "z", leads = 1:5)
+#'
 #' @rawNamespace import(data.table, except=c(last, first, between))
 #'
 #' @export

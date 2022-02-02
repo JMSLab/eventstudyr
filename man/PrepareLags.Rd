@@ -21,10 +21,8 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 Adds lags of a variable as new columns
 }
 \examples{
-\dontrun{
-#Compute lags of minimum wage in a panel data of states
-PrepareLags(df, groupvar = "state", timevar = "year", lagvar = "minwage", 1:5)
-}
+#' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+
 }
 \seealso{
 \link[data.table]{shift}

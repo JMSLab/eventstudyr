@@ -19,10 +19,8 @@ GetFirstDifferences(df, groupvar = NULL, timevar, diffvar)
 Adds first difference of a variable as a new column
 }
 \examples{
-\dontrun{
-#Compute first differences of minimum wage in a panel data of states
-GetFirstDifferences(df, groupvar = "state", timevar = "year", diffvar = "minwage")
-}
+GetFirstDifferences(df_sample_dynamic, groupvar = "id", timevar = "t", diffvar = "z")
+
 }
 \seealso{
 \link[data.table]{shift}

@@ -9,10 +9,8 @@
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
-#' \dontrun{
-#' #Compute lags of minimum wage in a panel data of states
-#' PrepareLags(df, groupvar = "state", timevar = "year", lagvar = "minwage", 1:5)
-#' }
+#' #' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+#'
 #' @rawNamespace import(data.table, except=c(last, first, between))
 #' @export
 

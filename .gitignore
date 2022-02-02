@@ -20,3 +20,4 @@
 *.svn
 *.m~
 .Rproj.user
+!data/*.RData

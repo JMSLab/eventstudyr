@@ -20,7 +20,7 @@ EventStudy(
   LM = 1,
   G,
   LG = M + G,
-  normalize = -1,
+  normalize = -1 * (G + 1),
   cluster = TRUE
 )
 }
@@ -63,7 +63,7 @@ not supposed to affect the value of the outcome today. Should be a positive inte
 \item{LG}{Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 Should be a positive integer.}
 
-\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -1.
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -G -1.
 Should be an integer. Should be one of TRUE or FALSE.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered

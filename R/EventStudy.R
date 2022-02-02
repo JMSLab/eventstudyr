@@ -26,7 +26,7 @@
 #' not supposed to affect the value of the outcome today. Should be a positive integer.
 #' @param LG Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 #' Should be a positive integer.
-#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to -1.
+#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to -G -1.
 #' Should be an integer. Should be one of TRUE or FALSE.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
@@ -42,7 +42,7 @@
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = -1, cluster = TRUE) {
+                       normalize = - 1 * (G + 1), cluster = TRUE) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
@@ -66,8 +66,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
-    num_fd_lead_periods <- G + LG
-    num_fd_lag_periods <- M + LM - 1
+    num_fd_lead_periods <- M + LM - 1
+    num_fd_lag_periods <- G + LG
 
     first_lag_period <- num_fd_lag_periods + 1
 
@@ -86,7 +86,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     str_policy_lead <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lead"))))
     str_policy_lag <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
-    event_study_formula <- PrepareModelFormula(outcomevar, policyvar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag)
 
     if (estimator == "OLS") {
 

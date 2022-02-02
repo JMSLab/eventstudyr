@@ -14,16 +14,24 @@
 #' @export
 #'
 #' @examples
-#' PrepareModelFormula(outcomevar = "lifeExp",
-#' policyvar = "pop",
-#' str_policy_fd = c("pop_fd_lead1", "pop_fd_lead2", "pop_fd_lead4",
-#' "pop_fd_lead5", "pop_fd_lead6", "pop_fd_lag1", "pop_fd_lag2",
-#' "pop_fd_lag3", "pop_fd_lag4", "pop_fd_lag5", "pop_fd_lag6", "pop_fd_lag7"),
-#' str_policy_lead = "pop_lead6",
-#' str_policy_lag = "pop_lag8",
-#' controls = "gdpPercap")
+#' PrepareModelFormula(outcomevar = "y_base",
+#' policyvar = "z",
+#' str_policy_fd = c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
+#' "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
+#' "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7"),
+#' str_policy_lead = "z_lead6",
+#' str_policy_lag = "z_lag8",
+#' controls = "x_r")
 
-PrepareModelFormula <- function(outcomevar, policyvar, str_policy_fd, str_policy_lead, str_policy_lag, controls) {
+PrepareModelFormula <- function(outcomevar, policyvar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL) {
+
+    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
+    if (! is.character(policyvar)) {stop("policyvar should be a character.")}
+    if (! is.character(str_policy_fd)) {stop("str_policy_fd should be a character.")}
+    if (! is.character(str_policy_lead)) {stop("str_policy_lead should be a character.")}
+    if (! is.character(str_policy_lag)) {stop("str_policy_lag should be a character.")}
+    if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
+
 
     reg_formula <- reformulate(termlabels = c(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag),
                                response = outcomevar,

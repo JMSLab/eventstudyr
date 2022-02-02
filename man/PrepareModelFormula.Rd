@@ -33,12 +33,12 @@ A formula object to be passed to EventStudy
 Prepares a formula object for use in EventStudyOLS or EventStudyFHS
 }
 \examples{
-PrepareModelFormula(outcomevar = "lifeExp",
-policyvar = "pop",
-str_policy_fd = c("pop_fd_lead1", "pop_fd_lead2", "pop_fd_lead4",
-"pop_fd_lead5", "pop_fd_lead6", "pop_fd_lag1", "pop_fd_lag2",
-"pop_fd_lag3", "pop_fd_lag4", "pop_fd_lag5", "pop_fd_lag6", "pop_fd_lag7"),
-str_policy_lead = "pop_lead6",
-str_policy_lag = "pop_lag8",
-controls = "gdpPercap")
+PrepareModelFormula(outcomevar = "y_base",
+policyvar = "z",
+str_policy_fd = c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
+"z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
+"z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7"),
+str_policy_lead = "z_lead6",
+str_policy_lag = "z_lag8",
+controls = "x_r")
 }

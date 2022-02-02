@@ -3,7 +3,6 @@
 #'
 
 #' @param outcomevar Variable indicating outcomme variable y, should be a character.
-#' @param policyvar Variable indicating policy variable z, should be a character.
 #' @param str_policy_fd Vector indicating leads and lags of first differenced policy variable z with the (G +1)th term omitted for normalization, should be a string.
 #' @param str_policy_lead Variable indicating the (G + LG)th lead of the policy variable z, should be a character.
 #' @param str_policy_lag Variable indicating the (M + LM)th lag of the policy variable z, should be a character.
@@ -15,7 +14,6 @@
 #'
 #' @examples
 #' PrepareModelFormula(outcomevar = "y_base",
-#' policyvar = "z",
 #' str_policy_fd = c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
 #' "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
 #' "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7"),
@@ -23,17 +21,16 @@
 #' str_policy_lag = "z_lag8",
 #' controls = "x_r")
 
-PrepareModelFormula <- function(outcomevar, policyvar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL) {
+PrepareModelFormula <- function(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL) {
 
     if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
-    if (! is.character(policyvar)) {stop("policyvar should be a character.")}
     if (! is.character(str_policy_fd)) {stop("str_policy_fd should be a character.")}
     if (! is.character(str_policy_lead)) {stop("str_policy_lead should be a character.")}
     if (! is.character(str_policy_lag)) {stop("str_policy_lag should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
 
 
-    reg_formula <- reformulate(termlabels = c(policyvar, controls, str_policy_fd, str_policy_lead, str_policy_lag),
+    reg_formula <- reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
                                response = outcomevar,
                                intercept = FALSE)
 

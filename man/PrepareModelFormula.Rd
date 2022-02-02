@@ -6,17 +6,14 @@
 \usage{
 PrepareModelFormula(
   outcomevar,
-  policyvar,
   str_policy_fd,
   str_policy_lead,
   str_policy_lag,
-  controls
+  controls = NULL
 )
 }
 \arguments{
 \item{outcomevar}{Variable indicating outcomme variable y, should be a character.}
-
-\item{policyvar}{Variable indicating policy variable z, should be a character.}
 
 \item{str_policy_fd}{Vector indicating leads and lags of first differenced policy variable z with the (G +1)th term omitted for normalization, should be a string.}
 
@@ -34,7 +31,6 @@ Prepares a formula object for use in EventStudyOLS or EventStudyFHS
 }
 \examples{
 PrepareModelFormula(outcomevar = "y_base",
-policyvar = "z",
 str_policy_fd = c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
 "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
 "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7"),

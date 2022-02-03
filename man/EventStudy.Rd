@@ -20,7 +20,7 @@ EventStudy(
   LM = 1,
   G,
   LG = M + G,
-  normalize = -1 * (G + 1),
+  normalize = -1,
   cluster = TRUE
 )
 }
@@ -63,8 +63,8 @@ not supposed to affect the value of the outcome today. Should be a positive inte
 \item{LG}{Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 Should be a positive integer.}
 
-\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -G -1.
-Should be an integer. Should be one of TRUE or FALSE.}
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - 1.
+Should be a negative integer.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
@@ -79,5 +79,5 @@ Estimates Equation (2) in Freyaldenhoven et al. (2021)
 EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-M = 3, G = 2, LG = 4, LM = 5, normalize = -1, cluster = TRUE)
+M = 3, G = 2, LG = 4, LM = 5, normalize = - 1, cluster = TRUE)
 }

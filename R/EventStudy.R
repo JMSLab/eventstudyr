@@ -26,11 +26,10 @@
 #' not supposed to affect the value of the outcome today. Should be a positive integer.
 #' @param LG Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 #' Should be a positive integer.
-#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to -G -1.
-#' Should be an integer. Should be one of TRUE or FALSE.
+#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - 1.
+#' Should be a negative integer.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
-#' @import estimatr
 #' @import dplyr
 #' @export
 #'
@@ -38,11 +37,11 @@
 #' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' M = 3, G = 2, LG = 4, LM = 5, normalize = -1, cluster = TRUE)
+#' M = 3, G = 2, LG = 4, LM = 5, normalize = - 1, cluster = TRUE)
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = - 1 * (G + 1), cluster = TRUE) {
+                       normalize = - 1, cluster = TRUE) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}

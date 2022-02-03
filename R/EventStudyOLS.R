@@ -12,6 +12,7 @@
 #' heteroskedasticity-robust standard errors. Defaults to TRUE.
 #'
 #' @return
+#' @import estimatr
 #' @export
 #'
 #' @examples

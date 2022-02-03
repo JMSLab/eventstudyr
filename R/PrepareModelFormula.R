@@ -10,6 +10,7 @@
 
 #'
 #' @return A formula object to be passed to EventStudy
+#' @rawNamespace import(stats, except=c(lag, filter))
 #' @export
 #'
 #' @examples
@@ -30,7 +31,7 @@ PrepareModelFormula <- function(outcomevar, str_policy_fd, str_policy_lead, str_
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
 
 
-    reg_formula <- reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
+    reg_formula <- stats::reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
                                response = outcomevar,
                                intercept = FALSE)
 

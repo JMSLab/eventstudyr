@@ -66,30 +66,34 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
     num_fd_lead_periods <- M + LM - 1
-    num_fd_lag_periods <- G + LG
+    num_fd_lag_periods  <- G + LG
 
-    first_lag_period <- num_fd_lag_periods + 1
+    first_lag_period    <- num_fd_lag_periods + 1
 
-    df_first_diff_leads <- PrepareLeads(df_first_diff, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"), leads = 1:num_fd_lead_periods)
-    df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar, lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
+    df_first_diff_leads      <- PrepareLeads(df_first_diff, groupvar = idvar, timevar,
+                                             leadvar = paste0(policyvar, "_fd"), leads = 1:num_fd_lead_periods)
+    df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar,
+                                             lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
 
-    df_lead <- PrepareLeads(df_first_diff_leads_lags, groupvar = idvar, timevar, leadvar = policyvar, leads = num_fd_lead_periods)
-    df_lead_lag <- PrepareLags(df_lead, groupvar = idvar, timevar, lagvar = policyvar, lags = first_lag_period)
+    df_lead     <- PrepareLeads(df_first_diff_leads_lags, groupvar = idvar, timevar,
+                                leadvar = policyvar, leads = num_fd_lead_periods)
+    df_lead_lag <- PrepareLags(df_lead, groupvar = idvar, timevar,
+                               lagvar = policyvar, lags = first_lag_period)
 
-    column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)
+    column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
     df_lead_lag[column_subtract_1] <- 1 - df_lead_lag[column_subtract_1]
 
     normalization_column <- paste0(policyvar, "_fd_lag", (-1 * normalize))
 
-    str_policy_fd <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
+    str_policy_fd   <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
     str_policy_lead <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lead"))))
-    str_policy_lag <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
+    str_policy_lag  <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
     event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag)
 
     if (estimator == "OLS") {
 
-        OLS_model <- EventStudyOLS(event_study_formula, df_lead_lag, idvar, timevar, FE, TFE, cluster)
+        OLS_model        <- EventStudyOLS(event_study_formula, df_lead_lag, idvar, timevar, FE, TFE, cluster)
         event_study_args <- list("estimator" = estimator,
                               "data" = data,
                               "outcomevar" = outcomevar,

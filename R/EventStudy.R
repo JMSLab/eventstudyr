@@ -27,7 +27,6 @@
 #' @param LG Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 #' Should be a positive integer.
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - 1.
-#' Should be a negative integer.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
@@ -41,8 +40,8 @@
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = - 1, cluster = TRUE) {
-
+                       normalize = -1, cluster = TRUE) {
+    
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
     if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
@@ -56,44 +55,53 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "FHS" & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
     if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
-    if (! (is.numeric(M) & M > 0)) {stop("M should be a positive integer.")}
-    if (! (is.numeric(LM) & LM > 0)) {stop("LM should be a positive integer.")}
-    if (! (is.numeric(G) & G >= 0)) {stop("G should be a whole number.")}
-    if (! (is.numeric(LG) & LG > 0)) {stop("LG should be a positive integer.")}
-    if (! (is.numeric(normalize) & normalize < 0)) {stop("normalize should be a negative integer.")}
+    if (! (is.numeric(M) & M > 0 & M %% 1 == 0)) {stop("M should be a positive integer.")}
+    if (! (is.numeric(LM) & LM > 0 & LM %% 1 == 0)) {stop("LM should be a positive integer.")}
+    if (! (is.numeric(G) & G >= 0 & G %% 1 == 0)) {stop("G should be a whole number.")}
+    if (! (is.numeric(LG) & LG > 0 & LG %% 1 == 0)) {stop("LG should be a positive integer.")}
+    if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(G + LG) &
+           normalize <= M + LM)) {stop("normalize should be an integer between - (G + LG) and (M + LM).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
-
+    
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
-    num_fd_lead_periods <- M + LM - 1
-    num_fd_lag_periods  <- G + LG
+    num_fd_lag_periods   <- M + LM - 1
+    num_fd_lead_periods  <- G + LG
 
-    first_lag_period    <- num_fd_lag_periods + 1
+    furthest_lag_period    <- num_fd_lag_periods + 1
 
     df_first_diff_leads      <- PrepareLeads(df_first_diff, groupvar = idvar, timevar,
                                              leadvar = paste0(policyvar, "_fd"), leads = 1:num_fd_lead_periods)
     df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar,
                                              lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
 
-    df_lead     <- PrepareLeads(df_first_diff_leads_lags, groupvar = idvar, timevar,
-                                leadvar = policyvar, leads = num_fd_lead_periods)
-    df_lead_lag <- PrepareLags(df_lead, groupvar = idvar, timevar,
-                               lagvar = policyvar, lags = first_lag_period)
+    
+    df_lag           <- PrepareLags(df_first_diff_leads_lags, groupvar = idvar, timevar,
+                                    lagvar = policyvar, lags = furthest_lag_period)
+    df_lag_lead      <- PrepareLeads(df_lag, groupvar = idvar, timevar,
+                                     leadvar = policyvar, leads = num_fd_lead_periods)
+    
 
     column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
-    df_lead_lag[column_subtract_1] <- 1 - df_lead_lag[column_subtract_1]
-
-    normalization_column <- paste0(policyvar, "_fd_lag", (-1 * normalize))
-
-    str_policy_fd   <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
-    str_policy_lead <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lead"))))
-    str_policy_lag  <- names(dplyr::select(df_lead_lag, dplyr::starts_with(paste0(policyvar, "_lag"))))
+    df_lag_lead[column_subtract_1] <- 1 - df_lag_lead[column_subtract_1]
+    
+    if (normalize < 0) {
+        normalization_column <- paste0(policyvar, "_fd_lead", (-1 * normalize))
+    } else if (normalize == 0){
+        normalization_column <- paste0(policyvar, "_fd")
+    } else {
+        normalization_column <- paste0(policyvar, "_fd_lag", (normalize))
+    }
+    
+    str_policy_fd   <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
+    str_policy_lead <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lead"))))
+    str_policy_lag  <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
     event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag)
-
+    
     if (estimator == "OLS") {
 
-        OLS_model        <- EventStudyOLS(event_study_formula, df_lead_lag, idvar, timevar, FE, TFE, cluster)
+        OLS_model        <- EventStudyOLS(event_study_formula, df_lag_lead, idvar, timevar, FE, TFE, cluster)
         event_study_args <- list("estimator" = estimator,
                               "data" = data,
                               "outcomevar" = outcomevar,

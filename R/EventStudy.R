@@ -41,7 +41,7 @@
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
                        normalize = -1, cluster = TRUE) {
-    
+
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
     if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
@@ -62,7 +62,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(G + LG) &
            normalize <= M + LM)) {stop("normalize should be an integer between - (G + LG) and (M + LM).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
-    
+
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
     num_fd_lag_periods   <- M + LM - 1
@@ -75,16 +75,16 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar,
                                              lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
 
-    
+
     df_lag           <- PrepareLags(df_first_diff_leads_lags, groupvar = idvar, timevar,
                                     lagvar = policyvar, lags = furthest_lag_period)
     df_lag_lead      <- PrepareLeads(df_lag, groupvar = idvar, timevar,
                                      leadvar = policyvar, leads = num_fd_lead_periods)
-    
+
 
     column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
     df_lag_lead[column_subtract_1] <- 1 - df_lag_lead[column_subtract_1]
-    
+
     if (normalize < 0) {
         normalization_column <- paste0(policyvar, "_fd_lead", (-1 * normalize))
     } else if (normalize == 0){
@@ -92,13 +92,13 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     } else {
         normalization_column <- paste0(policyvar, "_fd_lag", (normalize))
     }
-    
+
     str_policy_fd   <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
     str_policy_lead <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lead"))))
     str_policy_lag  <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag)
-    
+    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+
     if (estimator == "OLS") {
 
         OLS_model        <- EventStudyOLS(event_study_formula, df_lag_lead, idvar, timevar, FE, TFE, cluster)

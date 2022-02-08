@@ -40,7 +40,7 @@ program comparisons
 		local lags `lags' l`i'.zfd
 	}
 	
-	xtreg y_base zfd `lags' `leads' f`furthest_lead'.z l`furthest_lag'.z i.t, fe vce(cluster id)
+	reg y_base zfd `lags' `leads' f`furthest_lead'.z l`furthest_lag'.z i.t i.id, vce(cluster id)
 end
 
 main

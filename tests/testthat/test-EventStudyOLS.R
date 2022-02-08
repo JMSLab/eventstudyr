@@ -36,7 +36,7 @@ test_that("FE = TRUE,
         expect_true(all.equal(reg$felevels$`get(idvar)`, as.character(unique(df_test_EventStudyOLS$id))))
         expect_true(all.equal(reg$felevels$`get(timevar)`, as.character(unique(df_test_EventStudyOLS$t))))
         expect_equal(reg$nclusters, length(unique(df_test_EventStudyOLS$id)))
-        expect_equal(reg$se_type, "stata")
+        expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -77,7 +77,7 @@ test_that("FE = FALSE,
     expect_equal(is.null(reg$felevels$`get(idvar)`), TRUE)
     expect_true(all.equal(reg$felevels$V1, as.character(unique(df_test_EventStudyOLS$t))))
     expect_equal(reg$nclusters, length(unique(df_test_EventStudyOLS$id)))
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -118,7 +118,7 @@ test_that("FE = TRUE,
     expect_true(all.equal(reg$felevels$V1, as.character(unique(df_test_EventStudyOLS$id))))
     expect_true(is.null(reg$felevels$`get(timevar)`), TRUE)
     expect_equal(reg$nclusters, length(unique(df_test_EventStudyOLS$id)))
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -159,7 +159,7 @@ test_that("FE = FALSE,
     expect_true(is.null(reg$felevels$`get(idvar)`), TRUE)
     expect_true(is.null(reg$felevels$`get(timevar)`), TRUE)
     expect_equal(reg$nclusters, length(unique(df_test_EventStudyOLS$id)))
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -200,7 +200,7 @@ test_that("FE = TRUE,
     expect_true(all.equal(reg$felevels$`get(idvar)`, as.character(unique(df_test_EventStudyOLS$id))))
     expect_true(all.equal(reg$felevels$`get(timevar)`, as.character(unique(df_test_EventStudyOLS$t))))
     expect_true(is.null(reg$nclusters), TRUE)
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -241,7 +241,7 @@ test_that("FE = FALSE,
     expect_true(is.null(reg$felevels$`get(idvar)`), TRUE)
     expect_true(all.equal(reg$felevels$V1, as.character(unique(df_test_EventStudyOLS$t))))
     expect_true(is.null(reg$nclusters), TRUE)
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -282,7 +282,7 @@ test_that("FE = TRUE,
     expect_true(all.equal(reg$felevels$V1, as.character(unique(df_test_EventStudyOLS$id))))
     expect_true(is.null(reg$felevels$`get(timevar)`), TRUE)
     expect_true(is.null(reg$nclusters), TRUE)
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })
 
@@ -323,6 +323,6 @@ test_that("FE = FALSE,
     expect_true(is.null(reg$felevels$`get(idvar)`), TRUE)
     expect_true(is.null(reg$felevels$`get(timevar)`), TRUE)
     expect_true(is.null(reg$nclusters), TRUE)
-    expect_equal(reg$se_type, "stata")
+    expect_true(reg$se_type %in% c("stata", "HC1"))
 
 })

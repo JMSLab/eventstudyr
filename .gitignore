@@ -21,3 +21,4 @@
 *.m~
 .Rproj.user
 !data/*.RData
+*.csv

@@ -16,6 +16,13 @@
 #' @export
 #'
 #' @examples
+#' EventStudyOLS(prepared_model_formula = PrepareModelFormula("y_base",
+#' c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
+#' "z_lead3", "z_lag3", "x_r"),
+#' prepared_data = df_EventStudyOLS_example,
+#' idvar = "id",
+#' timevar = "t",
+#' FE = TRUE, TFE = TRUE, cluster = TRUE)
 
 EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar, FE, TFE, cluster) {
 

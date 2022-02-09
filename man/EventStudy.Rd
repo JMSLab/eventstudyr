@@ -63,8 +63,7 @@ not supposed to affect the value of the outcome today. Should be a positive inte
 \item{LG}{Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 Should be a positive integer.}
 
-\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - 1.
-Should be a negative integer.}
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - 1.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}

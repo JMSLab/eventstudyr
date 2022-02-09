@@ -15,7 +15,8 @@ Imports:
     data.table,
     dplyr,
     estimatr,
-    stats
+    stats,
+    stringr
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

@@ -25,7 +25,7 @@ program comparisons
 	local M_minus1 = `M' - 1
 	local furthest_lag_minus1 = `furthest_lag' - 1
 	
-	xtevent y_base, pol(z) panelvar(id) timevar(t) pre(`G') post(`M_minus1') overidpre(`LG') overidpost(`LM') cluster(id)
+	xtevent y_base, pol(z) panelvar(id) timevar(t) pre(`G') post(`M_minus1') overidpre(`LG') overidpost(`LM') cluster(id) nostaggered
 
 	xtset id t
 	gen zfd = d.z

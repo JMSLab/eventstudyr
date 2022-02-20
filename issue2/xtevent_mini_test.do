@@ -48,6 +48,7 @@ xtevent y, policyvar(z) w(2) nodrop
 drop __k _k*
 
 replace z = . if t == 20
+replace z = 1 if t == 19 & id == 1
+replace z = 0 if t == 19 & id == 2
 
 xtevent y, policyvar(z) w(2) nodrop
-

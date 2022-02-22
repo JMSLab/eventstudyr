@@ -34,7 +34,6 @@ test_that("FE = TRUE,
     }
 
         expect_true(all.equal(reg$felevels$`get(idvar)`, as.character(unique(df_test_EventStudyOLS$id))))
-        expect_true(all.equal(reg$felevels$`get(timevar)`, as.character(unique(df_test_EventStudyOLS$t))))
         expect_equal(reg$nclusters, length(unique(df_test_EventStudyOLS$id)))
         expect_true(reg$se_type %in% c("stata", "HC1"))
 
@@ -75,7 +74,6 @@ test_that("FE = FALSE,
     }
 
     expect_equal(is.null(reg$felevels$`get(idvar)`), TRUE)
-    expect_true(all.equal(reg$felevels$V1, as.character(unique(df_test_EventStudyOLS$t))))
     expect_equal(reg$nclusters, length(unique(df_test_EventStudyOLS$id)))
     expect_true(reg$se_type %in% c("stata", "HC1"))
 
@@ -198,7 +196,6 @@ test_that("FE = TRUE,
     }
 
     expect_true(all.equal(reg$felevels$`get(idvar)`, as.character(unique(df_test_EventStudyOLS$id))))
-    expect_true(all.equal(reg$felevels$`get(timevar)`, as.character(unique(df_test_EventStudyOLS$t))))
     expect_true(is.null(reg$nclusters), TRUE)
     expect_true(reg$se_type %in% c("stata", "HC1"))
 
@@ -239,7 +236,6 @@ test_that("FE = FALSE,
     }
 
     expect_true(is.null(reg$felevels$`get(idvar)`), TRUE)
-    expect_true(all.equal(reg$felevels$V1, as.character(unique(df_test_EventStudyOLS$t))))
     expect_true(is.null(reg$nclusters), TRUE)
     expect_true(reg$se_type %in% c("stata", "HC1"))
 
@@ -366,7 +362,7 @@ test_that("Coefficients and Standard Errors agree with base STATA", {
     expect_equal(unname(reg$coefficients["z_fd_lead3"]), as.double(df_test_STATA[df_test_STATA["term"] == "F3"][3]), tolerance = epsilon)
     expect_equal(unname(reg$coefficients["z_fd_lag1"]), as.double(df_test_STATA[df_test_STATA["term"] == "L1"][2]), tolerance = epsilon)
     expect_equal(unname(reg$coefficients["z_fd_lag2"]), as.double(df_test_STATA[df_test_STATA["term"] == "L2"][2]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_lead3"]), as.double(df_test_STATA[df_test_STATA["term"] == "F3"][4]), tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_lead3"]), -1 * as.double(df_test_STATA[df_test_STATA["term"] == "F3"][4]), tolerance = epsilon)
     expect_equal(unname(reg$coefficients["z_lag3"]), as.double(df_test_STATA[df_test_STATA["term"] == "L3"][2]), tolerance = epsilon)
     expect_equal(unname(reg$coefficients["x_r"]), as.double(df_test_STATA[df_test_STATA["term"] == "x_r"][2]), tolerance = epsilon)
 

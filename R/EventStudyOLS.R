@@ -11,7 +11,7 @@
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 #' heteroskedasticity-robust standard errors. Defaults to TRUE.
 #'
-#' @return
+#' @return An estimated model
 #' @import estimatr
 #' @export
 #'

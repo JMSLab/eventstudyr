@@ -32,7 +32,7 @@ lags of the first differenced policy variable and leads and lags of the policy v
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
 }
 \value{
-
+An estimated model
 }
 \description{
 Runs OLS with optional fixed effects and clustering

@@ -7,10 +7,13 @@
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2000 rows and 12 columns.
 }
+\source{
+Dataset in .dta format can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
+}
 \usage{
 df_sample_dynamic
 }
 \description{
-Dataset in .dta format can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
+Sample dataset obtained from the replication archive for Freyaldenhoven et al. (forthcoming)
 }
 \keyword{datasets}

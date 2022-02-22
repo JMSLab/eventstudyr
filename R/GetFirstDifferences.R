@@ -11,6 +11,7 @@
 #' GetFirstDifferences(df_sample_dynamic, groupvar = "id", timevar = "t", diffvar = "z")
 #'
 #' @rawNamespace import(data.table, except=c(last, first, between))
+#' @export
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}
@@ -26,7 +27,7 @@ GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
         data.table::setorderv(df, cols = c(groupvar, timevar))
         df[,paste0(diffvar, "_fd") := get(diffvar) - data.table::shift((get(diffvar))), by = groupvar]
     }
-    
+
     df <- as.data.frame(df)
     return(df)
 }

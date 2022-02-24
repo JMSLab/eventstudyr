@@ -1,2 +1,6 @@
 ^EventStudyR\.Rproj$
 ^\.Rproj\.user$
+^\.github$
+^LICENSE\.md$
+^issue[0-9]+$
+^examples$

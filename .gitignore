@@ -23,3 +23,5 @@
 !data/*.RData
 !data/*.rda
 *.csv
+issue*/
+examples/

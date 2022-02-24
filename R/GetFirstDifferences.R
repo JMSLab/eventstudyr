@@ -7,11 +7,8 @@
 #'
 #' @seealso \link[data.table]{shift}
 #'
-#' @examples
-#' GetFirstDifferences(df_sample_dynamic, groupvar = "id", timevar = "t", diffvar = "z")
 #'
 #' @rawNamespace import(data.table, except=c(last, first, between))
-#' @export
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}

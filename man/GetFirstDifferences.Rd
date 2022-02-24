@@ -18,10 +18,6 @@ GetFirstDifferences(df, groupvar = NULL, timevar, diffvar)
 \description{
 Adds first difference of a variable as a new column
 }
-\examples{
-GetFirstDifferences(df_sample_dynamic, groupvar = "id", timevar = "t", diffvar = "z")
-
-}
 \seealso{
 \link[data.table]{shift}
 }

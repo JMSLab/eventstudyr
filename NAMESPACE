@@ -2,7 +2,6 @@
 
 export(EventStudy)
 export(EventStudyOLS)
-export(GetFirstDifferences)
 export(PrepareLags)
 export(PrepareLeads)
 export(PrepareModelFormula)

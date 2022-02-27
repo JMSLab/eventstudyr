@@ -62,6 +62,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(G + LG) &
            normalize <= M + LM)) {stop("normalize should be an integer between - (G + LG) and (M + LM).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
+    max_period <- max(data[[timevar]], na.rm = T)
+    min_period <- min(data[[timevar]], na.rm = T)
+    if  (LM + G + M + LM > max_period - min_period - 1) {stop("LM + G + M + LM can not exceed the data window")}
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 

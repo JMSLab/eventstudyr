@@ -25,26 +25,58 @@ test_that("correctly creates highest order leads and lags", {
 
 })
 
+test_that("correctly throws an error when normalized coefficient is outside event-study window", {
+
+    M  <- 2
+    G  <- 3
+    LG <- 4
+    LM <- 11
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          M = M, G = G, LG = LG, LM = LM, normalize = - 1, cluster = TRUE)
+
+    leads_lags      <- outputs[[1]]$term
+    largest_fd_lag  <- as.double(stringr::str_extract(leads_lags, "(?<=fd_lag)[0-9]+"))
+    largest_fd_lead <- as.double(stringr::str_extract(leads_lags, "(?<=fd_lead)[0-9]+"))
+    largest_lag     <- as.double(stringr::str_extract(leads_lags, "(?<=lag)[0-9]+"))
+    largest_lead    <- as.double(stringr::str_extract(leads_lags, "(?<=lead)[0-9]+"))
+
+    expect_equal(max(largest_fd_lag, na.rm = TRUE), M + LM - 1)
+    expect_equal(max(largest_fd_lead, na.rm = TRUE), G + LG)
+    expect_equal(max(largest_lag, na.rm = TRUE), M + LM)
+    expect_equal(max(largest_lead, na.rm = TRUE), G + LG)
+
+
+})
+
 test_that("removes the correct column when normalize < 0", {
 
     M  <- 2
     G  <- 3
     LG <- 4
     LM <- 7
-    normalize <- -2
+    normalize <- 15
 
-    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    expect_error(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE)
+                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE))
+})
 
-    leads_lags      <- outputs[[1]]$term
+test_that("throws an error when M + G + LG + LM exceeds the data window", {
 
-    normalization_column <- paste0("z", "_fd_lead", (-1 * normalize))
+    M  <- 10
+    G  <- 15
+    LG <- 20
+    LM <- 25
+    normalize <- 2
 
-    expect_equal(stringr::str_extract(normalization_column, "lead"), "lead")
-    expect_true(!normalization_column %in% leads_lags)
-    expect_true(-1 * normalize > 0)
+    expect_error(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE))
 
 })
 

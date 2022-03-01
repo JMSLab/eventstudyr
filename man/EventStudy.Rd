@@ -20,7 +20,7 @@ EventStudy(
   LM = 1,
   G,
   LG = M + G,
-  normalize = -1,
+  normalize = -1 * (G + 1),
   cluster = TRUE
 )
 }
@@ -44,7 +44,7 @@ Should be specified if and only if estimator is specified as "FHS". Should be a 
 
 \item{proxyIV}{Variables to be used as an instrument. For the case of a single proxy,
 defaults to the strongest lead of the policy variable based on the first stage.
-Should be specified if an only if estimator is specified as "FHS".
+Should be specified if and only if estimator is specified as "FHS".
 Should be a character}
 
 \item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
@@ -63,7 +63,7 @@ not supposed to affect the value of the outcome today. Should be a positive inte
 \item{LG}{Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 Should be a positive integer.}
 
-\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - 1.}
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - G - 1.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}

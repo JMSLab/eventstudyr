@@ -12,7 +12,7 @@
 #' Should be specified if and only if estimator is specified as "FHS". Should be a character.
 #' @param proxyIV Variables to be used as an instrument. For the case of a single proxy,
 #' defaults to the strongest lead of the policy variable based on the first stage.
-#' Should be specified if an only if estimator is specified as "FHS".
+#' Should be specified if and only if estimator is specified as "FHS".
 #' Should be a character
 #' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
@@ -26,7 +26,7 @@
 #' not supposed to affect the value of the outcome today. Should be a positive integer.
 #' @param LG Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
 #' Should be a positive integer.
-#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - 1.
+#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - G - 1.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
@@ -40,7 +40,7 @@
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = -1, cluster = TRUE) {
+                       normalize = -1 * (G + 1), cluster = TRUE) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}

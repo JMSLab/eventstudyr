@@ -15,11 +15,11 @@ PrepareModelFormula(
 \arguments{
 \item{outcomevar}{Variable indicating outcomme variable y, should be a character.}
 
-\item{str_policy_fd}{Vector indicating leads and lags of first differenced policy variable z with the (G +1)th term omitted for normalization, should be a string.}
+\item{str_policy_fd}{Vector indicating leads and lags of first differenced policy variable z with the (pre +1)th term omitted for normalization, should be a string.}
 
-\item{str_policy_lead}{Variable indicating the (G + LG)th lead of the policy variable z, should be a character.}
+\item{str_policy_lead}{Variable indicating the (pre + overidpre)th lead of the policy variable z, should be a character.}
 
-\item{str_policy_lag}{Variable indicating the (M + LM)th lag of the policy variable z, should be a character.}
+\item{str_policy_lag}{Variable indicating the (post + overidpost)th lag of the policy variable z, should be a character.}
 
 \item{controls}{Optional vector of controls q, should be a character.}
 }

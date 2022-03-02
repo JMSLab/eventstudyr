@@ -5,7 +5,7 @@
 \alias{df_EventStudyOLS_example}
 \title{Sample dataset used in the Examples section in the EventStudyOLS documentation}
 \format{
-A data frame with 2000 rows and 13 variables (lead and lags created using M = 1, G = 1, LG = 2, LM = 2):
+A data frame with 2000 rows and 13 variables (lead and lags created using post = 1, pre = 1, overidpre = 2, overidpost = 2):
 \describe{
 \item{id}{variable to identify units}
 \item{t}{variable to identify time periods}

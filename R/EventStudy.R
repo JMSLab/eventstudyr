@@ -24,7 +24,7 @@
 #' @param overidpost Optional number of event times after "post" to be included in estimation. Defaults to 1.
 #' Should be a positive integer. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param pre Number of periods in the future after which the future values of the policy are
-#' not supposed to affect the value of the outcome today. Should be a positive integer. Corresponds to G in equation (2) of 
+#' not supposed to affect the value of the outcome today. Should be a positive integer. Corresponds to G in equation (2) of
 #' Freyaldenhoven et al. (forthcoming).
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
 #' Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
@@ -67,12 +67,12 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
     if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")}
-    if  (sum(grepl(paste0(policyvar, "_fd")), colnames(data)) > 0) {warning(paste0("Variables starting with ", policyvar,
+    if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_fd should be reserved for eventstudyr"))}
-    if  (sum(grepl(paste0(policyvar, "_lead")), colnames(data)) > 0) {warning(paste0("Variables starting with ", policyvar,
+    if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_lead should be reserved for eventstudyr"))}
-    if  (sum(grepl(paste0(policyvar, "lag")), colnames(data)) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_lag should be reserved for eventstudyr"))}                                                                                   
+    if  (sum(grepl(paste0(policyvar, "lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
+                                                                                   "_lag should be reserved for eventstudyr"))}
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 

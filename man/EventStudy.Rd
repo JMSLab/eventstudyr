@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in Freyaldenhoven et al. (2021)}
+\title{Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)}
 \usage{
 EventStudy(
   estimator,
@@ -16,11 +16,11 @@ EventStudy(
   proxyIV = NULL,
   FE = TRUE,
   TFE = TRUE,
-  M,
-  LM = 1,
-  G,
-  LG = M + G,
-  normalize = -1 * (G + 1),
+  post,
+  overidpost = 1,
+  pre,
+  overidpre = post + pre,
+  normalize = -1 * (pre + 1),
   cluster = TRUE
 )
 }
@@ -51,19 +51,21 @@ Should be a character}
 
 \item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
 
-\item{M}{The number of periods in the past before which the past values of the policy
-are not supposed to affect the value of the outcome. Should be a positive integer.}
+\item{post}{The number of periods in the past before which the past values of the policy
+are not supposed to affect the value of the outcome. Should be a positive integer. Corresponds to M in equation (2) of
+Freyaldenhoven et al. (forthcoming).}
 
-\item{LM}{Optional number of event times after M to be included in estimation. Defaults to 1.
-Should be a positive integer.}
+\item{overidpost}{Optional number of event times after "post" to be included in estimation. Defaults to 1.
+Should be a positive integer. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).}
 
-\item{G}{Number of periods in the future after which the future values of the policy are
-not supposed to affect the value of the outcome today. Should be a positive integer.}
+\item{pre}{Number of periods in the future after which the future values of the policy are
+not supposed to affect the value of the outcome today. Should be a positive integer. Corresponds to G in equation (2) of
+Freyaldenhoven et al. (forthcoming).}
 
-\item{LG}{Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
-Should be a positive integer.}
+\item{overidpre}{Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
+Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).}
 
-\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - G - 1.}
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -G - 1.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
@@ -72,11 +74,11 @@ heteroskedasticity-robust standard errors. Defaults to TRUE.}
 A list that contains the estimation output and an object containing the arguments passed to the function
 }
 \description{
-Estimates Equation (2) in Freyaldenhoven et al. (2021)
+Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
 }
 \examples{
 EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-M = 3, G = 2, LG = 4, LM = 5, normalize = - 1, cluster = TRUE)
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE)
 }

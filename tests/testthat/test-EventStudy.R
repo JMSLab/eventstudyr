@@ -1,15 +1,15 @@
 
 test_that("correctly creates highest order leads and lags", {
 
-    M  <- 2
-    G  <- 3
-    LG <- 4
-    LM <- 11
+    post  <- 2
+    pre  <- 3
+    overidpre <- 4
+    overidpost <- 11
 
     outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = - 1, cluster = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = - 1, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
     largest_fd_lag  <- as.double(stringr::str_extract(leads_lags, "(?<=fd_lag)[0-9]+"))
@@ -17,25 +17,25 @@ test_that("correctly creates highest order leads and lags", {
     largest_lag     <- as.double(stringr::str_extract(leads_lags, "(?<=lag)[0-9]+"))
     largest_lead    <- as.double(stringr::str_extract(leads_lags, "(?<=lead)[0-9]+"))
 
-    expect_equal(max(largest_fd_lag, na.rm = TRUE), M + LM - 1)
-    expect_equal(max(largest_fd_lead, na.rm = TRUE), G + LG)
-    expect_equal(max(largest_lag, na.rm = TRUE), M + LM)
-    expect_equal(max(largest_lead, na.rm = TRUE), G + LG)
+    expect_equal(max(largest_fd_lag, na.rm = TRUE), post + overidpost - 1)
+    expect_equal(max(largest_fd_lead, na.rm = TRUE), pre + overidpre)
+    expect_equal(max(largest_lag, na.rm = TRUE), post + overidpost)
+    expect_equal(max(largest_lead, na.rm = TRUE), pre + overidpre)
 
 
 })
 
 test_that("correctly throws an error when normalized coefficient is outside event-study window", {
 
-    M  <- 2
-    G  <- 3
-    LG <- 4
-    LM <- 11
+    post  <- 2
+    pre  <- 3
+    overidpre <- 4
+    overidpost <- 11
 
     outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = - 1, cluster = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = - 1, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
     largest_fd_lag  <- as.double(stringr::str_extract(leads_lags, "(?<=fd_lag)[0-9]+"))
@@ -43,55 +43,55 @@ test_that("correctly throws an error when normalized coefficient is outside even
     largest_lag     <- as.double(stringr::str_extract(leads_lags, "(?<=lag)[0-9]+"))
     largest_lead    <- as.double(stringr::str_extract(leads_lags, "(?<=lead)[0-9]+"))
 
-    expect_equal(max(largest_fd_lag, na.rm = TRUE), M + LM - 1)
-    expect_equal(max(largest_fd_lead, na.rm = TRUE), G + LG)
-    expect_equal(max(largest_lag, na.rm = TRUE), M + LM)
-    expect_equal(max(largest_lead, na.rm = TRUE), G + LG)
+    expect_equal(max(largest_fd_lag, na.rm = TRUE), post + overidpost - 1)
+    expect_equal(max(largest_fd_lead, na.rm = TRUE), pre + overidpre)
+    expect_equal(max(largest_lag, na.rm = TRUE), post + overidpost)
+    expect_equal(max(largest_lead, na.rm = TRUE), pre + overidpre)
 
 
 })
 
 test_that("removes the correct column when normalize < 0", {
 
-    M  <- 2
-    G  <- 3
-    LG <- 4
-    LM <- 7
+    post  <- 2
+    pre  <- 3
+    overidpre <- 4
+    overidpost <- 7
     normalize <- 15
 
     expect_error(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE))
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE))
 })
 
-test_that("throws an error when M + G + LG + LM exceeds the data window", {
+test_that("throws an error when post + pre + overidpre + overidpost exceeds the data window", {
 
-    M  <- 10
-    G  <- 15
-    LG <- 20
-    LM <- 25
+    post  <- 10
+    pre  <- 15
+    overidpre <- 20
+    overidpost <- 25
     normalize <- 2
 
     expect_error(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE))
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE))
 
 })
 
 test_that("removes the correct column when normalize = 0", {
 
-    M  <- 2
-    G  <- 3
-    LG <- 4
-    LM <- 7
+    post  <- 2
+    pre  <- 3
+    overidpre <- 4
+    overidpost <- 7
     normalize <- 0
 
     outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
 
@@ -104,16 +104,16 @@ test_that("removes the correct column when normalize = 0", {
 
 test_that("removes the correct column when normalize > 0", {
 
-    M  <- 2
-    G  <- 3
-    LG <- 4
-    LM <- 7
+    post  <- 2
+    pre  <- 3
+    overidpre <- 4
+    overidpost <- 7
     normalize <- 2
 
     outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
 
@@ -126,15 +126,15 @@ test_that("removes the correct column when normalize > 0", {
 
 test_that("subtraction is peformed on the correct column", {
 
-    M  <- 1
-    G  <- 1
-    LG <- 2
-    LM <- 2
+    post  <- 1
+    pre  <- 1
+    overidpre <- 2
+    overidpost <- 2
 
     df_first_diff <- GetFirstDifferences(df = df_sample_static, groupvar = "id", timevar = "t", diffvar = "z")
 
-    num_fd_lag_periods   <- M + LM - 1
-    num_fd_lead_periods  <- G + LG
+    num_fd_lag_periods   <- post + overidpost - 1
+    num_fd_lead_periods  <- pre + overidpre
 
     furthest_lag_period    <- num_fd_lag_periods + 1
 
@@ -158,7 +158,7 @@ test_that("subtraction is peformed on the correct column", {
     column_subtract_degree <- as.double(stringr::str_extract(column_subtract_1, "(?<=lead)[0-9]+"))
 
     expect_equal(num_equal + num_na, nrow(df_lag_lead))
-    expect_equal(column_subtract_degree, G + LG)
+    expect_equal(column_subtract_degree, pre + overidpre)
 
 })
 

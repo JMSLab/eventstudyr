@@ -1,4 +1,3 @@
-
 #' Runs OLS with optional fixed effects and clustering
 #'
 #' @param prepared_model_formula A formula object created in PrepareModelForumla that is passed to EventStudy.

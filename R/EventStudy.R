@@ -1,5 +1,5 @@
 
-#' Estimates Equation (2) in Freyaldenhoven et al. (2021)
+#' Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
 #'
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.
 #' @param data The data frame that contains the variables of interest.
@@ -18,15 +18,17 @@
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 #' heteroskedasticity-robust standard errors. Defaults to TRUE.
-#' @param M The number of periods in the past before which the past values of the policy
-#' are not supposed to affect the value of the outcome. Should be a positive integer.
-#' @param LM Optional number of event times after M to be included in estimation. Defaults to 1.
-#' Should be a positive integer.
-#' @param G Number of periods in the future after which the future values of the policy are
-#' not supposed to affect the value of the outcome today. Should be a positive integer.
-#' @param LG Optional number of event times earlier than -G to be included in estimation. Defaults to M + G.
-#' Should be a positive integer.
-#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - G - 1.
+#' @param post The number of periods in the past before which the past values of the policy
+#' are not supposed to affect the value of the outcome. Should be a positive integer. Corresponds to M in equation (2) of
+#' Freyaldenhoven et al. (forthcoming).
+#' @param overidpost Optional number of event times after "post" to be included in estimation. Defaults to 1.
+#' Should be a positive integer. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param pre Number of periods in the future after which the future values of the policy are
+#' not supposed to affect the value of the outcome today. Should be a positive integer. Corresponds to G in equation (2) of 
+#' Freyaldenhoven et al. (forthcoming).
+#' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
+#' Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to -G - 1.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
@@ -36,11 +38,11 @@
 #' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' M = 3, G = 2, LG = 4, LM = 5, normalize = - 1, cluster = TRUE)
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE)
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
-                       proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, M, LM = 1, G, LG = M + G,
-                       normalize = -1 * (G + 1), cluster = TRUE) {
+                       proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
+                       normalize = -1 * (pre + 1), cluster = TRUE) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
@@ -55,21 +57,21 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "FHS" & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
     if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
-    if (! (is.numeric(M) & M > 0 & M %% 1 == 0)) {stop("M should be a positive integer.")}
-    if (! (is.numeric(LM) & LM > 0 & LM %% 1 == 0)) {stop("LM should be a positive integer.")}
-    if (! (is.numeric(G) & G >= 0 & G %% 1 == 0)) {stop("G should be a whole number.")}
-    if (! (is.numeric(LG) & LG > 0 & LG %% 1 == 0)) {stop("LG should be a positive integer.")}
-    if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(G + LG) &
-           normalize <= M + LM)) {stop("normalize should be an integer between - (G + LG) and (M + LM).")}
+    if (! (is.numeric(post) & post > 0 & post %% 1 == 0)) {stop("post should be a positive integer.")}
+    if (! (is.numeric(overidpost) & overidpost > 0 & overidpost %% 1 == 0)) {stop("overidpost should be a positive integer.")}
+    if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
+    if (! (is.numeric(overidpre) & overidpre > 0 & overidpre %% 1 == 0)) {stop("overidpre should be a positive integer.")}
+    if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(pre + overidpre) &
+           normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre) and (post + overidpost).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
-    if  (LM + G + M + LM > max_period - min_period - 1) {stop("LM + G + M + LM can not exceed the data window")}
+    if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")}
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
-    num_fd_lag_periods   <- M + LM - 1
-    num_fd_lead_periods  <- G + LG
+    num_fd_lag_periods   <- post + overidpost - 1
+    num_fd_lead_periods  <- pre + overidpre
 
     furthest_lag_period    <- num_fd_lag_periods + 1
 
@@ -116,10 +118,10 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                               "proxyIV" = proxyIV,
                               "FE" = FE,
                               "TFE" = TFE,
-                              "M" = M,
-                              "LM" = LM,
-                              "G" = G,
-                              "LG" = LG,
+                              "post" = post,
+                              "overidpost" = overidpost,
+                              "pre" = pre,
+                              "overidpre" = overidpre,
                               "normalize" = normalize,
                               "cluster" = cluster)
 

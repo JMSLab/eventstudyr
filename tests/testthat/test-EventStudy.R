@@ -21,8 +21,6 @@ test_that("correctly creates highest order leads and lags", {
     expect_equal(max(largest_fd_lead, na.rm = TRUE), pre + overidpre)
     expect_equal(max(largest_lag, na.rm = TRUE), post + overidpost)
     expect_equal(max(largest_lead, na.rm = TRUE), pre + overidpre)
-
-
 })
 
 test_that("correctly throws an error when normalized coefficient is outside event-study window", {
@@ -51,21 +49,21 @@ test_that("throws an error when post + pre + overidpre + overidpost exceeds the 
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE))
-
 })
 
 test_that("removes the correct column when normalize < 0", {
 
-    M  <- 2
-    G  <- 3
-    LG <- 4
-    LM <- 7
+    post  <- 2
+    pre  <- 3
+    overidpre <- 4
+    overidpost <- 7
     normalize <- -2
 
     outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          M = M, G = G, LG = LG, LM = LM, normalize = normalize, cluster = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
 
@@ -96,7 +94,6 @@ test_that("removes the correct column when normalize = 0", {
     expect_equal(stringr::str_extract(normalization_column, "fd"), "fd")
     expect_true(!normalization_column %in% leads_lags)
     expect_true(normalize == 0)
-
 })
 
 test_that("removes the correct column when normalize > 0", {
@@ -118,7 +115,6 @@ test_that("removes the correct column when normalize > 0", {
     expect_equal(stringr::str_extract(normalization_column, "lag"), "lag")
     expect_true(!normalization_column %in% leads_lags)
     expect_true(normalize > 0)
-
 })
 
 test_that("subtraction is peformed on the correct column", {
@@ -156,6 +152,5 @@ test_that("subtraction is peformed on the correct column", {
 
     expect_equal(num_equal + num_na, nrow(df_lag_lead))
     expect_equal(column_subtract_degree, pre + overidpre)
-
 })
 

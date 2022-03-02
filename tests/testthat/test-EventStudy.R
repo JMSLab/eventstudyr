@@ -114,7 +114,7 @@ test_that("removes the correct column when normalize > 0", {
 
     leads_lags      <- outputs[[1]]$term
 
-    normalization_column <- paste0("z", "_fd_lag")
+    normalization_column <- paste0("z", "_fd_lag", normalize)
     expect_equal(stringr::str_extract(normalization_column, "lag"), "lag")
     expect_true(!normalization_column %in% leads_lags)
     expect_true(normalize > 0)

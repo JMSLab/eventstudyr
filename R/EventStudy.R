@@ -67,25 +67,29 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
     if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")}
+    if  (sum(grepl(paste0(policyvar, "_fd")), colnames(data)) > 0) {warning(paste0("Variables starting with ", policyvar,
+                                                                                   "_fd should be reserved for eventstudyr"))}
+    if  (sum(grepl(paste0(policyvar, "_lead")), colnames(data)) > 0) {warning(paste0("Variables starting with ", policyvar,
+                                                                                   "_lead should be reserved for eventstudyr"))}
+    if  (sum(grepl(paste0(policyvar, "lag")), colnames(data)) > 0) {warning(paste0("Variables starting with ", policyvar,
+                                                                                   "_lag should be reserved for eventstudyr"))}                                                                                   
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre
 
-    furthest_lag_period    <- num_fd_lag_periods + 1
+    furthest_lag_period  <- num_fd_lag_periods + 1
 
     df_first_diff_leads      <- PrepareLeads(df_first_diff, groupvar = idvar, timevar,
                                              leadvar = paste0(policyvar, "_fd"), leads = 1:num_fd_lead_periods)
     df_first_diff_leads_lags <- PrepareLags(df_first_diff_leads, groupvar = idvar, timevar,
                                              lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
 
-
     df_lag           <- PrepareLags(df_first_diff_leads_lags, groupvar = idvar, timevar,
                                     lagvar = policyvar, lags = furthest_lag_period)
     df_lag_lead      <- PrepareLeads(df_lag, groupvar = idvar, timevar,
                                      leadvar = policyvar, leads = num_fd_lead_periods)
-
 
     column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
     df_lag_lead[column_subtract_1] <- 1 - df_lag_lead[column_subtract_1]

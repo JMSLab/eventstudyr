@@ -106,9 +106,11 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     str_policy_lead <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lead"))))
     str_policy_lag  <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lag"))))
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+
 
     if (estimator == "OLS") {
+
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
         OLS_model        <- EventStudyOLS(event_study_formula, df_lag_lead, idvar, timevar, FE, TFE, cluster)
         event_study_args <- list("estimator" = estimator,

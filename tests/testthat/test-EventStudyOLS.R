@@ -5,13 +5,14 @@ test_that("FE = TRUE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -45,13 +46,14 @@ test_that("FE = FALSE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -85,13 +87,14 @@ test_that("FE = TRUE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -126,13 +129,14 @@ test_that("FE = FALSE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -167,13 +171,14 @@ test_that("FE = TRUE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -207,13 +212,14 @@ test_that("FE = FALSE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -247,13 +253,14 @@ test_that("FE = TRUE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -288,13 +295,14 @@ test_that("FE = FALSE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <- "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"
@@ -328,13 +336,14 @@ test_that("Coefficients and Standard Errors agree with base STATA", {
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
+    estimator       <-  "OLS"
     outcomevar      <- "y_base"
     str_policy_fd   <- c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2")
     str_policy_lead <-"z_lead3"
     str_policy_lag  <- "z_lag3"
     controls        <- "x_r"
 
-    event_study_formula <- PrepareModelFormula(outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+    event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
 
     idvar   <- "id"
     timevar <- "t"

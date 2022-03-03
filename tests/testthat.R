@@ -1,4 +1,4 @@
 library(testthat)
-library(EventStudyR)
+library(eventstudyr)
 
-test_check("EventStudyR")
+test_check("eventstudyr")

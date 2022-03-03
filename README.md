@@ -1,1 +1,1 @@
-# EventStudyR
+# eventstudyr

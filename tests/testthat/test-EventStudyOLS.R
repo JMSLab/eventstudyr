@@ -366,23 +366,23 @@ test_that("Coefficients and Standard Errors agree with base STATA", {
 
     epsilon <- 10e-7
 
-    expect_equal(unname(reg$coefficients["z_fd"]), as.double(df_test_STATA[df_test_STATA["term"] == "zfd"][2]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_fd_lead2"]), as.double(df_test_STATA[df_test_STATA["term"] == "F2"][2]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_fd_lead3"]), as.double(df_test_STATA[df_test_STATA["term"] == "F3"][3]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_fd_lag1"]), as.double(df_test_STATA[df_test_STATA["term"] == "L1"][2]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_fd_lag2"]), as.double(df_test_STATA[df_test_STATA["term"] == "L2"][2]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_lead3"]), -1 * as.double(df_test_STATA[df_test_STATA["term"] == "F3"][4]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["z_lag3"]), as.double(df_test_STATA[df_test_STATA["term"] == "L3"][2]), tolerance = epsilon)
-    expect_equal(unname(reg$coefficients["x_r"]), as.double(df_test_STATA[df_test_STATA["term"] == "x_r"][2]), tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_fd"]), df_test_STATA[df_test_STATA["term"] == "zfd",][[2]], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_fd_lead2"]), df_test_STATA[df_test_STATA["term"] == "F2",][[2]], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_fd_lead3"]), df_test_STATA[df_test_STATA["term"] == "F3",][["coef"]][1], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_fd_lag1"]), df_test_STATA[df_test_STATA["term"] == "L1",][[2]], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_fd_lag2"]), df_test_STATA[df_test_STATA["term"] == "L2",][[2]], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_lead3"]), -1 * df_test_STATA[df_test_STATA["term"] == "F3",][["coef"]][2], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["z_lag3"]), df_test_STATA[df_test_STATA["term"] == "L3",][[2]], tolerance = epsilon)
+    expect_equal(unname(reg$coefficients["x_r"]), df_test_STATA[df_test_STATA["term"] == "x_r",][[2]], tolerance = epsilon)
 
-    expect_equal(unname(reg$std.error["z_fd"]), as.double(df_test_STATA[df_test_STATA["term"] == "zfd"][3]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["z_fd_lead2"]), as.double(df_test_STATA[df_test_STATA["term"] == "F2"][3]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["z_fd_lead3"]), as.double(df_test_STATA[df_test_STATA["term"] == "F3"][5]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["z_fd_lag1"]), as.double(df_test_STATA[df_test_STATA["term"] == "L1"][3]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["z_fd_lag2"]), as.double(df_test_STATA[df_test_STATA["term"] == "L2"][3]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["z_lead3"]), as.double(df_test_STATA[df_test_STATA["term"] == "F3"][6]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["z_lag3"]), as.double(df_test_STATA[df_test_STATA["term"] == "L3"][3]), tolerance = epsilon)
-    expect_equal(unname(reg$std.error["x_r"]), as.double(df_test_STATA[df_test_STATA["term"] == "x_r"][3]), tolerance = epsilon * 10)
+    expect_equal(unname(reg$std.error["z_fd"]), df_test_STATA[df_test_STATA["term"] == "zfd",][[3]], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["z_fd_lead2"]), df_test_STATA[df_test_STATA["term"] == "F2",][[3]], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["z_fd_lead3"]), df_test_STATA[df_test_STATA["term"] == "F3",][["std_error"]][1], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["z_fd_lag1"]), df_test_STATA[df_test_STATA["term"] == "L1",][[3]], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["z_fd_lag2"]),df_test_STATA[df_test_STATA["term"] == "L2",][[3]], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["z_lead3"]), df_test_STATA[df_test_STATA["term"] == "F3",][["std_error"]][2], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["z_lag3"]),df_test_STATA[df_test_STATA["term"] == "L3",][[3]], tolerance = epsilon)
+    expect_equal(unname(reg$std.error["x_r"]), df_test_STATA[df_test_STATA["term"] == "x_r",][[3]], tolerance = epsilon * 10)
 
 
 

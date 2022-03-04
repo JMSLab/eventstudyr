@@ -7,7 +7,7 @@
 PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 }
 \arguments{
-\item{df}{Data frame that will be modified}
+\item{df}{Data frame that will be modified.}
 
 \item{groupvar}{Optional grouping variable, should be a character.}
 

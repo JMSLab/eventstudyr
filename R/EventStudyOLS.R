@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @examples
-#' EventStudyOLS(prepared_model_formula = PrepareModelFormula("OLS", y_base",
+#' EventStudyOLS(prepared_model_formula = PrepareModelFormula("OLS", "y_base",
 #' c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
 #' "z_lead3", "z_lag3", "x_r"),
 #' prepared_data = df_EventStudyOLS_example,

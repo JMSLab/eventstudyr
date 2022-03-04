@@ -14,7 +14,7 @@ PrepareModelFormula(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.}
 
 \item{outcomevar}{Variable indicating outcomme variable y, should be a character.}
 

@@ -28,7 +28,7 @@
 #' Freyaldenhoven et al. (forthcoming).
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
 #' Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
-#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to -G - 1.
+#' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
@@ -38,7 +38,7 @@
 #' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE)
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,

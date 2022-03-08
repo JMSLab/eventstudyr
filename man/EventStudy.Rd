@@ -65,7 +65,7 @@ Freyaldenhoven et al. (forthcoming).}
 \item{overidpre}{Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
 Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).}
 
-\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to -G - 1.}
+\item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
@@ -80,5 +80,5 @@ Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
 EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE)
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - pre - 1, cluster = TRUE)
 }

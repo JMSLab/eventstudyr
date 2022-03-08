@@ -102,7 +102,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         normalization_column <- paste0(policyvar, "_fd_lag", (normalize))
     }
 
-    str_policy_fd   <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_fd")), -normalization_column))
+    str_policy_fd   <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_fd")), - dplyr::all_of(normalization_column)))
     str_policy_lead <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lead"))))
     str_policy_lag  <- names(dplyr::select(df_lag_lead, dplyr::starts_with(paste0(policyvar, "_lag"))))
 

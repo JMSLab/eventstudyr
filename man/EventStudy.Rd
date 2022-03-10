@@ -52,18 +52,18 @@ Should be a character}
 \item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
 
 \item{post}{The number of periods in the past before which the past values of the policy
-are not supposed to affect the value of the outcome. Should be a positive integer. Corresponds to M in equation (2) of
+are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
 Freyaldenhoven et al. (forthcoming).}
 
 \item{overidpost}{Optional number of event times after "post" to be included in estimation. Defaults to 1.
-Should be a positive integer. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).}
+Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).}
 
 \item{pre}{Number of periods in the future after which the future values of the policy are
-not supposed to affect the value of the outcome today. Should be a positive integer. Corresponds to G in equation (2) of
+not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
 Freyaldenhoven et al. (forthcoming).}
 
 \item{overidpre}{Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).}
+Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 

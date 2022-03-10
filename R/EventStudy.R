@@ -19,15 +19,15 @@
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 #' heteroskedasticity-robust standard errors. Defaults to TRUE.
 #' @param post The number of periods in the past before which the past values of the policy
-#' are not supposed to affect the value of the outcome. Should be a positive integer. Corresponds to M in equation (2) of
+#' are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
 #' Freyaldenhoven et al. (forthcoming).
 #' @param overidpost Optional number of event times after "post" to be included in estimation. Defaults to 1.
-#' Should be a positive integer. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param pre Number of periods in the future after which the future values of the policy are
-#' not supposed to affect the value of the outcome today. Should be a positive integer. Corresponds to G in equation (2) of
+#' not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
 #' Freyaldenhoven et al. (forthcoming).
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-#' Should be a positive integer. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
@@ -57,10 +57,10 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "FHS" & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
     if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
-    if (! (is.numeric(post) & post > 0 & post %% 1 == 0)) {stop("post should be a positive integer.")}
-    if (! (is.numeric(overidpost) & overidpost > 0 & overidpost %% 1 == 0)) {stop("overidpost should be a positive integer.")}
+    if (! (is.numeric(post) & post >= 0 & post %% 1 == 0)) {stop("post should be a whole number.")}
+    if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0)) {stop("overidpost should be a whole number.")}
     if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
-    if (! (is.numeric(overidpre) & overidpre > 0 & overidpre %% 1 == 0)) {stop("overidpre should be a positive integer.")}
+    if (! (is.numeric(overidpre) & overidpre >= 0 & overidpre %% 1 == 0)) {stop("overidpre should be a whole number.")}
     if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(pre + overidpre) &
            normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre) and (post + overidpost).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}

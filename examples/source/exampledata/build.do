@@ -1,9 +1,8 @@
 
 est clear
 
-local root "C:/Users/c1nhs01/Documents/GitHub/EventStudyR"
-local indir "`root'/examples/source/raw/eventstudy_illustration_data/orig"
-local outdir "`root'/tests/testthat/input"
+local indir "examples/source/raw/eventstudy_illustration_data/orig"
+local outdir "tests/testthat/input"
 
 use "`indir'/simulation_data_dynamic.dta", clear
 

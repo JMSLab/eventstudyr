@@ -3,12 +3,12 @@
 #'
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.
 #' @param data The data frame that contains the variables of interest.
-#' @param outcomevar Variable indicating outcomme variable y, should be a character.
+#' @param outcomevar Variable indicating outcome variable y, should be a character.
 #' @param policyvar Variable indicating policy variable z, should be a character.
 #' @param idvar Variable indicating units, should be a character.
 #' @param timevar Variable indicating time periods, should be a character.
 #' @param controls Optional vector of controls q, should be a character.
-#' @param proxy Variable that is thought to be affected by the confoud but not by the policy.
+#' @param proxy Variable that is thought to be affected by the confound but not by the policy.
 #' Should be specified if and only if estimator is specified as "FHS". Should be a character.
 #' @param proxyIV Variables to be used as an instrument. For the case of a single proxy,
 #' defaults to the strongest lead of the policy variable based on the first stage.

@@ -16,7 +16,7 @@ PrepareModelFormula(
 \arguments{
 \item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.}
 
-\item{outcomevar}{Variable indicating outcomme variable y, should be a character.}
+\item{outcomevar}{Variable indicating outcome variable y, should be a character.}
 
 \item{str_policy_fd}{Vector indicating leads and lags of first differenced policy variable z with the (pre +1)th term omitted for normalization, should be a string.}
 

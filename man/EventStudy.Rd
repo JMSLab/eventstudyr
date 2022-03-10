@@ -29,7 +29,7 @@ EventStudy(
 
 \item{data}{The data frame that contains the variables of interest.}
 
-\item{outcomevar}{Variable indicating outcomme variable y, should be a character.}
+\item{outcomevar}{Variable indicating outcome variable y, should be a character.}
 
 \item{policyvar}{Variable indicating policy variable z, should be a character.}
 
@@ -39,7 +39,7 @@ EventStudy(
 
 \item{controls}{Optional vector of controls q, should be a character.}
 
-\item{proxy}{Variable that is thought to be affected by the confoud but not by the policy.
+\item{proxy}{Variable that is thought to be affected by the confound but not by the policy.
 Should be specified if and only if estimator is specified as "FHS". Should be a character.}
 
 \item{proxyIV}{Variables to be used as an instrument. For the case of a single proxy,

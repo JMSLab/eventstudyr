@@ -17,7 +17,7 @@ EventStudyOLS(
 \arguments{
 \item{prepared_model_formula}{A formula object created in PrepareModelForumla that is passed to EventStudy.}
 
-\item{prepared_data}{data frame containing all of the parameters required for EventStudy() plus leads and
+\item{prepared_data}{Data frame containing all of the parameters required for EventStudy() plus leads and
 lags of the first differenced policy variable and leads and lags of the policy variable.}
 
 \item{idvar}{Variable indicating units, should be a character.}

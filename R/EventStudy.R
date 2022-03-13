@@ -61,6 +61,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0)) {stop("overidpost should be a whole number.")}
     if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
     if (! (is.numeric(overidpre) & overidpre >= 0 & overidpre %% 1 == 0)) {stop("overidpre should be a whole number.")}
+    if (post + overidpost + pre + overidpre == 0) {stop("post + overidpost + pre + overidpre can not equal zero.")}
     if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(pre + overidpre) &
            normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre) and (post + overidpost).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}

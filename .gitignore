@@ -19,3 +19,9 @@
 *.out
 *.svn
 *.m~
+.Rproj.user
+!data/*.RData
+!data/*.rda
+*.csv
+
+

@@ -1,0 +1,672 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "ae" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family rmdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Standard
+This document starts with a short summary of the general logic of our code.
+ Then it looks at possible cases that can lead to 
+\begin_inset Formula $M+L_{M}-1\leq G+L_{G}$
+\end_inset
+
+ and asks what our code would produce in each case, what these would lead
+ to, and finally proposes a general architecture to address these problems.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that in the case where 
+\begin_inset Formula $M+L_{M}-1<G+L_{G}$
+\end_inset
+
+, the summation in the equation (2) of the paper has the form 
+\begin_inset Formula $\sum_{b}^{a}$
+\end_inset
+
+ with 
+\begin_inset Formula $a<b$
+\end_inset
+
+, and thus equals 0.
+ However, if 
+\begin_inset Formula $M+L_{M}-1=G+L_{G}$
+\end_inset
+
+, then the summation is valid, and equals 
+\begin_inset Formula $\delta_{-G-L_{G}}\Delta z_{i,t+G+L_{G}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+The logic of our current implementation
+\end_layout
+
+\begin_layout Standard
+Given pre (
+\begin_inset Formula $G$
+\end_inset
+
+), overidpre (
+\begin_inset Formula $L_{G}$
+\end_inset
+
+), post (
+\begin_inset Formula $M$
+\end_inset
+
+), and overipost (
+\begin_inset Formula $L_{M})$
+\end_inset
+
+, our code first creates the first differenced policy variable called policyvar_
+fd which corresponds to 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+, then it creates necessary leads and lags of the first differenced policy
+ variable and also computes the furhest leads and lags using the values
+ of the policy variable.
+ For creating the leads of the first differenced policy variable, it creates
+ the leads from 1 to 
+\begin_inset Formula $G+L_{G}$
+\end_inset
+
+.
+ Likewise, for the lags of the first differenced policy variable, it creates
+ them from 1 to 
+\begin_inset Formula $M+L_{M}-1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Then, it takes these newly created variables, parses them, and creates the
+ equation to be estimated.
+ Hence, any variable that our code creates but in fact shouldn't go to the
+ equation creates a problem.
+ One can also see that this implementation would create problems when either
+ 
+\begin_inset Formula $G+L_{G}$
+\end_inset
+
+ or 
+\begin_inset Formula $M+L_{M-1}$
+\end_inset
+
+ is below 1.
+ 
+\end_layout
+
+\begin_layout Section*
+Case when 
+\begin_inset Formula $M+L_{M}-1<-G-L_{G}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case we have the following: 
+\begin_inset Formula 
+\begin{align*}
+M+L_{M}+L_{G}+G & <1\\
+M+L_{M}+L_{G}+G & =0\\
+M,L_{M},G,L_{G} & =0
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The latter is due to the assumption that 
+\begin_inset Formula $M,L_{M},G,L_{G}>=$
+\end_inset
+
+0
+\begin_inset Newline newline
+\end_inset
+
+In this case the equation 2 is: 
+\begin_inset Formula 
+\[
+y_{it}=\delta_{0}z_{i,t}+\delta_{-1}(1-z_{i,t})
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and normalizing 
+\begin_inset Formula $\delta_{-G-1}=\delta_{-1}=0$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+y_{it}=\delta_{0}z_{i,t}
+\]
+
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Here are the variables that our code creates now:
+\end_layout
+
+\begin_layout Itemize
+It first creates the lags of the first differenced policy variable, from
+ the first lead to 
+\begin_inset Formula $G+L_{G}$
+\end_inset
+
+th lead.
+ Since the latter is zero in this setting, we'll have some undesirable behavior
+ here.
+ The variables created, along with what they correspond to: policyvar_fd_lead1:
+ 
+\begin_inset Formula $\Delta z_{i,t+1}$
+\end_inset
+
+, policyvar_fd_lead0: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Then it creates the lags of the differenced policy variable, from the first
+ lag to 
+\begin_inset Formula $M+L_{M}-1$
+\end_inset
+
+th lag.
+ Since the latter is -1 in this setting, we'll run into some issues.
+ Here are the variables created, along with what they correspond to.
+ policyvar_fd_lag1: 
+\begin_inset Formula $\Delta z_{i,t-1}$
+\end_inset
+
+, policyvar_fd_lag0: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+, policyvar_fd_lag-1:
+\begin_inset Formula $\Delta z_{i,t+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Then, the furthest lag is created, which is called policyvar_lag0 and correspond
+s to 
+\begin_inset Formula $z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Finally the furthest lead is created, which is called policyvar_lead0 and
+ again corresponds to 
+\begin_inset Formula $z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Then, the name of the variable to normalize is determined, which is policyvar_fd
+_lead1.
+ Note that our current script chooses the variables to normalize always
+ from first differenced variables.
+ This works well except the following cases: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Where 
+\begin_inset Formula $L_{G}=0$
+\end_inset
+
+, in which case 
+\begin_inset Formula $\delta_{-G-1}$
+\end_inset
+
+ becomes the coefficient in front of 
+\begin_inset Formula $(1-z_{i,t+G})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Where the user manually enters the coefficient to normalize as 
+\begin_inset Formula $\delta_{-G-L_{G}-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Where the user manually enters the coefficient to normalize as 
+\begin_inset Formula $\delta_{M+L_{M}}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Then, all the variables, except the variable chosen for normalization are
+ thrown into the right hand side of the estimating equation.
+ 
+\end_layout
+
+\begin_layout Section*
+Cases when 
+\begin_inset Formula $M+L_{M}-1=-G-L_{G}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case we have:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M+L_{M}+G+L_{G}=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again, since 
+\begin_inset Formula $M,L_{M},G,L_{G}\geq0$
+\end_inset
+
+, the following subcases are possible
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $M=1$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+In this case the equation 2 is:
+\begin_inset Formula 
+\[
+y_{it}=\delta_{0}\Delta z_{i,t}+\delta_{1}z_{i,t-1}+\delta_{-1}(1-z_{i,t})
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and normalizing 
+\begin_inset Formula $\delta_{-G-1}=\delta_{-1}=0$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+y_{it}=\delta_{0}\Delta z_{i,t}+\delta_{1}z_{i,t-1}
+\]
+
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Here is what our code would currently do:
+\end_layout
+
+\begin_layout Itemize
+It would first create the leads.
+ Here are the lag variables that it would create, and what they would correspond
+ to: policyvar_fd_lead1: 
+\begin_inset Formula $\Delta z_{i,t+1}$
+\end_inset
+
+, policyvar_fd_lead0: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+It would then create the lags, policyvar_fd_lag1: 
+\begin_inset Formula $\Delta z_{i,t-1}$
+\end_inset
+
+, policyvar_fd_lag0: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Then the furthest lag, named policyvar_lag1 corresponding to 
+\begin_inset Formula $z_{i,t-1}$
+\end_inset
+
+ would be created.
+\end_layout
+
+\begin_layout Itemize
+Then the furthest lead, named policyvar_lead0, corresponding to 
+\begin_inset Formula $z_{i,t}$
+\end_inset
+
+ would be created.
+\end_layout
+
+\begin_layout Itemize
+Finally, the name of the variable that will be normalized is chosen, which
+ is again chosen as policyvar_fd_lead1.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $L_{M}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Everything is the same as above.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $G=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case the equation 2 is:
+\begin_inset Formula 
+\[
+y_{it}=\delta_{-1}\Delta z_{i,t+1}+\delta_{0}z_{i,t}+\delta_{-2}(1-z_{i,t+1})
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and normalizing 
+\begin_inset Formula $\delta_{-G-1}=\delta_{-2}=0$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+y_{it}=\delta_{-1}\Delta z_{i,t+1}+\delta_{0}z_{i,t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here are the variables that our code would currently create:
+\end_layout
+
+\begin_layout Itemize
+The leads of the first differenced variable that would be created: policy_fd_lea
+d1.
+\end_layout
+
+\begin_layout Itemize
+Here are the lags of the first differenced variable that would be created.
+ policyvar_fd_lag1: 
+\begin_inset Formula $\Delta z_{i,t-1}$
+\end_inset
+
+, policyvar_fd_lag0: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+, policyvar_fd_lag-1:
+\begin_inset Formula $\Delta z_{i,t+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Then, the furthest lag is created, which is called policyvar_lag0 and correspond
+s to 
+\begin_inset Formula $z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The furthest lead is created, called policyvar_lead1 and corresponding to
+ 
+\begin_inset Formula $z_{i,t+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The name of the variable that would be normalized is chosen, in this case
+ it is chosen as policyvar_fd_lead2.
+ Note that this variable is incorrect, and it is not even created.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $L_{G}=1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In this case, the equation 2 is:
+\begin_inset Formula 
+\[
+y_{it}=\delta_{-1}\Delta z_{i,t+1}+\delta_{0}z_{i,t}+\delta_{-2}(1-z_{i,t+1})
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and normalizing 
+\begin_inset Formula $\delta_{-G-1}=\delta_{-1}=0$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+y_{it}=\delta_{0}z_{i,t}+\delta_{-2}(1-z_{i,t+1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here are the variables that our code would create:
+\end_layout
+
+\begin_layout Itemize
+The leads of the first differenced variable that would be created: policy_fd_lea
+d1.
+\end_layout
+
+\begin_layout Itemize
+Here are the lags of the first differenced variable that would be created.
+ policyvar_fd_lag1: 
+\begin_inset Formula $\Delta z_{i,t-1}$
+\end_inset
+
+, policyvar_fd_lag0: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+, policyvar_fd_lag-1:
+\begin_inset Formula $\Delta z_{i,t+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Then, the furthest lag is created, which is called policyvar_lag0 and correspond
+s to 
+\begin_inset Formula $z_{i,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The furthest lead is created, called policyvar_lead1 and corresponding to
+ 
+\begin_inset Formula $z_{i,t+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The name of the variable that would be normalized is chosen, in this case
+ it is chosen as policyvar_fd_lead1.
+ 
+\end_layout
+
+\begin_layout Section*
+A restructuring
+\end_layout
+
+\begin_layout Standard
+I outline some of the properties that our code should have:
+\end_layout
+
+\begin_layout Itemize
+
+\end_layout
+
+\end_body
+\end_document

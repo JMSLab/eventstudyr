@@ -88,7 +88,7 @@ Introduction
 \begin_layout Standard
 This document starts with a short summary of the general logic of our code.
  Then it looks at possible cases that can lead to 
-\begin_inset Formula $M+L_{M}-1\leq G+L_{G}$
+\begin_inset Formula $M+L_{M}-1\leq-(G+L_{G})$
 \end_inset
 
  and asks what our code would produce in each case.

@@ -91,9 +91,19 @@ This document starts with a short summary of the general logic of our code.
 \begin_inset Formula $M+L_{M}-1\leq G+L_{G}$
 \end_inset
 
- and asks what our code would produce in each case, what these would lead
- to, and finally proposes a general architecture to address these problems.
- 
+ and asks what our code would produce in each case.
+ It then provides an overall summary of the problems.
+ It turns out that problems can arise in more general settings, and it suffices
+ to have 
+\begin_inset Formula $M+L_{M}-1<1$
+\end_inset
+
+ or 
+\begin_inset Formula $G+L_{G}<1$
+\end_inset
+
+.
+ Finally, the document offers a general architecture to address these issues.
 \end_layout
 
 \begin_layout Standard
@@ -147,9 +157,9 @@ fd which corresponds to
 \begin_inset Formula $\Delta z_{i,t}$
 \end_inset
 
-, then it creates necessary leads and lags of the first differenced policy
- variable and also computes the furhest leads and lags using the values
- of the policy variable.
+, then it creates the necessary leads and lags of the first differenced
+ policy variable and also computes the furhest leads and lags using the
+ values of the policy variable.
  For creating the leads of the first differenced policy variable, it creates
  the leads from 1 to 
 \begin_inset Formula $G+L_{G}$
@@ -168,18 +178,8 @@ fd which corresponds to
 \begin_layout Standard
 Then, it takes these newly created variables, parses them, and creates the
  equation to be estimated.
- Hence, any variable that our code creates but in fact shouldn't go to the
- equation creates a problem.
- One can also see that this implementation would create problems when either
- 
-\begin_inset Formula $G+L_{G}$
-\end_inset
-
- or 
-\begin_inset Formula $M+L_{M-1}$
-\end_inset
-
- is below 1.
+ Hence, any variable that our code creates but in fact shouldn't go into
+ the equation creates a problem.
  
 \end_layout
 
@@ -206,7 +206,7 @@ M,L_{M},G,L_{G} & =0
 \begin_inset Newline newline
 \end_inset
 
-The latter is due to the assumption that 
+The last step is due to the assumption that 
 \begin_inset Formula $M,L_{M},G,L_{G}>=$
 \end_inset
 
@@ -246,7 +246,7 @@ Here are the variables that our code creates now:
 \end_layout
 
 \begin_layout Itemize
-It first creates the lags of the first differenced policy variable, from
+It first creates the leads of the first differenced policy variable, from
  the first lead to 
 \begin_inset Formula $G+L_{G}$
 \end_inset
@@ -273,7 +273,8 @@ Then it creates the lags of the differenced policy variable, from the first
 \end_inset
 
 th lag.
- Since the latter is -1 in this setting, we'll run into some issues.
+ Since the latter is -1 in this setting, we'll run into some issues here
+ as well.
  Here are the variables created, along with what they correspond to.
  policyvar_fd_lag1: 
 \begin_inset Formula $\Delta z_{i,t-1}$
@@ -313,44 +314,18 @@ Then, the name of the variable to normalize is determined, which is policyvar_fd
 _lead1.
  Note that our current script chooses the variables to normalize always
  from first differenced variables.
- This works well except the following cases: 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Where 
-\begin_inset Formula $L_{G}=0$
+ (More details are given in 
+\begin_inset Quotes eld
 \end_inset
 
-, in which case 
-\begin_inset Formula $\delta_{-G-1}$
+Solutions
+\begin_inset Quotes erd
 \end_inset
 
- becomes the coefficient in front of 
-\begin_inset Formula $(1-z_{i,t+G})$
-\end_inset
-
-.
+ section).
  
 \end_layout
 
-\begin_layout Itemize
-Where the user manually enters the coefficient to normalize as 
-\begin_inset Formula $\delta_{-G-L_{G}-1}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-Where the user manually enters the coefficient to normalize as 
-\begin_inset Formula $\delta_{M+L_{M}}$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 Then, all the variables, except the variable chosen for normalization are
  thrown into the right hand side of the estimating equation.
@@ -429,8 +404,8 @@ Here is what our code would currently do:
 
 \begin_layout Itemize
 It would first create the leads.
- Here are the lag variables that it would create, and what they would correspond
- to: policyvar_fd_lead1: 
+ Here are the lead variables that it would create, and what they would correspon
+d to: policyvar_fd_lead1: 
 \begin_inset Formula $\Delta z_{i,t+1}$
 \end_inset
 
@@ -526,7 +501,11 @@ Here are the variables that our code would currently create:
 
 \begin_layout Itemize
 The leads of the first differenced variable that would be created: policy_fd_lea
-d1.
+d1: 
+\begin_inset Formula $\Delta z_{i,t}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
@@ -657,15 +636,199 @@ The name of the variable that would be normalized is chosen, in this case
 \end_layout
 
 \begin_layout Section*
-A restructuring
+Summary of the problems
 \end_layout
 
 \begin_layout Standard
-I outline some of the properties that our code should have:
+In all of the cases above, at least one of the following problems is present:
 \end_layout
 
 \begin_layout Itemize
+The first-differenced policy variable shouldn't go into the equation, but
+ is generated.
+ (This happens when 
+\begin_inset Formula $G=L_{G}=L_{M}=M=0$
+\end_inset
 
+.)
+\end_layout
+
+\begin_layout Itemize
+Leads of the first-differenced policy variable shouldn't go into the equation,
+ but are generated.
+ (This happens when 
+\begin_inset Formula $G+L_{G}<1.)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Lags of the first-differenced policy variable shouldn't go into the equation,
+ but are generated.
+ (This happens when 
+\begin_inset Formula $M+L_{M}-1<1.)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Multiple variables that are actually the same are created (for instance
+ 
+\begin_inset Quotes eld
+\end_inset
+
+index negative one
+\begin_inset Quotes erd
+\end_inset
+
+ lag and first lead).
+ (This happens when at least one of the problems above is present.)
+\end_layout
+
+\begin_layout Itemize
+Wrong variable to normalize is chosen.
+ (This happens when 
+\begin_inset Formula $L_{G}=0$
+\end_inset
+
+ in the above examples, but can also happen whenever 
+\begin_inset Quotes eld
+\end_inset
+
+normalize
+\begin_inset Quotes erd
+\end_inset
+
+ equals 
+\begin_inset Formula $-(G+L_{G}-1)$
+\end_inset
+
+ or 
+\begin_inset Formula $(M+L_{M})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Solutions
+\end_layout
+
+\begin_layout Standard
+I think our current code can be modified to follow the equation (2) in the
+ paper exactly.
+ By that, I refer to two points:
+\end_layout
+
+\begin_layout Subsection*
+Creation of the leads and lags of the first-differenced policy variable
+\end_layout
+
+\begin_layout Standard
+In equation (2), the creation of these takes place inside the summation.
+ The code should follow these principles:
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $M+L_{M}-1<G+L_{G}$
+\end_inset
+
+, then no leads and lags of the first differenced policy variable should
+ be created.
+ Moreover, first differenced policy variable shouldn't be created either.
+ (Since the summation should equal zero in this case.)
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $M+L_{M}-1<1$
+\end_inset
+
+, then, no lags of the first-differenced policy variable should be created.
+ (The summation can't go to positive indices.)
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $G+L_{G}$
+\end_inset
+
+ < 1, then, no leads of the first-differenced policy variable shouldn be
+ created.
+ (The summation starts from a nonnegative index.)
+\end_layout
+
+\begin_layout Standard
+This would eliminate the problems with unwanted or duplicate variables.
+\end_layout
+
+\begin_layout Subsection*
+Chosing the variable whose coefficient will be normalized
+\end_layout
+
+\begin_layout Standard
+Currently, if normalize < 0, we choose a lead of the first-differenced policy
+ variable to normalize, if it equals zero, we choose the first-differenced
+ policy variable, and if it is greater than 0, we choose a lag of the first-diff
+erency policy variable to normalize.
+ Instead, the code should be doing this:
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $normalize=-(G+L_{G}+1)$
+\end_inset
+
+, then normalize the coefficient in front of 
+\begin_inset Quotes eld
+\end_inset
+
+one minus 
+\begin_inset Formula $G+L_{G}$
+\end_inset
+
+th lead of the policy variable
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $normalize=(M+L_{M})$
+\end_inset
+
+, then normalize the coefficient in front of 
+\begin_inset Formula $M+L_{M}$
+\end_inset
+
+th lag of the policy variable.
+\end_layout
+
+\begin_layout Itemize
+Otherwise, if normalize <0, choose the 
+\begin_inset Quotes eld
+\end_inset
+
+normalizeth
+\begin_inset Quotes erd
+\end_inset
+
+ lead of the first-differenced policy variable, if it equals zero, choose
+ the first-differenced policy variable, and if it is greater than 0, choose
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+normalizeth
+\begin_inset Quotes erd
+\end_inset
+
+ lag of the first-differenced policy variable.
 \end_layout
 
 \end_body

@@ -759,6 +759,17 @@ If
  < 1, then, no leads of the first-differenced policy variable shouldn be
  created.
  (The summation starts from a nonnegative index.)
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+NS: To clarify, leads of the first-difference policy variable *should not*
+ be created when G + L_G < 1?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

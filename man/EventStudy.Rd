@@ -82,7 +82,7 @@ policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
 
-If you would like to estimate a static model:
+#If you would like to estimate a static model:
 EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,

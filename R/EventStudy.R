@@ -38,6 +38,12 @@
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
 #' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+#'
+#' If you would like to estimate a static model:
+#' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' policyvar = "z", idvar = "id", timevar = "t",
+#' controls = "x_r", FE = TRUE, TFE = TRUE,
+#' post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,

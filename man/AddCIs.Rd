@@ -4,10 +4,10 @@
 \alias{AddCIs}
 \title{Adds confidence intervals around estimations in new columns}
 \usage{
-AddCIs(Estimates, CI)
+AddCIs(Estimates, CI = 0.95)
 }
 \arguments{
-\item{CI, }{Confidence interval expressed as a rational number between 0 and 1, inclusively.}
+\item{CI, }{Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.}
 
 \item{estimates, }{A list containing the outputs of an estimation containing, at least,
 coefficient estimates and standard errors.}

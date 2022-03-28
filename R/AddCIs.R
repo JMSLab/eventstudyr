@@ -23,8 +23,8 @@ AddCIs <- function(Estimates, CI) {
     percentile <- CI + ((1 - CI)/2)
 
     df <- df %>%
-        mutate(ci_lower = coefficients - std.error * qnorm(percentile),
-               ci_upper =  + std.error * qnorm(percentile))
+        mutate(ci_lower = estimate - std.error * qnorm(percentile),
+               ci_upper = estimate + std.error * qnorm(percentile))
 
     return(df)
 }

@@ -78,3 +78,5 @@ estimation_m3 <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
                                 cluster = TRUE)
 
 estimates_m3 <- tidy(estimation_m3[[1]])
+
+

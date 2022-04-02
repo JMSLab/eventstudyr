@@ -84,7 +84,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     furthest_lag_period  <- num_fd_lag_periods + 1
     
-    if (((post + overidpost - 1 >= 0) | (pre + overidpre >= 0)) & (post + overidpost + pre + overidpre > 0)) {
+    if (post + overidpost + pre + overidpre > 0) {
         data <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
     }
     

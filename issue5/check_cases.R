@@ -60,7 +60,7 @@ estimation_lg1 <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
                                 cluster = TRUE)
 
 estimates_lg1 <- tidy(estimation_lg1[[1]])
-
+View(estimates_lg1)
 
 estimation_lg2 <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
                                 outcomevar = "y_base", policyvar = "z",
@@ -79,3 +79,4 @@ estimation_m3 <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
 
 estimates_m3 <- tidy(estimation_m3[[1]])
 
+devtools::test()

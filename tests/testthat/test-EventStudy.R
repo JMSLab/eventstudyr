@@ -175,7 +175,7 @@ test_that("removes the correct column when normalize > 0", {
     expect_true(normalize > 0)
 })
 
-test_that("removes the correct column when normalize = - (G + L_G + 1)", {
+test_that("removes the correct column when normalize = - (pre + overidpre + 1)", {
 
     post  <- 3
     pre  <- 2
@@ -195,7 +195,7 @@ test_that("removes the correct column when normalize = - (G + L_G + 1)", {
     expect_true(!normalization_column %in% leads_lags)
 })
 
-test_that("removes the correct column when normalize = M + L_M", {
+test_that("removes the correct column when normalize = post + overidpost", {
 
     post  <- 3
     pre  <- 2

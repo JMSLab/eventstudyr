@@ -40,7 +40,7 @@
 #' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
 #'
 #' #If you would like to estimate a static model:
-#' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
 #' post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
@@ -88,12 +88,12 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
     }
     
-    if (post + overidpost - 1 > 0) {
+    if (post + overidpost - 1 >= 1) {
         data <- PrepareLags(data, groupvar = idvar, timevar,
                             lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
     }
     
-    if (pre + overidpre > 0) {
+    if (pre + overidpre >= 1) {
         data <- PrepareLeads(data, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"),
                              leads = 1:num_fd_lead_periods)
     }

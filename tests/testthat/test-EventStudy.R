@@ -114,6 +114,31 @@ test_that("does not create a first differenced variable when post, overidpost, p
     expect_true(! "z_fd" %in% leads_lags)
 })
 
+test_that("tests that package and STATA output agree when post, overidpost, pre, overidpre are zero", {
+
+    post  <- 0
+    pre  <- 0
+    overidpre <- 0
+    overidpost <- 0
+    normalize <- -1
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    coef_package <- outputs[[1]]$coefficients[[1]]
+    std_package  <- outputs[[1]]$std.error[[1]]
+
+    STATA_output <- read.csv('./input/df_test_base_STATA_allzero.csv')
+    coef_STATA <- STATA_output$coef[[1]]
+    std_STATA  <- STATA_output$std_error[[1]]
+
+    epsilon <- 10e-7
+    expect_equal(coef_package, coef_STATA, tolerance = epsilon)
+    expect_equal(std_package, std_STATA, tolerance = epsilon)
+})
+
 test_that("does not create lags of differenced variable when post + overidpost - 1 < 1", {
 
     post  <- 1
@@ -128,7 +153,7 @@ test_that("does not create lags of differenced variable when post + overidpost -
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
-    
+
     n_true <- sum(grepl("fd_lags", leads_lags))
 
     expect_equal(n_true, 0)
@@ -148,7 +173,7 @@ test_that("does not create leads of differenced variable when pre + overidpre < 
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
 
     leads_lags      <- outputs[[1]]$term
-    
+
     n_true <- sum(grepl("fd_leads", leads_lags))
 
     expect_equal(n_true, 0)

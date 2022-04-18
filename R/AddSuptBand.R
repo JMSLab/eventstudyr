@@ -7,7 +7,7 @@
 #' @param seed
 #'
 #' @return
-#' @import MASS
+#' @import MASS, stringr
 #' @export
 #'
 #' @examples
@@ -38,8 +38,13 @@ AddSuptBand <- function(EventStudy_estimate, num_sim, conf_level, seed = 1234) {
         critical_value = t[floor(conf_level_num_sim) + 1]
     }
 
-    data.frame("term" = EventStudy_estimate$term,
+    df <- data.frame("term" = EventStudy_estimate$term,
                "lower" = (EventStudy_estimate$coefficients) - (critical_value * EventStudy_estimate$std.error),
                "upper" = (EventStudy_estimate$coefficients) + (critical_value * EventStudy_estimate$std.error)
                )
+
+    v_terms_to_plot <- stringr::str_detect(df[, "term"], "fd|lag|lead")
+
+    df[v_terms_to_plot, ]
+
 }

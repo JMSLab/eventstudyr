@@ -1,23 +1,27 @@
 #' Adds confidence intervals around estimations in new columns
 #'
-#' @param estimates, A list containing the outputs of an estimation containing, at least,
+#' @param df_estimates, A list containing the outputs of an estimation containing, at least,
 #' coefficient estimates and standard errors.
+#' @param policyvar, A string with the name of the policy variable used in EventStudy()
+#' @param normalize, Specifies the event-time coefficient used to normalize in EventStudy(). Defaults to - pre - 1.
 #' @param CI, Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.
 #'
-#' @import estimatr
+#'
+#' @import estimatr, dplyr
 #' @export
 #'
 #' @examples
-#' AddCIs(OLS_estimates, .95)
+#' AddCIs(df_estimates, policyvar = "z", normalize = -3, CI = .95)
 #'
 #'
 
-AddCIs <- function(Estimates, CI = 0.95) {
-    if ((class(Estimates) != "list") | typeof(Estimates) != "list" |
-         class(Estimates[[1]]) != "lm_robust" | class(Estimates[[2]]) != "list")
-         {stop("Estimates should be a list of length 2 with Estimates[[1]] an 'lm_robust' list estimates
-                and standard errors and Estimates[[2]] a list of arguments. Should be an output from EventStudy().")}
-    if (!is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a rational number between 0 and 1, inclusive.")}
+AddCIs <- function(df_estimates, policyvar, normalize, CI = 0.95) {
+    if (class(df_estimates) != "data.frame") {stop("df_estimates should be a data frame")}
+    if (! "term" %in% colnames(df_estimates) | ! "estimate" %in% colnames(df_estimates) |
+        ! "std.error" %in% colnames(df_estimates)) {stop("df_estimates should include columns 'term', 'estimate', and 'std.error'")}
+    if (! is.character(policyvar)) {stop("policyvar should be a character.")}
+    if (! is.numeric(normalize)) {stop("normalize should be an integer.")}
+    if (! is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a rational number between 0 and 1, inclusive.")}
 
     if (normalize < 0) {
         normalization_column <- paste0(policyvar, "_fd_lead", (-1 * normalize))
@@ -27,20 +31,18 @@ AddCIs <- function(Estimates, CI = 0.95) {
         normalization_column <- paste0(policyvar, "_fd_lag", (normalize))
     }
 
-    terms <- Estimates[[1]]$term[startsWith(Estimates[[1]]$term, paste0(policyvar, "_fd")) |
-                                 startsWith(Estimates[[1]]$term, paste0(policyvar, "_lead")) |
-                                 startsWith(Estimates[[1]]$term, paste0(policyvar, "_lag")) &
-                                 Estimates[[1]]$term != normalization_column]
+    terms <- df_estimates$term[startsWith(df_estimates$term, paste0(policyvar, "_fd")) |
+                               startsWith(df_estimates$term, paste0(policyvar, "_lead")) |
+                               startsWith(df_estimates$term, paste0(policyvar, "_lag")) &
+                               df_estimates$term != normalization_column]
 
     percentile <- CI + ((1 - CI)/2)
 
-    df_CI <- df %>%
-          filter(term %in% terms) %>%
-          mutate(ci_lower = estimate - std.error * qnorm(percentile),
-                 ci_upper = estimate + std.error * qnorm(percentile)) %>%
-          select(term, ci_lower, ci_upper)
+    df_CI <- dplyr::filter(df_estimates, term %in% terms)
+    df_CI <- dplyr::mutate(df_CI, ci_lower = estimate - std.error * qnorm(percentile), ci_upper = estimate + std.error * qnorm(percentile))
+    df_CI <- dplyr::select(df_CI, c("term", "ci_lower", "ci_upper"))
 
-    df <- left_join(df, df_CI, by = "term")
+    df_estimates <- dplyr::left_join(df_estimates, df_CI, by = "term")
 
-    return(df)
+    return(df_estimates)
 }

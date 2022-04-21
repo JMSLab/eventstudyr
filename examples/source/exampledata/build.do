@@ -35,3 +35,10 @@ esttab * using "`outdir'/df_test_base_STATA.csv", csv plain wide noobs ///
 keep(x_r zfd L.zfd L2.zfd F2.zfd F3.zfd F3.z L3.z) ///
 replace se nomtitles collabels("coef" "std_error") 
 
+eststo clear 
+eststo: reg y_base z i.t i.id, vce(cluster id)
+
+esttab * using "`outdir'/df_test_base_STATA_allzero.csv", csv plain wide noobs ///
+keep(z) ///
+replace se nomtitles collabels("coef" "std_error") 
+

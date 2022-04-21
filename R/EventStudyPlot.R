@@ -18,6 +18,11 @@
 
 EventStudyPlot <- function(data, estimates, CI, Supt = .95, Preeventcoeffs, Posteventcoeffs, Nozeroline = FALSE, Smpath) {
 
+    df_estimates <- tidy(estimates[[1]])
+
+    policyvar <- estimates[[2]]$policyvar
+    normalize <- estimates[[2]]$normalize
+    
     df_plotting <- PreparePlottingData(data)
 
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE

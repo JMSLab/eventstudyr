@@ -19,11 +19,6 @@ AddCIs <- function(Estimates, CI = 0.95) {
                 and standard errors and Estimates[[2]] a list of arguments. Should be an output from EventStudy().")}
     if (!is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a rational number between 0 and 1, inclusive.")}
 
-    df <- tidy(Estimates[[1]])
-
-    policyvar <- Estimates[[2]]$policyvar
-    normalize <- Estimates[[2]]$normalize
-
     if (normalize < 0) {
         normalization_column <- paste0(policyvar, "_fd_lead", (-1 * normalize))
     } else if (normalize == 0){

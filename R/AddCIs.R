@@ -32,12 +32,10 @@ AddCIs <- function(Estimates, CI = 0.95) {
         normalization_column <- paste0(policyvar, "_fd_lag", (normalize))
     }
 
-    terms <- Estimates[[1]]$term[startsWith(Estimates[[1]]$term, paste0(policyvar, "_fd")) &
+    terms <- Estimates[[1]]$term[startsWith(Estimates[[1]]$term, paste0(policyvar, "_fd")) |
+                                 startsWith(Estimates[[1]]$term, paste0(policyvar, "_lead")) |
+                                 startsWith(Estimates[[1]]$term, paste0(policyvar, "_lag")) &
                                  Estimates[[1]]$term != normalization_column]
-    terms <- Estimates[[1]]$term[startsWith(Estimates[[1]]$term, paste0(policyvar, "_lead")) &
-                                     Estimates[[1]]$term != normalization_column]
-    terms <- Estimates[[1]]$term[startsWith(Estimates[[1]]$term, paste0(policyvar, "_lag")) &
-                                     Estimates[[1]]$term != normalization_column]
 
     percentile <- CI + ((1 - CI)/2)
 

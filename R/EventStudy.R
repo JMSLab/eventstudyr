@@ -72,7 +72,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                                                                                    "_fd should be reserved for eventstudyr"))}
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_lead should be reserved for eventstudyr"))}
-    if  (sum(grepl(paste0(policyvar, "lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
+    if  (sum(grepl(paste0(policyvar, "_lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_lag should be reserved for eventstudyr"))}
 
     df_first_diff <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)

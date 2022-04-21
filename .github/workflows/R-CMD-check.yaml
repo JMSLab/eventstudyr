@@ -1,7 +1,7 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/master/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  push:
+  pull:
     branches:
       - master
 
@@ -9,6 +9,7 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
+    timeout-minutes: 10
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})

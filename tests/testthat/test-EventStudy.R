@@ -96,6 +96,89 @@ test_that("removes the correct column when normalize = 0", {
     expect_true(normalize == 0)
 })
 
+test_that("does not create a first differenced variable when post, overidpost, pre, overidpre are all zero", {
+
+    post  <- 0
+    pre  <- 0
+    overidpre <- 0
+    overidpost <- 0
+    normalize <- -1
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    leads_lags      <- outputs[[1]]$term
+
+    expect_true(! "z_fd" %in% leads_lags)
+})
+
+test_that("tests that package and STATA output agree when post, overidpost, pre, overidpre are zero", {
+
+    post  <- 0
+    pre  <- 0
+    overidpre <- 0
+    overidpost <- 0
+    normalize <- -1
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    coef_package <- outputs[[1]]$coefficients[[1]]
+    std_package  <- outputs[[1]]$std.error[[1]]
+
+    STATA_output <- read.csv('./input/df_test_base_STATA_allzero.csv')
+    coef_STATA <- STATA_output$coef[[1]]
+    std_STATA  <- STATA_output$std_error[[1]]
+
+    epsilon <- 10e-7
+    expect_equal(coef_package, coef_STATA, tolerance = epsilon)
+    expect_equal(std_package, std_STATA, tolerance = epsilon)
+})
+
+test_that("does not create lags of differenced variable when post + overidpost - 1 < 1", {
+
+    post  <- 1
+    pre  <- 0
+    overidpre <- 0
+    overidpost <- 0
+    normalize <- -1
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    leads_lags      <- outputs[[1]]$term
+
+    n_true <- sum(grepl("fd_lags", leads_lags))
+
+    expect_equal(n_true, 0)
+})
+
+test_that("does not create leads of differenced variable when pre + overidpre < 1", {
+
+    post  <- 1
+    pre  <- 0
+    overidpre <- 0
+    overidpost <- 0
+    normalize <- -1
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    leads_lags      <- outputs[[1]]$term
+
+    n_true <- sum(grepl("fd_leads", leads_lags))
+
+    expect_equal(n_true, 0)
+})
+
 test_that("removes the correct column when normalize > 0", {
 
     post  <- 2
@@ -115,6 +198,46 @@ test_that("removes the correct column when normalize > 0", {
     expect_equal(stringr::str_extract(normalization_column, "lag"), "lag")
     expect_true(!normalization_column %in% leads_lags)
     expect_true(normalize > 0)
+})
+
+test_that("removes the correct column when normalize = - (pre + overidpre + 1)", {
+
+    post  <- 3
+    pre  <- 2
+    overidpre <- 1
+    overidpost <- 4
+    normalize <- -4
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    leads_lags      <- outputs[[1]]$term
+
+    normalization_column <- paste0("z", "_lead", -1 * (normalize + 1))
+    expect_equal(stringr::str_extract(normalization_column, "lead"), "lead")
+    expect_true(!normalization_column %in% leads_lags)
+})
+
+test_that("removes the correct column when normalize = post + overidpost", {
+
+    post  <- 3
+    pre  <- 2
+    overidpre <- 1
+    overidpost <- 4
+    normalize <- 5
+
+    outputs <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+
+    leads_lags      <- outputs[[1]]$term
+
+    normalization_column <- paste0("z", "_lag", normalize )
+    expect_equal(stringr::str_extract(normalization_column, "lag"), "lag")
+    expect_true(!normalization_column %in% leads_lags)
 })
 
 test_that("subtraction is peformed on the correct column", {

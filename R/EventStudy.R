@@ -83,22 +83,22 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     num_fd_lead_periods  <- pre + overidpre
 
     furthest_lag_period  <- num_fd_lag_periods + 1
-    
+
     if (post + overidpost + pre + overidpre > 0) {
         data <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
     }
-    
+
     if (post + overidpost - 1 >= 1) {
         data <- PrepareLags(data, groupvar = idvar, timevar,
                             lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
     }
-    
+
     if (pre + overidpre >= 1) {
         data <- PrepareLeads(data, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"),
                              leads = 1:num_fd_lead_periods)
     }
-    
-    
+
+
     if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
         data      <- PrepareLeads(data, groupvar = idvar, timevar,
                                          leadvar = policyvar, leads = num_fd_lead_periods)
@@ -110,13 +110,13 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }
-    
+
     if (normalize < 0) {
         if (normalize == -(pre + overidpre + 1)) {
            normalization_column <- paste0(policyvar, "_lead", (-1 * (normalize + 1)))
         } else {
             normalization_column <- paste0(policyvar, "_fd_lead", (-1 * normalize))
-        }        
+        }
     } else if (normalize == 0){
         if (normalize == post + overidpost) {
             normalization_column <- paste0(policyvar, "_lag", (normalize))
@@ -145,11 +145,11 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         str_policy_lead <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lead"))))
         str_policy_lag  <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lag"))))
     }
-    
+
     if (post + overidpost - 1 < 0) {
         str_policy_fd <- str_policy_fd[str_policy_fd != paste0(policyvar, "_fd")]
     }
-    
+
     if (estimator == "OLS") {
 
         event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
@@ -171,6 +171,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                               "pre" = pre,
                               "overidpre" = overidpre,
                               "normalize" = normalize,
+                              "normalization_column" = normalization_column,
                               "cluster" = cluster)
 
         return(list(OLS_model, event_study_args))

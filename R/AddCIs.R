@@ -20,7 +20,7 @@ AddCIs <- function(df_estimates, policyvar, normalization_column, CI = 0.95) {
     if (! "term" %in% colnames(df_estimates) | ! "estimate" %in% colnames(df_estimates) |
         ! "std.error" %in% colnames(df_estimates)) {stop("df_estimates should include columns 'term', 'estimate', and 'std.error'")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
-    if (! is.numeric(normalize)) {stop("normalize should be an integer.")}
+    if (! is.character(normalization_column)) {stop("normalize should be a character.")}
     if (! is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a rational number between 0 and 1, inclusive.")}
 
     terms <- df_estimates$term[startsWith(df_estimates$term, paste0(policyvar, "_fd")) |

@@ -7,7 +7,7 @@
 #' @param seed
 #'
 #' @return
-#' @import MASS, stringr
+#' @import MASS, estimatr
 #' @export
 #'
 #' @examples
@@ -38,13 +38,12 @@ AddSuptBand <- function(estimates, num_sim, conf_level, seed = 1234) {
         critical_value = t[floor(conf_level_num_sim) + 1]
     }
 
-    df <- data.frame("term" = estimates$term,
-               "lower" = (estimates$coefficients) - (critical_value * estimates$std.error),
-               "upper" = (estimates$coefficients) + (critical_value * estimates$std.error)
-               )
+    df_estimates_tidy <- estimatr::tidy(estimates)
 
-    v_terms_to_plot <- stringr::str_detect(df[, "term"], "fd|lag|lead")
+    df_estimates_tidy["suptband_lower"] <- df_estimates_tidy$estimate - (critical_value * df_estimates_tidy$std.error)
+    df_estimates_tidy["suptband_upper"] <- df_estimates_tidy$estimate + (critical_value * df_estimates_tidy$std.error)
 
-    df[v_terms_to_plot, ]
+
+    return(df_estimates_tidy)
 
 }

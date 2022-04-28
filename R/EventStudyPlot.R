@@ -37,18 +37,24 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, Preeventcoeffs
         df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt)
     }
 
-    df_CI <- AddCIs(df_estimates_tidy, policyvar, normalization_column, CI)
+    plot_CI <- if(!is.null(CI)) TRUE else FALSE
 
-    df_plotting <- PreparePlottingData(df_CI, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    if (plot_CI) {
+
+        df_estimates_tidy <-  df_CI <- AddCIs(df_estimates_tidy, policyvar, normalization_column, CI)
+    }
+
+    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column)
 
 
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
     p_Supt <- if(plot_Supt) ggplot2::geom_linerange(data = df_plotting, ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
+    p_CI <- if(plot_CI) ggplot2::geom_errorbar(ggplot2::aes(ymin = ci_lower, ymax = ci_upper), width = .2) else NULL
 
     ggplot2::ggplot(df_plotting, ggplot2::aes(x = label, y = estimate)) +
         p_Nozeroline +
         p_Supt +
-        ggplot2::geom_errorbar(ggplot2::aes(ymin = ci_lower, ymax = ci_upper), width = .2) +
+        p_CI +
         ggplot2::geom_point(color = "#006600", size = 3) +
         ggplot2::labs(
             x = "Event time",

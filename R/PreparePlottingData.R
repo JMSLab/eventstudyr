@@ -1,23 +1,60 @@
 
-
-#' Title
+#' Orders the eventstudy coefficients and generates the x-axis labels
 #'
-#' @param df_tidy_estimates
-#' @param policyvar
-#' @param post
-#' @param overidpost
-#' @param pre
+#' @param df_tidy_estimates A data.frame created from applying estimatr::tidy() to the estimation output from EventStudy.
+#' At a minimum, it containing a column called "term" with the name for the coefficient and a column called "estimate"
+#' that contains the corresponding estimate. Should be a data.frame.
+#' @param policyvar Variable indicating policy variable z, should be a character.
+#' @param post The number of periods in the past before
+#' which the past values of the policy are not supposed
+#' to affect the value of the outcome. Should be a whole number.
+#' Corresponds to M in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param overidpost Optional number of event times after "post" to be
+#' included in estimation. Defaults to 1. Should be a whole number.
+#' Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param pre Number of periods in the future after which the future values
+#' of the policy are not supposed to affect the value of the outcome today.
+#' Should be a whole number. Corresponds to G in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param overidpre
-#' @param normalize
+#' Optional number of event times earlier than -"pre" to be included in estimation.
+#' Defaults to "post" + "pre". Should be a whole number.
+#' Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param normalization_column The name of the column containing the coefficient that will
+#' be set to 0 in the eventstudy plot. Should be a character.
 #'
-#' @return
+#' @return A data.frame that contains the x-axis labels, y-axis estimates,
+#' and optional plot aesthetics to be used in creating the eventstudy plot
 #' @import stringr, stats
 #' @export
 #'
-#' @examples
+#' @examples PreparePlottingData(df_tidy_estimates =
+#' estimatr::tidy(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' policyvar = "z", idvar = "id", timevar = "t",
+#' controls = "x_r", FE = TRUE, TFE = TRUE,
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[1]]),
+#' policyvar = "z",
+#' post = 3,
+#' overidpost = 5,
+#' pre = 2,
+#' overidpre = 4,
+#' normalization_column = "z_fd_lead3")
+#'
+#'
+#'
+#'
+#'
+#'
 
 PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column) {
 
+    if (! is.data.frame(df_tidy_estimates)) {stop("data should be a data frame.")}
+    if (! is.character(policyvar)) {stop("policyvar should be a character.")}
+    if (! (is.numeric(post) & post >= 0 & post %% 1 == 0)) {stop("post should be a whole number.")}
+    if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0)) {stop("overidpost should be a whole number.")}
+    if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
+    if (! (is.numeric(overidpre) & overidpre >= 0 & overidpre %% 1 == 0)) {stop("overidpre should be a whole number.")}
+    if (! is.character(normalization_column)) {stop("normalization_column should be a character.")}
+    if (normalization_column %in% df_tidy_estimates$term) {stop("normalization_column should not be one of the strings in the 'term' column")}
 
     largest_lead <- pre + overidpre
     largest_lag <- post + overidpost - 1

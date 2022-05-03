@@ -172,7 +172,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                               "overidpre" = overidpre,
                               "normalize" = normalize,
                               "normalization_column" = normalization_column,
-                              "cluster" = cluster)
+                              "cluster" = cluster,
+                              "v_eventstudy_coefficients" = c(str_policy_fd, str_policy_lead, str_policy_lag)
+                              )
 
         return(list(OLS_model, event_study_args))
 

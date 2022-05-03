@@ -13,7 +13,7 @@
 #' @examples
 #'
 
-AddSuptBand <- function(estimates, num_sim, conf_level, seed, controls = controls) {
+AddSuptBand <- function(estimates, num_sim, conf_level, seed, eventstudy_coefficients) {
 
     if ((class(estimates) != "lm_robust") & (typeof(estimates) != "list")) {
     stop("estimates is not a data frame with coefficient estimates and standard errors")
@@ -23,8 +23,7 @@ AddSuptBand <- function(estimates, num_sim, conf_level, seed, controls = control
     if (! is.numeric(seed) | seed %%  1 != 0) {stop("seed should be an integer.")}
 
     vcov_matrix_all <- estimates$vcov
-
-    v_terms_to_keep <- !colnames(vcov_matrix_all) %in% controls
+    v_terms_to_keep <- colnames(vcov_matrix_all) %in% eventstudy_coefficients
     vcov_matrix <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
 
     v_std_errors <- t(sqrt(diag(vcov_matrix)))

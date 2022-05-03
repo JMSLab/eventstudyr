@@ -28,14 +28,14 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, P
     overidpre <- estimates[[2]]$overidpre
     normalize <- estimates[[2]]$normalize
     normalization_column <- estimates[[2]]$normalization_column
-    controls <- estimates[[2]]$controls
-
+    v_eventstudy_coefficients <- estimates[[2]]$v_eventstudy_coefficients
 
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
 
     if (plot_Supt) {
 
-        df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt, seed = seed, controls = controls)
+        df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt,
+                                         seed = seed, eventstudy_coefficients = v_eventstudy_coefficients)
     }
 
     plot_CI <- if(!is.null(CI)) TRUE else FALSE

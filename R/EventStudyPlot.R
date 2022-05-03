@@ -16,7 +16,7 @@
 #'
 #' @examples
 
-EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, Preeventcoeffs, Posteventcoeffs, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, Preeventcoeffs, Posteventcoeffs, Nozeroline = FALSE, Smpath) {
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
@@ -28,13 +28,14 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, Preeventcoeffs
     overidpre <- estimates[[2]]$overidpre
     normalize <- estimates[[2]]$normalize
     normalization_column <- estimates[[2]]$normalization_column
+    controls <- estimates[[2]]$controls
 
 
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
 
     if (plot_Supt) {
 
-        df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt)
+        df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt, seed = seed, controls = controls)
     }
 
     plot_CI <- if(!is.null(CI)) TRUE else FALSE

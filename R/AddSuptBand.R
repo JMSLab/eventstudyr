@@ -13,7 +13,7 @@
 #' @examples
 #'
 
-AddSuptBand <- function(estimates, num_sim, conf_level, seed = 1234) {
+AddSuptBand <- function(estimates, num_sim, conf_level, seed, controls = controls) {
 
     if ((class(estimates) != "lm_robust") & (typeof(estimates) != "list")) {
     stop("estimates is not a data frame with coefficient estimates and standard errors")
@@ -22,8 +22,13 @@ AddSuptBand <- function(estimates, num_sim, conf_level, seed = 1234) {
     if (! is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {stop("conf_level should be a rational number between 0 and 1, inclusive.")}
     if (! is.numeric(seed) | seed %%  1 != 0) {stop("seed should be an integer.")}
 
-    vcov_matrix <- estimates$vcov
+    vcov_matrix_all <- estimates$vcov
+
+    v_terms_to_keep <- !colnames(vcov_matrix_all) %in% controls
+    vcov_matrix <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
+
     v_std_errors <- t(sqrt(diag(vcov_matrix)))
+    set.seed(seed)
     draws <- MASS::mvrnorm(n = num_sim, mu = rep(0, nrow(vcov_matrix)), Sigma = vcov_matrix)
     t <- draws / (v_std_errors %x% matrix(rep(1, num_sim)))
 

@@ -1,0 +1,974 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{setspace}
+\usepackage{sectsty}
+
+\usepackage{datetime}
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage{times}
+\usepackage[small]{caption}
+\usepackage[bottom,hang,flushmargin]{footmisc}
+\usepackage{amsmath,amssymb}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\logit}{logit}
+\DeclareMathOperator{\I}{I}
+
+\sectionfont{\noindent\normalfont\large\bf}
+\subsectionfont{\noindent\normalfont\normalsize\bf}
+\subsubsectionfont{\noindent\normalfont\it}
+
+\pdfminorversion=4
+\end_preamble
+\options hyperfootnotes=false
+\use_default_options false
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "times" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 12
+\spacing double
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\noindent
+
+\series bold
+Design Document for EventStudyR
+\end_layout
+
+\begin_layout Abstract
+This document sketches the functionality of EventStudyR package.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This package estimates and visualizes event-study models.
+ It implements the suggestions in Freyaldenhoven et al.
+ (2021) to produce informative event-study plots.
+ 
+\end_layout
+
+\begin_layout Standard
+It provides methods to estimate the following regression model from Equation
+ (2) in Freyaldenhoven et al.
+ (2021):
+\begin_inset Formula 
+\begin{equation}
+y_{it}=\sum_{k=-G-L_{G}}^{M+L_{M}-1}\delta_{k}\Delta z_{i,t-k}+\delta_{M+L_{M}}z_{i,t-M-L_{M}}+\delta_{-G-L_{G}-1}(1-z_{i,t+G+L_{G}})+\alpha_{i}+\gamma_{t}+q'_{it}\psi+C_{it}+\epsilon_{it}\label{eq:maineq}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $y_{it}$
+\end_inset
+
+ denotes the outcome, 
+\begin_inset Formula $z_{it}$
+\end_inset
+
+ denotes a scalar policy variable, 
+\begin_inset Formula $q_{it}$
+\end_inset
+
+ is a vector of controls, 
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+ denotes unit fixed-effects, 
+\begin_inset Formula $\gamma_{t}$
+\end_inset
+
+ denotes time fixed-effects, and 
+\begin_inset Formula $C_{it}$
+\end_inset
+
+ is a potentially unobserved confound.
+ 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ denotes the first difference operator.
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ denotes the number of periods before which it is assumed that the policy
+ can't affect the outcome at 
+\begin_inset Formula $t$
+\end_inset
+
+, and 
+\begin_inset Formula $G$
+\end_inset
+
+ denotes the number of periods after which it is assumed that the policy
+ can't affet the outcome at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ 
+\begin_inset Formula $L_{M}$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{G}$
+\end_inset
+
+ denote the additional periods included to consider the possibility that
+ the policy at time 
+\begin_inset Formula $t$
+\end_inset
+
+ affects the outcome 
+\begin_inset Formula $L_{M}\geq0$
+\end_inset
+
+ periods after 
+\begin_inset Formula $t-M$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{G}\geq0$
+\end_inset
+
+ periods before 
+\begin_inset Formula $t-G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In addition to estimating the above model, the package also provides functions
+ for hypothesis testing.
+\end_layout
+
+\begin_layout Standard
+Finally, it provides plotting functions to visualize the points 
+\begin_inset Formula $\{(k,\hat{\delta_{k}})\}_{k=-G-L_{G}-1}^{k=M+L_{M}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Functions
+\end_layout
+
+\begin_layout Subsection
+Estimation
+\end_layout
+
+\begin_layout Subsubsection
+EventStudy 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:EventStudyOLS"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\color green
+This function estimates the model in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:maineq"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) using the estimator specified.
+ It accepts variables specifying the outcome, policy, ID and time variables.
+ It returns a list object that stores the estimation results (as an lm()
+ object) as well as the arguments given in the function call.
+ It optionally accepts variables specifying the controls, the time window,
+ whether fixed effects should be included, the period to be used for normalizati
+on.
+ The model is estimated through OLS 
+\color red
+or the IV estimator in Freyaldenhoven et al.
+ (2019).
+ If the IV estimator in Freyaldenhoven et al.
+ (2019) is specified, then a proxy variable and the leads of the policy
+ variable to be used as instruments should be specified.
+\end_layout
+
+\begin_layout Itemize
+Arguments:
+\begin_inset Newline newline
+\end_inset
+
+
+\color green
+Data: The data frame that contains the variables of interest.
+\begin_inset Newline newline
+\end_inset
+
+Outcomevar: Specifies the outcome variable 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Policyvar: Specifies the policy variable 
+\begin_inset Formula $z.$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Idvar: Variable to identify units.
+\begin_inset Newline newline
+\end_inset
+
+Timevar: Variable to identify time periods.
+\begin_inset Newline newline
+\end_inset
+
+Controls: Specifies the control vector 
+\begin_inset Formula $q$
+\end_inset
+
+, accepts a character vector.
+ (Optional)
+\begin_inset Newline newline
+\end_inset
+
+Estimator: Accepts one of 
+\begin_inset Quotes eld
+\end_inset
+
+OLS
+\begin_inset Quotes erd
+\end_inset
+
+ or
+\color inherit
+ 
+\color red
+
+\begin_inset Quotes eld
+\end_inset
+
+FHS
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If the latter is specified, implements the IV estimator in Freyaldenhoven
+ et al.
+ (2019), and requires Proxy and ProxyIV options to be specified.
+\color inherit
+
+\begin_inset Newline newline
+\end_inset
+
+
+\color red
+Proxy: Variable that is thought to be affected by the confound but not by
+ the policy.
+ Shouldn't be specified in 
+\begin_inset Quotes eld
+\end_inset
+
+controls
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Should be specified if and only if Estimator is specified as 
+\begin_inset Quotes eld
+\end_inset
+
+FHS
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+ProxyIV: Variables to be used as an instrument.
+ For the case of a single proxy, defaults to the strongest lead of the policy
+ variable based on the first stage.
+ Should be specified if and only if Estimator is specified as 
+\begin_inset Quotes eld
+\end_inset
+
+FHS
+\begin_inset Quotes erd
+\end_inset
+
+.
+\color inherit
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+NS: I'm still unsure if it makes more sense to combine EventStudyOLS + EventStud
+yIV into EventStudy vs.
+ leaving them separate.
+ I see the appeal of combining: reduce code duplication since there is considera
+ble overlap in function inputs, and function outputs are similar.
+ However, my concerns with combining:
+\end_layout
+
+\begin_layout Itemize
+having 1 function instead of 2 will make debugging the 1 function harder
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+we'll need to implement more tests in EventStudy to make sure that EventStudyOLS
+ and EventStudyFHS are behaving properly, and this would be in addition
+ to the testing we'll need to do for the EventStudyOLS and EventStudyFHS
+ helper functions
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+it might make the function more confusing for the user 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+if running OLS, user will have to make sure they provide the correct OLS
+ arguments and omit the ones that apply to IV and vice versa for IV
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+I like your previous suggestion of keeping the functions separate and crating
+ a list called 
+\begin_inset Quotes eld
+\end_inset
+
+common_args
+\begin_inset Quotes erd
+\end_inset
+
+ and then expanding the list with 
+\begin_inset Quotes eld
+\end_inset
+
+IV_args
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+@veli-m-andirin please let me know your thoughts!
+\end_layout
+
+\begin_layout Plain Layout
+VMA: Thanks Nathan! I'm slightly leaning toward having separate functions,
+ too.
+ Although the first problem you mention concerns us more, the second problem
+ will affect the end user and will get worse in case we increase the number
+ of estimators we provide.
+ Having a single function with many possible arguments, some of which shouldn't
+ be specified if some others are already specified could become problematic.
+\end_layout
+
+\begin_layout Plain Layout
+As in my first suggestion, specifying a list called 
+\begin_inset Quotes eld
+\end_inset
+
+common_args
+\begin_inset Quotes erd
+\end_inset
+
+ and then using it with do.call() can reduce the amount of typing, especially
+ for estimators of the same 
+\begin_inset Quotes eld
+\end_inset
+
+class
+\begin_inset Quotes erd
+\end_inset
+
+ (an OLS estimator that includes interactions versus one that doesn't).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+I'm happy to defer to @jmshapir for a final decision.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\color green
+FE: Specifies if unit fixed-effects should be included.
+ Defaults to: TRUE.
+\begin_inset Newline newline
+\end_inset
+
+TFE: Specifies if time fixed-effects should be included.
+ Defaults to: TRUE.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $M$
+\end_inset
+
+: The number of periods in the past before which the past values of the
+ policy are not supposed to affect the value of the outcome today.
+ (Refer to the equation)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $L_{M}:$
+\end_inset
+
+ The number of event times after 
+\begin_inset Formula $M$
+\end_inset
+
+ to be included in estimation.
+ Optional, defaults to 1.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $G:$
+\end_inset
+
+ The number of periods in the future after which the future values of the
+ policy are not supposed to affect the value of the outcome today.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $L_{G}:$
+\end_inset
+
+The number of event times earlier than 
+\begin_inset Formula $-G$
+\end_inset
+
+ to be included in estimation.
+ Optional, defaults to 1.
+\begin_inset Newline newline
+\end_inset
+
+Normalize: Specifies the event-time coefficient to be normalized.
+ Defaults to: -1.
+\begin_inset Newline newline
+\end_inset
+
+Cluster: Specifies whether to use clustered errors by units.
+ If FALSE, will use unclustered heteroskedasticity-robust standard errors.
+ Defaults to : TRUE.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\color green
+Output: A list that contains:
+\begin_inset Newline newline
+\end_inset
+
+Estoutput: The estimation output.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Estimator: An object containing the arguments passed to the function.
+\end_layout
+
+\begin_layout Subsubsection
+PrepareLeadsLags
+\end_layout
+
+\begin_layout Standard
+
+\color green
+A helper function to EventStudy().
+ Appends the leads and lags of the specified policy variable to the data
+ frame as new columns.
+ Uses data.table for fast implementation.
+ (This function will be included in the manual to facilitate the creation
+ of leads and lags even if EventStudy() is not called later.) 
+\end_layout
+
+\begin_layout Subsubsection
+EventStudyOLS
+\end_layout
+
+\begin_layout Standard
+
+\color green
+A helper function to EventStudy().
+ Accepts a data frame that is ready for estimation with leads and lags of
+ the policy variable.
+ Uses the arguments from EventStudy() that are needed for OLS estimation.
+ (This function will be included in the manual to allow users who would
+ like to prepare leads/lags using other methods and who prefer to jump to
+ the estimation function.)
+\end_layout
+
+\begin_layout Subsubsection
+EventStudyFHS
+\end_layout
+
+\begin_layout Standard
+
+\color red
+A helper function to EventStudy().
+ Accepts a data frame that is ready for estimation with leads and lags of
+ the policy variable.
+ Uses the arguments from EventStudy() that are needed for the IV estimator
+ in Freyaldenhoven et al.
+ (2019).
+ (This function will be included in the manual to allow users who would
+ like to prepare leads/lags using other methods and who prefer to jump to
+ the estimation function.)
+\end_layout
+
+\begin_layout Subsubsection
+PrepareModelFormula
+\end_layout
+
+\begin_layout Standard
+
+\color green
+An internal helper function to EventStudyOLS() and EventStudyFHS().
+ Using the arguments passed to EventStudyOLS() or EventStudyFHS() it prepares
+ a formula object corresponding to the equation to be estimated, depending
+ on which function it is called from.
+\end_layout
+
+\begin_layout Subsection
+Hypothesis Testing
+\end_layout
+
+\begin_layout Subsubsection
+TestLinear
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+This function can be used to perform tests of linear hypotheses.
+\end_layout
+
+\begin_layout Itemize
+
+\color orange
+Arguments:
+\begin_inset Newline newline
+\end_inset
+
+Estimates: A list containing estimation results and model information.
+ Should be an output of EventStudyOLS or EventStudyIV.
+\begin_inset Newline newline
+\end_inset
+
+Test: The hypothesis to be estimated.
+ Accepts inputs that can be passed to hypothesis.matrix argument in linearHypothe
+sis() function from car package.
+ It also accepts the arguments 
+\begin_inset Quotes eld
+\end_inset
+
+pre-trends
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+leveling off
+\begin_inset Quotes erd
+\end_inset
+
+ and performs the tests in Freyaldenhoven et al.
+ (2021).
+ If 
+\begin_inset Quotes eld
+\end_inset
+
+pre-trends
+\begin_inset Quotes erd
+\end_inset
+
+ is specified, it uses the values 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{G}$
+\end_inset
+
+ from 
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If 
+\begin_inset Quotes eld
+\end_inset
+
+leveling off
+\begin_inset Quotes erd
+\end_inset
+
+ is specified, the value 
+\begin_inset Formula $M$
+\end_inset
+
+ from 
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+ is used.
+\end_layout
+
+\begin_layout Itemize
+
+\color orange
+Output: p-value for the hypothesis test.
+\end_layout
+
+\begin_layout Subsection
+Plotting
+\end_layout
+
+\begin_layout Subsubsection
+EventStudyPlot
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+This function prepares an event-study plot based on the suggestions in Freyalden
+hoven et al.
+ (2021).
+ At a minimum, it prepares an event-study plot showing 
+\begin_inset Formula $\{(k,\hat{\delta_{k}})\}_{k=-G-L_{G}-1}^{k=M+L_{M}}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\color orange
+Arguments:
+\begin_inset Newline newline
+\end_inset
+
+Data: The data frame used in estimation.
+\begin_inset Newline newline
+\end_inset
+
+Estimates: A list containing estimation results and model information.
+ Should be an output of EventStudyOLS or EventStudyIV.
+\begin_inset Newline newline
+\end_inset
+
+CI: The confidence level to use for the confidence interval.
+ If specified, adds a pointwise confidence interval for each coefficient
+ using the specificed significance level.
+ If NULL, doesn't add pointwise confidence intervals.
+ Defaults to: 0.95.
+\begin_inset Newline newline
+\end_inset
+
+Supt: The confidence level to use for the confidence interval.
+ If specified, adds a sup-t confidence band covering the event-time path
+ of the outcome 
+\begin_inset Formula $\delta$
+\end_inset
+
+ with asymptotic probability at least equal to the specified level.
+ If NULL, doesn't add a sup-t band.
+ Defaults to: 0.95.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Addmean: Adds the mean of the dependent variable in the period used for
+ normalization.
+ Defaults to: FALSE 
+\begin_inset Newline newline
+\end_inset
+
+Preeventcoeffs: The set of coefficients to be included in the pre-event
+ trends test.
+ By default uses the values 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{G}$
+\end_inset
+
+ from 
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Posteventcoeffs: The set of coefficients to be included in the leveling
+ off test.
+ By default uses the value 
+\begin_inset Formula $L_{M}$
+\end_inset
+
+ from 
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+.
+\color inherit
+
+\begin_inset Newline newline
+\end_inset
+
+
+\color red
+Nozeroline: Removes the horizontal line at 0.
+ Defaults to: FALSE.
+\begin_inset Newline newline
+\end_inset
+
+Smpath: Include the smoothest path through the Wald confidence region with
+ the specified confidence level.
+ Defaults to: NULL.
+\end_layout
+
+\begin_layout Itemize
+
+\color orange
+Output:
+\begin_inset Newline newline
+\end_inset
+
+Returns a ggplot object.
+\end_layout
+
+\begin_layout Subsubsection
+AddCIs
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+An internal helper function to EventStudyPlot().
+ Takes the estimation output (
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+) and the specified confidence level (
+\begin_inset Quotes eld
+\end_inset
+
+CI
+\begin_inset Quotes erd
+\end_inset
+
+), and returns a data frame with event-times and corresponding confidence
+ intervals for the coefficients.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+AddSuptBand
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+An internal helper function to EventStudyPlot().
+ Takes the estimation output (
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+) and the specified confidence level (
+\begin_inset Quotes eld
+\end_inset
+
+Supt
+\begin_inset Quotes erd
+\end_inset
+
+), and returns a data frame with event-times and corresponding confidence
+ bands for the coefficients.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+AddSmPath
+\end_layout
+
+\begin_layout Standard
+
+\color red
+An internal helper function to EventStudyPlot().
+ Takes the estimation output (
+\begin_inset Quotes eld
+\end_inset
+
+Estimates
+\begin_inset Quotes erd
+\end_inset
+
+) and the specified confidence level (
+\begin_inset Quotes eld
+\end_inset
+
+Smpath
+\begin_inset Quotes erd
+\end_inset
+
+), and returns a data frame with event-times and corresponding points on
+ the smoothest line through the Wald confidence region.
+\end_layout
+
+\end_body
+\end_document

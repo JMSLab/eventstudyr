@@ -53,7 +53,7 @@ TestLinear <- function(estimates, test = NA, pretrends = F, leveling_off = F){
         test_results <- rbind(test_results, temp)
     }
 
-    if (!is.na(leveling_off)){
+    if (leveling_off == T){
         n_furthest_lag <- estimates[[2]]$post + estimates[[2]]$overidpost
         furthest_lag    <- paste0(estimates[[2]]$policyvar, "_lag", as.character(n_furthest_lag))
         leveling_off_hyp <- paste0(furthest_lag, "=0")

@@ -660,6 +660,16 @@ Hypothesis Testing
 
 \begin_layout Subsubsection
 TestLinear
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+@rcalvo Needs to add tests
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -902,6 +912,16 @@ Returns a ggplot object.
 
 \begin_layout Subsubsection
 AddCIs
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+@rcalvo Needs to add tests
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

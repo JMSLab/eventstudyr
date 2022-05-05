@@ -4,8 +4,8 @@
 #' Should be an output of EventStudyOLS or EventStudyIV.
 #' @param test, The hypothesis to be estimated. Accepts inputs that can be passed to hypothesis.matrix
 #' argument in linearHypothesis() function from car package.
-#' @param pretrends, If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to FALSE.
-#' @param leveling_off, If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to FALSE.
+#' @param pretrends, If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.
+#' @param leveling_off, If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.
 #'
 #' @import car
 #' @export
@@ -15,7 +15,7 @@
 #'
 
 
-TestLinear <- function(estimates, test = NA, pretrends = F, leveling_off = F){
+TestLinear <- function(estimates, test = NA, pretrends = T, leveling_off = T){
     if (class(estimates) != "list" | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
     if ((class(estimates[[1]]) != "lm_robust") | (typeof(estimates[[1]]) != "list")) {

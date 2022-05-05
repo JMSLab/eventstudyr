@@ -16,7 +16,7 @@
 #'
 #' @examples
 
-EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, Preeventcoeffs, Posteventcoeffs, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
@@ -45,6 +45,37 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, P
         df_estimates_tidy <-  df_CI <- AddCIs(df_estimates_tidy, policyvar, normalization_column, CI)
     }
 
+    df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
+
+    if (Preeventcoeffs & Posteventcoeffs) {
+
+        pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
+        levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
+
+        text_pretrends <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
+        text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
+        text_caption <- paste0(text_pretrends, " -- ", text_levelingoff)
+    }
+
+    else if (Preeventcoeffs & !Posteventcoeffs) {
+
+        pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
+
+        text_caption <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
+
+    }
+
+    else if (!Preeventcoeffs & Posteventcoeffs) {
+
+        levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
+
+        text_caption <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
+
+    } else {
+
+        text_caption <- NULL
+    }
+
     df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column)
 
 
@@ -64,5 +95,11 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, P
         ggplot2::theme_bw() +
         ggplot2::theme(
             panel.grid = ggplot2::element_blank()
-            )
+            ) +
+        ggplot2::theme(
+            plot.caption = ggplot2::element_text(hjust = 0)
+        ) +
+        ggplot2::labs(
+            caption = text_caption
+        )
 }

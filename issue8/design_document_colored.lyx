@@ -761,6 +761,20 @@ Plotting
 
 \begin_layout Subsubsection
 EventStudyPlot
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CI, Supt, Preventcoeffs, Posteventcoeffs, and Nozeroline have all been incorpara
+ted into the event-study plot.
+ @nateschor will add documentation (including an executable example) and
+ unit tests after the code for EventStudyPlot has stabilized.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -863,9 +877,11 @@ Estimates
 \end_inset
 
 
-\color red
+\color orange
 Nozeroline: Removes the horizontal line at 0.
  Defaults to: FALSE.
+\color red
+
 \begin_inset Newline newline
 \end_inset
 
@@ -915,6 +931,19 @@ CI
 
 \begin_layout Subsubsection
 AddSuptBand
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The code for this has been finished, but still needs documentation and unit
+ tests (the package we are using for this is sparse with testing).
+ Getting help for the unit tests from @veli-m-andirin/@rcalvo12/@santiagohermo
+ would be great!
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

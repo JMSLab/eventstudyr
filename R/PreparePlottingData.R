@@ -24,7 +24,8 @@
 #'
 #' @return A data.frame that contains the x-axis labels, y-axis estimates,
 #' and optional plot aesthetics to be used in creating the eventstudy plot
-#' @import stringr, stats
+#' @import stringr
+#' @rawNamespace import(stats, except=c(lag, filter))
 #' @export
 #'
 #' @examples PreparePlottingData(df_tidy_estimates =

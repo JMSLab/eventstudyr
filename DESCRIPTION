@@ -11,9 +11,12 @@ Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
+    car,
     data.table,
     dplyr,
     estimatr,
+    ggplot2,
+    MASS,
     stats,
     stringr
 LazyData: true

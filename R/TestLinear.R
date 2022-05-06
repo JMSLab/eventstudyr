@@ -7,7 +7,7 @@
 #' @param pretrends, If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.
 #' @param leveling_off, If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.
 #'
-#' @import car
+#' @importFrom car linearHypothesis
 #' @export
 #'
 #' @examples

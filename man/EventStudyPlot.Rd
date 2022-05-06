@@ -2,10 +2,9 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Title}
+\title{Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)}
 \usage{
 EventStudyPlot(
-  data,
   estimates,
   CI = 0.95,
   Supt = 0.95,
@@ -17,11 +16,40 @@ EventStudyPlot(
 )
 }
 \arguments{
-\item{Smpath}{}
+\item{estimates}{The output from calling EventStudy(). Should be a list of length 2}
+
+\item{CI}{Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
+
+\item{Supt}{The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
+0 and 1, inclusive. Defaults to .95}
+
+\item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
+Defaults to 1234}
+
+\item{Preeventcoeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.}
+
+\item{Posteventcoeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.}
+
+\item{Nozeroline}{Whether or not to plot a dashed horizontal line at y = 0. Defaults to FALSE, where the line is plotted.}
+
+\item{Smpath}{PLACE HOLDER}
 }
 \value{
-
+The Event-Study plot as a gpplot2 object
 }
 \description{
-Title
+Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
+}
+\examples{
+EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+policyvar = "z", idvar = "id", timevar = "t",
+controls = "x_r", FE = TRUE, TFE = TRUE,
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+CI = .95,
+Supt = .95,
+seed = 1234,
+Preeventcoeffs = TRUE,
+Posteventcoeffs = TRUE,
+Nozeroline = FALSE,
+Smpath = NULL)
 }

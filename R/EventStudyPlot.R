@@ -1,22 +1,34 @@
 
-#' Title
+#'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
 #'
-#' @param data
-#' @param estimates
-#' @param CI
-#' @param Supt
-#' @param Preeventcoeffs
-#' @param Posteventcoeffs
-#' @param Nozeroline
-#' @param Smpath
+#' @param estimates The output from calling EventStudy(). Should be a list of length 2
+#' @param CI Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
+#' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
+#' 0 and 1, inclusive. Defaults to .95
+#' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
+#' Defaults to 1234
+#' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.
+#' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.
+#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0. Defaults to FALSE, where the line is plotted.
+#' @param Smpath PLACE HOLDER
 #'
-#' @return
+#' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2
 #' @export
 #'
-#' @examples
+#' @examples EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#'policyvar = "z", idvar = "id", timevar = "t",
+#'controls = "x_r", FE = TRUE, TFE = TRUE,
+#'post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+#'CI = .95,
+#'Supt = .95,
+#'seed = 1234,
+#'Preeventcoeffs = TRUE,
+#'Posteventcoeffs = TRUE,
+#'Nozeroline = FALSE,
+#'Smpath = NULL)
 
-EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
@@ -90,7 +102,8 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, P
         ggplot2::geom_point(color = "#006600", size = 3) +
         ggplot2::labs(
             x = "Event time",
-            y = "Coefficient"
+            y = "Coefficient",
+            caption = text_caption
             ) +
         ggplot2::theme_bw() +
         ggplot2::theme(
@@ -98,8 +111,5 @@ EventStudyPlot <- function(data, estimates, CI = .95, Supt = .95, seed = 1234, P
             ) +
         ggplot2::theme(
             plot.caption = ggplot2::element_text(hjust = 0)
-        ) +
-        ggplot2::labs(
-            caption = text_caption
         )
 }

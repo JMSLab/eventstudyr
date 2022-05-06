@@ -2,21 +2,24 @@
 % Please edit documentation in R/AddCIs.R
 \name{AddCIs}
 \alias{AddCIs}
-\title{Adds confidence intervals around estimations in new columns}
+\title{Adds columns to data frame containing confidence intervals around provided estimates.}
 \usage{
-AddCIs(Estimates, CI = 0.95)
+AddCIs(df_estimates, policyvar, normalization_column, CI = 0.95)
 }
 \arguments{
-\item{CI, }{Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.}
+\item{df_estimates, }{A data frame with columns for term, estimate, and standard error.}
 
-\item{estimates, }{A list containing the outputs of an estimation containing, at least,
-coefficient estimates and standard errors.}
+\item{policyvar, }{A string with the name of the policy variable used in EventStudy().}
+
+\item{normalization_column, }{A string specifying the name of the column used to normalize in EventStudy().}
+
+\item{CI, }{Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.}
 }
 \description{
-Adds confidence intervals around estimations in new columns
+Adds columns to data frame containing confidence intervals around provided estimates.
 }
 \examples{
-AddCIs(OLS_estimates, .95)
+AddCIs(df_estimates, policyvar = "z", normalization_column = "z_fd_lead3", CI = 0.95)
 
 
 }

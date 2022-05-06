@@ -4,23 +4,23 @@
 \alias{TestLinear}
 \title{This function can be used to perform tests of linear hypotheses.}
 \usage{
-TestLinear(estimates, test, pretrends = NA, leveling_off = NA)
+TestLinear(estimates, test = NA, pretrends = T, leveling_off = T)
 }
 \arguments{
-\item{estimates, }{A list containing estimation results and model information.
-Should be an output ofEventStudyOLS or EventStudyIV}
+\item{estimates, }{A list of length 2 containing estimation results and model information.
+Should be an output of EventStudyOLS or EventStudyIV.}
 
 \item{test, }{The hypothesis to be estimated. Accepts inputs that can be passed to hypothesis.matrix
 argument in linearHypothesis() function from car package.}
 
-\item{pretrends, }{String containing name of variable}
+\item{pretrends, }{If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.}
 
-\item{leveling_off, }{String containing name of variable}
+\item{leveling_off, }{If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.}
 }
 \description{
 This function can be used to perform tests of linear hypotheses.
 }
 \examples{
-TestLinear(Estimates, "z_fd_lag1 = z_fd", pretrends = "z_lead6", leveling_off = "z_lag8")
+TestLinear(Estimates, test = "z_fd_lag1 = z_fd", pretrends = T, leveling_off = T)
 
 }

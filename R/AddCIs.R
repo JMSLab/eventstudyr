@@ -1,17 +1,16 @@
-#' Adds confidence intervals around estimations in new columns
+#' Adds columns to data frame containing confidence intervals around provided estimates.
 #'
-#' @param df_estimates, A list containing the outputs of an estimation containing, at least,
-#' coefficient estimates and standard errors.
-#' @param policyvar, A string with the name of the policy variable used in EventStudy()
+#' @param df_estimates, A data frame with columns for term, estimate, and standard error.
+#' @param policyvar, A string with the name of the policy variable used in EventStudy().
 #' @param normalization_column, A string specifying the name of the column used to normalize in EventStudy().
 #' @param CI, Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.
 #'
 #'
-#' @import estimatr, dplyr
+#' @import dplyr
 #' @export
 #'
 #' @examples
-#' AddCIs(df_estimates, policyvar = "z", normalization_column = "z_fd_lead3", CI = .95)
+#' AddCIs(df_estimates, policyvar = "z", normalization_column = "z_fd_lead3", CI = 0.95)
 #'
 #'
 
@@ -23,15 +22,16 @@ AddCIs <- function(df_estimates, policyvar, normalization_column, CI = 0.95) {
     if (! is.character(normalization_column)) {stop("normalize should be a character.")}
     if (! is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a rational number between 0 and 1, inclusive.")}
 
-    terms <- df_estimates$term[startsWith(df_estimates$term, paste0(policyvar, "_fd")) |
+    terms <- df_estimates$term[(startsWith(df_estimates$term, paste0(policyvar, "_fd"))  |
                                startsWith(df_estimates$term, paste0(policyvar, "_lead")) |
-                               startsWith(df_estimates$term, paste0(policyvar, "_lag")) &
+                               startsWith(df_estimates$term, paste0(policyvar, "_lag"))) &
                                df_estimates$term != normalization_column]
 
     percentile <- CI + ((1 - CI)/2)
 
     df_CI <- dplyr::filter(df_estimates, term %in% terms)
-    df_CI <- dplyr::mutate(df_CI, ci_lower = estimate - std.error * qnorm(percentile), ci_upper = estimate + std.error * qnorm(percentile))
+    df_CI <- dplyr::mutate(df_CI, ci_lower = estimate - std.error * qnorm(percentile),
+                                  ci_upper = estimate + std.error * qnorm(percentile))
     df_CI <- dplyr::select(df_CI, c("term", "ci_lower", "ci_upper"))
 
     df_estimates <- dplyr::left_join(df_estimates, df_CI, by = "term")

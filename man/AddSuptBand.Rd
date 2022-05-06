@@ -4,7 +4,7 @@
 \alias{AddSuptBand}
 \title{Title}
 \usage{
-AddSuptBand(EventStudy_estimate, num_sim, conf_level, seed = 1234)
+AddSuptBand(estimates, num_sim, conf_level, seed, eventstudy_coefficients)
 }
 \arguments{
 \item{seed}{}

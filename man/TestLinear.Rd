@@ -8,7 +8,7 @@ TestLinear(estimates, test = NA, pretrends = T, leveling_off = T)
 }
 \arguments{
 \item{estimates, }{A list of length 2 containing estimation results and model information.
-Should be an output of EventStudyOLS or EventStudyIV.}
+Should be an output of EventStudy().}
 
 \item{test, }{The hypothesis to be estimated. Accepts inputs that can be passed to hypothesis.matrix
 argument in linearHypothesis() function from car package.}

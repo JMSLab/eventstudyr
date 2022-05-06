@@ -4,17 +4,45 @@
 \alias{AddSuptBand}
 \title{Title}
 \usage{
-AddSuptBand(estimates, num_sim, conf_level, seed, eventstudy_coefficients)
+AddSuptBand(
+  estimates,
+  num_sim,
+  conf_level = 0.95,
+  seed = 1234,
+  eventstudy_coefficients
+)
 }
 \arguments{
-\item{seed}{}
+\item{estimates}{The first element extracted from the EventStudy function. Should be a list.}
+
+\item{num_sim}{The number of simulations used in generating the sup-t bands. Should be a natural number}
+
+\item{conf_level}{The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
+0 and 1, inclusive. Defaults to .95}
+
+\item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
+Defaults to 1234}
+
+\item{eventstudy_coefficients}{The names of the event-study coefficients. This vector is outputted
+in the second element of the EventStudy function. Should be a vector of strings.}
 }
 \value{
-
+A data.frame that contains the upper and lower sup-t band values for each event-study coefficient.
 }
 \description{
 Title
 }
 \examples{
+AddSuptBand(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+policyvar = "z", idvar = "id", timevar = "t",
+controls = "x_r", FE = TRUE, TFE = TRUE,
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[1]],
+num_sim = 100,
+conf_level = .95,
+seed = 1234,
+eventstudy_coefficients = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+policyvar = "z", idvar = "id", timevar = "t",
+controls = "x_r", FE = TRUE, TFE = TRUE,
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[2]]$v_eventstudy_coefficients)
 
 }

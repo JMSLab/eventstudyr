@@ -1,5 +1,4 @@
 test_that("correctly recognizes wrong class for estimate argument", {
-    load("./../../data/df_sample_dynamic.RData")
     df_test <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -12,7 +11,6 @@ test_that("correctly recognizes wrong class for estimate argument", {
 })
 
 test_that("correctly recognizes missing columns in estimates argument", {
-    load("./../../data/df_sample_dynamic.RData")
     df_test <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -33,7 +31,6 @@ test_that("correctly recognizes missing columns in estimates argument", {
 })
 
 test_that("correctly recognizes wrong inputs for policyvar argument", {
-    load("./../../data/df_sample_dynamic.RData")
     df_test <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -48,7 +45,6 @@ test_that("correctly recognizes wrong inputs for policyvar argument", {
 })
 
 test_that("correctly recognizes wrong inputs for normalization_column argument", {
-    load("./../../data/df_sample_dynamic.RData")
     df_test <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -63,7 +59,6 @@ test_that("correctly recognizes wrong inputs for normalization_column argument",
 })
 
 test_that("correctly recognizes wrong inputs for CI argument", {
-    load("./../../data/df_sample_dynamic.RData")
     df_test <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                      policyvar = "z", idvar = "id", timevar = "t",
                      controls = "x_r", FE = TRUE, TFE = TRUE,

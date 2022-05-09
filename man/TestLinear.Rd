@@ -4,7 +4,7 @@
 \alias{TestLinear}
 \title{This function can be used to perform tests of linear hypotheses.}
 \usage{
-TestLinear(estimates, test = NA, pretrends = T, leveling_off = T)
+TestLinear(estimates, test = NA, pretrends = TRUE, leveling_off = TRUE)
 }
 \arguments{
 \item{estimates, }{A list of length 2 containing estimation results and model information.
@@ -21,6 +21,12 @@ argument in linearHypothesis() function from car package.}
 This function can be used to perform tests of linear hypotheses.
 }
 \examples{
-TestLinear(Estimates, test = "z_fd_lag1 = z_fd", pretrends = T, leveling_off = T)
+estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                        policyvar = "z", idvar = "id", timevar = "t",
+                        controls = "x_r", FE = TRUE, TFE = TRUE,
+                        post = 3, pre = 2, overidpre = 4, overidpost = 5,
+                        normalize = - 3, cluster = TRUE)
+
+TestLinear(estimates, test = "z_fd_lag1 = z_fd", pretrends = TRUE, leveling_off = TRUE)
 
 }

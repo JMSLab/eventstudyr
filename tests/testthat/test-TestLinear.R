@@ -1,5 +1,4 @@
 test_that("correctly recognizes wrong variable type for estimate argument", {
-    load("./../../data/df_sample_dynamic.RData")
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -15,7 +14,6 @@ test_that("correctly recognizes wrong variable type for estimate argument", {
 })
 
 test_that("correctly recognizes wrong variable type for pretrends", {
-    load("./../../data/df_sample_dynamic.RData")
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -26,7 +24,6 @@ test_that("correctly recognizes wrong variable type for pretrends", {
 })
 
 test_that("correctly recognizes wrong variable type for leveling_off", {
-    load("./../../data/df_sample_dynamic.RData")
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -37,7 +34,6 @@ test_that("correctly recognizes wrong variable type for leveling_off", {
 })
 
 test_that("produces only functions that are specified", {
-    load("./../../data/df_sample_dynamic.RData")
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            controls = "x_r", FE = TRUE, TFE = TRUE,

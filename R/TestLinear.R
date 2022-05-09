@@ -11,11 +11,17 @@
 #' @export
 #'
 #' @examples
-#' TestLinear(Estimates, test = "z_fd_lag1 = z_fd", pretrends = T, leveling_off = T)
+#' estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#'                         policyvar = "z", idvar = "id", timevar = "t",
+#'                         controls = "x_r", FE = TRUE, TFE = TRUE,
+#'                         post = 3, pre = 2, overidpre = 4, overidpost = 5,
+#'                         normalize = - 3, cluster = TRUE)
+#'
+#' TestLinear(estimates, test = "z_fd_lag1 = z_fd", pretrends = TRUE, leveling_off = TRUE)
 #'
 
 
-TestLinear <- function(estimates, test = NA, pretrends = T, leveling_off = T){
+TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TRUE){
     if (class(estimates) != "list" | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
     if ((class(estimates[[1]]) != "lm_robust") | (typeof(estimates[[1]]) != "list")) {
@@ -40,7 +46,7 @@ TestLinear <- function(estimates, test = NA, pretrends = T, leveling_off = T){
         test_results <- rbind(test_results, temp)
     }
 
-    if (pretrends == T){
+    if (pretrends == TRUE){
         n_furthest_lead <- estimates[[2]]$pre + estimates[[2]]$overidpre
         furthest_lead    <- paste0(estimates[[2]]$policyvar, "_lead",as.character(n_furthest_lead))
         pretrends_hyp <- paste0(furthest_lead, "=0")
@@ -53,7 +59,7 @@ TestLinear <- function(estimates, test = NA, pretrends = T, leveling_off = T){
         test_results <- rbind(test_results, temp)
     }
 
-    if (leveling_off == T){
+    if (leveling_off == TRUE){
         n_furthest_lag <- estimates[[2]]$post + estimates[[2]]$overidpost
         furthest_lag    <- paste0(estimates[[2]]$policyvar, "_lag", as.character(n_furthest_lag))
         leveling_off_hyp <- paste0(furthest_lag, "=0")

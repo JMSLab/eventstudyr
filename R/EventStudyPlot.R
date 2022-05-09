@@ -7,13 +7,15 @@
 #' 0 and 1, inclusive. Defaults to .95
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
 #' Defaults to 1234
-#' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.
-#' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.
-#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0. Defaults to FALSE, where the line is plotted.
+#' @param Addmean Adds the mean of the dependent variable in the period used for normalization. Should be TRUE or FALSE. Defaults to FALSE.
+#' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends. Should be TRUE or FALSE. Defaults to TRUE.
+#' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off. Should be TRUE or FALSE. Defaults to TRUE.
+#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0. Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
 #' @param Smpath PLACE HOLDER
 #'
 #' @return The Event-Study plot as a gpplot2 object
-#' @import ggplot2
+#' @import ggplot2 dplyr
+#' @importFrom tidyr pivot_longer
 #' @export
 #'
 #' @examples EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
@@ -23,16 +25,19 @@
 #'CI = .95,
 #'Supt = .95,
 #'seed = 1234,
+#'Addmean = FALSE,
 #'Preeventcoeffs = TRUE,
 #'Posteventcoeffs = TRUE,
 #'Nozeroline = FALSE,
 #'Smpath = NULL)
 
-EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
 
+    df_data <- estimates[[2]]$data
+    outcomevar <- estimates[[2]]$outcomevar
     policyvar <- estimates[[2]]$policyvar
     post <- estimates[[2]]$post
     overidpost <- estimates[[2]]$overidpost
@@ -90,6 +95,23 @@ EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Preeven
 
     df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column)
 
+    p_AddMeans <- if (Addmean) {
+
+        y_mean <- AddMeans(df_data, normalization_column, policyvar, outcomevar)
+        df_estimate_columns <- dplyr::select(df_plotting, -term, -std.error:-outcome, -label)
+        df_estimates_longer <- tidyr::pivot_longer(df_estimate_columns, dplyr::everything(), names_to = "term", values_to = "value")
+
+        largest_y_value <- max(abs(df_estimates_longer$value))
+        largest_rounded_y_value <- ceiling(largest_y_value)
+
+        y_axis_breaks <- seq(largest_rounded_y_value, - largest_rounded_y_value, length.out = 5)
+        y_axis_labels <- c(y_axis_breaks[1:2],
+                           paste0(y_axis_breaks[3], " (", round(y_mean, 2), ")"),
+                           y_axis_breaks[4:5])
+
+        ggplot2::scale_y_continuous(breaks = y_axis_breaks, labels = y_axis_labels)
+
+    } else NULL
 
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
     p_Supt <- if(plot_Supt) ggplot2::geom_linerange(data = df_plotting, ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
@@ -99,6 +121,7 @@ EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Preeven
         p_Nozeroline +
         p_Supt +
         p_CI +
+        p_AddMeans +
         ggplot2::geom_point(color = "#006600", size = 3) +
         ggplot2::labs(
             x = "Event time",

@@ -9,6 +9,7 @@ EventStudyPlot(
   CI = 0.95,
   Supt = 0.95,
   seed = 1234,
+  Addmean = FALSE,
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
   Nozeroline = FALSE,
@@ -26,11 +27,13 @@ EventStudyPlot(
 \item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
 Defaults to 1234}
 
-\item{Preeventcoeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.}
+\item{Addmean}{Adds the mean of the dependent variable in the period used for normalization. Should be TRUE or FALSE. Defaults to FALSE.}
 
-\item{Posteventcoeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.}
+\item{Preeventcoeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends. Should be TRUE or FALSE. Defaults to TRUE.}
 
-\item{Nozeroline}{Whether or not to plot a dashed horizontal line at y = 0. Defaults to FALSE, where the line is plotted.}
+\item{Posteventcoeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off. Should be TRUE or FALSE. Defaults to TRUE.}
+
+\item{Nozeroline}{Whether or not to plot a dashed horizontal line at y = 0. Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.}
 
 \item{Smpath}{PLACE HOLDER}
 }
@@ -48,6 +51,7 @@ post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRU
 CI = .95,
 Supt = .95,
 seed = 1234,
+Addmean = FALSE,
 Preeventcoeffs = TRUE,
 Posteventcoeffs = TRUE,
 Nozeroline = FALSE,

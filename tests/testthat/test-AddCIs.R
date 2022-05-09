@@ -70,7 +70,7 @@ test_that("correctly recognizes wrong inputs for CI argument", {
 })
 
 test_that("correctly calculates CI at 0.95", {
-    df_test <- read.csv("./input/df_test_AddCI.csv")
+    df_test <- as.data.frame(data.table::fread("./input/df_test_AddCI.csv"))
 
     policyvar <- "z"
     normalization_column <- "z_fd"
@@ -85,7 +85,7 @@ test_that("correctly calculates CI at 0.95", {
 })
 
 test_that("correctly ignores normalization_column", {
-    df_test <- read.csv("./input/df_test_AddCI.csv")
+    df_test <- as.data.frame(data.table::fread("./input/df_test_AddCI.csv"))
 
     policyvar <- "z"
     normalization_column <- "z_fd"
@@ -96,6 +96,4 @@ test_that("correctly ignores normalization_column", {
     expect_true(is.na(df_test_CI$ci_upper[df_test_CI$term == "z_fd"]))
 
 })
-
-
 

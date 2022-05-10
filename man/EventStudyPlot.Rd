@@ -6,6 +6,8 @@
 \usage{
 EventStudyPlot(
   estimates,
+  xtitle = "Event time",
+  ytitle = "Coefficient",
   CI = 0.95,
   Supt = 0.95,
   seed = 1234,
@@ -18,6 +20,10 @@ EventStudyPlot(
 }
 \arguments{
 \item{estimates}{The output from calling EventStudy(). Should be a list of length 2}
+
+\item{xtitle}{The title for the x-axis. Should be a string. Defaults to "Event time".}
+
+\item{ytitle}{The title for the y-axis. Should be a string. Defaults to "Coefficient".}
 
 \item{CI}{Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
 
@@ -48,6 +54,8 @@ EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynami
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+xtitle = "Event Time",
+ytitle = "Event-Study Coefficients",
 CI = .95,
 Supt = .95,
 seed = 1234,

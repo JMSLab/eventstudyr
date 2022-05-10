@@ -14,8 +14,23 @@ test_that("The x-axis and y-axis labels are correct", {
                         Nozeroline = FALSE,
                         Smpath = NULL)
 
-    expect_equal(p$labels$x, "Event time")
-    expect_equal(p$labels$y, "Coefficient")
+    p_labels <- EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                                               policyvar = "z", idvar = "id", timevar = "t",
+                                               controls = "x_r", FE = TRUE, TFE = TRUE,
+                                               post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                        CI = .95,
+                        xtitle = "Event Time",
+                        ytitle = "Event-Study Coefficients",
+                        Supt = .95,
+                        seed = 1234,
+                        Addmean = TRUE,
+                        Preeventcoeffs = TRUE,
+                        Posteventcoeffs = TRUE,
+                        Nozeroline = FALSE,
+                        Smpath = NULL)
+
+    expect_equal(p_labels$labels$x, "Event Time")
+    expect_equal(p_labels$labels$y, "Event-Study Coefficients")
 
 
 })

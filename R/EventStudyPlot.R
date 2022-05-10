@@ -2,6 +2,8 @@
 #'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
 #'
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2
+#' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
+#' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param CI Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
 #' 0 and 1, inclusive. Defaults to .95
@@ -22,6 +24,8 @@
 #'policyvar = "z", idvar = "id", timevar = "t",
 #'controls = "x_r", FE = TRUE, TFE = TRUE,
 #'post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+#'xtitle = "Event Time",
+#'ytitle = "Event-Study Coefficients",
 #'CI = .95,
 #'Supt = .95,
 #'seed = 1234,
@@ -31,7 +35,11 @@
 #'Nozeroline = FALSE,
 #'Smpath = NULL)
 
-EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", CI = .95, Supt = .95, seed = 1234, Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
+
+    if (!is.character(xtitle)) {stop("xtitle should be a character.")}
+    if (!is.character(ytitle)) {stop("ytitle should be a character.")}
+    if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
@@ -124,8 +132,8 @@ EventStudyPlot <- function(estimates, CI = .95, Supt = .95, seed = 1234, Addmean
         p_AddMeans +
         ggplot2::geom_point(color = "#006600", size = 3) +
         ggplot2::labs(
-            x = "Event time",
-            y = "Coefficient",
+            x = xtitle,
+            y = ytitle,
             caption = text_caption
             ) +
         ggplot2::theme_bw() +

@@ -5,6 +5,7 @@ test_that("The x-axis and y-axis labels are correct", {
                                                policyvar = "z", idvar = "id", timevar = "t",
                                                controls = "x_r", FE = TRUE, TFE = TRUE,
                                                post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                        ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                         CI = .95,
                         Supt = .95,
                         seed = 1234,
@@ -18,6 +19,7 @@ test_that("The x-axis and y-axis labels are correct", {
                                                policyvar = "z", idvar = "id", timevar = "t",
                                                controls = "x_r", FE = TRUE, TFE = TRUE,
                                                post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                        ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                         CI = .95,
                         xtitle = "Event Time",
                         ytitle = "Event-Study Coefficients",
@@ -35,12 +37,58 @@ test_that("The x-axis and y-axis labels are correct", {
 
 })
 
+test_that("The x and y axis breaks and limits are correct", {
+
+    p_Addmean <- EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                                          policyvar = "z", idvar = "id", timevar = "t",
+                                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                   xtitle = "Event Time",
+                   ytitle = "Event-Study Coefficients",
+                   ybreaks = c(-1.5, -.5, 0, .5, 1.5),
+                   CI = .95,
+                   Supt = .95,
+                   seed = 1234,
+                   Addmean = TRUE,
+                   Preeventcoeffs = TRUE,
+                   Posteventcoeffs = TRUE,
+                   Nozeroline = FALSE,
+                   Smpath = NULL)
+
+    p_without_Addmean <- EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                                                       policyvar = "z", idvar = "id", timevar = "t",
+                                                       controls = "x_r", FE = TRUE, TFE = TRUE,
+                                                       post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                xtitle = "Event Time",
+                                ytitle = "Event-Study Coefficients",
+                                ybreaks = c(-1.5, -.5, 0, .5, 1.5),
+                                CI = .95,
+                                Supt = .95,
+                                seed = 1234,
+                                Addmean = FALSE,
+                                Preeventcoeffs = TRUE,
+                                Posteventcoeffs = TRUE,
+                                Nozeroline = FALSE,
+                                Smpath = NULL)
+
+    v_limits_addmeans <- p_Addmean$scales$scales[[1]]$limits
+    v_limits_without_addmeans <- p_without_Addmean$scales$scales[[1]]$limits
+    v_breaks_addmeans <- p_Addmean$scales$scales[[1]]$breaks
+    v_breaks_without_addmeans <- p_without_Addmean$scales$scales[[1]]$breaks
+
+    expect_equal(v_limits_addmeans, c(-1.5, 1.5))
+    expect_equal(v_limits_without_addmeans, c(-1.5, 1.5))
+    expect_equal(v_breaks_addmeans, c(-1.5, -.5, 0, .5, 1.5))
+    expect_equal(v_breaks_without_addmeans, c(-1.5, -.5, 0, .5, 1.5))
+})
+
 test_that("Sup-t bands are appropriately present or absent", {
 
     p_with_supt <- EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                                                          policyvar = "z", idvar = "id", timevar = "t",
                                                          controls = "x_r", FE = TRUE, TFE = TRUE,
                                                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                  ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                   CI = .95,
                                   Supt = .95,
                                   seed = 1234,
@@ -54,6 +102,7 @@ test_that("Sup-t bands are appropriately present or absent", {
                                                             policyvar = "z", idvar = "id", timevar = "t",
                                                             controls = "x_r", FE = TRUE, TFE = TRUE,
                                                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                     ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                      CI = .95,
                                      Supt = NULL,
                                      seed = 1234,
@@ -76,6 +125,7 @@ test_that("Confidence intervals are appropriately present or absent", {
                                                          policyvar = "z", idvar = "id", timevar = "t",
                                                          controls = "x_r", FE = TRUE, TFE = TRUE,
                                                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                  ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                   CI = .95,
                                   Supt = NULL,
                                   seed = 1234,
@@ -89,6 +139,7 @@ test_that("Confidence intervals are appropriately present or absent", {
                                                             policyvar = "z", idvar = "id", timevar = "t",
                                                             controls = "x_r", FE = TRUE, TFE = TRUE,
                                                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                     ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                      CI = NULL,
                                      Supt = NULL,
                                      seed = 1234,
@@ -111,6 +162,7 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
                                                        policyvar = "z", idvar = "id", timevar = "t",
                                                        controls = "x_r", FE = TRUE, TFE = TRUE,
                                                        post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                 CI = .95,
                                 Supt = NULL,
                                 seed = 1234,
@@ -124,6 +176,7 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
                                                           policyvar = "z", idvar = "id", timevar = "t",
                                                           controls = "x_r", FE = TRUE, TFE = TRUE,
                                                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                   ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                    CI = NULL,
                                    Supt = NULL,
                                    seed = 1234,
@@ -137,6 +190,7 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
                                                                 policyvar = "z", idvar = "id", timevar = "t",
                                                                 controls = "x_r", FE = TRUE, TFE = TRUE,
                                                                 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                         ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                          CI = NULL,
                                          Supt = NULL,
                                          seed = 1234,
@@ -150,6 +204,7 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
                                                                  policyvar = "z", idvar = "id", timevar = "t",
                                                                  controls = "x_r", FE = TRUE, TFE = TRUE,
                                                                  post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                                          ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                                           CI = NULL,
                                           Supt = NULL,
                                           seed = 1234,
@@ -206,6 +261,7 @@ test_that("Sup-t bands are wider than confidence intervals", {
                                                policyvar = "z", idvar = "id", timevar = "t",
                                                controls = "x_r", FE = TRUE, TFE = TRUE,
                                                post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+                        ybreaks = c(-1.5, -.5, 0, .5, 1.5),
                         CI = .95,
                         Supt = .95,
                         seed = 1234,

@@ -4,6 +4,7 @@
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
+#' @param ybreaks A vector containing the desired breaks for the y-axis. Should be a numeric vector that contains 0.
 #' @param CI Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
 #' 0 and 1, inclusive. Defaults to .95
@@ -17,15 +18,15 @@
 #'
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
-#' @importFrom tidyr pivot_longer
 #' @export
 #'
 #' @examples EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #'policyvar = "z", idvar = "id", timevar = "t",
 #'controls = "x_r", FE = TRUE, TFE = TRUE,
 #'post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
-#'xtitle = "Event Time",
-#'ytitle = "Event-Study Coefficients",
+#'xtitle = "Event time",
+#'ytitle = "Coefficient",
+#'ybreaks = c(-1.5, -.5, 0, .5, 1.5),
 #'CI = .95,
 #'Supt = .95,
 #'seed = 1234,
@@ -35,11 +36,14 @@
 #'Nozeroline = FALSE,
 #'Smpath = NULL)
 
-EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", CI = .95, Supt = .95, seed = 1234, Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, CI = .95, Supt = .95, seed = 1234,
+                           Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
     if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
+    if (class(ybreaks) != "numeric") {stop("ybreaks should be a numeric vector.")}
+    if (! 0 %in% ybreaks) {stop("0 needs to be one of the specified breaks.")}
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
@@ -103,23 +107,16 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
     df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column)
 
-    p_AddMeans <- if (Addmean) {
+    y_axis_labels <- ybreaks
+
+    if (Addmean) {
 
         y_mean <- AddMeans(df_data, normalization_column, policyvar, outcomevar)
-        df_estimate_columns <- dplyr::select(df_plotting, -term, -std.error:-outcome, -label)
-        df_estimates_longer <- tidyr::pivot_longer(df_estimate_columns, dplyr::everything(), names_to = "term", values_to = "value")
 
-        largest_y_value <- max(abs(df_estimates_longer$value))
-        largest_rounded_y_value <- ceiling(largest_y_value)
+        index_zero <- which(ybreaks == 0)
+        y_axis_labels[index_zero] <- paste0(y_axis_labels[index_zero], " (", round(y_mean, 2), ")")
 
-        y_axis_breaks <- seq(largest_rounded_y_value, - largest_rounded_y_value, length.out = 5)
-        y_axis_labels <- c(y_axis_breaks[1:2],
-                           paste0(y_axis_breaks[3], " (", round(y_mean, 2), ")"),
-                           y_axis_breaks[4:5])
-
-        ggplot2::scale_y_continuous(breaks = y_axis_breaks, labels = y_axis_labels)
-
-    } else NULL
+    }
 
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
     p_Supt <- if(plot_Supt) ggplot2::geom_linerange(data = df_plotting, ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
@@ -129,13 +126,14 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         p_Nozeroline +
         p_Supt +
         p_CI +
-        p_AddMeans +
         ggplot2::geom_point(color = "#006600", size = 3) +
         ggplot2::labs(
             x = xtitle,
             y = ytitle,
             caption = text_caption
             ) +
+        ggplot2::scale_y_continuous(breaks = ybreaks, labels = y_axis_labels,
+                                    limits = c(min(ybreaks), max(ybreaks))) +
         ggplot2::theme_bw() +
         ggplot2::theme(
             panel.grid = ggplot2::element_blank()

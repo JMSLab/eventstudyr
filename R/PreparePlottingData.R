@@ -60,22 +60,24 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, 
     largest_lead <- pre + overidpre
     largest_lag <- post + overidpost - 1
 
+    integer_regex <- "[0-9]+$"
+
     first_lead <- paste0(policyvar, "_lead", largest_lead)
-    first_lead_integer <- as.integer(stringr::str_extract(first_lead, "[0-9]+$")) + 1
+    first_lead_integer <- as.integer(stringr::str_extract(first_lead, integer_regex)) + 1
     first_lead_label <- paste0("-", first_lead_integer, "+")
 
     v_leads <- paste0(policyvar, "_fd_lead", largest_lead:1)
-    v_leads_integer <- stringr::str_extract(v_leads, "[0-9]+$")
+    v_leads_integer <- stringr::str_extract(v_leads, integer_regex)
     v_leads_label <- paste0("-", v_leads_integer)
 
     t_0_term <- paste0(policyvar, "_fd")
     t_0_term_label <- "0"
 
     v_lags <- paste0(policyvar, "_fd_lag", 1:largest_lag)
-    v_lags_label <- stringr::str_extract(v_lags, "[0-9]+$")
+    v_lags_label <- stringr::str_extract(v_lags, integer_regex)
 
     last_lag <- paste0(policyvar, "_lag", largest_lag + 1)
-    last_lag_integer <- stringr::str_extract(last_lag, "[0-9]+$")
+    last_lag_integer <- stringr::str_extract(last_lag, integer_regex)
     last_lag_label <- paste0(last_lag_integer, "+")
 
 

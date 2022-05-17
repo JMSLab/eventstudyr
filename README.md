@@ -1,6 +1,6 @@
 # eventstudyr
 
-## Workflow
+## Development Workflow
 
 1. Create a function using `usethis::use_r("functionName")`
 2. Add `if(fail_condition){stop("message here")}` or `if(fial_condition){warning("message here")}` statements that perform checks on all of the functions' arguments and throw an appropriate error or warning

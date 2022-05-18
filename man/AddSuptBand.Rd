@@ -2,7 +2,7 @@
 % Please edit documentation in R/AddSuptBand.R
 \name{AddSuptBand}
 \alias{AddSuptBand}
-\title{Title}
+\title{Produces sup-t bands for the event-study coefficients.}
 \usage{
 AddSuptBand(
   estimates,
@@ -30,7 +30,9 @@ in the second element of the EventStudy function. Should be a vector of strings.
 A data.frame that contains the upper and lower sup-t band values for each event-study coefficient.
 }
 \description{
-Title
+Source code from Ryan Kessler (2022). \href{https://github.com/ryanedmundkessler/suptCriticalValue}{suptCriticalValue}: Computes critical values
+underlying simultaneous sup-t confidence bands. R package version
+0.1.0.
 }
 \examples{
 AddSuptBand(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",

@@ -1,5 +1,9 @@
 
-#' Title
+#' Produces sup-t bands for the event-study coefficients.
+#'
+#' @description Source code from Ryan Kessler (2022). [suptCriticalValue](https://github.com/ryanedmundkessler/suptCriticalValue): Computes critical values
+#' underlying simultaneous sup-t confidence bands. R package version
+#' 0.1.0.
 #'
 #' @param estimates The first element extracted from the EventStudy function. Should be a list.
 #' @param num_sim The number of simulations used in generating the sup-t bands. Should be a natural number

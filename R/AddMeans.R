@@ -9,7 +9,15 @@
 
 AddMeans <- function(df, normalization_column, policyvar, outcomevar,
                      custom_scalar = NULL) {
+                     
+    if (! is.data.frame(df)) {stop("df should be a data frame.")}
+    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
+    if (! is.character(policyvar)) {stop("policyvar should be a character.")}
+    if (! is.character(normalization_column)) {stop("normalization_column should be a character.")}                         
+                     
     if (is.null(custom_scalar)) {
+    
+        if (! (is.numeric(custom_scalar))) {stop("custom_scalar should be numeric.")}
 
         if (grepl(paste0(policyvar, "_lead"), normalization_column)) {
             df_change <- df[df[, normalization_column] == 0, ]

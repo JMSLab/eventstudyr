@@ -2,7 +2,7 @@
 #'
 #' @param df_estimates, A data frame with columns for term, estimate, and standard error.
 #' @param policyvar, A string with the name of the policy variable used in EventStudy().
-#' @param normalization_column, A string specifying the name of the column used to normalize in EventStudy().
+#' @param eventstudy_coefficients, A list specifying the names of the columns that were not normalized in EventStudy().
 #' @param CI, Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.
 #'
 #'
@@ -20,23 +20,20 @@
 #'
 #' df_estimates_tidy <- AddCIs(df_estimates_tidy,
 #'                             policyvar = "z",
-#'                             normalization_column = "z_fd_lead3",
+#'                             eventstudy_coefficients = estimates[[2]]$v_eventstudy_coefficients,
 #'                             CI = 0.95)
 #'
 #'
 
-AddCIs <- function(df_estimates, policyvar, normalization_column, CI = 0.95) {
+AddCIs <- function(df_estimates, policyvar, eventstudy_coefficients, CI = 0.95) {
     if (class(df_estimates) != "data.frame") {stop("df_estimates should be a data frame")}
     if (! "term" %in% colnames(df_estimates) | ! "estimate" %in% colnames(df_estimates) |
         ! "std.error" %in% colnames(df_estimates)) {stop("df_estimates should include columns 'term', 'estimate', and 'std.error'")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
-    if (! is.character(normalization_column)) {stop("normalize should be a character.")}
-    if (! is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a rational number between 0 and 1, inclusive.")}
+    if (! is.character(eventstudy_coefficients)) {stop("eventstudy_coefficients should be a character.")}
+    if (! is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a real number between 0 and 1, inclusive.")}
 
-    terms <- df_estimates$term[(startsWith(df_estimates$term, paste0(policyvar, "_fd"))  |
-                               startsWith(df_estimates$term, paste0(policyvar, "_lead")) |
-                               startsWith(df_estimates$term, paste0(policyvar, "_lag"))) &
-                               df_estimates$term != normalization_column]
+    terms <- v_eventstudy_coefficients
 
     percentile <- CI + ((1 - CI)/2)
 

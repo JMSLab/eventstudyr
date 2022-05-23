@@ -33,7 +33,7 @@ AddCIs <- function(df_estimates, policyvar, eventstudy_coefficients, CI = 0.95) 
     if (! is.character(eventstudy_coefficients)) {stop("eventstudy_coefficients should be a character.")}
     if (! is.numeric(CI) | CI < 0 | CI > 1) {stop("CI should be a real number between 0 and 1, inclusive.")}
 
-    terms <- v_eventstudy_coefficients
+    terms <- eventstudy_coefficients
 
     percentile <- CI + ((1 - CI)/2)
 

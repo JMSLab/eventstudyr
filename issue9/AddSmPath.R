@@ -22,21 +22,24 @@ AddSmPath <- function(dhat, Vhat, norm_index,
                         Wcritic, maxorder) {
     Wstart = 1e6
 
-    r = 2
-    while (r <= maxorder & Wstart >= Wcritic) {
+    error = F
+    r     = 0
+    while (r <= maxorder & Wstart >= Wcritic ) {
       print(r)
       min_results <- PolyWaldMin(d, invV, normalized_index, r)
 
       print(min_results)
       if (is.null(min_results)) {
-        return("Error.")
+        error = T
+        break
       } else {
         Wstart = min_results$W
         r      = r + 1
       }
     }
 
-    return(r - 1)
+    if (error) return("Error")
+    else       return(r - 1)
   }
 
   PolyWaldMin <- function(d, invV, normalized_index, r) {
@@ -47,6 +50,7 @@ AddSmPath <- function(dhat, Vhat, norm_index,
     #   r = degree of polynomial
 
     p = length(d)
+    error = F
 
     if (r == 0) {
       trfit <- rep(0, p)
@@ -78,7 +82,7 @@ AddSmPath <- function(dhat, Vhat, norm_index,
           print("The solver in PolyWaldMin failed. Here is the original error message:")
           print(cond)
 
-          return(NULL)
+          error <<- T
         }
       )
       a_short <- a_long[2:(r+1)]
@@ -87,8 +91,12 @@ AddSmPath <- function(dhat, Vhat, norm_index,
       W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
     }
 
-    return(list("trfit" = trfit,   "W"    = W,
-                "a"     = a_short, "Fmat" = Fmat))
+    if (error) {
+      return(NULL)
+    } else {
+      return(list("trfit" = trfit,   "W"    = W,
+                  "a"     = a_short, "Fmat" = Fmat))
+    }
   }
 
 

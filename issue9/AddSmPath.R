@@ -1,13 +1,15 @@
-AddSmPath <- function(dhat, Vhat, norm_index,
+library(pracma) # install.packages("pracma")
+
+AddSmPath <- function(dhat, Vhat,
                       alpha = 0.05, maxiter = 30, maxorder = 10) {
 
   Main <- function() {
 
     p          = length(dhat)
-    invVhat    = solve(Vhat)
+    invVhat    = pinv(Vhat)
     Wcritic    = qchisq(1-alpha, p)
 
-    order <- FindOrder(d, invVhat, norm_index,
+    order <- FindOrder(dhat, invVhat,
                        Wcritic, maxorder)
 
     if (order == "Error") {
@@ -18,17 +20,18 @@ AddSmPath <- function(dhat, Vhat, norm_index,
     }
   }
 
-  FindOrder <- function(d, invV, normalized_index,
-                        Wcritic, maxorder) {
-    Wstart = 1e6
+  FindOrder <- function(d, invV, Wcritic, maxorder) {
+    normalized_index <- which(d %in% c(0))
 
+
+    Wstart = 1e6
     error = F
     r     = 0
+
     while (r <= maxorder & Wstart >= Wcritic ) {
-      print(r)
+
       min_results <- PolyWaldMin(d, invV, normalized_index, r)
 
-      print(min_results)
       if (is.null(min_results)) {
         error = T
         break
@@ -60,8 +63,8 @@ AddSmPath <- function(dhat, Vhat, norm_index,
     else {
 
       k    <- seq(0, p-1)/(p-1)
-      Fmat <- sapply(seq(1, r),
-                     function(j) {k^(j-1)})
+      Fmat <- sapply(seq(0, r),
+                     function(j) {k^(j)})
 
       Anorm   <- matrix(Fmat[normalized_index,])
       ZeroMat <- matrix(0, nrow = length(normalized_index),
@@ -76,7 +79,11 @@ AddSmPath <- function(dhat, Vhat, norm_index,
 
       tryCatch(
         {
-          a_long  <- solve(A, b)
+          a_long <- solve(A, b)
+          a      <- a_long[1:(r+1)]
+
+          trfit <- Fmat%*%a
+          W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
         },
         error = function(cond) {
           print("The solver in PolyWaldMin failed. Here is the original error message:")
@@ -85,17 +92,14 @@ AddSmPath <- function(dhat, Vhat, norm_index,
           error <<- T
         }
       )
-      a_short <- a_long[2:(r+1)]
-
-      trfit <- Fmat%*%a_short
-      W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
     }
 
     if (error) {
       return(NULL)
     } else {
-      return(list("trfit" = trfit,   "W"    = W,
-                  "a"     = a_short, "Fmat" = Fmat))
+      return(list("trfit" = trfit,
+                  "W"     = W,
+                  "a"     = a))
     }
   }
 

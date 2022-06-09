@@ -5,7 +5,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
 
     policyvar <- "z"
-    eventstudy_coefficients <- estimates[[2]]$v_eventstudy_coefficients
+    eventstudy_coefficients <- estimate[[2]]$v_eventstudy_coefficients
 
     expect_error(AddCIs(df_test, policyvar, eventstudy_coefficients, 0.95))
 })
@@ -19,7 +19,7 @@ test_that("correctly recognizes missing columns in estimates argument", {
     df_test <- estimatr::tidy(estimate[[1]])
 
     policyvar <- "z"
-    eventstudy_coefficients <- estimates[[2]]$v_eventstudy_coefficients
+    eventstudy_coefficients <- estimate[[2]]$v_eventstudy_coefficients
 
     df_test_noterm <- df_test %>% rename(wrongname = term)
     df_test_noest  <- df_test %>% rename(wrongname = estimate)
@@ -39,7 +39,7 @@ test_that("correctly recognizes wrong inputs for policyvar argument", {
     df_test <- estimatr::tidy(estimate[[1]])
 
     policyvar <- 1
-    eventstudy_coefficients <- estimates[[2]]$v_eventstudy_coefficients
+    eventstudy_coefficients <- estimate[[2]]$v_eventstudy_coefficients
 
     expect_error(AddCIs(df_test, policyvar, eventstudy_coefficients, 0.95))
 })
@@ -53,7 +53,7 @@ test_that("correctly recognizes wrong inputs for CI argument", {
     df_test <- estimatr::tidy(estimate[[1]])
 
     policyvar <- "z"
-    eventstudy_coefficients <- estimates[[2]]$v_eventstudy_coefficients
+    eventstudy_coefficients <- estimate[[2]]$v_eventstudy_coefficients
 
     expect_error(AddCIs(df_test, policyvar, eventstudy_coefficients, "95"))
     expect_error(AddCIs(df_test, policyvar, eventstudy_coefficients,  95))
@@ -64,7 +64,7 @@ test_that("correctly calculates CI at 0.95", {
     df_test <- as.data.frame(data.table::fread("./input/df_test_AddCI.csv"))
 
     policyvar <- "z"
-    normalization_column <- c("z_fd_lag1", "z_fd_lead1")
+    eventstudy_coefficients <- c("z_fd_lag1", "z_fd_lead1")
 
     df_test_CI <- AddCIs(df_test, policyvar, eventstudy_coefficients, 0.95)
 

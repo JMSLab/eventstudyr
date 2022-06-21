@@ -64,7 +64,7 @@ test_that("correctly calculates CI at 0.95", {
     df_test <- as.data.frame(data.table::fread("./input/df_test_AddCI.csv"))
 
     policyvar <- "z"
-    normalization_column <- c("z_fd_lag1", "z_fd_lead1")
+    eventstudy_coefficients <- c("z_fd_lag1", "z_fd_lead1")
 
     df_test_CI <- AddCIs(df_test, policyvar, eventstudy_coefficients, 0.95)
 

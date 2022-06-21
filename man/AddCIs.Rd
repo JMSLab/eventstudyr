@@ -11,9 +11,9 @@ AddCIs(df_estimates, policyvar, eventstudy_coefficients, CI = 0.95)
 
 \item{policyvar, }{A string with the name of the policy variable used in EventStudy().}
 
-\item{eventstudy_coefficients, }{A vector specifying the names of the columns that were not normalized in EventStudy().}
+\item{eventstudy_coefficients, }{A list specifying the names of the columns that were not normalized in EventStudy().}
 
-\item{CI, }{Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.}
+\item{CI, }{Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
 }
 \description{
 Adds columns to data frame containing confidence intervals around provided estimates.

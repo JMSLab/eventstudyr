@@ -2,8 +2,8 @@
 #'
 #' @param df_estimates, A data frame with columns for term, estimate, and standard error.
 #' @param policyvar, A string with the name of the policy variable used in EventStudy().
-#' @param eventstudy_coefficients, A vector specifying the names of the columns that were not normalized in EventStudy().
-#' @param CI, Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.
+#' @param eventstudy_coefficients, A list specifying the names of the columns that were not normalized in EventStudy().
+#' @param CI, Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #'
 #'
 #' @import dplyr

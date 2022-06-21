@@ -4,14 +4,14 @@
 \alias{AddCIs}
 \title{Adds columns to data frame containing confidence intervals around provided estimates.}
 \usage{
-AddCIs(df_estimates, policyvar, normalization_column, CI = 0.95)
+AddCIs(df_estimates, policyvar, eventstudy_coefficients, CI = 0.95)
 }
 \arguments{
 \item{df_estimates, }{A data frame with columns for term, estimate, and standard error.}
 
 \item{policyvar, }{A string with the name of the policy variable used in EventStudy().}
 
-\item{normalization_column, }{A string specifying the name of the column used to normalize in EventStudy().}
+\item{eventstudy_coefficients, }{A vector specifying the names of the columns that were not normalized in EventStudy().}
 
 \item{CI, }{Confidence interval expressed as a rational number between 0 and 1, inclusively. Defaults to 0.95.}
 }
@@ -29,7 +29,7 @@ df_estimates_tidy <- estimatr::tidy(estimates[[1]])
 
 df_estimates_tidy <- AddCIs(df_estimates_tidy,
                             policyvar = "z",
-                            normalization_column = "z_fd_lead3",
+                            eventstudy_coefficients = estimates[[2]]$eventstudy_coefficients,
                             CI = 0.95)
 
 

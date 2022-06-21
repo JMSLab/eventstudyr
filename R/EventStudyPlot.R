@@ -57,21 +57,21 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     overidpre <- estimates[[2]]$overidpre
     normalize <- estimates[[2]]$normalize
     normalization_column <- estimates[[2]]$normalization_column
-    v_eventstudy_coefficients <- estimates[[2]]$v_eventstudy_coefficients
+    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
 
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
 
     if (plot_Supt) {
 
         df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt,
-                                         seed = seed, eventstudy_coefficients = v_eventstudy_coefficients)
+                                         seed = seed, eventstudy_coefficients = eventstudy_coefficients)
     }
 
     plot_CI <- if(!is.null(CI)) TRUE else FALSE
 
     if (plot_CI) {
 
-        df_estimates_tidy <-  df_CI <- AddCIs(df_estimates_tidy, policyvar, v_eventstudy_coefficients, CI)
+        df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, CI)
     }
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)

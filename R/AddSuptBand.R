@@ -29,7 +29,7 @@
 #' eventstudy_coefficients = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[2]]$v_eventstudy_coefficients)
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[2]]$eventstudy_coefficients)
 #'
 
 AddSuptBand <- function(estimates, num_sim, conf_level = .95, seed = 1234, eventstudy_coefficients) {

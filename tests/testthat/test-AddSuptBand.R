@@ -5,7 +5,7 @@ test_that("check that the correct part of vcov matrix is used", {
                                     TFE = TRUE, post = 2, pre = 2, overidpre = 2,
                                     overidpost = 2, normalize = -1, cluster = TRUE)
 
-    eventstudy_coefficients <- sample_estimation[[2]]$v_eventstudy_coefficients
+    eventstudy_coefficients <- sample_estimation[[2]]$eventstudy_coefficients
     vcov_matrix_all <- sample_estimation[[1]]$vcov
     v_terms_to_keep <- colnames(vcov_matrix_all) %in% eventstudy_coefficients
     vcov_matrix     <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]

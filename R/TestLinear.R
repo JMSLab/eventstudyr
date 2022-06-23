@@ -30,8 +30,8 @@ TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TR
     if (class(estimates[[2]]) != "list" | typeof(estimates[[2]]) != "list") {
         stop("The second element of estimates should be a list with argument definitions, an output of EventStudy().")
     }
-    if (class(pretrends) != "logical"){stop("pretrends should be a logical. Default value is false.")}
-    if (class(leveling_off) != "logical"){stop("leveling_off should be a logical. Default value is false.")}
+    if (class(pretrends) != "logical"){stop("pretrends should be a logical. Default value is TRUE")}
+    if (class(leveling_off) != "logical"){stop("leveling_off should be a logical. Default value is TRUE")}
 
     estimates[[1]]$df.residual <- estimates[[1]]$nclusters - 1
 

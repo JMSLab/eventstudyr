@@ -4,6 +4,7 @@
 #' Should be an output of EventStudy().
 #' @param test, The hypothesis to be estimated. Accepts inputs that can be passed to hypothesis.matrix
 #' argument in linearHypothesis() function from car package.
+#' @param test_name, Name for test input by user. Defaults to "User Test."
 #' @param pretrends, If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.
 #' @param leveling_off, If TRUE, uses post and overidpost from estimates to test for leveling-off. Defaults to TRUE.
 #'
@@ -17,11 +18,11 @@
 #'                         post = 3, pre = 2, overidpre = 4, overidpost = 5,
 #'                         normalize = - 3, cluster = TRUE)
 #'
-#' TestLinear(estimates, test = "z_fd_lag1 = z_fd", pretrends = TRUE, leveling_off = TRUE)
+#' TestLinear(estimates, test = "z_fd_lag1 = z_fd", test_name = "Hypothesis Test", pretrends = TRUE, leveling_off = TRUE)
 #'
 
 
-TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TRUE){
+TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends = TRUE, leveling_off = TRUE){
     if (class(estimates) != "list" | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
     if ((class(estimates[[1]]) != "lm_robust") | (typeof(estimates[[1]]) != "list")) {
@@ -30,6 +31,7 @@ TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TR
     if (class(estimates[[2]]) != "list" | typeof(estimates[[2]]) != "list") {
         stop("The second element of estimates should be a list with argument definitions, an output of EventStudy().")
     }
+    if (class(test_name) != "character"){stop("test_name should be of class character. Defaults to 'User Test'.")}
     if (class(pretrends) != "logical"){stop("pretrends should be a logical. Default value is TRUE")}
     if (class(leveling_off) != "logical"){stop("leveling_off should be a logical. Default value is TRUE")}
 
@@ -44,7 +46,7 @@ TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TR
     if (!is.na(test)){
         user_results <- car::linearHypothesis(estimates[[1]], test, test = "F")
 
-        temp <- data.frame("Test"    = "UserTest",
+        temp <- data.frame("Test"    = test_name,
                            "F"       = user_results[2, ]$F,
                            "p.value" = user_results[2, ]$`Pr(>F)`)
         test_results <- rbind(test_results, temp)

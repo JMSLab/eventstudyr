@@ -46,7 +46,7 @@ test_that("produces only functions that are specified", {
 
     df <- TestLinear(estimate, test, pretrends = F, leveling_off = F)
     expect_equal(length(df$Test), 1)
-    expect_equal(df$Test, "UserTest")
+    expect_equal(df$Test, "User Test")
 
     df <- TestLinear(estimate, pretrends = T, leveling_off = F)
     expect_equal(length(df$Test), 1)
@@ -58,12 +58,12 @@ test_that("produces only functions that are specified", {
 
     df <- TestLinear(estimate, test, pretrends = T, leveling_off = F)
     expect_equal(length(df$Test), 2)
-    tests <- c("UserTest", "Pre-Trends")
+    tests <- c("User Test", "Pre-Trends")
     expect_equal(df$Test, tests)
 
     df <- TestLinear(estimate, test, pretrends = F, leveling_off = T)
     expect_equal(length(df$Test), 2)
-    tests <- c("UserTest", "Leveling-Off")
+    tests <- c("User Test", "Leveling-Off")
     expect_equal(df$Test, tests)
 
     df <- TestLinear(estimate, pretrends = T, leveling_off = T)
@@ -73,7 +73,7 @@ test_that("produces only functions that are specified", {
 
     df <- TestLinear(estimate, test, pretrends = T, leveling_off = T)
     expect_equal(length(df$Test), 3)
-    tests <- c("UserTest", "Pre-Trends", "Leveling-Off")
+    tests <- c("User Test", "Pre-Trends", "Leveling-Off")
     expect_equal(df$Test, tests)
 
 

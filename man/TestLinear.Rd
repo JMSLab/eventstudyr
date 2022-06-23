@@ -4,7 +4,13 @@
 \alias{TestLinear}
 \title{This function can be used to perform tests of linear hypotheses.}
 \usage{
-TestLinear(estimates, test = NA, pretrends = TRUE, leveling_off = TRUE)
+TestLinear(
+  estimates,
+  test = NA,
+  test_name = "User Test",
+  pretrends = TRUE,
+  leveling_off = TRUE
+)
 }
 \arguments{
 \item{estimates, }{A list of length 2 containing estimation results and model information.
@@ -12,6 +18,8 @@ Should be an output of EventStudy().}
 
 \item{test, }{The hypothesis to be estimated. Accepts inputs that can be passed to hypothesis.matrix
 argument in linearHypothesis() function from car package.}
+
+\item{test_name, }{Name for test input by user. Defaults to "User Test."}
 
 \item{pretrends, }{If TRUE, uses pre and overidpre from estimates to test for pre-trends. Defaults to TRUE.}
 
@@ -27,6 +35,6 @@ estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar 
                         post = 3, pre = 2, overidpre = 4, overidpost = 5,
                         normalize = - 3, cluster = TRUE)
 
-TestLinear(estimates, test = "z_fd_lag1 = z_fd", pretrends = TRUE, leveling_off = TRUE)
+TestLinear(estimates, test = "z_fd_lag1 = z_fd", test_name = "Hypothesis Test", pretrends = TRUE, leveling_off = TRUE)
 
 }

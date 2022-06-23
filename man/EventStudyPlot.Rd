@@ -9,7 +9,7 @@ EventStudyPlot(
   xtitle = "Event time",
   ytitle = "Coefficient",
   ybreaks,
-  CI = 0.95,
+  conf_level = 0.95,
   Supt = 0.95,
   seed = 1234,
   Addmean = FALSE,
@@ -28,7 +28,7 @@ EventStudyPlot(
 
 \item{ybreaks}{A vector containing the desired breaks for the y-axis. Should be a numeric vector that contains 0.}
 
-\item{CI}{Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
+\item{conf_level}{Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
 
 \item{Supt}{The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
 0 and 1, inclusive. Defaults to .95}
@@ -60,7 +60,7 @@ post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRU
 xtitle = "Event time",
 ytitle = "Coefficient",
 ybreaks = c(-1.5, -.5, 0, .5, 1.5),
-CI = .95,
+conf_level = .95,
 Supt = .95,
 seed = 1234,
 Addmean = FALSE,

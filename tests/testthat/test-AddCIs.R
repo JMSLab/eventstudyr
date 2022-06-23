@@ -44,7 +44,7 @@ test_that("correctly recognizes wrong inputs for policyvar argument", {
     expect_error(AddCIs(df_test, policyvar, eventstudy_coefficients, 0.95))
 })
 
-test_that("correctly recognizes wrong inputs for CI argument", {
+test_that("correctly recognizes wrong inputs for conf_level argument", {
     estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                      policyvar = "z", idvar = "id", timevar = "t",
                      controls = "x_r", FE = TRUE, TFE = TRUE,
@@ -60,7 +60,7 @@ test_that("correctly recognizes wrong inputs for CI argument", {
     expect_error(AddCIs(df_test, policyvar, eventstudy_coefficients,-.95))
 })
 
-test_that("correctly calculates CI at 0.95", {
+test_that("correctly calculates conf_level at 0.95", {
     df_test <- as.data.frame(data.table::fread("./input/df_test_AddCI.csv"))
 
     policyvar <- "z"

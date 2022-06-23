@@ -5,7 +5,7 @@
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis. Should be a numeric vector that contains 0.
-#' @param CI Confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
+#' @param conf_level Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
 #' 0 and 1, inclusive. Defaults to .95
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
@@ -27,7 +27,7 @@
 #'xtitle = "Event time",
 #'ytitle = "Coefficient",
 #'ybreaks = c(-1.5, -.5, 0, .5, 1.5),
-#'CI = .95,
+#'conf_level = .95,
 #'Supt = .95,
 #'seed = 1234,
 #'Addmean = FALSE,
@@ -36,7 +36,7 @@
 #'Nozeroline = FALSE,
 #'Smpath = NULL)
 
-EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, CI = .95, Supt = .95, seed = 1234,
+EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95, Supt = .95, seed = 1234,
                            Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
@@ -67,11 +67,11 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
                                          seed = seed, eventstudy_coefficients = eventstudy_coefficients)
     }
 
-    plot_CI <- if(!is.null(CI)) TRUE else FALSE
+    plot_CI <- if(!is.null(conf_level)) TRUE else FALSE
 
     if (plot_CI) {
 
-        df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, CI)
+        df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
     }
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)

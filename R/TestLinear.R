@@ -33,7 +33,11 @@ TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TR
     if (class(pretrends) != "logical"){stop("pretrends should be a logical. Default value is TRUE")}
     if (class(leveling_off) != "logical"){stop("leveling_off should be a logical. Default value is TRUE")}
 
-    estimates[[1]]$df.residual <- estimates[[1]]$nclusters - 1
+    if(estimates[[2]]$cluster == TRUE){
+
+        estimates[[1]]$df.residual <- estimates[[1]]$nclusters - 1
+
+    }
 
     test_results <- data.frame(row.names = c("Test", "F.statistic", "p.value"))
 
@@ -60,8 +64,8 @@ TestLinear <- function(estimates, test = NA, pretrends = TRUE, leveling_off = TR
     }
 
     if (leveling_off == TRUE){
-        n_furthest_lag <- estimates[[2]]$post + estimates[[2]]$overidpost
-        furthest_lag    <- paste0(estimates[[2]]$policyvar, "_lag", as.character(n_furthest_lag))
+        n_furthest_lag   <- estimates[[2]]$post + estimates[[2]]$overidpost
+        furthest_lag     <- paste0(estimates[[2]]$policyvar, "_lag", as.character(n_furthest_lag))
         leveling_off_hyp <- paste0(furthest_lag, "=0")
 
         leveling_results <- car::linearHypothesis(estimates[[1]], leveling_off_hyp, test = "F")

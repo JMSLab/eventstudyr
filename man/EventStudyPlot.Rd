@@ -53,10 +53,12 @@ The Event-Study plot as a gpplot2 object
 Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
 }
 \examples{
-EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+
+EventStudyPlot(estimates = eventstudy_estimates,
 xtitle = "Event time",
 ytitle = "Coefficient",
 ybreaks = c(-1.5, -.5, 0, .5, 1.5),

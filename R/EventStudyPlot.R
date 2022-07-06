@@ -20,10 +20,13 @@
 #' @import ggplot2 dplyr
 #' @export
 #'
-#' @examples EventStudyPlot(estimates = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' @examples
+#'eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #'policyvar = "z", idvar = "id", timevar = "t",
 #'controls = "x_r", FE = TRUE, TFE = TRUE,
-#'post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE),
+#'post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+#'
+#'EventStudyPlot(estimates = eventstudy_estimates,
 #'xtitle = "Event time",
 #'ytitle = "Coefficient",
 #'ybreaks = c(-1.5, -.5, 0, .5, 1.5),

@@ -28,22 +28,21 @@
 #' @rawNamespace import(stats, except=c(lag, filter))
 #' @export
 #'
-#' @examples PreparePlottingData(df_tidy_estimates =
-#' estimatr::tidy(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' @examples
+#'
+#' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[1]]),
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[1]])
+#'
+#' PreparePlottingData(
+#' df_tidy_estimates = tidy_eventstudy_estimates,
 #' policyvar = "z",
 #' post = 3,
 #' overidpost = 5,
 #' pre = 2,
 #' overidpre = 4,
 #' normalization_column = "z_fd_lead3")
-#'
-#'
-#'
-#'
-#'
 #'
 
 PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column) {

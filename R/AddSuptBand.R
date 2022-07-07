@@ -6,11 +6,11 @@
 #' 0.1.0.
 #'
 #' @param estimates The first element extracted from the EventStudy function. Should be a list.
-#' @param num_sim The number of simulations used in generating the sup-t bands. Should be a natural number
+#' @param num_sim The number of simulations used in generating the sup-t bands. Should be a natural number.
 #' @param conf_level The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
-#' 0 and 1, inclusive. Defaults to .95
+#' 0 and 1, inclusive. Defaults to .95.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
-#' Defaults to 1234
+#' Defaults to 1234.
 #' @param eventstudy_coefficients The names of the event-study coefficients. This vector is outputted
 #' in the second element of the EventStudy function. Should be a vector of strings.
 #'
@@ -23,16 +23,13 @@
 #' eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[1]]
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
 #'
-#' AddSuptBand(estimates = eventstudy_estimates,
+#' AddSuptBand(estimates = eventstudy_estimates[[1]],
 #' num_sim = 100,
 #' conf_level = .95,
 #' seed = 1234,
-#' eventstudy_coefficients = EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
-#' policyvar = "z", idvar = "id", timevar = "t",
-#' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[2]]$eventstudy_coefficients)
+#' eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients)
 #'
 
 AddSuptBand <- function(estimates, num_sim, conf_level = .95, seed = 1234, eventstudy_coefficients) {

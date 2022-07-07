@@ -41,6 +41,8 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
     }
 
+    coefficients <- estimates[[2]]$eventstudy_coefficients
+
     test_results <- data.frame(row.names = c("Test", "F.statistic", "p.value"))
 
     if (!is.na(test)){
@@ -53,28 +55,46 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
     }
 
     if (pretrends == TRUE){
-        n_furthest_lead <- estimates[[2]]$pre + estimates[[2]]$overidpre
-        furthest_lead    <- paste0(estimates[[2]]$policyvar, "_lead",as.character(n_furthest_lead))
-        pretrends_hyp <- paste0(furthest_lead, "=0")
 
-        pretrends_results   <- car::linearHypothesis(estimates[[1]], pretrends_hyp, test = "F")
+        G   <- estimates[[2]]$pre
+        L_G <- estimates[[2]]$overidpre
+        k   <- as.character(seq.int(G, (G+L_G)))
+
+        suffix <- paste0("_lead",k)
+
+        delta_k <- coefficients[str_sub(coefficients, start= -6) %in% suffix]
+
+        pretrends_hyp <- paste0(delta_k, "=0")
+
+        pretrends_results <- car::linearHypothesis(estimates[[1]], pretrends_hyp, test = "F")
 
         temp <- data.frame("Test"        = "Pre-Trends",
                            "F"           = pretrends_results[2, ]$F,
                            "p.value"     = pretrends_results[2, ]$`Pr(>F)`)
+
         test_results <- rbind(test_results, temp)
     }
 
     if (leveling_off == TRUE){
-        n_furthest_lag   <- estimates[[2]]$post + estimates[[2]]$overidpost
-        furthest_lag     <- paste0(estimates[[2]]$policyvar, "_lag", as.character(n_furthest_lag))
-        leveling_off_hyp <- paste0(furthest_lag, "=0")
+
+        M   <- estimates[[2]]$post
+        L_M <- estimates[[2]]$overidpost
+        k   <- as.character(seq.int(M+1, M+L_M))
+
+        suffix_M  <- paste0("_lag",as.character(M))
+        suffix_Mk <- paste0("_lag",k)
+
+        delta_M   <- coefficients[str_sub(coefficients, start= -5) %in% suffix_M]
+        delta_Mk  <- coefficients[str_sub(coefficients, start= -5) %in% suffix_Mk]
+
+        leveling_off_hyp <- paste0(delta_Mk, "=", delta_M)
 
         leveling_results <- car::linearHypothesis(estimates[[1]], leveling_off_hyp, test = "F")
 
         temp <- data.frame("Test"        = "Leveling-Off",
                            "F"           = leveling_results[2, ]$F,
                            "p.value"     = leveling_results[2, ]$`Pr(>F)`)
+
         test_results <- rbind(test_results, temp)
     }
 

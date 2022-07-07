@@ -1,15 +1,15 @@
 
 #'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
 #'
-#' @param estimates The output from calling EventStudy(). Should be a list of length 2
+#' @param estimates The output from calling EventStudy(). Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis. Should be a numeric vector that contains 0.
 #' @param conf_level Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
-#' 0 and 1, inclusive. Defaults to .95
+#' 0 and 1, inclusive. Defaults to .95.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
-#' Defaults to 1234
+#' Defaults to 1234.
 #' @param Addmean Adds the mean of the dependent variable in the period used for normalization. Should be TRUE or FALSE. Defaults to FALSE.
 #' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends. Should be TRUE or FALSE. Defaults to TRUE.
 #' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off. Should be TRUE or FALSE. Defaults to TRUE.
@@ -51,15 +51,15 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
 
-    df_data <- estimates[[2]]$data
-    outcomevar <- estimates[[2]]$outcomevar
-    policyvar <- estimates[[2]]$policyvar
-    post <- estimates[[2]]$post
-    overidpost <- estimates[[2]]$overidpost
-    pre <- estimates[[2]]$pre
-    overidpre <- estimates[[2]]$overidpre
-    normalize <- estimates[[2]]$normalize
-    normalization_column <- estimates[[2]]$normalization_column
+    df_data                 <- estimates[[2]]$data
+    outcomevar              <- estimates[[2]]$outcomevar
+    policyvar               <- estimates[[2]]$policyvar
+    post                    <- estimates[[2]]$post
+    overidpost              <- estimates[[2]]$overidpost
+    pre                     <- estimates[[2]]$pre
+    overidpre               <- estimates[[2]]$overidpre
+    normalize               <- estimates[[2]]$normalize
+    normalization_column    <- estimates[[2]]$normalization_column
     eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
 
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
@@ -81,12 +81,12 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
     if (Preeventcoeffs & Posteventcoeffs) {
 
-        pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
+        pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]
         levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
 
-        text_pretrends <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
+        text_pretrends   <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
         text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
-        text_caption <- paste0(text_pretrends, " -- ", text_levelingoff)
+        text_caption     <- paste0(text_pretrends, " -- ", text_levelingoff)
     }
 
     else if (Preeventcoeffs & !Posteventcoeffs) {
@@ -95,9 +95,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
         text_caption <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
 
-    }
-
-    else if (!Preeventcoeffs & Posteventcoeffs) {
+    } else if (!Preeventcoeffs & Posteventcoeffs) {
 
         levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
 
@@ -123,7 +121,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
     p_Supt <- if(plot_Supt) ggplot2::geom_linerange(data = df_plotting, ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
-    p_CI <- if(plot_CI) ggplot2::geom_errorbar(ggplot2::aes(ymin = ci_lower, ymax = ci_upper), width = .2) else NULL
+    p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = ci_lower, ymax = ci_upper), width = .2) else NULL
 
     ggplot2::ggplot(df_plotting, ggplot2::aes(x = label, y = estimate)) +
         p_Nozeroline +

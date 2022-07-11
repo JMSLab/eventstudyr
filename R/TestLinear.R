@@ -62,7 +62,9 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
         suffix <- paste0("_lead",k)
 
-        delta_k <- coefficients[str_sub(coefficients, start= -6) %in% suffix]
+        suffix_len  <- str_length(suffix)[1]
+
+        delta_k <- coefficients[str_sub(coefficients, start= -suffix_len) %in% suffix]
 
         pretrends_hyp <- paste0(delta_k, "=0")
 
@@ -84,8 +86,11 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
         suffix_M  <- paste0("_lag",as.character(M))
         suffix_Mk <- paste0("_lag",k)
 
-        delta_M   <- coefficients[str_sub(coefficients, start= -5) %in% suffix_M]
-        delta_Mk  <- coefficients[str_sub(coefficients, start= -5) %in% suffix_Mk]
+        suffix_M_len  <- str_length(suffix_M)
+        suffix_Mk_len <- str_length(suffix_Mk)[1]
+
+        delta_M   <- coefficients[str_sub(coefficients, start= -suffix_M_len) %in% suffix_M]
+        delta_Mk  <- coefficients[str_sub(coefficients, start= -suffix_Mk_len) %in% suffix_Mk]
 
         leveling_off_hyp <- paste0(delta_Mk, "=", delta_M)
 

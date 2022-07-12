@@ -6,7 +6,7 @@
 \usage{
 AddSuptBand(
   estimates,
-  num_sim,
+  num_sim = 1000,
   conf_level = 0.95,
   seed = 1234,
   eventstudy_coefficients

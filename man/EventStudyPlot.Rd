@@ -11,16 +11,17 @@ EventStudyPlot(
   ybreaks,
   conf_level = 0.95,
   Supt = 0.95,
+  num_sim = 1000,
   seed = 1234,
   Addmean = FALSE,
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
   Nozeroline = FALSE,
-  Smpath
+  Smpath = NULL
 )
 }
 \arguments{
-\item{estimates}{The output from calling EventStudy(). Should be a list of length 2}
+\item{estimates}{The output from calling EventStudy(). Should be a list of length 2.}
 
 \item{xtitle}{The title for the x-axis. Should be a string. Defaults to "Event time".}
 
@@ -31,10 +32,12 @@ EventStudyPlot(
 \item{conf_level}{Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
 
 \item{Supt}{The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
-0 and 1, inclusive. Defaults to .95}
+0 and 1, inclusive. Defaults to .95.}
+
+\item{num_sim}{The number of simulations used in generating the sup-t bands. Should be a natural number.}
 
 \item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
-Defaults to 1234}
+Defaults to 1234.}
 
 \item{Addmean}{Adds the mean of the dependent variable in the period used for normalization. Should be TRUE or FALSE. Defaults to FALSE.}
 
@@ -64,6 +67,7 @@ ytitle = "Coefficient",
 ybreaks = c(-1.5, -.5, 0, .5, 1.5),
 conf_level = .95,
 Supt = .95,
+num_sim = 1000,
 seed = 1234,
 Addmean = FALSE,
 Preeventcoeffs = TRUE,

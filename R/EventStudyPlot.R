@@ -8,6 +8,7 @@
 #' @param conf_level Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
 #' 0 and 1, inclusive. Defaults to .95.
+#' @param num_sim The number of simulations used in generating the sup-t bands. Should be a natural number.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
 #' Defaults to 1234.
 #' @param Addmean Adds the mean of the dependent variable in the period used for normalization. Should be TRUE or FALSE. Defaults to FALSE.
@@ -32,6 +33,7 @@
 #'ybreaks = c(-1.5, -.5, 0, .5, 1.5),
 #'conf_level = .95,
 #'Supt = .95,
+#'num_sim = 1000,
 #'seed = 1234,
 #'Addmean = FALSE,
 #'Preeventcoeffs = TRUE,
@@ -39,14 +41,17 @@
 #'Nozeroline = FALSE,
 #'Smpath = NULL)
 
-EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95, Supt = .95, seed = 1234,
-                           Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath) {
+EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
+                           Supt = .95, num_sim = 1000, seed = 1234, Addmean = FALSE,
+                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = NULL) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
     if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
     if (class(ybreaks) != "numeric") {stop("ybreaks should be a numeric vector.")}
     if (! 0 %in% ybreaks) {stop("0 needs to be one of the specified breaks.")}
+
+# Estimation Elements -----------------------------------------------------
 
     df_estimates <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
@@ -62,11 +67,13 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     normalization_column    <- estimates[[2]]$normalization_column
     eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
 
+# Optionally Add Suptbands/Confidence Intervals ---------------------------
+
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
 
     if (plot_Supt) {
 
-        df_estimates_tidy <- AddSuptBand(df_estimates, 1000, conf_level = Supt,
+        df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = Supt,
                                          seed = seed, eventstudy_coefficients = eventstudy_coefficients)
     }
 
@@ -76,6 +83,8 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
         df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
     }
+
+# Optionally Test For Pretrends/Leveing Off -------------------------------
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
 
@@ -110,6 +119,8 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
     y_axis_labels <- ybreaks
 
+# Optionally Adds Mean ----------------------------------------------------
+
     if (Addmean) {
 
         y_mean <- AddMeans(df_data, normalization_column, policyvar, outcomevar)
@@ -119,11 +130,13 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
     }
 
+# Construct Plot ----------------------------------------------------------
+
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
     p_Supt <- if(plot_Supt) ggplot2::geom_linerange(data = df_plotting, ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
     p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = ci_lower, ymax = ci_upper), width = .2) else NULL
 
-    ggplot2::ggplot(df_plotting, ggplot2::aes(x = label, y = estimate)) +
+    eventstudy_plot <- ggplot2::ggplot(df_plotting, ggplot2::aes(x = label, y = estimate)) +
         p_Nozeroline +
         p_Supt +
         p_CI +
@@ -142,4 +155,6 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         ggplot2::theme(
             plot.caption = ggplot2::element_text(hjust = 0)
         )
+
+    return(eventstudy_plot)
 }

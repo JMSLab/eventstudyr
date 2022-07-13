@@ -12,5 +12,5 @@
 8. Run `devtools::check()` (`Ctrl + Shift + E` on Windows) and address any notes, errors, or warnings
 9. Commit changes
 10. Push your code **if it is passing all tests**. Address any warnings/errors
-11. When you open a pull request, uncomment `.github/workflows/R-CMD-check.yaml` to check your code, and then comment out again. Do the
+11. When you open a pull request, uncomment the job `R-CMD-check` in `.github/workflows/R-CMD-check.yaml` to check your code, and then comment out again. Do the
  same before you are ready to wrap-up the pull request to ensure that the changes during the pull did not introduce any bugs.

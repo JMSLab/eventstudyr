@@ -27,7 +27,7 @@ AddMeans <- function(df, normalization_column, policyvar, outcomevar,
     } else {
         mean <- custom_scalar
     }
-    print(mean)
+
     return(mean)
 }
 

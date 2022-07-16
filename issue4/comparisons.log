@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\user\Documents\GitHub\EventStudyR\issue4/comparisons.log
+  log type:  text
+ opened on:  16 Jul 2022, 18:54:51
+       panel variable:  id (strongly balanced)
+        time variable:  t, 1 to 40
+                delta:  1 unit
+(50 missing values generated)
+(100 missing values generated)
+(150 missing values generated)
+(200 missing values generated)
+
+(100 missing values generated)
+(150 missing values generated)
+(200 missing values generated)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      y_base |         49   -.0427445    .7680957  -1.869535   1.626534
+      name:  <unnamed>
+       log:  C:\Users\user\Documents\GitHub\EventStudyR\issue4/comparisons.log
+  log type:  text
+ closed on:  16 Jul 2022, 18:54:51
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

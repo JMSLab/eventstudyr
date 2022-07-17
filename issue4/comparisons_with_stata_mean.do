@@ -28,19 +28,24 @@ program comparisons
 	xtset id t
 	gen zfd = d.z
 	
-	local leads
 	forvalues i = 2/`furthest_lead' {
 		by id: gen zfd_lead`i' = f`i'.zfd
 	}
-	display "`leads'"	
-	local lags
+	
 	forvalues i = 1/`furthest_lag_minus1' {
 		by id: gen zfd_lag`i'  = l`i'.zfd
 	}
+	display "hello"	
+	by id: gen furthest_lead = 1 - f`furthest_lead'.z 
+	by id: gen furthest_lag  = l`furthest_lag'.z 
 end
 
 program compute_mean
 	summarize y_base if zfd_lead3 != 0 & zfd_lead3 != .
+end
+
+program sample_regression
+	reg y_base zfd zfd_lead* zfd_lag* furthest_lead furthest_lag i.t i.id, vce(cluster id)
 end
 
 main

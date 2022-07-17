@@ -58,7 +58,7 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
         G   <- estimates[[2]]$pre
         L_G <- estimates[[2]]$overidpre
-        k   <- as.character(seq.int(G, (G+L_G)))
+        k   <- as.character(seq.int(G+1, (G+L_G)))
 
         suffix <- paste0("_lead",k)
 
@@ -73,7 +73,7 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
         temp <- data.frame("Test"        = "Pre-Trends",
                            "F"           = pretrends_results[2, ]$F,
                            "p.value"     = pretrends_results[2, ]$`Pr(>F)`)
-
+        
         test_results <- rbind(test_results, temp)
     }
 

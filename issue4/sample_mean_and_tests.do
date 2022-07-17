@@ -9,14 +9,15 @@ program main
 	
 	use "`indir'/simulation_data_dynamic.dta", clear
 
-	comparisons
-	
+	gen_vars
+	sample_regression
+	do_tests	
 	compute_mean	
 	
 	log close
 end
 
-program comparisons
+program gen_vars
 	local G 2
 	local LG 2
 	local M 2
@@ -40,12 +41,20 @@ program comparisons
 	by id: gen furthest_lag  = l`furthest_lag'.z 
 end
 
-program compute_mean
-	summarize y_base if zfd_lead3 != 0 & zfd_lead3 != .
-end
-
 program sample_regression
 	reg y_base zfd zfd_lead* zfd_lag* furthest_lead furthest_lag i.t i.id, vce(cluster id)
+end
+
+program do_tests
+	* pre-trends test
+	test furthest_lead = zfd_lead4 = zfd_lead3 = 0
+	* leveling-off test
+	test zfd_lag2 = zfd_lag3 = furthest_lag
+end
+
+program compute_mean
+	by id: gen zfd_lead1 = f1.zfd
+	summarize y_base if zfd_lead1 != 0 & zfd_lead1 != .
 end
 
 main

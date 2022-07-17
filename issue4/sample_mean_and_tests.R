@@ -1,7 +1,7 @@
 setwd('~/GitHub/EventStudyR')
 
 devtools::load_all()
-
+devtools::test()
 estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
                         outcomevar = "y_base", policyvar = "z",
                         idvar = "id", timevar = "t",

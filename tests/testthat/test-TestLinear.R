@@ -75,6 +75,26 @@ test_that("produces only functions that are specified", {
     expect_equal(length(df$Test), 3)
     tests <- c("User Test", "Pre-Trends", "Leveling-Off")
     expect_equal(df$Test, tests)
+})
 
 
+test_that("checks equality with STATA", {
+    estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+                           policyvar = "z", idvar = "id", timevar = "t",
+                           FE = TRUE, TFE = TRUE,
+                           post = 2, pre = 2, overidpre = 2,
+                           overidpost = 2, normalize = - 1,
+                           cluster = TRUE)
+
+    # Hardcoded values from https://github.com/JMSLab/eventstudyr/blob/5359decf25bf9b7982cca6328f2796f0d9e6eb11/issue4/comparisons.log#L128-L144
+
+    pretrends_stata_p  <- 0.8814
+    leveloff_stata_p   <- 0.6923
+
+    df_test_linear <- TestLinear(estimate, pretrends = T, leveling_off = T)
+    pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]
+    levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
+    
+    expect_true(abs(pretrends_stata_p - pretrends_p_value) < 0.0001)
+    expect_true(abs(leveloff_stata_p  - levelingoff_p_value) < 0.0001)    
 })

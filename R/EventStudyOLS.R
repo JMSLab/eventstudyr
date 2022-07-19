@@ -15,9 +15,15 @@
 #' @export
 #'
 #' @examples
-#' EventStudyOLS(prepared_model_formula = PrepareModelFormula("OLS", "y_base",
-#' c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
-#' "z_lead3", "z_lag3", "x_r"),
+#' model_formula <-  PrepareModelFormula(
+#' estimator = "OLS", outcomevar = "y_base",
+#' str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
+#' str_policy_lead = "z_lead3",
+#' str_policy_lag = "z_lag3",
+#' controls = "x_r"
+#' )
+#'
+#' EventStudyOLS(prepared_model_formula = model_formula,
 #' prepared_data = df_EventStudyOLS_example,
 #' idvar = "id",
 #' timevar = "t",
@@ -35,7 +41,7 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar,
 
     if (FE & TFE & cluster) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             fixed_effects = ~ get(idvar) + get(timevar),
@@ -45,7 +51,7 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar,
 
     } else if ((!FE) & TFE & cluster) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             fixed_effects = ~ get(timevar),
@@ -53,10 +59,9 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar,
             se_type = "stata"
         )
 
-
     } else if (FE & (!TFE) & cluster) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             fixed_effects = ~ get(idvar),
@@ -64,50 +69,45 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar,
             se_type = "stata"
         )
 
-
     } else if ((!FE) & (!TFE) & cluster) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             clusters = get(idvar),
             se_type = "stata"
         )
 
-
     } else if (FE & TFE & (!cluster)) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             fixed_effects = ~ get(idvar) + get(timevar),
             se_type = "stata"
         )
 
-
     } else if ((!FE) & TFE & (!cluster)) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             fixed_effects = ~ get(timevar),
             se_type = "stata"
         )
 
-
     } else if (FE & (!TFE) & (!cluster)) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             fixed_effects = ~ get(idvar),
             se_type = "stata"
         )
 
-
     } else if ((!FE) & (!TFE) & (!cluster)) {
 
-        estimatr::lm_robust(
+        ols_output <- estimatr::lm_robust(
             formula = prepared_model_formula,
             data = prepared_data,
             se_type = "stata"
@@ -116,6 +116,5 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar,
 
     }
 
-
-
+    return(ols_output)
 }

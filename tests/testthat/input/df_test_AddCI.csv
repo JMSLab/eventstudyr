@@ -1,0 +1,4 @@
+﻿term,estimate,std.error
+z_fd,1,1
+z_fd_lag1,-2,1
+z_fd_lead1,2,1

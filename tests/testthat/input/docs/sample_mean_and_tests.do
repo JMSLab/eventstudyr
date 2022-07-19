@@ -48,13 +48,8 @@ end
 program do_tests
 	* pre-trends test
 	test furthest_lead = zfd_lead4 = zfd_lead3 = 0
-	display r(p)
-	file open pvalues using "tests/testthat/input/pvalues.txt", write replace
-	file write pvalues "`r(p)'" _n
 	* leveling-off test
 	test zfd_lag2 = zfd_lag3 = furthest_lag
-	file write pvalues "`r(p)'" _n
-	file close pvalues
 end
 
 program compute_mean

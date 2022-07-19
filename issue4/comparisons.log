@@ -1,8 +1,8 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\user\Documents\GitHub\EventStudyR\issue4/comparisons.log
+       log:  C:\Users\user\Documents\GitHub\eventstudyr\issue4/comparisons.log
   log type:  text
- opened on:  17 Jul 2022, 08:28:02
+ opened on:  18 Jul 2022, 20:25:24
        panel variable:  id (strongly balanced)
         time variable:  t, 1 to 40
                 delta:  1 unit
@@ -131,6 +131,7 @@ furthest_lead |   .1067736   .1487138     0.72   0.476    -.1920779    .4056252
 
        F(  3,    49) =    0.22
             Prob > F =    0.8814
+.88139493
 
  ( 1)  zfd_lag2 - zfd_lag3 = 0
  ( 2)  zfd_lag2 - furthest_lag = 0
@@ -143,7 +144,7 @@ furthest_lead |   .1067736   .1487138     0.72   0.476    -.1920779    .4056252
 -------------+---------------------------------------------------------
       y_base |         49   -.0912978    .7596936  -1.783123   1.634649
       name:  <unnamed>
-       log:  C:\Users\user\Documents\GitHub\EventStudyR\issue4/comparisons.log
+       log:  C:\Users\user\Documents\GitHub\eventstudyr\issue4/comparisons.log
   log type:  text
- closed on:  17 Jul 2022, 08:28:03
+ closed on:  18 Jul 2022, 20:25:25
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

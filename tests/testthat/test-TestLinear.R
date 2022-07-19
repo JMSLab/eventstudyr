@@ -86,10 +86,10 @@ test_that("checks equality with STATA", {
                            overidpost = 2, normalize = - 1,
                            cluster = TRUE)
 
-    # Hardcoded values from https://github.com/JMSLab/eventstudyr/blob/5359decf25bf9b7982cca6328f2796f0d9e6eb11/issue4/comparisons.log#L128-L144
-
-    pretrends_stata_p  <- 0.8814
-    leveloff_stata_p   <- 0.6923
+    codes <- read.csv('input/pvalues.txt', header =F)
+    
+    pretrends_stata_p <- codes[1,1]
+    leveloff_stata_p  <- codes[2,1]
 
     df_test_linear <- TestLinear(estimate, pretrends = T, leveling_off = T)
     pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]

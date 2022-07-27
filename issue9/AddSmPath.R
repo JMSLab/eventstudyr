@@ -100,7 +100,7 @@ AddSmPath <- function(dhat, Vhat,
     p <- length(d)
     r <- length(v)
 
-    k    <- seq(0, p-1)/(p-1)
+    k    <- seq(3, p+2)/(p-1)
     Fmat <- sapply(seq(0, r-1),
                    function(j) {k^(j)})
     trfit <- Fmat %*% v

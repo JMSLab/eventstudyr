@@ -691,7 +691,7 @@ mata
 			a=0
 		}	
 		else {
-			k = range(0,p-1,1)/(p-1)
+			k = range(1,p,1)
 			F = J(p,1,1)
 			for (jj=1; jj<=r; jj++) {
 				F = F, k:^jj

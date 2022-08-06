@@ -43,7 +43,7 @@
 
 EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
                            Supt = .95, num_sim = 1000, seed = 1234, Addmean = FALSE,
-                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = NULL) {
+                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = FALSE) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
@@ -127,6 +127,14 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
         index_zero <- which(ybreaks == 0)
         y_axis_labels[index_zero] <- paste0(y_axis_labels[index_zero], " (", round(y_mean, 2), ")")
+
+    }
+
+# Optionally Add Smoothest Path -------------------------------------------
+
+    if (Smpath) {
+
+        sm_path <- AddSmPath(estimates)
 
     }
 

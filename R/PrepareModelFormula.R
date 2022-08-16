@@ -23,7 +23,7 @@
 #' str_policy_lag = "z_lag8",
 #' controls = "x_r")
 
-PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL) {
+PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL, proxy = NULL, proxyIV = NULL) {
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
@@ -36,9 +36,17 @@ PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy
     if (estimator == "OLS") {
 
 
-    reg_formula <- stats::reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
+        reg_formula <- stats::reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
                                response = outcomevar,
                                intercept = FALSE)
+    }
+    else {
+
+        exogenous <- c(str_policy_fd, str_policy_lead, str_policy_lag, controls)
+        exogenous <- exogenous[exogenous != proxy]
+        exogenous <- exogenous[exogenous != proxyIV]
+        reg_formula <- as.formula(paste(outcomevar, "~", paste(c(exogenous, proxy), collapse="+"), "|", paste(c(exogenous, proxyIV), collapse="+")))
+
     }
 
     return(reg_formula)

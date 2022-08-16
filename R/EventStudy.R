@@ -152,7 +152,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     if (estimator == "OLS") {
 
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
 
         OLS_model        <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         event_study_args <- list("estimator" = estimator,
@@ -178,6 +178,33 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         return(list(OLS_model, event_study_args))
 
+    }
+    else {
+
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
+
+        FHS_model <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+        event_study_args <- list("estimator" = estimator,
+                                 "data" = data,
+                                 "outcomevar" = outcomevar,
+                                 "policyvar" = policyvar,
+                                 "idvar" = idvar,
+                                 "timevar" = timevar,
+                                 "controls" = controls,
+                                 "proxy" = proxy,
+                                 "proxyIV" = proxyIV,
+                                 "FE" = FE,
+                                 "TFE" = TFE,
+                                 "post" = post,
+                                 "overidpost" = overidpost,
+                                 "pre" = pre,
+                                 "overidpre" = overidpre,
+                                 "normalize" = normalize,
+                                 "normalization_column" = normalization_column,
+                                 "cluster" = cluster,
+                                 "eventstudy_coefficients" = c(str_policy_fd, str_policy_lead, str_policy_lag))
+
+        return(list(FHS_model, event_study_args))
     }
 
 }

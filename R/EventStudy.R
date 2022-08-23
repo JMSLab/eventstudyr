@@ -44,6 +44,16 @@
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' FE = TRUE, TFE = TRUE,
 #' post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
+#'
+#' #If you would like to use IV regression:
+#' library(dplyr)
+#' library(magrittr)
+#' data <- df_sample_dynamic %>% select(y_base, z, id, t, x_r, eta_m)
+#' results <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z",
+#' idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_m", proxyIV = "z_fd_lead3",
+#' FE = TRUE, TFE = TRUE, post = 3, overidpost = 1, pre = 0, overidpre = 3, normalize = -1,
+#' cluster = TRUE)
+#'
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,

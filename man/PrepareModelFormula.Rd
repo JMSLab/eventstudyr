@@ -10,7 +10,9 @@ PrepareModelFormula(
   str_policy_fd,
   str_policy_lead,
   str_policy_lag,
-  controls = NULL
+  controls = NULL,
+  proxy = NULL,
+  proxyIV = NULL
 )
 }
 \arguments{

@@ -15,20 +15,26 @@
 #' @export
 #'
 #' @examples
-#' model_formula <-  PrepareModelFormula(
-#' estimator = "FHS", outcomevar = "y_base",
-#' str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
-#' str_policy_lead = "z_lead3",
-#' str_policy_lag = "z_lag3",
-#' controls = "x_r",
-#' proxy = "proxy"
-#' )
+#' library(dplyr)
+#' library(magrittr)
+#'
+#' # Prepare data
+#' data <- df_sample_dynamic %>% select(y_base, z, id, t, x_r, eta_m)
+#' results <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z",
+#' idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_m", proxyIV = "z_fd_lead3",
+#' FE = TRUE, TFE = TRUE, post = 3, overidpost = 1, pre = 0, overidpre = 3, normalize = -1,
+#' cluster = TRUE)
+#'
+#' # Prepare formula
+#' model_formula <-  PrepareModelFormula(estimator = "FHS", outcomevar = "y_base",
+#' str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3"),
+#' str_policy_lead = "z_lead3", str_policy_lag = "z_lag4", controls = "x_r", proxy = "eta_m",
+#' proxyIV = "z_fd_lead3")
 #'
 #' EventStudyFHS(prepared_model_formula = model_formula,
-#' prepared_data = df_EventStudyOLS_example,
-#' idvar = "id",
-#' timevar = "t",
-#' FE = TRUE, TFE = TRUE, cluster = TRUE)
+#' prepared_data = results[[2]]$data, idvar = "id", timevar = "t", FE = TRUE, TFE = TRUE,
+#' cluster = TRUE)
+#'
 
 EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar, FE, TFE, cluster) {
 

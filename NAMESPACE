@@ -3,6 +3,7 @@
 export(AddCIs)
 export(AddSuptBand)
 export(EventStudy)
+export(EventStudyFHS)
 export(EventStudyOLS)
 export(EventStudyPlot)
 export(PrepareLags)

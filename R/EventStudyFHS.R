@@ -66,6 +66,7 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       fhs_output <- estimatr::iv_robust(
           formula = prepared_model_formula,
           data = prepared_data,
+          clusters = get(idvar),
           fixed_effects = ~ get(timevar),
           se_type="stata")
 

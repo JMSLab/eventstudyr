@@ -34,13 +34,12 @@
 
 AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {
 
-    if ((class(estimates) != "lm_robust") & (typeof(estimates) != "list")) {
+    if (! class(estimates) %in% c("lm_robust", "iv_robust") & (typeof(estimates) != "list")) {
     stop("estimates is not a data frame with coefficient estimates and standard errors")
     }
     if (! is.numeric(num_sim) | num_sim %% 1 != 0) {stop("num_sim should be a natural number.")}
     if (! is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {stop("conf_level should be a real number between 0 and 1, inclusive.")}
     if (! is.numeric(seed) | seed %%  1 != 0) {stop("seed should be an integer.")}
-    if (class(estimates) != "lm_robust" | typeof(estimates) != "list") {stop("estimates should be a lm_robust list.")}
     if (! is.character(eventstudy_coefficients)) {stop("eventstudy_coefficients should be a character.")}
 
     vcov_matrix_all <- estimates$vcov

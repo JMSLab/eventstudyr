@@ -25,7 +25,7 @@
 TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends = TRUE, leveling_off = TRUE){
     if (class(estimates) != "list" | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
-    if ((class(estimates[[1]]) != "lm_robust") | (typeof(estimates[[1]]) != "list")) {
+    if ((! class(estimates[[1]]) %in% c("lm_robust", "iv_robust")) | (typeof(estimates[[1]]) != "list")) {
         stop("The first element of estimates should be a list of class 'lm_robust' with coefficient estimates and standard errors")
     }
     if (class(estimates[[2]]) != "list" | typeof(estimates[[2]]) != "list") {
@@ -73,7 +73,7 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
         temp <- data.frame("Test"        = "Pre-Trends",
                            "F"           = pretrends_results[2, ]$F,
                            "p.value"     = pretrends_results[2, ]$`Pr(>F)`)
-        
+
         test_results <- rbind(test_results, temp)
     }
 

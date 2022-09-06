@@ -43,6 +43,10 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
     coefficients <- estimates[[2]]$eventstudy_coefficients
 
+    if (!is.null(estimates[[2]]$proxyIV)){
+        coefficients <- coefficients[coefficients != estimates[[2]]$proxyIV]
+    }
+
     test_results <- data.frame(row.names = c("Test", "F.statistic", "p.value"))
 
     if (!is.na(test)){

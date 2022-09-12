@@ -66,6 +66,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     normalize               <- estimates[[2]]$normalize
     normalization_column    <- estimates[[2]]$normalization_column
     eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    proxyIV                 <- estimates[[2]]$proxyIV
 
 # Optionally Add Suptbands/Confidence Intervals ---------------------------
 
@@ -115,7 +116,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         text_caption <- NULL
     }
 
-    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     y_axis_labels <- ybreaks
 
@@ -133,7 +134,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 # Construct Plot ----------------------------------------------------------
 
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
-    p_Supt <- if(plot_Supt) ggplot2::geom_linerange(data = df_plotting, ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
+    p_Supt <- if(plot_Supt) ggplot2::geom_linerange(ggplot2::aes(ymin = suptband_lower, ymax = suptband_upper)) else NULL
     p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = ci_lower, ymax = ci_upper), width = .2) else NULL
 
     eventstudy_plot <- ggplot2::ggplot(df_plotting, ggplot2::aes(x = label, y = estimate)) +
@@ -150,11 +151,10 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
                                     limits = c(min(ybreaks), max(ybreaks))) +
         ggplot2::theme_bw() +
         ggplot2::theme(
-            panel.grid = ggplot2::element_blank()
-            ) +
-        ggplot2::theme(
-            plot.caption = ggplot2::element_text(hjust = 0)
-        )
+            panel.grid = ggplot2::element_blank(),
+            plot.caption = ggplot2::element_text(hjust = 0),
+            text = ggplot2::element_text(size = 20)
+            )
 
     return(eventstudy_plot)
 }

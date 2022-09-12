@@ -45,7 +45,7 @@
 #' normalization_column = "z_fd_lead3")
 #'
 
-PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column) {
+PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV) {
 
     if (! is.data.frame(df_tidy_estimates)) {stop("data should be a data frame.")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
@@ -79,7 +79,6 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, 
     last_lag_integer <- stringr::str_extract(last_lag, integer_regex)
     last_lag_label   <- paste0(last_lag_integer, "+")
 
-
     v_terms_to_plot_ordered <- c(first_lead, v_leads, t_0_term, v_lags, last_lag)
     v_terms_to_plot_labels  <- c(first_lead_label, v_leads_label, t_0_term_label, v_lags_label, last_lag_label)
 
@@ -92,6 +91,15 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, 
     v_names_for_zeroes    <- names(df_plotting)[3:ncol(df_plotting)]
     v_normalization_other <- stats::setNames(v_zeroes, v_names_for_zeroes)
 
+    supt_or_ci_present <- v_names_for_zeroes %in% c("suptband_lower", "suptband_upper", "ci_lower", "ci_upper")
+
+    if (sum(supt_or_ci_present) > 0) {
+
+        v_normalization_other[which(supt_or_ci_present)] <- NA
+
+    }
+
+
     df_normalization_column <- data.frame(
         "term"     = normalization_column,
         "estimate" = 0,
@@ -99,6 +107,29 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, 
     )
 
     df_plotting <- rbind(df_plotting, df_normalization_column)
+
+    if (!is.null(proxyIV)) {
+
+        proxyIV_integer <- stringr::str_extract(proxyIV, integer_regex)
+        proxyIV_lead_or_lag <- stringr::str_extract(proxyIV, "lead|lag")
+
+        proxyIV_sign <- switch (proxyIV_lead_or_lag,
+            "lead" = "-",
+            "lag" = "+"
+        )
+
+        df_proxyIV_column <- data.frame(
+            "term"     = proxyIV,
+            "estimate" = 0,
+            as.list(v_normalization_other)
+        )
+
+        proxyIV_label <- paste0(proxyIV_integer, proxyIV_sign)
+
+        df_plotting <- rbind(df_plotting, df_proxyIV_column)
+
+    }
+
 
     df_plotting["label"] <- factor(df_plotting$term, levels = v_terms_to_plot_ordered, labels = v_terms_to_plot_labels)
 

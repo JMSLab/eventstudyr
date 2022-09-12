@@ -277,11 +277,11 @@ test_that("Sup-t bands are wider than confidence intervals", {
                         Nozeroline = FALSE,
                         Smpath = NULL)
 
-    ci_lower <- p$data$ci_lower
-    ci_upper <- p$data$ci_upper
-    suptband_lower <- p$data$suptband_lower
-    suptband_upper <- p$data$suptband_upper
-    num_terms <- nrow(p$data)
+    ci_lower <- na.omit(p$data$ci_lower)
+    ci_upper <- na.omit(p$data$ci_upper)
+    suptband_lower <- na.omit(p$data$suptband_lower)
+    suptband_upper <- na.omit(p$data$suptband_upper)
+    num_terms <- nrow(na.omit(p$data))
 
     v_lower_comparison <- suptband_lower <= ci_lower
     v_upper_comparison <- suptband_upper >= ci_upper

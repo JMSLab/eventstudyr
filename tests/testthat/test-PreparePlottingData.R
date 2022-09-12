@@ -15,8 +15,9 @@ test_that("labels are unique", {
     pre <- list_EventStudy[[2]]$pre
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     labels_actual <- as.character(df_PreparePlottingData$label)
     num_labels <- length(labels_actual)
@@ -43,8 +44,9 @@ test_that("the correct labels are created", {
     pre <- list_EventStudy[[2]]$pre
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     labels_actual <- as.character(df_PreparePlottingData$label)
 
@@ -68,8 +70,9 @@ test_that("the labels are ordered correctly", {
     pre <- list_EventStudy[[2]]$pre
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     levels_coefficients <- stringr::str_remove(levels(df_PreparePlottingData$label), "\\+")
     actual_levels_as_integer <- as.integer(levels_coefficients)
@@ -95,8 +98,9 @@ test_that("the control variable is removed", {
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
     controls <- list_EventStudy[[2]]$controls
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     terms_actual <- df_PreparePlottingData$term
 
@@ -120,8 +124,9 @@ test_that("the largest lag label is correctly created", {
     pre <- list_EventStudy[[2]]$pre
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     term_actual <- as.character(df_PreparePlottingData[df_PreparePlottingData["term"] == paste0(policyvar, "_lag", (post + overidpost)), ][["label"]])
 
@@ -146,8 +151,9 @@ test_that("the largest lead label is correctly created", {
     pre <- list_EventStudy[[2]]$pre
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     term_actual <- as.character(df_PreparePlottingData[df_PreparePlottingData["term"] == paste0(policyvar, "_lead", (pre + overidpre)), ][["label"]])
 
@@ -172,8 +178,9 @@ test_that("all columns besides 'term' and 'label' are 0 for the normalization co
     pre <- list_EventStudy[[2]]$pre
     overidpre <- list_EventStudy[[2]]$overidpre
     normalization_column <- list_EventStudy[[2]]$normalization_column
+    proxyIV <- list_EventStudy[[2]]$proxyIV
 
-    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column)
+    df_PreparePlottingData <- PreparePlottingData(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     all_columns <- names(df_PreparePlottingData)
     v_zero_column_names <- all_columns[all_columns != c("term", "label")]

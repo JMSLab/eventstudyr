@@ -60,6 +60,10 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       K <- length(fhs_output$felevels$`get(timevar)`) + fhs_output$rank
 
       fhs_output$std.error <- fhs_output$std.error / sqrt((N - K) / (N - n - K + 1))
+      fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
+      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
+      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
+      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
 
   } else if ((!FE) & TFE & cluster) {
 
@@ -85,6 +89,10 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       K <- 1 + fhs_output$rank
 
       fhs_output$std.error <- fhs_output$std.error / sqrt((N - K)/(N - n - K + 1))
+      fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
+      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
+      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
+      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
 
   } else if ((!FE) & (!TFE) & cluster) {
       fhs_output <- estimatr::iv_robust(
@@ -106,7 +114,10 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       K <- length(fhs_output$felevels$`get(timevar)`) + fhs_output$rank
 
       fhs_output$std.error <- fhs_output$std.error / sqrt((N - K) / (N - n - K + 1))
-
+      fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
+      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
+      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
+      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
 
   } else if ((!FE) & TFE & (!cluster)) {
 
@@ -129,7 +140,10 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       K <- 1 + fhs_output$rank
 
       fhs_output$std.error <- fhs_output$std.error / sqrt((N - K)/(N - n - K + 1))
-
+      fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
+      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
+      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
+      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
 
   } else if ((!FE) & (!TFE) & (!cluster)) {
 

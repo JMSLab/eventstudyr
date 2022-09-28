@@ -45,12 +45,12 @@
 # FE = TRUE, TFE = TRUE,
 # post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
 #
-# #If you would like to use IV regression:
+#If you would like to use IV regression:
 # library(dplyr)
 # library(magrittr)
 # data <- df_sample_dynamic %>% select(y_base, z, id, t, x_r, eta_m)
 # results <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z",
-# idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_m", proxyIV = "z_fd_lead3",
+# idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_m",
 # FE = TRUE, TFE = TRUE, post = 3, overidpost = 1, pre = 0, overidpre = 3, normalize = -1,
 # cluster = TRUE)
 
@@ -69,7 +69,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "OLS" & ! is.null(proxy))) {stop("proxy should only be specified when estimator = 'FHS'.")}
     if ((estimator == "FHS" & ! is.character(proxy))) {stop("proxy should be a character.")}
     if ((estimator == "OLS" & ! is.null(proxyIV))) {stop("proxyIV should only be specified when estimator = 'FHS'.")}
-    if ((estimator == "FHS" & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
     if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
     if (! (is.numeric(post) & post >= 0 & post %% 1 == 0)) {stop("post should be a whole number.")}
@@ -80,6 +79,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
            normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre + 1) and (post + overidpost).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
     if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
+
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
     if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")}
@@ -191,6 +191,25 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     }
     else {
+
+
+        if (is.null(proxyIV)) {
+
+            print("proxyIV has not been specified: defaulting to strongest lead of differenced policy variable")
+
+            Fstart <- 0
+            proxyIV <- NULL
+            str_policy_fd_lead <- str_policy_fd[grepl("^z_fd_lead", str_policy_fd)]
+            for (var in str_policy_fd_lead) {
+                lm <- lm(data = data, formula = stats::reformulate(termlabels = var, response = proxy))
+                Floop <- summary(lm)$fstatistic["value"]
+                if (Floop > Fstart) {
+                    Fstart <- Floop
+                    proxyIV <- var
+                }
+            }
+            print(paste0(proxyIV," selected as instrument"))
+        }
 
         event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
 

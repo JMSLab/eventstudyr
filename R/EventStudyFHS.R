@@ -14,27 +14,6 @@
 #' @import estimatr
 #' @export
 #'
-#' @examples
-#' library(dplyr)
-#' library(magrittr)
-#'
-#' # Prepare data
-#' data <- df_sample_dynamic %>% select(y_base, z, id, t, x_r, eta_m)
-#' results <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z",
-#' idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_m", proxyIV = "z_fd_lead3",
-#' FE = TRUE, TFE = TRUE, post = 3, overidpost = 1, pre = 0, overidpre = 3, normalize = -1,
-#' cluster = TRUE)
-#'
-#' # Prepare formula
-#' model_formula <-  PrepareModelFormula(estimator = "FHS", outcomevar = "y_base",
-#' str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3"),
-#' str_policy_lead = "z_lead3", str_policy_lag = "z_lag4", controls = "x_r", proxy = "eta_m",
-#' proxyIV = "z_fd_lead3")
-#'
-#' EventStudyFHS(prepared_model_formula = model_formula,
-#' prepared_data = results[[2]]$data, idvar = "id", timevar = "t", FE = TRUE, TFE = TRUE,
-#' cluster = TRUE)
-#'
 
 EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar, FE, TFE, cluster) {
 
@@ -45,6 +24,7 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
   if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
   if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
   if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
+  if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
 
   if (FE & TFE & cluster) {
 
@@ -64,16 +44,7 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
       fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
       fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
-
-  } else if ((!FE) & TFE & cluster) {
-
-      fhs_output <- estimatr::iv_robust(
-          formula = prepared_model_formula,
-          data = prepared_data,
-          clusters = get(idvar),
-          fixed_effects = ~ get(timevar),
-          se_type="stata")
-
+      fhs_output$vcov <- fhs_output$vcov / ((N - K) / (N - n - K + 1))
 
   } else if (FE & (!TFE) & cluster) {
 
@@ -93,31 +64,7 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
       fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
       fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
       fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
-
-  } else if ((!FE) & (!TFE) & cluster) {
-      fhs_output <- estimatr::iv_robust(
-          formula = prepared_model_formula,
-          data = prepared_data,
-          clusters = get(idvar),
-          se_type = "stata")
-
-  } else if (FE & TFE & (!cluster)) {
-
-      fhs_output <- estimatr::iv_robust(
-          formula = prepared_model_formula,
-          data = prepared_data,
-          fixed_effects = ~ get(idvar) + get(timevar),
-          se_type="stata")
-
-      N <- fhs_output$nobs
-      n <- fhs_output$nclusters
-      K <- length(fhs_output$felevels$`get(timevar)`) + fhs_output$rank
-
-      fhs_output$std.error <- fhs_output$std.error / sqrt((N - K) / (N - n - K + 1))
-      fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
-      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
-      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
-      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
+      fhs_output$vcov <- fhs_output$vcov / ((N - K) / (N - n - K + 1))
 
   } else if ((!FE) & TFE & (!cluster)) {
 
@@ -127,23 +74,14 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
           fixed_effects = ~ get(timevar),
           se_type="stata")
 
-  } else if (FE & (!TFE) & (!cluster)) {
+  } else if ((!FE) & TFE & cluster) {
 
       fhs_output <- estimatr::iv_robust(
           formula = prepared_model_formula,
           data = prepared_data,
-          fixed_effects = ~ get(idvar),
+          clusters = get(idvar),
+          fixed_effects = ~ get(timevar),
           se_type="stata")
-
-      N <- fhs_output$nobs
-      n <- fhs_output$nclusters
-      K <- 1 + fhs_output$rank
-
-      fhs_output$std.error <- fhs_output$std.error / sqrt((N - K)/(N - n - K + 1))
-      fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
-      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
-      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
-      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
 
   } else if ((!FE) & (!TFE) & (!cluster)) {
 
@@ -151,7 +89,16 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data, idvar, timevar,
           formula = prepared_model_formula,
           data = prepared_data,
           se_type = "stata")
+
+  } else if ((!FE) & (!TFE) & cluster) {
+
+      fhs_output <- estimatr::iv_robust(
+          formula = prepared_model_formula,
+          data = prepared_data,
+          clusters = get(idvar),
+          se_type = "stata")
   }
 
   return(fhs_output)
 }
+

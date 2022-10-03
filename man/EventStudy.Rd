@@ -42,10 +42,8 @@ EventStudy(
 \item{proxy}{Variable that is thought to be affected by the confound but not by the policy.
 Should be specified if and only if estimator is specified as "FHS". Should be a character.}
 
-\item{proxyIV}{Variables to be used as an instrument. For the case of a single proxy,
-defaults to the strongest lead of the policy variable based on the first stage.
-Should be specified if and only if estimator is specified as "FHS".
-Should be a character}
+\item{proxyIV}{Variables to be used as an instrument. Should be a character. If NULL,
+defaults to the strongest lead of the policy variable based on the first stage.}
 
 \item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
 
@@ -82,19 +80,15 @@ policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
 
-#If you would like to estimate a static model:
+# If you would like to estimate a static model:
 EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
 policyvar = "z", idvar = "id", timevar = "t",
 FE = TRUE, TFE = TRUE,
 post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
 
-#If you would like to use IV regression:
-library(dplyr)
-library(magrittr)
-data <- df_sample_dynamic \%>\% select(y_base, z, id, t, x_r, eta_m)
-results <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z",
-idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_m", proxyIV = "z_fd_lead3",
-FE = TRUE, TFE = TRUE, post = 3, overidpost = 1, pre = 0, overidpre = 3, normalize = -1,
-cluster = TRUE)
-
+# If you would like to use IV regression:
+data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
+overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE)
 }

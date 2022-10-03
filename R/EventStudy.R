@@ -9,10 +9,8 @@
 #' @param controls Optional vector of controls q, should be a character.
 #' @param proxy Variable that is thought to be affected by the confound but not by the policy.
 #' Should be specified if and only if estimator is specified as "FHS". Should be a character.
-#' @param proxyIV Variables to be used as an instrument. For the case of a single proxy,
+#' @param proxyIV Variables to be used as an instrument. Should be a character. If NULL,
 #' defaults to the strongest lead of the policy variable based on the first stage.
-#' Should be specified if and only if estimator is specified as "FHS".
-#' Should be a character
 #' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
@@ -48,8 +46,8 @@
 #' # If you would like to use IV regression:
 #' data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
 #' EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
-#' timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 3,
-#' overidpost = 1, pre = 0, overidpre = 3, normalize = -1, cluster = TRUE)
+#' timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
+#' overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE)
 
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,

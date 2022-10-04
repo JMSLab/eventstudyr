@@ -4,17 +4,24 @@
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
-#' @param ybreaks A vector containing the desired breaks for the y-axis. Should be a numeric vector that contains 0.
-#' @param conf_level Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
-#' @param Supt The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
-#' 0 and 1, inclusive. Defaults to .95.
-#' @param num_sim The number of simulations used in generating the sup-t bands. Should be a natural number.
-#' @param seed The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
-#' Defaults to 1234.
-#' @param Addmean Adds the mean of the dependent variable in the period used for normalization. Should be TRUE or FALSE. Defaults to FALSE.
-#' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends. Should be TRUE or FALSE. Defaults to TRUE.
-#' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off. Should be TRUE or FALSE. Defaults to TRUE.
-#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0. Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
+#' @param ybreaks A vector containing the desired breaks for the y-axis.
+#' Should be a numeric vector that contains 0.
+#' @param conf_level Confidence level used for confidence interval
+#' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
+#' @param Supt The confidence level used for obtaining the sup-t bands critical value.
+#' Should be a real number between 0 and 1, inclusive. Defaults to .95.
+#' @param num_sim The number of simulations used in generating the sup-t bands.
+#' Should be a natural number.
+#' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
+#' Should be a natural number. Defaults to 1234.
+#' @param Addmean Adds the mean of the dependent variable in the period used for normalization.
+#' Should be TRUE or FALSE. Defaults to FALSE.
+#' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
+#' Should be TRUE or FALSE. Defaults to TRUE.
+#' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
+#' Should be TRUE or FALSE. Defaults to TRUE.
+#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0.
+#' Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
 #' @param Smpath PLACE HOLDER
 #'
 #' @return The Event-Study plot as a gpplot2 object
@@ -22,7 +29,8 @@
 #' @export
 #'
 #' @examples
-#'eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#'eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
+#'outcomevar = "y_base",
 #'policyvar = "z", idvar = "id", timevar = "t",
 #'controls = "x_r", FE = TRUE, TFE = TRUE,
 #'post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)

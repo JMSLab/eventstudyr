@@ -15,19 +15,23 @@ AddSuptBand(
 \arguments{
 \item{estimates}{The first element extracted from the EventStudy function. Should be a list.}
 
-\item{num_sim}{The number of simulations used in generating the sup-t bands. Should be a natural number.}
+\item{num_sim}{The number of simulations used in generating the sup-t bands.
+Should be a natural number.}
 
-\item{conf_level}{The confidence level used for obtaining the sup-t bands critical value. Should be a real number between
+\item{conf_level}{The confidence level used for obtaining the sup-t bands critical value.
+Should be a real number between
 0 and 1, inclusive. Defaults to .95.}
 
-\item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible. Should be a natural number.
+\item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible.
+Should be a natural number.
 Defaults to 1234.}
 
-\item{eventstudy_coefficients}{The names of the event-study coefficients. This vector is outputted
-in the second element of the EventStudy function. Should be a vector of strings.}
+\item{eventstudy_coefficients}{The names of the event-study coefficients. This vector is
+outputted in the second element of the EventStudy function. Should be a vector of strings.}
 }
 \value{
-A data.frame that contains the upper and lower sup-t band values for each event-study coefficient.
+A data.frame that contains the upper and lower sup-t band values
+for each event-study coefficient.
 }
 \description{
 Source code from Ryan Kessler (2022). \href{https://github.com/ryanedmundkessler/suptCriticalValue}{suptCriticalValue}: Computes critical values
@@ -35,7 +39,8 @@ underlying simultaneous sup-t confidence bands. R package version
 0.1.0.
 }
 \examples{
-eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
+outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)

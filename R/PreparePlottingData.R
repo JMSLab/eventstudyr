@@ -1,9 +1,10 @@
 
 #' Orders the eventstudy coefficients and generates the x-axis labels
 #'
-#' @param df_tidy_estimates A data.frame created from applying estimatr::tidy() to the estimation output from EventStudy.
-#' At a minimum, it contains a column called "term" with the name for the coefficient and a column called "estimate"
-#' that contains the corresponding estimate. Should be a data.frame.
+#' @param df_tidy_estimates A data.frame created from applying estimatr::tidy()
+#' to the estimation output from EventStudy.
+#' At a minimum, it contains a column called "term" with the name for the coefficient and a
+#' column called "estimate" that contains the corresponding estimate. Should be a data.frame.
 #' @param policyvar Variable indicating policy variable z, should be a character.
 #' @param post The number of periods in the past before
 #' which the past values of the policy are not supposed
@@ -14,13 +15,16 @@
 #' Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param pre Number of periods in the future after which the future values
 #' of the policy are not supposed to affect the value of the outcome today.
-#' Should be a whole number. Corresponds to G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Should be a whole number. Corresponds to G in equation (2) of
+#' Freyaldenhoven et al. (forthcoming).
 #' @param overidpre
 #' Optional number of event times earlier than -"pre" to be included in estimation.
 #' Defaults to "post" + "pre". Should be a whole number.
 #' Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param normalization_column The name of the column containing the coefficient that will
 #' be set to 0 in the eventstudy plot. Should be a character.
+#' @param proxyIV Variables to be used as an instrument. Should be a character. if NULL,
+#' defaults to the strongest lead of the policy variable based on the first stage.
 #'
 #' @return A data.frame that contains the x-axis labels, y-axis estimates,
 #' and optional plot aesthetics to be used in creating the eventstudy plot
@@ -30,7 +34,8 @@
 #'
 #' @examples
 #'
-#' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "OLS",
+#' data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
 #' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)[[1]])
@@ -42,10 +47,11 @@
 #' overidpost = 5,
 #' pre = 2,
 #' overidpre = 4,
-#' normalization_column = "z_fd_lead3")
+#' normalization_column = "z_fd_lead3",
+#' proxyIV = NULL)
 #'
 
-PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV) {
+PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV = NULL) {
 
     if (! is.data.frame(df_tidy_estimates)) {stop("data should be a data frame.")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
@@ -54,7 +60,8 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, 
     if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
     if (! (is.numeric(overidpre) & overidpre >= 0 & overidpre %% 1 == 0)) {stop("overidpre should be a whole number.")}
     if (! is.character(normalization_column)) {stop("normalization_column should be a character.")}
-    if (normalization_column %in% df_tidy_estimates$term) {stop("normalization_column should not be one of the strings in the 'term' column")}
+    if (normalization_column %in% df_tidy_estimates$term) {stop("normalization_column should not be one of the strings in the 'term' column.")}
+    if (! (is.null(proxyIV) | is.character(proxyIV))) {stop("proxyIV should be either a character or NULL.")}
 
     largest_lead <- pre + overidpre
     largest_lag  <- post + overidpost - 1

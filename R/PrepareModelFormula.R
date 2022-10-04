@@ -51,7 +51,8 @@ PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy
                                response = outcomevar,
                                intercept = FALSE)
     }
-    else {
+
+    if (estimator == "FHS") {
 
         if (is.null(proxyIV)) {stop("proxyIV must be specified with estimator=FHS")}
 

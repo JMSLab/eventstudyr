@@ -277,3 +277,26 @@ test_that("subtraction is peformed on the correct column", {
     expect_equal(column_subtract_degree, pre + overidpre)
 })
 
+test_that("proxyIV selection works", {
+
+    expect_message(
+        EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base", policyvar = "z", idvar = "id",
+                   timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 2,
+                   overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE),
+        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead3"
+    )
+
+    expect_message(
+        EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base", policyvar = "z", idvar = "id",
+                   timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
+                   overidpost = 2, pre = 2, overidpre = 2, normalize = -1, cluster = TRUE),
+        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead4"
+    )
+
+    expect_message(
+        EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base", policyvar = "z", idvar = "id",
+                   timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
+                   overidpost = 2, pre = 6, overidpre = 2, normalize = -1, cluster = TRUE),
+        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead5"
+    )
+})

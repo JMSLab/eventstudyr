@@ -83,7 +83,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_lead should be reserved for eventstudyr"))}
     if  (sum(grepl(paste0(policyvar, "_lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_lag should be reserved for eventstudyr"))}
+                                                                                    "_lag should be reserved for eventstudyr"))}
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre
@@ -189,9 +189,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
 
         if (is.null(proxyIV)) {
-
-            print("proxyIV has not been specified: defaulting to strongest lead of differenced policy variable")
-
             Fstart <- 0
             proxyIV <- NULL
             str_policy_fd_lead <- str_policy_fd[grepl("^z_fd_lead", str_policy_fd)]
@@ -203,7 +200,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                     proxyIV <- var
                 }
             }
-            print(paste0(proxyIV," selected as instrument"))
+            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV))
         }
 
         event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
@@ -227,7 +224,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                                  "normalize" = normalize,
                                  "normalization_column" = normalization_column,
                                  "cluster" = cluster,
-                                 "eventstudy_coefficients" = c(str_policy_fd, str_policy_lead, str_policy_lag))
+                                 "eventstudy_coefficients" = setdiff(c(str_policy_fd, str_policy_lead, str_policy_lag), proxyIV))
 
         return(list(FHS_model, event_study_args))
     }

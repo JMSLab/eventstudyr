@@ -413,7 +413,7 @@ test_that("all columns besides 'term' and 'label' are 0 for the proxyIV column",
     v_zero_column_names <- all_columns[all_columns != c("term", "label")]
 
     proxyIV_row <- df_PreparePlottingData[df_PreparePlottingData["term"] == proxyIV, v_zero_column_names]
-    actual_row_total <- apply(normalized_row, MARGIN = 1, function(x) sum(as.integer(x)))
+    actual_row_total <- apply(proxyIV_row, MARGIN = 1, function(x) sum(as.integer(x)))
 
     expect_equal(unname(actual_row_total), 0)
 

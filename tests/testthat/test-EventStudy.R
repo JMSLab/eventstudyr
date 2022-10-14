@@ -378,7 +378,7 @@ test_that("removes the correct column when normalize = 0", {
     expect_true(normalize == 0)
 })
 
-test_that("does not create a first differenced variable when post, overidpost, pre, overidpre are all zero", {
+test_that("FHS does not run when post, pre, overidpre, and overidpost are all 0", {
 
     post  <- 0
     pre  <- 0
@@ -386,54 +386,12 @@ test_that("does not create a first differenced variable when post, overidpost, p
     overidpost <- 0
     normalize <- -1
 
-    outputs <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base",
+    expect_error(outputs <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE))
 
-    leads_lags      <- outputs[[1]]$term
 
-    expect_true(! "z_fd" %in% leads_lags)
-})
-
-test_that("does not create lags of differenced variable when post + overidpost - 1 < 1", {
-
-    post  <- 1
-    pre  <- 0
-    overidpre <- 0
-    overidpost <- 0
-    normalize <- -1
-
-    outputs <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
-
-    leads_lags      <- outputs[[1]]$term
-
-    n_true <- sum(grepl("fd_lags", leads_lags))
-
-    expect_equal(n_true, 0)
-})
-
-test_that("does not create leads of differenced variable when pre + overidpre < 1", {
-
-    post  <- 1
-    pre  <- 0
-    overidpre <- 0
-    overidpost <- 0
-    normalize <- -1
-
-    outputs <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE)
-
-    leads_lags      <- outputs[[1]]$term
-
-    n_true <- sum(grepl("fd_leads", leads_lags))
-
-    expect_equal(n_true, 0)
 })
 
 test_that("removes the correct column when normalize > 0", {

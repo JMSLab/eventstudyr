@@ -1,4 +1,6 @@
-# OLS
+
+# OLS ---------------------------------------------------------------------
+
 test_that("labels are unique", {
 
 
@@ -193,7 +195,7 @@ test_that("all columns besides 'term' and 'label' are 0 for the normalization co
 
 })
 
-# FHS
+# FHS ---------------------------------------------------------------------
 
 test_that("labels are unique", {
 

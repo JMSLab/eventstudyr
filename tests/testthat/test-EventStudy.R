@@ -1,5 +1,5 @@
 
-# OLS
+# OLS ---------------------------------------------------------------------
 
 test_that("correctly creates highest order leads and lags", {
 
@@ -279,7 +279,7 @@ test_that("subtraction is peformed on the correct column", {
     expect_equal(column_subtract_degree, pre + overidpre)
 })
 
-# FHS
+# FHS ---------------------------------------------------------------------
 
 test_that("correctly creates highest order leads and lags", {
 

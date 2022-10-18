@@ -72,4 +72,21 @@ overidpre = 4,
 normalization_column = "z_fd_lead3",
 proxyIV = NULL)
 
+# If you would like to use IV regression:
+data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+
+tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+          timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
+          overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE)[[1]])
+
+PreparePlottingData(
+df_tidy_estimates = tidy_eventstudy_estimates,
+policyvar = "z",
+post = 3,
+overidpost = 5,
+pre = 2,
+overidpre = 4,
+normalization_column = "z_fd_lead1",
+proxyIV = "z_fd_lead3")
+
 }

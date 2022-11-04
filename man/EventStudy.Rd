@@ -21,7 +21,8 @@ EventStudy(
   pre,
   overidpre = post + pre,
   normalize = -1 * (pre + 1),
-  cluster = TRUE
+  cluster = TRUE,
+  default_override = FALSE
 )
 }
 \arguments{
@@ -67,6 +68,9 @@ Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven e
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
+
+\item{default_override}{Specifies if the coefficient to be normalized should be altered
+when there are anticipation effects. Defaults to FALSE.}
 }
 \value{
 A list that contains the estimation output and an object containing the arguments passed to the function
@@ -78,13 +82,13 @@ Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
 EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
 
 # If you would like to estimate a static model:
 EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
 policyvar = "z", idvar = "id", timevar = "t",
 FE = TRUE, TFE = TRUE,
-post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
+post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE, default_override = FALSE)
 
 # If you would like to use IV regression:
 data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]

@@ -35,7 +35,7 @@ estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar 
                         policyvar = "z", idvar = "id", timevar = "t",
                         controls = "x_r", FE = TRUE, TFE = TRUE,
                         post = 3, pre = 2, overidpre = 4, overidpost = 5,
-                        normalize = - 3, cluster = TRUE)
+                        normalize = - 3, cluster = TRUE, default_override = FALSE)
 
 TestLinear(estimates, test = "z_fd_lag1 = z_fd", test_name = "Hypothesis Test",
 pretrends = TRUE, leveling_off = TRUE)

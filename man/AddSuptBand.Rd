@@ -43,7 +43,7 @@ eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
 outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
 
 AddSuptBand(estimates = eventstudy_estimates[[1]],
 num_sim = 100,

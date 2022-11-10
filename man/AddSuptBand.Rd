@@ -16,7 +16,7 @@ AddSuptBand(
 \item{estimates}{The first element extracted from the EventStudy function. Should be a list.}
 
 \item{num_sim}{The number of simulations used in generating the sup-t bands.
-Should be a natural number.}
+Should be a natural number. Defaults to 1000.}
 
 \item{conf_level}{The confidence level used for obtaining the sup-t bands critical value.
 Should be a real number between

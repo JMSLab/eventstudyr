@@ -7,7 +7,7 @@
 #'
 #' @param estimates The first element extracted from the EventStudy function. Should be a list.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
-#' Should be a natural number.
+#' Should be a natural number. Defaults to 1000.
 #' @param conf_level The confidence level used for obtaining the sup-t bands critical value.
 #' Should be a real number between
 #' 0 and 1, inclusive. Defaults to .95.

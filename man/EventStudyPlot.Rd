@@ -37,7 +37,7 @@ expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
 Should be a real number between 0 and 1, inclusive. Defaults to .95.}
 
 \item{num_sim}{The number of simulations used in generating the sup-t bands.
-Should be a natural number.}
+Should be a natural number. Defaults to 1000.}
 
 \item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible.
 Should be a natural number. Defaults to 1234.}

@@ -11,7 +11,7 @@
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value.
 #' Should be a real number between 0 and 1, inclusive. Defaults to .95.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
-#' Should be a natural number.
+#' Should be a natural number. Defaults to 1000.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
 #' Should be a natural number. Defaults to 1234.
 #' @param Addmean Adds the mean of the dependent variable in the period used for normalization.

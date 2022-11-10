@@ -515,3 +515,15 @@ test_that("proxyIV selection works", {
         "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead5"
     )
 })
+
+test_that("warning with correct normalize and pre is thrown when anticpation effects are allowed and default override is TRUE", {
+
+    expect_warning(
+        EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+               policyvar = "z", idvar = "id", timevar = "t",
+               controls = "x_r", FE = TRUE, TFE = TRUE,
+               post = 1, pre = 1, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE, default_override = TRUE),
+        paste("You allowed for anticipation effects 1 periods before the event, so the coefficient at -2 was selected to be normalized to zero.",
+        "To override this, change default_override to TRUE.")
+    )
+})

@@ -197,7 +197,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         return(list(OLS_model, event_study_args))
 
     }
-    else {
+    if (estimator == "FHS") {
 
 
         if (is.null(proxyIV)) {

@@ -42,6 +42,7 @@ PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy
     if (! is.character(str_policy_lead)) {stop("str_policy_lead should be a character.")}
     if (! is.character(str_policy_lag)) {stop("str_policy_lag should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
+    if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified with estimator=FHS")}
 
 
     if (estimator == "OLS") {
@@ -53,8 +54,6 @@ PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy
     }
 
     if (estimator == "FHS") {
-
-        if (is.null(proxyIV)) {stop("proxyIV must be specified with estimator=FHS")}
 
         exogenous <- c(str_policy_fd, str_policy_lead, str_policy_lag, controls)
         exogenous <- exogenous[exogenous != proxy]

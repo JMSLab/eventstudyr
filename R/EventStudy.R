@@ -202,7 +202,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         if (is.null(proxyIV)) {
             Fstart <- 0
-            proxyIV <- NULL
             str_policy_fd_lead <- str_policy_fd[grepl("^z_fd_lead", str_policy_fd)]
             for (var in str_policy_fd_lead) {
                 lm <- lm(data = data, formula = stats::reformulate(termlabels = var, response = proxy))

@@ -35,7 +35,3 @@ test_that("check that the correct part of vcov matrix is used", {
     expect_true(! "x_r" %in% colnames(vcov_matrix))
 })
 
-asymm_index = function(m) {
-    which(m != t(m), arr.ind = TRUE)
-}
-

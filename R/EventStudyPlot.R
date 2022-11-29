@@ -83,7 +83,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
     if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
-    if (class(ybreaks) != "numeric") {stop("ybreaks should be a numeric vector.")}
+    if (! inherits(ybreaks, "numeric")) {stop("ybreaks should be a numeric vector.")}
     if (! 0 %in% ybreaks) {stop("0 needs to be one of the specified breaks.")}
 
 # Estimation Elements -----------------------------------------------------

@@ -26,7 +26,7 @@
 #'
 
 AddCIs <- function(df_estimates, policyvar, eventstudy_coefficients, conf_level = 0.95) {
-    if (class(df_estimates) != "data.frame") {stop("df_estimates should be a data frame")}
+    if (! inherits(df_estimates, "data.frame")) {stop("df_estimates should be a data frame")}
     if (! "term" %in% colnames(df_estimates) | ! "estimate" %in% colnames(df_estimates) |
         ! "std.error" %in% colnames(df_estimates)) {stop("df_estimates should include columns 'term', 'estimate', and 'std.error'")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}

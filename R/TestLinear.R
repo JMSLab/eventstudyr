@@ -26,17 +26,17 @@
 
 
 TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends = TRUE, leveling_off = TRUE){
-    if (class(estimates) != "list" | length(estimates) != 2){
+    if (! inherits(estimates, "list") | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
     if ((! class(estimates[[1]]) %in% c("lm_robust", "iv_robust")) | (typeof(estimates[[1]]) != "list")) {
         stop("The first element of estimates should be a list of class 'lm_robust' with coefficient estimates and standard errors")
     }
-    if (class(estimates[[2]]) != "list" | typeof(estimates[[2]]) != "list") {
+    if (! inherits(estimates[[2]], "list") | typeof(estimates[[2]]) != "list") {
         stop("The second element of estimates should be a list with argument definitions, an output of EventStudy().")
     }
-    if (class(test_name) != "character"){stop("test_name should be of class character. Defaults to 'User Test'.")}
-    if (class(pretrends) != "logical"){stop("pretrends should be a logical. Default value is TRUE")}
-    if (class(leveling_off) != "logical"){stop("leveling_off should be a logical. Default value is TRUE")}
+    if (! inherits(test_name, "character")) {stop("test_name should be of class character. Defaults to 'User Test'.")}
+    if (! inherits(pretrends, "logical")) {stop("pretrends should be a logical. Default value is TRUE")}
+    if (! inherits(leveling_off, "logical")) {stop("leveling_off should be a logical. Default value is TRUE")}
 
     if(estimates[[2]]$cluster == TRUE){
 

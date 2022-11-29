@@ -70,7 +70,8 @@ eventstudy_estimates_ols <- EventStudy(estimator = "OLS", data = df_sample_dynam
 outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+post = 3, pre = 2, overidpre = 4, overidpost = 5,
+normalize = - 3, cluster = TRUE, default_override = FALSE)
 
 EventStudyPlot(estimates = eventstudy_estimates_ols,
 xtitle = "Event time",
@@ -92,7 +93,8 @@ eventstudy_estimates_fhs <- EventStudy(estimator = "FHS", data = df_sample_dynam
 outcomevar = "y_base",
 policyvar = "z", idvar = "id", timevar = "t",
 controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 0, overidpre = 3, overidpost = 1, normalize = - 1, cluster = TRUE, proxy = "eta_m", default_override = FALSE)
+post = 3, pre = 0, overidpre = 3, overidpost = 1,
+normalize = - 1, cluster = TRUE, proxy = "eta_m", default_override = FALSE)
 
 EventStudyPlot(estimates = eventstudy_estimates_fhs,
 xtitle = "Event time",

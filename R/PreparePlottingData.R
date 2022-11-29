@@ -38,7 +38,8 @@
 #' data = df_sample_dynamic, outcomevar = "y_base",
 #' policyvar = "z", idvar = "id", timevar = "t",
 #' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)[[1]])
+#' post = 3, pre = 2, overidpre = 4, overidpost = 5,
+#' normalize = - 3, cluster = TRUE, default_override = FALSE)[[1]])
 #'
 #' PreparePlottingData(
 #' df_tidy_estimates = tidy_eventstudy_estimates,
@@ -53,9 +54,12 @@
 #' # If you would like to use IV regression:
 #' data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
 #'
-#' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+#' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "FHS",
+#'           data = data,
+#'           outcomevar = "y_base", policyvar = "z", idvar = "id",
 #'           timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
-#'           overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE)[[1]])
+#'           overidpost = 2, pre = 1, overidpre = 2,
+#'           normalize = -1, cluster = TRUE, default_override = FALSE)[[1]])
 #'
 #' PreparePlottingData(
 #' df_tidy_estimates = tidy_eventstudy_estimates,

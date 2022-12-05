@@ -26,8 +26,8 @@
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
 #' Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
-#' @param default_override Specifies if the coefficient to be normalized should be altered
-#' when there are anticipation effects. Defaults to FALSE.
+#' @param default_override If set to FALSE, runs default process and switches coefficient to be normalized to 0
+#' when there are anticipation effects. If set to TRUE, does not make switch. Defaults to FALSE.
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr

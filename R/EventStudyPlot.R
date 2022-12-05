@@ -26,6 +26,7 @@
 #'
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -169,10 +170,10 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 # Construct Plot ----------------------------------------------------------
 
     p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
-    p_Supt <- if(plot_Supt) ggplot2::geom_linerange(ggplot2::aes(ymin = df_plotting$suptband_lower, ymax = df_plotting$suptband_upper)) else NULL
-    p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = df_plotting$ci_lower, ymax = df_plotting$ci_upper), width = .2) else NULL
+    p_Supt <- if(plot_Supt) ggplot2::geom_linerange(ggplot2::aes(ymin = .data$suptband_lower, ymax = .data$suptband_upper)) else NULL
+    p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = .data$ci_lower, ymax = .data$ci_upper), width = .2) else NULL
 
-    eventstudy_plot <- ggplot2::ggplot(df_plotting, ggplot2::aes(x = df_plotting$label, y = df_plotting$estimate)) +
+    eventstudy_plot <- ggplot2::ggplot(df_plotting, ggplot2::aes(x = .data$label, y = .data$estimate)) +
         p_Nozeroline +
         p_Supt +
         p_CI +

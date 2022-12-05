@@ -119,8 +119,8 @@ test_that("Sup-t bands are appropriately present or absent", {
                                      Nozeroline = FALSE,
                                      Smpath = NULL)
 
-    expect_equal(p_with_supt$labels$ymin, "df_plotting$suptband_lower")
-    expect_equal(p_with_supt$labels$ymax, "df_plotting$suptband_upper")
+    expect_equal(p_with_supt$labels$ymin, "suptband_lower")
+    expect_equal(p_with_supt$labels$ymax, "suptband_upper")
     expect_true(p_without_supt$labels$ymin != "suptband_lower")
     expect_true(p_without_supt$labels$ymax != "suptband_upper")
 
@@ -156,8 +156,8 @@ test_that("Confidence intervals are appropriately present or absent", {
                                      Nozeroline = FALSE,
                                      Smpath = NULL)
 
-    expect_equal(p_with_ci$labels$ymin, "df_plotting$ci_lower")
-    expect_equal(p_with_ci$labels$ymax, "df_plotting$ci_upper")
+    expect_equal(p_with_ci$labels$ymin, "ci_lower")
+    expect_equal(p_with_ci$labels$ymax, "ci_upper")
     expect_null(p_without_ci$labels$ymin)
     expect_null(p_without_ci$labels$ymax)
 
@@ -426,10 +426,10 @@ test_that("Sup-t bands are appropriately present or absent", {
                                      Nozeroline = FALSE,
                                      Smpath = NULL)
 
-    expect_equal(p_with_supt$labels$ymin, "df_plotting$suptband_lower")
-    expect_equal(p_with_supt$labels$ymax, "df_plotting$suptband_upper")
-    expect_true(p_without_supt$labels$ymin != "df_plotting$suptband_lower")
-    expect_true(p_without_supt$labels$ymax != "df_plotting$suptband_upper")
+    expect_equal(p_with_supt$labels$ymin, "suptband_lower")
+    expect_equal(p_with_supt$labels$ymax, "suptband_upper")
+    expect_true(p_without_supt$labels$ymin != "suptband_lower")
+    expect_true(p_without_supt$labels$ymax != "suptband_upper")
 
 })
 
@@ -467,8 +467,8 @@ test_that("Confidence intervals are appropriately present or absent", {
                                      Nozeroline = FALSE,
                                      Smpath = NULL)
 
-    expect_equal(p_with_ci$labels$ymin, "df_plotting$ci_lower")
-    expect_equal(p_with_ci$labels$ymax, "df_plotting$ci_upper")
+    expect_equal(p_with_ci$labels$ymin, "ci_lower")
+    expect_equal(p_with_ci$labels$ymax, "ci_upper")
     expect_null(p_without_ci$labels$ymin)
     expect_null(p_without_ci$labels$ymax)
 

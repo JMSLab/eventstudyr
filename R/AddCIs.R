@@ -7,6 +7,7 @@
 #'
 #'
 #' @import dplyr
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -37,9 +38,9 @@ AddCIs <- function(df_estimates, policyvar, eventstudy_coefficients, conf_level 
 
     percentile <- conf_level + ((1 - conf_level)/2)
 
-    df_CI <- dplyr::filter(df_estimates, df_estimates$term %in% terms)
-    df_CI <- dplyr::mutate(df_CI, ci_lower = df_CI$estimate - df_CI$std.error * qnorm(percentile),
-                                  ci_upper = df_CI$estimate + df_CI$std.error * qnorm(percentile))
+    df_CI <- dplyr::filter(df_estimates, .data$term %in% terms)
+    df_CI <- dplyr::mutate(df_CI, ci_lower = .data$estimate - .data$std.error * qnorm(percentile),
+                                  ci_upper = .data$estimate + .data$std.error * qnorm(percentile))
     df_CI <- dplyr::select(df_CI, c("term", "ci_lower", "ci_upper"))
 
     df_estimates <- dplyr::left_join(df_estimates, df_CI, by = "term")

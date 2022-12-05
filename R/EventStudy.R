@@ -122,7 +122,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }
 
-    if (pre !=0 & normalize == -1 & default_override) {
+    if (pre !=0 & normalize == -1 & !default_override) {
         normalize <- -pre - 1
         warning(paste("You allowed for anticipation effects", pre,
                       "periods before the event, so the coefficient at", normalize,

@@ -17,6 +17,7 @@ Imports:
     estimatr,
     ggplot2,
     MASS,
+    rlang,
     stats,
     stringr
 LazyData: true

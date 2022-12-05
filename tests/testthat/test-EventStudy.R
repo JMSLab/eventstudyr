@@ -498,21 +498,21 @@ test_that("proxyIV selection works", {
         EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base", policyvar = "z", idvar = "id",
                    timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 2,
                    overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE),
-        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead3"
+        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead3. A different variable to use as the instrument can be specified via the proxyIV argument."
     )
 
     expect_message(
         EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base", policyvar = "z", idvar = "id",
                    timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                    overidpost = 2, pre = 2, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE),
-        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead4"
+        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead4. A different variable to use as the instrument can be specified via the proxyIV argument."
     )
 
     expect_message(
         EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base", policyvar = "z", idvar = "id",
                    timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                    overidpost = 2, pre = 6, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE),
-        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead5"
+        "Defaulting to strongest lead of differenced policy variable: proxyIV = z_fd_lead5. A different variable to use as the instrument can be specified via the proxyIV argument."
     )
 })
 

@@ -25,17 +25,17 @@
 #'
 #' @examples
 #' eventstudy_estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic,
-#' outcomevar = "y_base",
-#' policyvar = "z", idvar = "id", timevar = "t",
-#' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5,
-#' normalize = - 3, cluster = TRUE, default_override = FALSE)
+#'                                    outcomevar = "y_base",
+#'                                    policyvar = "z", idvar = "id", timevar = "t",
+#'                                    controls = "x_r", FE = TRUE, TFE = TRUE,
+#'                                    post = 3, pre = 2, overidpre = 4, overidpost = 5,
+#'                                    normalize = - 3, cluster = TRUE, default_override = FALSE)
 #'
 #' AddSuptBand(estimates = eventstudy_estimates[[1]],
-#' num_sim = 100,
-#' conf_level = .95,
-#' seed = 1234,
-#' eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients)
+#'             num_sim = 100,
+#'             conf_level = .95,
+#'             seed = 1234,
+#'             eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients)
 #'
 
 AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {

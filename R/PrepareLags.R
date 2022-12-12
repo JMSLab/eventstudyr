@@ -9,7 +9,7 @@
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
-#' #' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+#' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
 #'
 #' @rawNamespace import(data.table, except=c(last, first, between))
 #' @export
@@ -21,7 +21,7 @@ PrepareLags <- function(df, groupvar = NULL, timevar, lagvar, lags) {
     if (! is.character(timevar)) {stop("timevar should be a character.")}
     if (! is.character(lagvar)) {stop("lagvar should be a character.")}
     if (! is.numeric(lags)) {stop("lags should be numeric.")}
-    
+
     df <- data.table::setDT(df)
 
     if (is.null(groupvar)) {

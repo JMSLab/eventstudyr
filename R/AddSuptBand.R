@@ -50,7 +50,6 @@
 #'   seed = 1234,
 #'   eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients
 #')
-#'
 
 AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {
 

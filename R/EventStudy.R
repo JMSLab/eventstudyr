@@ -93,7 +93,6 @@
 #'    cluster = TRUE
 #')
 
-
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
                        normalize = -1 * (pre + 1), cluster = TRUE, default_override = FALSE) {

@@ -65,5 +65,4 @@ AddSuptBand(
   seed = 1234,
   eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients
 )
-
 }

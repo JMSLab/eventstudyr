@@ -41,20 +41,22 @@ Prepares a formula object for use in EventStudyOLS or EventStudyFHS
 }
 \examples{
 PrepareModelFormula(estimator = "OLS", outcomevar = "y_base",
-str_policy_fd = c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-"z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-"z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7"),
-str_policy_lead = "z_lead6",
-str_policy_lag = "z_lag8",
-controls = "x_r")
+                    str_policy_fd = c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
+                                      "z_fd_lead5", "z_fd_lead6", "z_fd_lag1",
+                                      "z_fd_lag2", "z_fd_lag3", "z_fd_lag4",
+                                      "z_fd_lag5", "z_fd_lag6", "z_fd_lag7"),
+                    str_policy_lead = "z_lead6",
+                    str_policy_lag = "z_lag8",
+                    controls = "x_r")
 
 # If you would like to use IV regression:
 PrepareModelFormula(estimator = "FHS",
-outcomevar = "y_base",
-str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
-str_policy_lead = "z_lead3",
-str_policy_lag = "z_lag3",
-controls = "x_r",
-proxy = "eta_m",
-proxyIV = "z_fd_lead3")
+                    outcomevar = "y_base",
+                    str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3",
+                                      "z_fd_lag1", "z_fd_lag2"),
+                    str_policy_lead = "z_lead3",
+                    str_policy_lag = "z_lag3",
+                    controls = "x_r",
+                    proxy = "eta_m",
+                    proxyIV = "z_fd_lead3")
 }

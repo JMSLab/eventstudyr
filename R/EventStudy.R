@@ -253,7 +253,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                     proxyIV <- var
                 }
             }
-            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV, ". A different variable to use as the instrument can be specified via the proxyIV argument."))
+            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV, ". To specify a different proxyIV use the proxyIV argument."))
         }
 
         event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)

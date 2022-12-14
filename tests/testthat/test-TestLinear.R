@@ -2,7 +2,7 @@ test_that("correctly recognizes wrong variable type for estimate argument", {
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     df_estimate <- estimatr::tidy(estimate[[1]])
 
@@ -17,7 +17,7 @@ test_that("correctly recognizes wrong variable type for pretrends", {
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            controls = "x_r", FE = TRUE, TFE = TRUE,
-                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     expect_error(TestLinear(df_estimate, pretrends = "pretrends"))
     expect_error(TestLinear(df_estimate, pretrends = 1))
@@ -27,7 +27,7 @@ test_that("correctly recognizes wrong variable type for leveling_off", {
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            controls = "x_r", FE = TRUE, TFE = TRUE,
-                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     expect_error(TestLinear(df_estimate, leveling_off = "leveling_off"))
     expect_error(TestLinear(df_estimate, leveling_off = 1))
@@ -37,7 +37,7 @@ test_that("produces only functions that are specified", {
     estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            controls = "x_r", FE = TRUE, TFE = TRUE,
-                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     test = "z_fd_lag1 = z_fd"
 
@@ -79,14 +79,16 @@ test_that("produces only functions that are specified", {
 
 
 test_that("checks equality with STATA", {
-    estimate <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    estimate <- suppressWarnings(
+        EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t",
                            FE = TRUE, TFE = TRUE,
                            post = 2, pre = 2, overidpre = 2,
                            overidpost = 2, normalize = - 1,
-                           cluster = TRUE, default_override = FALSE)
+                           cluster = TRUE, anticipation_effects_normalization = TRUE)
+    )
 
-    codes <- read.csv('input/pvalues.txt', header =F)
+    codes <- read.csv('input/pvalues.txt', header = F)
 
     pretrends_stata_p <- codes[1,1]
     leveloff_stata_p  <- codes[2,1]

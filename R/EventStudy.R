@@ -26,8 +26,8 @@
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
 #' Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
-#' @param default_override If set to FALSE, runs default process and switches coefficient to be normalized to 0
-#' when there are anticipation effects. If set to TRUE, does not make switch. Defaults to FALSE.
+#' @param anticipation_effects_normalization If set to TRUE, runs default process and switches coefficient to be normalized to 0
+#' when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
@@ -50,7 +50,7 @@
 #'    overidpost = 5,
 #'    normalize = - 3,
 #'    cluster = TRUE,
-#'    default_override = FALSE
+#'    anticipation_effects_normalization = TRUE
 #')
 #'
 #' # If you would like to estimate a static model:
@@ -68,7 +68,7 @@
 #'    overidpre = 0,
 #'    overidpost = 0,
 #'    cluster = TRUE,
-#'    default_override = FALSE
+#'    anticipation_effects_normalization = TRUE
 #' )
 #'
 #' # If you would like to use IV regression:
@@ -95,7 +95,7 @@
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
-                       normalize = -1 * (pre + 1), cluster = TRUE, default_override = FALSE) {
+                       normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE) {
 
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -118,7 +118,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
            normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre + 1) and (post + overidpost).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
     if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
-    if (! is.logical(default_override)) {stop("default_override should be either TRUE or FALSE.")}
+    if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
 
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
@@ -162,11 +162,11 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }
 
-    if (pre !=0 & normalize == -1 & default_override) {
+    if (pre !=0 & normalize == -1 & anticipation_effects_normalization) {
         normalize <- -pre - 1
         warning(paste("You allowed for anticipation effects", pre,
                       "periods before the event, so the coefficient at", normalize,
-                      "was selected to be normalized to zero. To override this, change default_override to FALSE."))
+                      "was selected to be normalized to zero. To override this, change anticipation_effects_normalization to FALSE."))
     }
 
 

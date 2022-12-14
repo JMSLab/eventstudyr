@@ -19,7 +19,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
     estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     policyvar <- "z"
     eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
@@ -31,7 +31,7 @@ test_that("correctly recognizes missing columns in estimates argument", {
     estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     df_test <- estimatr::tidy(estimates[[1]])
 
@@ -51,7 +51,7 @@ test_that("correctly recognizes wrong inputs for policyvar argument", {
     estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                          post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     df_test <- estimatr::tidy(estimates[[1]])
 
@@ -65,7 +65,7 @@ test_that("correctly recognizes wrong inputs for conf_level argument", {
     estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
                      policyvar = "z", idvar = "id", timevar = "t",
                      controls = "x_r", FE = TRUE, TFE = TRUE,
-                     post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, default_override = FALSE)
+                     post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     df_test <- estimatr::tidy(estimates[[1]])
 
@@ -83,7 +83,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
     data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
     estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
-                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE)
+                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
     policyvar <- "z"
     eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
@@ -95,7 +95,7 @@ test_that("correctly recognizes missing columns in estimates argument", {
     data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
     estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
-                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE)
+                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
     df_test <- estimatr::tidy(estimates[[1]])
 
@@ -115,7 +115,7 @@ test_that("correctly recognizes wrong inputs for policyvar argument", {
     data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
     estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
-                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE)
+                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
     df_test <- estimatr::tidy(estimates[[1]])
 
@@ -129,7 +129,7 @@ test_that("correctly recognizes wrong inputs for conf_level argument", {
     data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
     estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
-                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, default_override = FALSE)
+                            overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
     df_test <- estimatr::tidy(estimates[[1]])
 

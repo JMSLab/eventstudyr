@@ -49,7 +49,7 @@
 #'   overidpost = 5,
 #'   normalize = - 3,
 #'   cluster = TRUE,
-#'   default_override = FALSE
+#'   anticipation_effects_normalization = TRUE
 #')
 #'
 #'EventStudyPlot(
@@ -87,7 +87,7 @@
 #'   normalize = - 1,
 #'   cluster = TRUE,
 #'   proxy = "eta_m",
-#'   default_override = FALSE
+#'   anticipation_effects_normalization = TRUE
 #')
 #'
 #'EventStudyPlot(

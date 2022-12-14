@@ -49,7 +49,7 @@
 #'                                        overidpost = 5,
 #'                                        normalize = - 3,
 #'                                        cluster = TRUE,
-#'                                        default_override = FALSE)[[1]])
+#'                                        anticipation_effects_normalization = TRUE)[[1]])
 #'
 #' PreparePlottingData(df_tidy_estimates = tidy_eventstudy_estimates,
 #'                     policyvar = "z",
@@ -79,7 +79,7 @@
 #'                                        overidpre = 2,
 #'                                        normalize = -1,
 #'                                        cluster = TRUE,
-#'                                        default_override = FALSE)[[1]])
+#'                                        anticipation_effects_normalization = TRUE)[[1]])
 #'
 #' PreparePlottingData(df_tidy_estimates = tidy_eventstudy_estimates,
 #'                     policyvar = "z",
@@ -87,7 +87,7 @@
 #'                     overidpost = 5,
 #'                     pre = 2,
 #'                     overidpre = 4,
-#'                     normalization_column = "z_fd_lead1",
+#'                     normalization_column = "z_fd_lead2",
 #'                     proxyIV = "z_fd_lead3")
 #'
 

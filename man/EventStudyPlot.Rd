@@ -82,7 +82,7 @@ eventstudy_estimates_ols <- EventStudy(
   overidpost = 5,
   normalize = - 3,
   cluster = TRUE,
-  default_override = FALSE
+  anticipation_effects_normalization = TRUE
 )
 
 EventStudyPlot(
@@ -120,7 +120,7 @@ eventstudy_estimates_fhs <- EventStudy(
   normalize = - 1,
   cluster = TRUE,
   proxy = "eta_m",
-  default_override = FALSE
+  anticipation_effects_normalization = TRUE
 )
 
 EventStudyPlot(

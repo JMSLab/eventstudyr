@@ -22,7 +22,7 @@ EventStudy(
   overidpre = post + pre,
   normalize = -1 * (pre + 1),
   cluster = TRUE,
-  default_override = FALSE
+  anticipation_effects_normalization = TRUE
 )
 }
 \arguments{
@@ -69,8 +69,8 @@ Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven e
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
 
-\item{default_override}{If set to FALSE, runs default process and switches coefficient to be normalized to 0
-when there are anticipation effects. If set to TRUE, does not make switch. Defaults to FALSE.}
+\item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
+when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE}
 }
 \value{
 A list that contains the estimation output and an object containing the arguments passed to the function
@@ -95,7 +95,7 @@ EventStudy(
    overidpost = 5,
    normalize = - 3,
    cluster = TRUE,
-   default_override = FALSE
+   anticipation_effects_normalization = TRUE
 )
 
 # If you would like to estimate a static model:
@@ -113,7 +113,7 @@ EventStudy(
    overidpre = 0,
    overidpost = 0,
    cluster = TRUE,
-   default_override = FALSE
+   anticipation_effects_normalization = TRUE
 )
 
 # If you would like to use IV regression:

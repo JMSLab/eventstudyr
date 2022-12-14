@@ -19,8 +19,7 @@ Imports:
     MASS,
     rlang,
     stats,
-    stringr,
-    rlang
+    stringr
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1

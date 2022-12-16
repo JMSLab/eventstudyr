@@ -12,7 +12,7 @@ program main
 	gen_vars
 	sample_regression
 	do_tests	
-	compute_mean	
+	compute_mean
 	
 	log close
 end
@@ -29,8 +29,10 @@ program gen_vars
 	xtset id t
 	gen zfd = d.z
 	
-	forvalues i = 2/`furthest_lead' {
-		by id: gen zfd_lead`i' = f`i'.zfd
+	forvalues i = 1/`furthest_lead' {
+		if `i' != 3 {
+			by id: gen zfd_lead`i' = f`i'.zfd
+		}
 	}
 	
 	forvalues i = 1/`furthest_lag_minus1' {
@@ -47,15 +49,17 @@ end
 
 program do_tests
 	* pre-trends test
-	test furthest_lead = zfd_lead4 = zfd_lead3 = 0
+	test furthest_lead = zfd_lead4 = 0
+	
 	* leveling-off test
 	test zfd_lag2 = zfd_lag3 = furthest_lag
 end
 
 program compute_mean
-	by id: gen zfd_lead1 = f1.zfd
-	summarize y_base if zfd_lead1 != 0 & zfd_lead1 != .
+	by id: gen zfd_lead3 = f3.zfd
+	summarize y_base if zfd_lead3 != 0 & zfd_lead3 != .
 end
+
 
 main
 

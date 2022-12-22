@@ -16,18 +16,23 @@
 #'
 #' @examples
 #' model_formula <-  PrepareModelFormula(
-#' estimator = "OLS", outcomevar = "y_base",
-#' str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
-#' str_policy_lead = "z_lead3",
-#' str_policy_lag = "z_lag3",
-#' controls = "x_r"
+#'    estimator = "OLS",
+#'    outcomevar = "y_base",
+#'    str_policy_fd = c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2"),
+#'    str_policy_lead = "z_lead3",
+#'    str_policy_lag = "z_lag3",
+#'    controls = "x_r"
 #' )
 #'
-#' EventStudyOLS(prepared_model_formula = model_formula,
-#' prepared_data = df_EventStudyOLS_example,
-#' idvar = "id",
-#' timevar = "t",
-#' FE = TRUE, TFE = TRUE, cluster = TRUE)
+#' EventStudyOLS(
+#'    prepared_model_formula = model_formula,
+#'    prepared_data = df_EventStudyOLS_example,
+#'    idvar = "id",
+#'    timevar = "t",
+#'    FE = TRUE,
+#'    TFE = TRUE,
+#'    cluster = TRUE
+#')
 
 EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar, FE, TFE, cluster) {
 

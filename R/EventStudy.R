@@ -9,10 +9,8 @@
 #' @param controls Optional vector of controls q, should be a character.
 #' @param proxy Variable that is thought to be affected by the confound but not by the policy.
 #' Should be specified if and only if estimator is specified as "FHS". Should be a character.
-#' @param proxyIV Variables to be used as an instrument. For the case of a single proxy,
+#' @param proxyIV Variables to be used as an instrument. Should be a character. If NULL,
 #' defaults to the strongest lead of the policy variable based on the first stage.
-#' Should be specified if and only if estimator is specified as "FHS".
-#' Should be a character
 #' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
@@ -28,26 +26,77 @@
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
 #' Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
+#' @param anticipation_effects_normalization If set to TRUE, runs default process and switches coefficient to be normalized to 0
+#' when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
 #' @export
 #'
 #' @examples
-#' EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
-#' policyvar = "z", idvar = "id", timevar = "t",
-#' controls = "x_r", FE = TRUE, TFE = TRUE,
-#' post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+#' EventStudy(
+#'    estimator = "OLS",
+#'    data = df_sample_dynamic,
+#'    outcomevar = "y_base",
+#'    policyvar = "z",
+#'    idvar = "id",
+#'    timevar = "t",
+#'    controls = "x_r",
+#'    FE = TRUE,
+#'    TFE = TRUE,
+#'    post = 3,
+#'    pre = 2,
+#'    overidpre = 4,
+#'    overidpost = 5,
+#'    normalize = - 3,
+#'    cluster = TRUE,
+#'    anticipation_effects_normalization = TRUE
+#')
 #'
-#' #If you would like to estimate a static model:
-#' EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
-#' policyvar = "z", idvar = "id", timevar = "t",
-#' FE = TRUE, TFE = TRUE,
-#' post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
+#' # If you would like to estimate a static model:
+#' EventStudy(
+#'    estimator = "OLS",
+#'    data = df_sample_static,
+#'    outcomevar = "y_static",
+#'    policyvar = "z",
+#'    idvar = "id",
+#'    timevar = "t",
+#'    FE = TRUE,
+#'    TFE = TRUE,
+#'    post = 0,
+#'    pre = 0,
+#'    overidpre = 0,
+#'    overidpost = 0,
+#'    cluster = TRUE,
+#'    anticipation_effects_normalization = TRUE
+#' )
+#'
+#' # If you would like to use IV regression:
+#' data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+#'
+#' EventStudy(
+#'    estimator = "FHS",
+#'    data = data,
+#'    outcomevar = "y_base",
+#'    policyvar = "z",
+#'    idvar = "id",
+#'    timevar = "t",
+#'    controls = "x_r",
+#'    proxy = "eta_m",
+#'    FE = TRUE,
+#'    TFE = TRUE,
+#'    post = 1,
+#'    overidpost = 2,
+#'    pre = 1,
+#'    overidpre = 2,
+#'    normalize = -1,
+#'    cluster = TRUE
+#')
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
-                       normalize = -1 * (pre + 1), cluster = TRUE) {
+                       normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE) {
+
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
@@ -59,7 +108,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "OLS" & ! is.null(proxy))) {stop("proxy should only be specified when estimator = 'FHS'.")}
     if ((estimator == "FHS" & ! is.character(proxy))) {stop("proxy should be a character.")}
     if ((estimator == "OLS" & ! is.null(proxyIV))) {stop("proxyIV should only be specified when estimator = 'FHS'.")}
-    if ((estimator == "FHS" & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
     if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
     if (! (is.numeric(post) & post >= 0 & post %% 1 == 0)) {stop("post should be a whole number.")}
@@ -69,6 +117,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(pre + overidpre + 1) &
            normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre + 1) and (post + overidpost).")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
+    if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
+    if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
+
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
     if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")}
@@ -77,7 +128,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_lead should be reserved for eventstudyr"))}
     if  (sum(grepl(paste0(policyvar, "_lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_lag should be reserved for eventstudyr"))}
+                                                                                    "_lag should be reserved for eventstudyr"))}
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre
@@ -110,6 +161,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }
+
+    if (pre !=0 & normalize == -1 & anticipation_effects_normalization) {
+        normalize <- -pre - 1
+        warning(paste("You allowed for anticipation effects", pre,
+                      "periods before the event, so the coefficient at", normalize,
+                      "was selected to be normalized to zero. To override this, change anticipation_effects_normalization to FALSE."))
+    }
+
 
     if (normalize < 0) {
         if (normalize == -(pre + overidpre + 1)) {
@@ -152,7 +211,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     if (estimator == "OLS") {
 
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
 
         OLS_model        <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         event_study_args <- list("estimator" = estimator,
@@ -178,6 +237,49 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         return(list(OLS_model, event_study_args))
 
+    }
+    if (estimator == "FHS") {
+
+
+        if (is.null(proxyIV)) {
+            Fstart <- 0
+            z_fd_lead_indicator <- grepl("^z_fd_lead", str_policy_fd)
+            str_policy_fd_lead <- str_policy_fd[z_fd_lead_indicator]
+            for (var in str_policy_fd_lead) {
+                lm <- lm(data = data, formula = stats::reformulate(termlabels = var, response = proxy))
+                Floop <- summary(lm)$fstatistic["value"]
+                if (Floop > Fstart) {
+                    Fstart <- Floop
+                    proxyIV <- var
+                }
+            }
+            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV, ". To specify a different proxyIV use the proxyIV argument."))
+        }
+
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
+
+        FHS_model <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+        event_study_args <- list("estimator" = estimator,
+                                 "data" = data,
+                                 "outcomevar" = outcomevar,
+                                 "policyvar" = policyvar,
+                                 "idvar" = idvar,
+                                 "timevar" = timevar,
+                                 "controls" = controls,
+                                 "proxy" = proxy,
+                                 "proxyIV" = proxyIV,
+                                 "FE" = FE,
+                                 "TFE" = TFE,
+                                 "post" = post,
+                                 "overidpost" = overidpost,
+                                 "pre" = pre,
+                                 "overidpre" = overidpre,
+                                 "normalize" = normalize,
+                                 "normalization_column" = normalization_column,
+                                 "cluster" = cluster,
+                                 "eventstudy_coefficients" = dplyr::setdiff(c(str_policy_fd, str_policy_lead, str_policy_lag), proxyIV))
+
+        return(list(FHS_model, event_study_args))
     }
 
 }

@@ -21,7 +21,7 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 Adds lags of a variable as new columns
 }
 \examples{
-#' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
 
 }
 \seealso{

@@ -94,4 +94,23 @@ test_that("controls arguments are incorporated into formula for OLS", {
   expect_equal(sum(controls_in_model), length(controls))
 })
 
+test_that("formula for IV regression is correct", {
+    estimator         <-  "FHS"
+    outcomevar        <-  "y_base"
+    str_policy_fd     <-  c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3")
+    str_policy_lead   <-  "z_lead3"
+    str_policy_lag    <-  "z_lag4"
+    controls          <-  "x_r"
+    proxy             <-  "eta_m"
+    proxyIV           <-  "z_fd_lead3"
+
+    reg <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
+
+    expect_equal(class(reg), "formula")
+    expect_equal(deparse(reg[[2]]), "y_base")
+    expect_equal(sort(all.vars(reg[[c(3,2)]])),
+                 sort(c("z_fd", "z_fd_lead2", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3", "z_lead3", "z_lag4", "x_r", "eta_m")))
+    expect_equal(sort(all.vars(reg[[c(3,3)]])),
+                 sort(c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3", "z_lead3", "z_lag4", "x_r")))
+})
 

@@ -11,14 +11,18 @@ Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
+    car,
     data.table,
     dplyr,
     estimatr,
+    ggplot2,
+    MASS,
+    rlang,
     stats,
     stringr
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

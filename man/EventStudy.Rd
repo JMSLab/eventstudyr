@@ -21,7 +21,8 @@ EventStudy(
   pre,
   overidpre = post + pre,
   normalize = -1 * (pre + 1),
-  cluster = TRUE
+  cluster = TRUE,
+  anticipation_effects_normalization = TRUE
 )
 }
 \arguments{
@@ -42,10 +43,8 @@ EventStudy(
 \item{proxy}{Variable that is thought to be affected by the confound but not by the policy.
 Should be specified if and only if estimator is specified as "FHS". Should be a character.}
 
-\item{proxyIV}{Variables to be used as an instrument. For the case of a single proxy,
-defaults to the strongest lead of the policy variable based on the first stage.
-Should be specified if and only if estimator is specified as "FHS".
-Should be a character}
+\item{proxyIV}{Variables to be used as an instrument. Should be a character. If NULL,
+defaults to the strongest lead of the policy variable based on the first stage.}
 
 \item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
 
@@ -69,6 +68,9 @@ Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven e
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
+
+\item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
+when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE}
 }
 \value{
 A list that contains the estimation output and an object containing the arguments passed to the function
@@ -77,14 +79,62 @@ A list that contains the estimation output and an object containing the argument
 Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
 }
 \examples{
-EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
-policyvar = "z", idvar = "id", timevar = "t",
-controls = "x_r", FE = TRUE, TFE = TRUE,
-post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE)
+EventStudy(
+   estimator = "OLS",
+   data = df_sample_dynamic,
+   outcomevar = "y_base",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   controls = "x_r",
+   FE = TRUE,
+   TFE = TRUE,
+   post = 3,
+   pre = 2,
+   overidpre = 4,
+   overidpost = 5,
+   normalize = - 3,
+   cluster = TRUE,
+   anticipation_effects_normalization = TRUE
+)
 
-#If you would like to estimate a static model:
-EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
-policyvar = "z", idvar = "id", timevar = "t",
-FE = TRUE, TFE = TRUE,
-post = 0, pre = 0, overidpre = 0, overidpost = 0, cluster = TRUE)
+# If you would like to estimate a static model:
+EventStudy(
+   estimator = "OLS",
+   data = df_sample_static,
+   outcomevar = "y_static",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   FE = TRUE,
+   TFE = TRUE,
+   post = 0,
+   pre = 0,
+   overidpre = 0,
+   overidpost = 0,
+   cluster = TRUE,
+   anticipation_effects_normalization = TRUE
+)
+
+# If you would like to use IV regression:
+data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+
+EventStudy(
+   estimator = "FHS",
+   data = data,
+   outcomevar = "y_base",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   controls = "x_r",
+   proxy = "eta_m",
+   FE = TRUE,
+   TFE = TRUE,
+   post = 1,
+   overidpost = 2,
+   pre = 1,
+   overidpre = 2,
+   normalize = -1,
+   cluster = TRUE
+)
 }

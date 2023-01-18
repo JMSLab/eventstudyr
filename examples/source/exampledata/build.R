@@ -19,7 +19,7 @@ pre <- 1
 overidpost <- 2
 overidpre <- 2
 
-df_first_diff <- GetFirstDifferences(df = df_sample_dynamic, timevar = "t", diffvar = "z")
+df_first_diff <- GetFirstDifferences(df = df_sample_dynamic, timevar = "t", groupvar="id", diffvar = "z")
 
 num_fd_lag_periods   <- post + overidpost - 1
 num_fd_lead_periods  <- pre + overidpre
@@ -43,5 +43,9 @@ df_EventStudyOLS_example <- df_lag_lead[c("id", "t", "z", "y_base", "x_r", "z_fd
                              "z_fd_lead1", "z_fd_lead2", "z_fd_lead3",
                              "z_fd_lag1", "z_fd_lag2", "z_lag3","z_lead3")]
 
-save(df_EventStudyOLS_example, file = sprintf('%s/df_EventStudyOLS_example.RData', outdir))
+df_EventStudyFHS_example <- df_lag_lead[c("id", "t", "z", "y_base", "x_r", "z_fd",
+                                          "z_fd_lead1", "z_fd_lead2", "z_fd_lead3",
+                                          "z_fd_lag1", "z_fd_lag2", "z_lag3","z_lead3", "eta_m")]
 
+save(df_EventStudyOLS_example, file = sprintf('%s/df_EventStudyOLS_example.RData', outdir))
+save(df_EventStudyFHS_example, file = sprintf('%s/df_EventStudyFHS_example.RData', outdir))

@@ -9,8 +9,7 @@ AddSmPath <- function(dhat, Vhat,
   FindOrder <- function(d, invV, Wcritic, maxorder) {
     # Find minimum order of polynomial such that the constraint is satisfied
 
-    normalized_index <- which(d %in% c(0))
-
+    normalized_index <- which(d == 0)
 
     Wstart = 1e6
     error = F
@@ -41,54 +40,33 @@ AddSmPath <- function(dhat, Vhat,
     #   r = degree of polynomial
 
     p = length(d)
-    error = F
+    k = seq(0, p-1)/(p-1)
 
     if (r == 0) {
       trfit <- rep(0, p)
       W     <- (t(d)%*%invV)%*%d
-      a     <- 0
+      vhat  <- 0
     }
     else {
-
-      k    <- seq(0, p-1)/(p-1)
       Fmat <- sapply(seq(0, r),
                      function(j) {k^(j)})
 
       Anorm   <- matrix(Fmat[normalized_index,])
-      ZeroMat <- matrix(0, nrow = length(normalized_index),
-                           ncol = length(normalized_index))
-      ZeroVec <- matrix(0, nrow = length(normalized_index))
 
-      XX = 2*(t(Fmat)%*%invV)%*%Fmat
-      Xy = 2*(t(Fmat)%*%invV)%*%d
-      A  = rbind(cbind(XX,       Anorm),
-                 cbind(t(Anorm), ZeroMat))
-      b  = rbind(Xy, ZeroVec)
+      FtinvVd    = (t(Fmat)%*%invV)%*%matrix(d)
+      invFtinvVF = inv((t(Fmat)%*%invV)%*%Fmat)
+      AtFtinvVFA = (t(Anorm)%*%invFtinvVF)%*%Anorm
+      multiplo   = (Anorm%*%inv(AtFtinvVFA))%*%t(Anorm)
 
-      tryCatch(
-        {
-          a_long <- solve(A, b)
-          a      <- a_long[1:(r+1)]
+      difference = FtinvVd - (multiplo%*%invFtinvVF)%*%FtinvVd
+      vhat = invFtinvVF%*%difference
 
-          trfit <- Fmat%*%a
-          W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
-        },
-        error = function(cond) {
-          print("The solver in PolyWaldMin failed. Here is the original error message:")
-          print(cond)
-
-          error <<- T
-        }
-      )
+      trfit <- Fmat%*%vhat
+      W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
     }
-
-    if (error) {
-      return(NULL)
-    } else {
-      return(list("trfit" = trfit,
-                  "W"     = W,
-                  "a"     = a))
-    }
+    return(list("trfit" = trfit,
+                "W"     = W,
+                "vhat"  = vhat))
   }
 
 
@@ -113,7 +91,7 @@ AddSmPath <- function(dhat, Vhat,
 
   p          = length(dhat)
   invVhat    = pinv(Vhat)
-  Wcritic    = qchisq(1-alpha, p)
+  Wcritic    = qchisq(1-alpha/2, p)
 
   # First step
   order <- FindOrder(dhat, invVhat,

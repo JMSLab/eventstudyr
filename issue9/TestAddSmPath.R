@@ -1,5 +1,6 @@
 remove(list=ls())
 library(ggplot2)
+library(pracma) # install.packages("pracma")
 source("AddSmPath.R")
 
 dhat = c(-.5,-.25,-.24,-.3,-.05,0,1.25)

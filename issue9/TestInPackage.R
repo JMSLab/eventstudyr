@@ -6,7 +6,7 @@ load_all()
 estimates <- EventStudy(
     estimator = "OLS",
     data = df_sample_dynamic,
-    outcomevar = "y_smooth_m",
+    outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",
     timevar = "t",
@@ -38,5 +38,5 @@ EventStudyPlot(
     Smpath = T
 )
 
-ggsave("issue9/smpath_base.png")
+ggsave("issue9/smpath.png")
 

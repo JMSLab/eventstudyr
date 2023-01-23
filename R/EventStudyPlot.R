@@ -207,8 +207,8 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         vcov_matrix_all <- estimates[[1]]$vcov
         v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coefficients)
         covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
-        covar           <- rbind(covar, matrix(0, ncol = n_coefs-1))
-        covar           <- cbind(covar, matrix(0, nrow = n_coefs))
+        covar           <- rbind(cbind(covar, matrix(0, nrow = n_coefs-1)),
+                                 matrix(0, ncol = n_coefs))
         inv_covar       <- pracma::pinv(covar)
 
         df_plotting <- AddSmPath(df_plotting, inv_covar)
@@ -254,5 +254,5 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
             plot.caption = ggplot2::element_text(hjust = 0),
             text         = ggplot2::element_text(size = 20))
 
-    return(eventstudy_plot)
+    return(plt)
 }

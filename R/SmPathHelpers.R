@@ -40,21 +40,22 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
     vhat  = 0
   }
   else {
+    k    <- seq(0, coeff_length-1)/(coeff_length-1)
     Fmat <- sapply(seq(0, poly_order),
-                   function(j) {coeff_length^(j)})
+                   function(j) {k^(j)})
 
     Anorm   <- matrix(Fmat[norm_index,])
 
     FtinvVd    = (t(Fmat)%*%inv_covar)%*%matrix(coeffs)
-    invFtinvVF = inv((t(Fmat)%*%inv_covar)%*%Fmat)
+    invFtinvVF = pracma::inv((t(Fmat)%*%inv_covar)%*%Fmat)
     AtFtinvVFA = (t(Anorm)%*%invFtinvVF)%*%Anorm
-    multiple   = (Anorm%*%inv(AtFtinvVFA))%*%t(Anorm)
+    multiple   = (Anorm%*%pracma::inv(AtFtinvVFA))%*%t(Anorm)
 
     difference = FtinvVd - (multiple%*%invFtinvVF)%*%FtinvVd
     vhat       = invFtinvVF%*%difference
 
     trfit <- Fmat%*%vhat
-    W     <- (t(d-trfit)%*%inv_covar)%*%(d-trfit)
+    W     <- (t(coeffs-trfit)%*%inv_covar)%*%(coeffs-trfit)
   }
 
   return(list("trfit" = trfit,
@@ -68,7 +69,7 @@ Objective <- function(v, coeffs, inv_covar) {
 }
 
 IneqConstraint <- function(v, coeffs, inv_covar) {
-  p <- length(d)
+  p <- length(coeffs)
   r <- length(v)
 
   k    <- seq(3, p+2)/(p-1)
@@ -76,6 +77,6 @@ IneqConstraint <- function(v, coeffs, inv_covar) {
                  function(j) {k^(j)})
   trfit <- Fmat %*% v
 
-  W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
+  W     <- (t(coeffs-trfit)%*%inv_covar)%*%(coeffs-trfit)
   return(W)
 }

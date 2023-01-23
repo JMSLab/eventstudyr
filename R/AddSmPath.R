@@ -44,7 +44,7 @@ AddSmPath <- function(df, inv_covar, normalization_column,
                                inv_covar = inv_covar)
 
         if (optim$convergence != 0) {
-            stop("The search for parameters for the polynomial did not converge. Please unselect the smoothest path option.")
+            stop("The search for parameters for the polynomial did not converge. Please unselect the smoothest path option by setting Smpath to FALSE.")
         }
 
         vstar <- optim$pars

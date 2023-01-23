@@ -108,7 +108,7 @@
 
 EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
                            Supt = .95, num_sim = 1000, seed = 1234, Addmean = FALSE,
-                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = NULL) {
+                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = F) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
@@ -148,6 +148,14 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     if (plot_CI) {
 
         df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
+    }
+
+# Optionally Add smoothing ---------------------------------------------------
+
+    if (Smpath) {
+
+        df_estimates_tidy <- AddSmPath(df_estimates_tidy, eventstudy_coefficients)
+
     }
 
 # Optionally Test For Pretrends/Levelling-Off -------------------------------
@@ -195,6 +203,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         y_axis_labels[index_zero] <- paste0(y_axis_labels[index_zero], " (", round(y_mean, 2), ")")
 
     }
+
 
 # Construct Plot ----------------------------------------------------------
 

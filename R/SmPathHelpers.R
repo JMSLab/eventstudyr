@@ -1,30 +1,24 @@
-# Functions for Finding Minimum Order 
+# Functions for Finding Minimum Order
 FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
   ########################################################################
   # Find minimum order of polynomial such that the constraint is satisfied
   ########################################################################
-  
+
   norm_index <- which(coeffs == 0)
-  
+
   Wvalue = 1e6
   error  = F
   poly_order = 0
-  
+
   # Compute Wald value for polynomials of increasing order until Wald Value < Critical Value
   while (poly_order <= maxorder & Wvalue >= Wcritic ) {
-    
+
     min_results <- SolutionInWaldRegion(coeffs, inv_covar, norm_index, poly_order)
-    
-    if (is.null(min_results)) {
-      error = T
-      break
-    } else {
-      Wvalue = min_results$W
-      poly_order = poly_order + 1
-    }
-    
+    Wvalue     = min_results$W
+    poly_order = poly_order + 1
+
   }
-  
+
   if (error){
     return("Error")
   }else{
@@ -33,13 +27,13 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
 
 }
 
-SolutionInWaldRegion <- function(coeffs, coeff_length, inv_covar, norm_index, poly_order) {
+SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
   ##########################################################################
   # Minimize Wald objective given coefficients and inverse covariance matrix
   ##########################################################################
 
   coeff_length = length(coeffs)
-  
+
   if (poly_order == 0) {
     trfit = rep(0, coeff_length)
     W     = (t(coeffs)%*%inv_covar)%*%coeffs
@@ -76,12 +70,12 @@ Objective <- function(v, coeffs, inv_covar) {
 IneqConstraint <- function(v, coeffs, inv_covar) {
   p <- length(d)
   r <- length(v)
-  
+
   k    <- seq(3, p+2)/(p-1)
   Fmat <- sapply(seq(0, r-1),
                  function(j) {k^(j)})
   trfit <- Fmat %*% v
-  
+
   W     <- (t(d-trfit)%*%invV)%*%(d-trfit)
   return(W)
 }

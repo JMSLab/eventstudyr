@@ -22,7 +22,8 @@
 #' Should be TRUE or FALSE. Defaults to TRUE.
 #' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0.
 #' Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
-#' @param Smpath PLACE HOLDER
+#' @param Smpath Plot smoothest path of confounder that rationalizes event study coefficients.
+#' Should be TRUE or FALSE. Defaults to TRUE.
 #'
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
@@ -65,7 +66,7 @@
 #'   Preeventcoeffs = TRUE,
 #'   Posteventcoeffs = TRUE,
 #'   Nozeroline = FALSE,
-#'   Smpath = NULL
+#'   Smpath = FALSE
 #')
 #'
 #' # IV
@@ -103,7 +104,7 @@
 #'   Preeventcoeffs = TRUE,
 #'   Posteventcoeffs = TRUE,
 #'   Nozeroline = FALSE,
-#'   Smpath = NULL
+#'   Smpath = FALSE
 #')
 
 EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
@@ -150,14 +151,6 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
     }
 
-# Optionally Add smoothing ---------------------------------------------------
-
-    if (Smpath) {
-
-        df_estimates_tidy <- AddSmPath(df_estimates_tidy, eventstudy_coefficients)
-
-    }
-
 # Optionally Test For Pretrends/Levelling-Off -------------------------------
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
@@ -170,9 +163,8 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         text_pretrends   <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
         text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
         text_caption     <- paste0(text_pretrends, " -- ", text_levelingoff)
-    }
 
-    else if (Preeventcoeffs & !Posteventcoeffs) {
+    } else if (Preeventcoeffs & !Posteventcoeffs) {
 
         pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
 
@@ -189,7 +181,8 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         text_caption <- NULL
     }
 
-    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
+    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar,
+                                       post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     y_axis_labels <- ybreaks
 
@@ -205,30 +198,61 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     }
 
 
+# Optionally Add smoothing ---------------------------------------------------
+
+    if (Smpath) {
+
+        n_coefs = nrow(df_plotting)
+
+        vcov_matrix_all <- estimates[[1]]$vcov
+        v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coefficients)
+        covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
+        covar           <- rbind(covar, matrix(0, ncol = n_coefs-1))
+        covar           <- cbind(covar, matrix(0, nrow = n_coefs))
+        inv_covar       <- pracma::pinv(covar)
+
+        df_plotting <- AddSmPath(df_plotting, inv_covar)
+    }
+
 # Construct Plot ----------------------------------------------------------
 
-    p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
-    p_Supt <- if(plot_Supt) ggplot2::geom_linerange(ggplot2::aes(ymin = .data$suptband_lower, ymax = .data$suptband_upper)) else NULL
-    p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = .data$ci_lower, ymax = .data$ci_upper), width = .2) else NULL
+    plt <-
+        ggplot2::ggplot(df_plotting,
+                        ggplot2::aes(x = .data$label, y = .data$estimate))
 
-    eventstudy_plot <- ggplot2::ggplot(df_plotting, ggplot2::aes(x = .data$label, y = .data$estimate)) +
-        p_Nozeroline +
-        p_Supt +
-        p_CI +
+    if (Nozeroline) {
+        plt <- plt +
+            ggplot2::geom_hline(yintercept = 0,
+                                color = "green", linetype = "dashed")
+    }
+    if (plot_Supt) {
+        plt <- plt +
+            ggplot2::geom_linerange(ggplot2::aes(ymin = .data$suptband_lower,
+                                                 ymax = .data$suptband_upper))
+    }
+    if (plot_CI) {
+        plt <- plt +
+            ggplot2::geom_errorbar(ggplot2::aes(ymin = .data$ci_lower,
+                                                ymax = .data$ci_upper), width = .2)
+    }
+    if (Smpath) {
+        plt <- plt +
+            ggplot2::geom_line(ggplot2::aes(y = smoothest_path, group = 1),
+                               color = "black")
+    }
+
+    plt <- plt  +
         ggplot2::geom_point(color = "#006600", size = 3) +
-        ggplot2::labs(
-            x = xtitle,
-            y = ytitle,
-            caption = text_caption
-            ) +
         ggplot2::scale_y_continuous(breaks = ybreaks, labels = y_axis_labels,
                                     limits = c(min(ybreaks), max(ybreaks))) +
+        ggplot2::labs(x = xtitle,
+                      y = ytitle,
+                      caption = text_caption) +
         ggplot2::theme_bw() +
         ggplot2::theme(
-            panel.grid = ggplot2::element_blank(),
+            panel.grid   = ggplot2::element_blank(),
             plot.caption = ggplot2::element_text(hjust = 0),
-            text = ggplot2::element_text(size = 20)
-            )
+            text         = ggplot2::element_text(size = 20))
 
     return(eventstudy_plot)
 }

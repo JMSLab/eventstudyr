@@ -91,7 +91,9 @@
 #'                     proxyIV = "z_fd_lead3")
 #'
 
-PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV = NULL) {
+PreparePlottingData <- function(df_tidy_estimates, policyvar,
+                                post, overidpost, pre, overidpre, normalization_column,
+                                proxyIV = NULL, Smpath = F) {
 
     if (! is.data.frame(df_tidy_estimates)) {stop("data should be a data frame.")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
@@ -181,6 +183,5 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar, post, overidpost, 
     df_plotting["label"] <- factor(df_plotting$term, levels = v_terms_to_plot_ordered, labels = v_terms_to_plot_labels)
 
     return(df_plotting)
-
 
 }

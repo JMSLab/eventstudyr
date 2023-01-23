@@ -35,7 +35,7 @@ AddSmPath <- function(df, inv_covar, normalization_column,
 
     # Second step: Find minimum coefficient on highest-order term
     if (order != 0) {
-        optim <- Rsolnp::solnp(pars      = rep(0, order),
+        optim <- Rsolnp::solnp(pars      = rep(1, order),
                                fun       = Objective,
                                ineqfun   = IneqConstraint,
                                ineqUB    = Wcritic,

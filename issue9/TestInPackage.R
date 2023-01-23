@@ -3,7 +3,7 @@ library(devtools)
 
 load_all()
 
-eventstudy_estimates_ols <- EventStudy(
+estimates <- EventStudy(
     estimator = "OLS",
     data = df_sample_dynamic,
     outcomevar = "y_smooth_m",
@@ -23,10 +23,10 @@ eventstudy_estimates_ols <- EventStudy(
 )
 
 EventStudyPlot(
-    estimates = eventstudy_estimates_ols,
+    estimates = estimates,
     xtitle = "Event time",
     ytitle = "Coefficient",
-    ybreaks = c(-1.5, -.5, 0, .5, 1.5),
+    ybreaks = seq(-2.5, 2.5, .5),
     conf_level = .95,
     Supt = .95,
     num_sim = 1000,

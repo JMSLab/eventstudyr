@@ -197,8 +197,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
     }
 
-
-# Optionally Add smoothing ---------------------------------------------------
+# Optionally Add smooth path ----------------------------------------------
 
     if (Smpath) {
 

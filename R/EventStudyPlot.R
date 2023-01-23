@@ -150,7 +150,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
     }
 
-# Optionally Test For Pretrends/Leveing Off -------------------------------
+# Optionally Test For Pretrends/Levelling-Off -------------------------------
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
 

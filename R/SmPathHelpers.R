@@ -16,15 +16,9 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
     min_results <- SolutionInWaldRegion(coeffs, inv_covar, norm_index, poly_order)
     Wvalue     = min_results$W
     poly_order = poly_order + 1
-
   }
 
-  if (error){
-    return("Error")
-  }else{
-    return(poly_order - 1)
-  }
-
+  return(poly_order - 1)
 }
 
 SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
@@ -38,8 +32,8 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
     trfit = rep(0, coeff_length)
     W     = (t(coeffs)%*%inv_covar)%*%coeffs
     vhat  = 0
-  }
-  else {
+
+  } else {
     k    <- seq(0, coeff_length-1)/(coeff_length-1)
     Fmat <- sapply(seq(0, poly_order),
                    function(j) {k^(j)})
@@ -55,7 +49,7 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
     vhat       = invFtinvVF%*%difference
 
     trfit <- Fmat%*%vhat
-    W     <- (t(coeffs-trfit)%*%inv_covar)%*%(coeffs-trfit)
+    W     <- (t(trfit-coeffs)%*%inv_covar)%*%(trfit-coeffs)
   }
 
   return(list("trfit" = trfit,
@@ -65,10 +59,12 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
 
 # Functions for Finding Minimum Coefficient on Highest Term
 Objective <- function(v, coeffs, inv_covar) {
+
   return(v[length(v)]^2)
 }
 
 IneqConstraint <- function(v, coeffs, inv_covar) {
+
   p <- length(coeffs)
   r <- length(v)
 
@@ -77,6 +73,23 @@ IneqConstraint <- function(v, coeffs, inv_covar) {
                  function(j) {k^(j)})
   trfit <- Fmat %*% v
 
-  W     <- (t(coeffs-trfit)%*%inv_covar)%*%(coeffs-trfit)
+  W     <- (t(trfit-coeffs)%*%inv_covar)%*%(trfit-coeffs)
   return(W)
+}
+
+EqConstraint <- function(v, coeffs, inv_covar) {
+
+  norm_index <- which(coeffs == 0)
+
+  p <- length(coeffs)
+  r <- length(v)
+
+  k    <- seq(0, p-1)/(p-1)
+  Fmat <- sapply(seq(0, r-1),
+                   function(j) {k^(j)})
+  trfit <- Fmat %*% v
+
+  norm_sm_path <- trfit[norm_index]
+
+  return(norm_sm_path)
 }

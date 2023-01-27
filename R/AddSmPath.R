@@ -16,7 +16,7 @@
 #'
 #'
 
-AddSmPath <- function(df, inv_covar, normalization_column,
+AddSmPath <- function(coefficients, inv_covar,
                       conf_level = 0.95, maxorder = 10){
 
     if (!is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {
@@ -26,28 +26,32 @@ AddSmPath <- function(df, inv_covar, normalization_column,
         stop("Argument 'maxorder' should be an integer greater than zero.")
     }
 
-    coefficients <- df$estimate
     coeff_length <- length(coefficients)
     Wcritic      <- qchisq(conf_level, coeff_length)
+    norm_idxs <- which(coefficients == 0)
 
     # First step: Find lowest possible polynomial order
     order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
 
     # Second step: Find minimum coefficient on highest-order term
     if (order != 0) {
-        optim <- Rsolnp::solnp(pars      = rep(1, order),
+        optim <- Rsolnp::solnp(pars      = rep(.1, order),
                                fun       = Objective,
+                               eqfun     = EqConstraint,
+                               eqB       = rep(0, length(norm_idxs)),
                                ineqfun   = IneqConstraint,
                                ineqUB    = Wcritic,
-                               ineqLB    = -1e6,
+                               ineqLB    = -Inf,
                                coeffs    = coefficients,
                                inv_covar = inv_covar)
+                             # control   = list("tol" = 1e-5)
+
 
         if (optim$convergence != 0) {
             stop("The search for parameters for the polynomial did not converge. Please unselect the smoothest path option by setting Smpath to FALSE.")
         }
 
-        vstar <- optim$pars
+        vstar <- matrix(optim$pars)
 
         p <- coeff_length
         r <- order

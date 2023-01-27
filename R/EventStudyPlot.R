@@ -119,7 +119,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
 # Estimation Elements -----------------------------------------------------
 
-    df_estimates <- estimates[[1]]
+    df_estimates      <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
 
     df_data                 <- estimates[[2]]$data
@@ -203,21 +203,28 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
         n_coefs = nrow(df_plotting)
 
+        setorder(df_plotting, label)
+        coefficients <- df_plotting$estimate
+
+        # Add column and row in matrix of coefficients
         vcov_matrix_all <- estimates[[1]]$vcov
         v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coefficients)
         covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
         covar           <- rbind(cbind(covar, matrix(0, nrow = n_coefs-1)),
                                  matrix(0, ncol = n_coefs))
+        rownames(covar) <- c(eventstudy_coefficients, normalization_column)
+        colnames(covar) <- c(eventstudy_coefficients, normalization_column)
+        covar           <- covar[df_plotting$term, df_plotting$term]
+
         inv_covar       <- pracma::pinv(covar)
 
-        df_plotting <- AddSmPath(df_plotting, inv_covar)
+        df_plotting <- AddSmPath(coefficients, inv_covar)
     }
 
 # Construct Plot ----------------------------------------------------------
 
-    plt <-
-        ggplot2::ggplot(df_plotting,
-                        ggplot2::aes(x = .data$label, y = .data$estimate))
+    plt <- ggplot2::ggplot(df_plotting,
+                           ggplot2::aes(x = .data$label, y = .data$estimate))
 
     if (Nozeroline) {
         plt <- plt +

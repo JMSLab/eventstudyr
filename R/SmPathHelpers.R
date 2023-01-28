@@ -1,3 +1,24 @@
+# Function to add zero where normalized coefficient should be in covar matrix
+AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
+                          coeffs_oder) {
+
+  v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coeffs)
+  covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
+
+  n_coefs = nrow(covar)
+
+  # Add row and col of zeros at the end
+  covar           <- rbind(cbind(covar, matrix(0, nrow = n_coefs)),
+                           matrix(0, ncol = n_coefs+1))
+  rownames(covar) <- c(eventstudy_coeffs, norm_column)
+  colnames(covar) <- c(eventstudy_coeffs, norm_column)
+
+  # Sort matrix
+  covar           <- covar[coeffs_oder, coeffs_oder]
+
+  return(covar)
+}
+
 # Functions for Finding Minimum Order
 FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
   ########################################################################

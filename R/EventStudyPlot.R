@@ -107,9 +107,11 @@
 #'   Smpath = FALSE
 #')
 
-EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
-                           Supt = .95, num_sim = 1000, seed = 1234, Addmean = FALSE,
-                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = F) {
+EventStudyPlot <- function(estimates,
+                           xtitle = "Event time", ytitle = "Coefficient", ybreaks,
+                           conf_level = .95, Supt = .95, num_sim = 1000, seed = 1234,
+                           Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
+                           Nozeroline = FALSE, Smpath = F) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
@@ -199,26 +201,20 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
 
 # Optionally Add smooth path ----------------------------------------------
 
+    # Order coefficients
+    setorder(df_plotting, label)
+
     if (Smpath) {
-
-        n_coefs = nrow(df_plotting)
-
-        setorder(df_plotting, label)
         coefficients <- df_plotting$estimate
 
-        # Add column and row in matrix of coefficients
-        vcov_matrix_all <- estimates[[1]]$vcov
-        v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coefficients)
-        covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
-        covar           <- rbind(cbind(covar, matrix(0, nrow = n_coefs-1)),
-                                 matrix(0, ncol = n_coefs))
-        rownames(covar) <- c(eventstudy_coefficients, normalization_column)
-        colnames(covar) <- c(eventstudy_coefficients, normalization_column)
-        covar           <- covar[df_plotting$term, df_plotting$term]
+        # Add column and row in matrix of coefficients in index of norm columns
+        covar <- AddZerosCovar(estimates[[1]]$vcov, eventstudy_coefficients,
+                               normalization_column, df_plotting$term)
 
-        inv_covar       <- pracma::pinv(covar)
+        inv_covar <- pracma::pinv(covar)
 
-        df_plotting <- AddSmPath(coefficients, inv_covar)
+        df_plotting <- AddSmPath(df_plotting,
+                                 coefficients, inv_covar)
     }
 
 # Construct Plot ----------------------------------------------------------

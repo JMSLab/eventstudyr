@@ -1,3 +1,4 @@
+remove(list=ls())
 # Run with working directory in ROOT
 library(devtools)
 

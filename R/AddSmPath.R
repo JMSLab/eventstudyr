@@ -1,6 +1,6 @@
 #' Calculates smoothest path
 #'
-#' @description
+#' @description Function to add smoothest path to dataframe with coefficients
 #'
 #' @param df Dataset with coefficients prepared for plotting (must include normalized coefficients)
 #' @param inv_covar Inverse of covariance matrix of coefficients (must include row and column of 0s for normalized coefficients)
@@ -8,12 +8,11 @@
 #' @param maxorder Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.
 #'
 #' @return df with smoothest path add as a new column
-#' @import pracma, Rsolnp
+#' @import pracma
+#' @import Rsolnp
 #' @export
 #'
 #' @examples
-#'
-#'
 
 AddSmPath <- function(df, coefficients, inv_covar,
                       conf_level = 0.95, maxorder = 10){

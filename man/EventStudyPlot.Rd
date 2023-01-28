@@ -17,7 +17,7 @@ EventStudyPlot(
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
   Nozeroline = FALSE,
-  Smpath = NULL
+  Smpath = F
 )
 }
 \arguments{
@@ -54,7 +54,8 @@ Should be TRUE or FALSE. Defaults to TRUE.}
 \item{Nozeroline}{Whether or not to plot a dashed horizontal line at y = 0.
 Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.}
 
-\item{Smpath}{PLACE HOLDER}
+\item{Smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
+Should be TRUE or FALSE. Defaults to TRUE.}
 }
 \value{
 The Event-Study plot as a gpplot2 object
@@ -98,7 +99,7 @@ EventStudyPlot(
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
   Nozeroline = FALSE,
-  Smpath = NULL
+  Smpath = FALSE
 )
 
 # IV
@@ -136,6 +137,6 @@ EventStudyPlot(
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
   Nozeroline = FALSE,
-  Smpath = NULL
+  Smpath = FALSE
 )
 }

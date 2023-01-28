@@ -18,7 +18,8 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
     poly_order = poly_order + 1
   }
 
-  return(poly_order - 1)
+  return(list(order = poly_order - 1,
+              results = min_results))
 }
 
 SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
@@ -34,9 +35,9 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
     vhat  = 0
 
   } else {
-    k    <- seq(0, coeff_length-1)/(coeff_length-1)
-    Fmat <- sapply(seq(0, poly_order),
-                   function(j) {k^(j)})
+    k    = seq(0, coeff_length-1)/(coeff_length-1)
+    Fmat = sapply(seq(1, poly_order),
+                  function(j) {k^(j-1)})
 
     Anorm   <- matrix(Fmat[norm_index,])
 
@@ -68,9 +69,9 @@ IneqConstraint <- function(v, coeffs, inv_covar) {
   p <- length(coeffs)
   r <- length(v)
 
-  k    <- seq(0, p-1)/(p-1)
-  Fmat <- sapply(seq(0, r-1),
-                 function(j) {k^(j)})
+  k    = seq(0, p-1)/(p-1)
+  Fmat = sapply(seq(1, r),
+                function(j) {k^(j-1)})
   trfit <- Fmat %*% v
 
   W     <- (t(trfit-coeffs)%*%inv_covar)%*%(trfit-coeffs)
@@ -85,8 +86,8 @@ EqConstraint <- function(v, coeffs, inv_covar) {
   r <- length(v)
 
   k    <- seq(0, p-1)/(p-1)
-  Fmat <- sapply(seq(0, r-1),
-                   function(j) {k^(j)})
+  Fmat <- sapply(seq(1, r),
+                   function(j) {k^(j-1)})
   trfit <- Fmat %*% v
 
   norm_sm_path <- trfit[norm_index]

@@ -28,7 +28,7 @@ AddSmPath <- function(coefficients, inv_covar,
 
     coeff_length <- length(coefficients)
     Wcritic      <- qchisq(conf_level, coeff_length)
-    norm_idxs <- which(coefficients == 0)
+    norm_idxs    <- which(coefficients == 0)
 
     # First step: Find lowest possible polynomial order
     order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)

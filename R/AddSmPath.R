@@ -37,7 +37,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
     if (order != 0) {
 
-        # Comment out momentarily
+        # Commented out momentarily
 
         #optim <- Rsolnp::solnp(pars      = rep(0, order),
         #                       fun       = Objective,

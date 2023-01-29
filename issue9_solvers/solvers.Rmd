@@ -54,7 +54,7 @@ kable(covar[1:7,1:7])
 ## Find order of polynomial
 
 We find the minimum order such that a polynomial is in the Wald region of the coefficients.
-We use a function already incorporated in the package.
+We use the function `FindOrder`, already incorporated in the main `eventstudyr` package.
 
 ```{r}
 coefficients <- dt$estimate
@@ -84,12 +84,13 @@ ggplot(dt, aes(x = label)) +
     geom_errorbar(aes(ymin = estimate - 1.96*std.error,
                       ymax = estimate + 1.96*std.error),
                   width = 0.2) +
-    geom_point(aes(y = poly_path), size = 2, color = "red")
+    geom_point(aes(y = poly_path), size = 2, 
+               color = "red", alpha = 0.7)
 ```
 
 ## Searching for the smoothest path
 
-Now that we now the order of the desired polynomial, we want to find the smoothest path by solving the following problem:
+Now that we know the order of the desired polynomial, we want to find the smoothest path by solving the following problem:
 
 1. Choose coefficients for the desired order to minimize the squared of the coefficient on the highest order polynomial term.
 2. Constraint the minimization to paths inside the Wald confidence region.
@@ -209,7 +210,7 @@ EqConstraint <- function(v, d, invV, Wcritic) {
 Next, we run the solver.
 It appears that, for some reason, the initial guess of $(0,..,0)$ does not change.
 The solver, however, works in a simpler example with the options.
-(See file [`test_nloptr.R`](test_nloptr.R))
+(See file [`test_nloptr.R`](test_nloptr.R).)
 
 ```{r solve nloptr}
 local_opts <- list( "algorithm" = "NLOPT_LD_MMA", "xtol_rel" = 1.0e-8)

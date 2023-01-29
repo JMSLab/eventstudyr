@@ -94,8 +94,8 @@ kable(covar[1:7,1:7])
 ## Find order of polynomial
 
 We find the minimum order such that a polynomial is in the Wald region
-of the coefficients. We use a function already incorporated in the
-package.
+of the coefficients. We use the function `FindOrder`, already
+incorporated in the main `eventstudyr` package.
 
 ``` r
 coefficients <- dt$estimate
@@ -125,15 +125,16 @@ ggplot(dt, aes(x = label)) +
     geom_errorbar(aes(ymin = estimate - 1.96*std.error,
                       ymax = estimate + 1.96*std.error),
                   width = 0.2) +
-    geom_point(aes(y = poly_path), size = 2, color = "red")
+    geom_point(aes(y = poly_path), size = 2, 
+               color = "red", alpha = 0.7)
 ```
 
 <img src="solvers_files/figure-gfm/plot-1.png" style="display: block; margin: auto;" />
 
 ## Searching for the smoothest path
 
-Now that we now the order of the desired polynomial, we want to find the
-smoothest path by solving the following problem:
+Now that we know the order of the desired polynomial, we want to find
+the smoothest path by solving the following problem:
 
 1.  Choose coefficients for the desired order to minimize the squared of
     the coefficient on the highest order polynomial term.
@@ -188,15 +189,15 @@ Next, we run the solver.
 ``` r
 norm_idxs <- which(coefficients == 0)
 
-optim <- Rsolnp::solnp(pars      = rep(0, order),
-                       fun       = Objective,
-                       eqfun     = EqConstraint,
-                       eqB       = rep(0, length(norm_idxs)),
-                       ineqfun   = IneqConstraint,
-                       ineqUB    = Wcritic,
-                       ineqLB    = -Inf,
-                       d         = coefficients,
-                       invV      = inv_covar)
+optim <- solnp(pars      = rep(0, order),
+               fun       = Objective,
+               eqfun     = EqConstraint,
+               eqB       = rep(0, length(norm_idxs)),
+               ineqfun   = IneqConstraint,
+               ineqUB    = Wcritic,
+               ineqLB    = -Inf,
+               d         = coefficients,
+               invV      = inv_covar)
 ```
 
     ## 
@@ -300,7 +301,7 @@ Next, we run the solver. It appears that, for some reason, the initial
 guess of
 ![(0,..,0)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%280%2C..%2C0%29 "(0,..,0)")
 does not change. The solver, however, works in a simpler example with
-the options. (See file [`test_nloptr.R`](test_nloptr.R))
+the options. (See file [`test_nloptr.R`](test_nloptr.R).)
 
 ``` r
 local_opts <- list( "algorithm" = "NLOPT_LD_MMA", "xtol_rel" = 1.0e-8)

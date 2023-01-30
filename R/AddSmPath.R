@@ -21,7 +21,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
         stop("Argument 'conf_level' should be a real number between 0 and 1, inclusive.")
     }
     if (!(maxorder%%1 == 0) | maxorder < 0 | maxorder > 10) {
-        stop("Argument 'maxorder' should be an integer greater than zero.")
+        stop("Argument 'maxorder' should be an integer between zero and ten.")
     }
 
     coeff_length <- length(coefficients)

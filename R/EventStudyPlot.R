@@ -23,7 +23,7 @@
 #' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0.
 #' Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
 #' @param Smpath Plot smoothest path of confounder that rationalizes event study coefficients.
-#' Should be TRUE or FALSE. Defaults to TRUE.
+#' Should be TRUE or FALSE. Defaults to FALSE.
 #'
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
@@ -111,7 +111,7 @@ EventStudyPlot <- function(estimates,
                            xtitle = "Event time", ytitle = "Coefficient", ybreaks,
                            conf_level = .95, Supt = .95, num_sim = 1000, seed = 1234,
                            Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
-                           Nozeroline = FALSE, Smpath = F) {
+                           Nozeroline = FALSE, Smpath = FALSE) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
@@ -141,7 +141,6 @@ EventStudyPlot <- function(estimates,
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
 
     if (plot_Supt) {
-
         df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = Supt,
                                          seed = seed, eventstudy_coefficients = eventstudy_coefficients)
     }
@@ -219,42 +218,40 @@ EventStudyPlot <- function(estimates,
 
 # Construct Plot ----------------------------------------------------------
 
-    plt <- ggplot2::ggplot(df_plotting,
-                           ggplot2::aes(x = .data$label, y = .data$estimate))
+    plt <- ggplot(df_plotting,
+                  aes(x = .data$label, y = .data$estimate))
 
     if (Nozeroline) {
         plt <- plt +
-            ggplot2::geom_hline(yintercept = 0,
-                                color = "green", linetype = "dashed")
+            geom_hline(yintercept = 0,
+                       color = "green", linetype = "dashed")
     }
     if (plot_Supt) {
         plt <- plt +
-            ggplot2::geom_linerange(ggplot2::aes(ymin = .data$suptband_lower,
-                                                 ymax = .data$suptband_upper))
+            geom_linerange(aes(ymin = .data$suptband_lower,
+                               ymax = .data$suptband_upper))
     }
     if (plot_CI) {
         plt <- plt +
-            ggplot2::geom_errorbar(ggplot2::aes(ymin = .data$ci_lower,
-                                                ymax = .data$ci_upper), width = .2)
+            geom_errorbar(aes(ymin = .data$ci_lower,
+                              ymax = .data$ci_upper), width = .2)
     }
     if (Smpath) {
         plt <- plt +
-            ggplot2::geom_line(ggplot2::aes(y = smoothest_path, group = 1),
-                               color = "black")
+            geom_line(aes(y = smoothest_path, group = 1),
+                      color = "black")
     }
 
     plt <- plt  +
-        ggplot2::geom_point(color = "#006600", size = 3) +
-        ggplot2::scale_y_continuous(breaks = ybreaks, labels = y_axis_labels,
-                                    limits = c(min(ybreaks), max(ybreaks))) +
-        ggplot2::labs(x = xtitle,
-                      y = ytitle,
-                      caption = text_caption) +
-        ggplot2::theme_bw() +
-        ggplot2::theme(
-            panel.grid   = ggplot2::element_blank(),
-            plot.caption = ggplot2::element_text(hjust = 0),
-            text         = ggplot2::element_text(size = 20))
+        geom_point(color = "#006600", size = 3) +
+        scale_y_continuous(breaks = ybreaks, labels = y_axis_labels,
+                           limits = c(min(ybreaks), max(ybreaks))) +
+        labs(x = xtitle, y = ytitle,
+             caption = text_caption) +
+        theme_bw() +
+        theme(panel.grid   = element_blank(),
+              plot.caption = element_text(hjust = 0),
+              text         = element_text(size = 20))
 
     return(plt)
 }

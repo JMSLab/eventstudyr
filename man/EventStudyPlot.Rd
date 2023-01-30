@@ -17,7 +17,7 @@ EventStudyPlot(
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
   Nozeroline = FALSE,
-  Smpath = F
+  Smpath = FALSE
 )
 }
 \arguments{
@@ -55,7 +55,7 @@ Should be TRUE or FALSE. Defaults to TRUE.}
 Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.}
 
 \item{Smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
-Should be TRUE or FALSE. Defaults to TRUE.}
+Should be TRUE or FALSE. Defaults to FALSE.}
 }
 \value{
 The Event-Study plot as a gpplot2 object

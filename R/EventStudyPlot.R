@@ -5,7 +5,7 @@
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis.
-#' Should be a numeric vector that contains 0.
+#' Should be a numeric vector that contains 0. Optional.
 #' @param conf_level Confidence level used for confidence interval
 #' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value.
@@ -108,7 +108,7 @@
 #')
 
 EventStudyPlot <- function(estimates,
-                           xtitle = "Event time", ytitle = "Coefficient", ybreaks,
+                           xtitle = "Event time", ytitle = "Coefficient", ybreaks = NULL,
                            conf_level = .95, Supt = .95, num_sim = 1000, seed = 1234,
                            Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
                            Nozeroline = FALSE, Smpath = FALSE) {
@@ -116,8 +116,6 @@ EventStudyPlot <- function(estimates,
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
     if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
-    if (! inherits(ybreaks, "numeric")) {stop("ybreaks should be a numeric vector.")}
-    if (! 0 %in% ybreaks) {stop("0 needs to be one of the specified breaks.")}
 
 # Estimation Elements -----------------------------------------------------
 
@@ -185,7 +183,38 @@ EventStudyPlot <- function(estimates,
     df_plt <- PreparePlottingData(df_estimates_tidy, policyvar,
                                   post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
-    y_axis_labels <- ybreaks
+# Construct y brakes ------------------------------------------------------
+
+    if (!is.null(ybreaks)) {
+        if (!(0 %in% ybreaks) & Addmean) {
+            stop("If you want to add the mean of y in the y-axis then 'ybreaks' must include 0 (zero).")
+        }
+
+        ylabels <- ybreaks
+    } else {
+        min_value <- min(c(df_plt$estimate, df_plt$ci_lower, df_plt$suptband_lower), na.rm = T)
+        max_value <- max(c(df_plt$estimate, df_plt$ci_upper, df_plt$suptband_upper), na.rm = T)
+        max_abs   <- max(abs(min_value), abs(max_value))
+
+        magnitude <- 10^floor(log10(max_abs))
+
+        # Determine step depending on how far the endpoints are from the magnitude
+        mean_ratio <- mean(abs(min_value)/magnitude_min, max_value/magnitude_min)
+        if (mean_ratio > 6.67) {
+            step = 3*magnitude_min
+        } else if (mean_ratio > 3.33) {
+            step = 2*magnitude_min
+        } else {
+            step = magnitude_min
+        }
+
+        # Pick multiples of step to ensure zero is included
+        close_to_min <- floor(min_value/step)*step
+        close_to_max <- ceiling(max_value/step)*step
+
+        ybreaks <- seq(close_to_min, close_to_max, step)
+        ylabels <- ybreaks
+    }
 
 # Optionally Adds Mean ----------------------------------------------------
 
@@ -194,7 +223,7 @@ EventStudyPlot <- function(estimates,
         y_mean <- AddMeans(df_data, normalization_column, policyvar, outcomevar)
 
         index_zero <- which(ybreaks == 0)
-        y_axis_labels[index_zero] <- paste0(y_axis_labels[index_zero], " (", round(y_mean, 2), ")")
+        ylabels[index_zero] <- paste0(ylabels[index_zero], " (", round(y_mean, 2), ")")
 
     }
 
@@ -243,8 +272,8 @@ EventStudyPlot <- function(estimates,
 
     plt <- plt  +
         geom_point(color = "#006600", size = 3) +
-        scale_y_continuous(breaks = ybreaks, labels = y_axis_labels,
-                           limits = c(min(ybreaks), max(ybreaks))) +
+        scale_y_continuous(breaks = ybreaks, labels = ylabels,
+                           limits = 1.05*c(ybreaks[1], ybreaks[length(ybreaks)])) +
         labs(x = xtitle, y = ytitle,
              caption = text_caption) +
         theme_bw() +

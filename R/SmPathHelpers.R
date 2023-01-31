@@ -19,6 +19,16 @@ AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
   return(covar)
 }
 
+# Function that takes coeff_length and poly_order as arguments and computes Fmat
+GetFmat <- function(coeff_length, poly_order) {
+
+  k    = seq(0, coeff_length-1)/(coeff_length-1)
+  Fmat = sapply(seq(1, poly_order),
+                function(j) {k^(j-1)})
+
+  return(Fmat)
+}
+
 # Functions for Finding Minimum Order
 FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
   ########################################################################
@@ -56,11 +66,8 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
     vhat  = 0
 
   } else {
-    k    = seq(0, coeff_length-1)/(coeff_length-1)
-    Fmat = sapply(seq(1, poly_order),
-                  function(j) {k^(j-1)})
-
-    Anorm   <- matrix(Fmat[norm_index,])
+    Fmat  <- GetFmat(coeff_length, poly_order)
+    Anorm <- matrix(Fmat[norm_index,])
 
     FtinvVd    = (t(Fmat)%*%inv_covar)%*%matrix(coeffs)
     invFtinvVF = pracma::inv((t(Fmat)%*%inv_covar)%*%Fmat)
@@ -87,12 +94,7 @@ Objective <- function(v, coeffs, inv_covar) {
 
 IneqConstraint <- function(v, coeffs, inv_covar) {
 
-  p <- length(coeffs)
-  r <- length(v)
-
-  k    = seq(0, p-1)/(p-1)
-  Fmat = sapply(seq(1, r),
-                function(j) {k^(j-1)})
+  Fmat  <- GetFmat(length(coeffs), length(v))
   trfit <- Fmat %*% v
 
   W     <- (t(trfit-coeffs)%*%inv_covar)%*%(trfit-coeffs)
@@ -103,12 +105,7 @@ EqConstraint <- function(v, coeffs, inv_covar) {
 
   norm_index <- which(coeffs == 0)
 
-  p <- length(coeffs)
-  r <- length(v)
-
-  k    <- seq(0, p-1)/(p-1)
-  Fmat <- sapply(seq(1, r),
-                   function(j) {k^(j-1)})
+  Fmat  <- GetFmat(length(coeffs), length(v))
   trfit <- Fmat %*% v
 
   norm_sm_path <- trfit[norm_index]

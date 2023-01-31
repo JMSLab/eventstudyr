@@ -23,6 +23,12 @@ AddSmPath <- function(df, coefficients, inv_covar,
     if (!(maxorder%%1 == 0) | maxorder < 0 | maxorder > 10) {
         stop("Argument 'maxorder' should be an integer between zero and ten.")
     }
+    if (!is.data.frame(df)) {
+        stop("Argument 'df' should be a dataframe.")
+    }
+    if (!is.matrix(inv_covar)) {
+        stop("Argument 'inv_covar' should be a matrix.")
+    }
 
     coeff_length <- length(coefficients)
     Wcritic      <- qchisq(conf_level, coeff_length)

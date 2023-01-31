@@ -182,8 +182,8 @@ EventStudyPlot <- function(estimates,
         text_caption <- NULL
     }
 
-    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar,
-                                       post, overidpost, pre, overidpre, normalization_column, proxyIV)
+    df_plt <- PreparePlottingData(df_estimates_tidy, policyvar,
+                                  post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
     y_axis_labels <- ybreaks
 
@@ -201,24 +201,23 @@ EventStudyPlot <- function(estimates,
 # Optionally Add smooth path ----------------------------------------------
 
     # Order coefficients
-    setorder(df_plotting, label)
+    setorder(df_plt, label)
 
     if (Smpath) {
-        coefficients <- df_plotting$estimate
+        coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
         covar <- AddZerosCovar(estimates[[1]]$vcov, eventstudy_coefficients,
-                               normalization_column, df_plotting$term)
+                               normalization_column, df_plt$term)
 
         inv_covar <- pracma::pinv(covar)
 
-        df_plotting <- AddSmPath(df_plotting,
-                                 coefficients, inv_covar)
+        df_plt <- AddSmPath(df_plt, coefficients, inv_covar)
     }
 
 # Construct Plot ----------------------------------------------------------
 
-    plt <- ggplot(df_plotting,
+    plt <- ggplot(df_plt,
                   aes(x = .data$label, y = .data$estimate))
 
     if (Nozeroline) {

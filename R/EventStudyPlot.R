@@ -273,7 +273,7 @@ EventStudyPlot <- function(estimates,
     plt <- plt  +
         geom_point(color = "#006600", size = 3) +
         scale_y_continuous(breaks = ybreaks, labels = ylabels,
-                           limits = 1.05*c(ybreaks[1], ybreaks[length(ybreaks)])) +
+                           limits = c(ybreaks[1], ybreaks[length(ybreaks)])) +
         labs(x = xtitle, y = ytitle,
              caption = text_caption) +
         theme_bw() +

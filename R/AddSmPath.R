@@ -65,6 +65,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
     }
 
+    vstar = res_order$vhat
     df["smoothest_path"] = Fmat %*% vstar
 
     return(df)

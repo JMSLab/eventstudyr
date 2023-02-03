@@ -39,5 +39,5 @@ EventStudyPlot(
     Smpath = T
 )
 
-ggsave("issue9/smpath.png")
+ggsave("issue9/smpath.png", width = 7, height = 5)
 

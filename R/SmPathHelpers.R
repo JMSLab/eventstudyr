@@ -22,6 +22,9 @@ AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
 # Function that takes coeff_length and poly_order as arguments and computes Fmat
 GetFmat <- function(coeff_length, poly_order) {
 
+  if (poly_order < 1) {
+    stop("Error computing F matrix to search for smoothest path. When constructing Fmat poly_order should be 1 or larger.")
+  }
   k    = seq(0, coeff_length-1)/(coeff_length-1)
   Fmat = sapply(seq(1, poly_order),
                 function(j) {k^(j-1)})
@@ -29,7 +32,6 @@ GetFmat <- function(coeff_length, poly_order) {
   return(Fmat)
 }
 
-# Functions for Finding Minimum Order
 FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
   ########################################################################
   # Find minimum order of polynomial such that the constraint is satisfied
@@ -86,29 +88,105 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
               "vhat"  = vhat))
 }
 
-# Functions for Finding Minimum Coefficient on Highest Term
-Objective <- function(v, coeffs, inv_covar) {
+FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat) {
+  ########################################################################
+  # Find coefficients such that square of highest order term is minimized
+  ########################################################################
 
-  return(v[length(v)]^2)
+  if (is.null(dim(Fmat))) { # If one-dimensional make sure it's also a matrix object
+     Fmat <- matrix(Fmat)
+  }
+
+  # Prevent conversion to vector with drop = F
+  Anorm <- Fmat[norm_idxs, , drop = F]
+
+  stopifnot(ncol(Anorm) == ncol(Fmat))
+
+  index_b = 1:(ncol(Anorm)-pN-1)
+  index_1 = (ncol(Anorm)-pN):(ncol(Anorm)-1)
+  index_2 = ncol(Anorm)
+
+  Ab <- Anorm[, index_b, drop = F]
+  A1 <- Anorm[, index_1, drop = F]
+  A2 <- Anorm[, index_2, drop = F]
+
+  Fb <- Fmat[, index_b, drop = F]
+  F1 <- Fmat[, index_1, drop = F]
+  F2 <- Fmat[, index_2, drop = F]
+
+  x0 = res_order$vhat[1:ncol(Fb)]
+
+  optim_pos <- optim(par = x0,
+                     fn  = ObjectivePositive,
+                     d   = coeffs, inv_covar = inv_covar,
+                     Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
+                     Wcritic = Wcritic)
+
+  vb_pos <- optim_pos$par
+  v2_pos <- sqrt(optim_pos$value)
+
+  optim_neg <- optim(par = x0,
+                     fn  = ObjectiveNegative,
+                     d   = coeffs, inv_covar = inv_covar,
+                     Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
+                     Wcritic = Wcritic)
+
+  vb_neg <- optim_neg$par
+  v2_neg <- sqrt(optim_neg$value)
+
+  if (abs(v2_pos) < abs(v2_neg)) {
+    vb = vb_pos
+    v2 = v2_pos
+  } else {
+    vb = vb_neg
+    v2 = v2_neg
+  }
+  v1 = pinv(A1)%*%(-Ab%*%vb - A2%*%v2)
+
+  return(c(vb, v2, v1))
 }
 
-IneqConstraint <- function(v, coeffs, inv_covar) {
+d0 <- function(d, inv_covar, F1, F2, A1, A2) {
 
-  Fmat  <- GetFmat(length(coeffs), length(v))
-  trfit <- Fmat %*% v
-
-  W     <- (t(trfit-coeffs)%*%inv_covar)%*%(trfit-coeffs)
-  return(W)
+    return(t(F2 - F1%*%pinv(A1)%*%A2)%*%inv_covar%*%(F2 - F1%*%pinv(A1)%*%A2))
 }
 
-EqConstraint <- function(v, coeffs, inv_covar) {
+d1 <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2) {
+  pre_factor  = t((Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d)
+  post_factor = F2 - F1%*%pinv(A1)%*%A2
 
-  norm_index <- which(coeffs == 0)
+  return(2*pre_factor%*%inv_covar%*%post_factor)
+}
 
-  Fmat  <- GetFmat(length(coeffs), length(v))
-  trfit <- Fmat %*% v
+d2 <- function(vb, d, inv_covar, Fb, F1, Ab, A1, Wcritic) {
+  pre_factor  = t((Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d)
+  post_factor = t(pre_factor)
 
-  norm_sm_path <- trfit[norm_index]
+  return(pre_factor%*%inv_covar%*%post_factor - Wcritic)
+}
 
-  return(norm_sm_path)
+ObjectivePositive <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic) {
+
+  vb = matrix(vb)
+
+  d0_ = d0(    d, inv_covar,     F1, F2,     A1, A2)
+  d1_ = d1(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2)
+  d2_ = d2(vb, d, inv_covar, Fb, F1,     Ab, A1,    Wcritic)
+
+  discriminant = d1_^2 - 4*d0_*d2_
+
+  return(( (-d1_ + sqrt(discriminant))/(2*d0_) )^2)
+}
+
+ObjectiveNegative <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic) {
+
+  vb = matrix(vb)
+
+  d0_ = d0(    d, inv_covar,     F1, F2,     A1, A2)
+  d1_ = d1(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2)
+  d2_ = d2(vb, d, inv_covar, Fb, F1,     Ab, A1,    Wcritic)
+
+  discriminant = d1_^2 - 4*d0_*d2_
+
+  return(( (-d1_ - sqrt(discriminant))/(2*d0_) )^2)
 }

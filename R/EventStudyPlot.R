@@ -183,7 +183,7 @@ EventStudyPlot <- function(estimates,
     df_plt <- PreparePlottingData(df_estimates_tidy, policyvar,
                                   post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
-# Construct y brakes ------------------------------------------------------
+# Construct y breaks ------------------------------------------------------
 
     if (!is.null(ybreaks)) {
         if (!(0 %in% ybreaks) & Addmean) {

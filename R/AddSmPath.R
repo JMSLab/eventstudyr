@@ -29,10 +29,12 @@ AddSmPath <- function(df, coefficients, inv_covar,
     if (!is.matrix(inv_covar)) {
         stop("Argument 'inv_covar' should be a matrix.")
     }
+    unselect_message <- "Please unselect the 'Addsmpath' option for plotting."
 
     coeff_length <- length(coefficients)
     Wcritic      <- qchisq(conf_level, coeff_length)
     norm_idxs    <- which(coefficients == 0)
+    pN           <- length(norm_idxs)
 
     # First step: Find lowest possible polynomial order
     res_order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
@@ -40,45 +42,27 @@ AddSmPath <- function(df, coefficients, inv_covar,
     res_order <- res_order$results
 
     # Second step: Find minimum coefficient on highest-order term
+    if (order == 0) {
 
-    if (order != 0) {
-
-        # Commented out momentarily
-
-        #optim <- Rsolnp::solnp(pars      = rep(0, order),
-        #                       fun       = Objective,
-        #                       eqfun     = EqConstraint,
-        #                       eqB       = rep(0, length(norm_idxs)),
-        #                       ineqfun   = IneqConstraint,
-        #                       ineqUB    = Wcritic,
-        #                       ineqLB    = -Inf,
-        #                       coeffs    = coefficients,
-        #                       inv_covar = inv_covar)
-        #                     # control   = list("tol" = 1e-5)
-
-
-        #if (optim$convergence != 0) {
-        #    stop("The search for parameters for the polynomial did not converge. Please unselect the smoothest path option by setting Smpath to FALSE.")
-        #}
-
-        #vstar <- matrix(optim$pars)
-
-
-        # TEMP: Use coefficients found in first step
-        vstar <- res_order$vhat
-
-        p <- coeff_length
-        r <- order
-
-        k    <- seq(0, p-1)/(p-1)
-        Fmat <- sapply(seq(1, r),
-                       function(j) {k^(j-1)})
-
-    } else if (order == 0) {
-
-        p     <- coeff_length
-        Fmat  <- rep(1, p)
+        Fmat  <- rep(1, coeff_length)
         vstar <- matrix(0)
+    } else if (order == maxorder) {
+
+        stop(paste0("Smoothest path reached the maximum order. ", unselect_message))
+    } else {
+
+        Fmat <- GetFmat(coeff_length, order)
+
+        if (pN <= order) {
+
+            vstar <- FindCoeffs(res_order, coefficients, inv_covar, Wcritic, pN, order, norm_idxs, Fmat)
+
+            # Should we try the case pN == order differently?
+
+        } else {
+            stop(paste0("The smoothest path cannot be found because the number of normalized coefficients is larger than the minimum order. ", unselect_message))
+        }
+
     }
 
     df["smoothest_path"] = Fmat %*% vstar

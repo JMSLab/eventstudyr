@@ -7,7 +7,7 @@ load_all()
 estimates <- EventStudy(
     estimator = "OLS",
     data = df_sample_dynamic,
-    outcomevar = "y_jump_m",
+    outcomevar = "y_smooth_m",
     policyvar = "z",
     idvar = "id",
     timevar = "t",
@@ -35,7 +35,7 @@ EventStudyPlot(
     Addmean = FALSE,
     Preeventcoeffs = TRUE,
     Posteventcoeffs = TRUE,
-    Nozeroline = FALSE,
+    Nozeroline = T,
     Smpath = T
 )
 

@@ -1,4 +1,4 @@
-# Function to add zero where normalized coefficient should be in covar matrix
+# Add zero where normalized coefficient(s) should be in covar matrix
 AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
                           coeffs_order) {
 
@@ -19,7 +19,7 @@ AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
   return(covar)
 }
 
-# Function that takes coeff_length and poly_order as arguments and computes Fmat
+# Computes F matrix using coeff_length and poly_order as arguments
 GetFmat <- function(coeff_length, poly_order) {
 
   if (poly_order < 1) {
@@ -32,10 +32,8 @@ GetFmat <- function(coeff_length, poly_order) {
   return(Fmat)
 }
 
+# Find minimum order of polynomial such that the constraint is satisfied
 FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
-  ########################################################################
-  # Find minimum order of polynomial such that the constraint is satisfied
-  ########################################################################
 
   norm_index <- which(coeffs == 0)
 
@@ -55,10 +53,8 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
               results = min_results))
 }
 
+# Minimize Wald objective given coefficients and inverse covariance matrix
 SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
-  ##########################################################################
-  # Minimize Wald objective given coefficients and inverse covariance matrix
-  ##########################################################################
 
   coeff_length = length(coeffs)
 
@@ -88,10 +84,8 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
               "vhat"  = vhat))
 }
 
+# Find coefficients such that square of highest order term is minimized
 FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat) {
-  ########################################################################
-  # Find coefficients such that square of highest order term is minimized
-  ########################################################################
 
   if (is.null(dim(Fmat))) { # If one-dimensional make sure it's also a matrix object
      Fmat <- matrix(Fmat)
@@ -146,6 +140,7 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
   return(c(vb, v2, v1))
 }
 
+# Functions used by FindCoeffs
 d0 <- function(d, inv_covar, F1, F2, A1, A2) {
 
     return(t(F2 - F1%*%pinv(A1)%*%A2)%*%inv_covar%*%(F2 - F1%*%pinv(A1)%*%A2))

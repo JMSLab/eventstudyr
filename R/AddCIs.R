@@ -1,7 +1,7 @@
 #' Adds columns to data frame containing confidence intervals around provided estimates.
 #'
 #' @param df_estimates, A data frame with columns for term, estimate, and standard error.
-#' @param policyvar, A string with the name of the policy variable used in EventStudy().
+#' @param policyvar, A string with the name of the policy variable used in EventStudy().  # policyvar is not used in this function - MZW
 #' @param eventstudy_coefficients, A list specifying the names of the columns that were not normalized in EventStudy().
 #' @param conf_level, Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #'
@@ -57,7 +57,7 @@ AddCIs <- function(df_estimates, policyvar, eventstudy_coefficients, conf_level 
     df_CI <- dplyr::mutate(df_CI, ci_lower = .data$estimate - .data$std.error * qnorm(percentile),
                                   ci_upper = .data$estimate + .data$std.error * qnorm(percentile))
     df_CI <- dplyr::select(df_CI, c("term", "ci_lower", "ci_upper"))
-
+    # When running the example, the last term (`x_r`) has NAs for the lower and upper CI bounds - is this expected? - MZW
     df_estimates <- dplyr::left_join(df_estimates, df_CI, by = "term")
 
     return(df_estimates)

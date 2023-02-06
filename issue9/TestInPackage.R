@@ -34,7 +34,7 @@ EventStudyPlot(
     Addmean = FALSE,
     Preeventcoeffs = TRUE,
     Posteventcoeffs = TRUE,
-    Nozeroline = T,
+    Addzeroline = T,
     Smpath = T
 )
 

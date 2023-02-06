@@ -110,20 +110,28 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
 
   x0 = res_order$vhat[1:ncol(Fb)]
 
-  optim_pos <- optim(par = x0,
-                     fn  = Objective,
+  optim_pos <- optim(par     = x0,
+                     fn      = Objective,
+                     method  = "Nelder-Mead",
+                     control = list("maxit" = 1e6),
                      d   = coeffs, inv_covar = inv_covar,
                      Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                      Wcritic = Wcritic, positive = T)
 
-  vb_pos <- optim_pos$par
-  v2_pos <- sqrt(optim_pos$value)
-
-  optim_neg <- optim(par = x0,
-                     fn  = Objective,
+  optim_neg <- optim(par     = x0,
+                     fn      = Objective,
+                     method  = "Nelder-Mead",
+                     control = list("maxit" = 1e6),
                      d   = coeffs, inv_covar = inv_covar,
                      Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                      Wcritic = Wcritic, positive = F)
+
+  if (optim_pos$convergence != 0 | optim_neg$convergence != 0) {
+    stop("Numerical optimization failed when searching for the smoothest path. Please set 'Addsmpath' to FALSE.")
+  }
+
+  vb_pos <- optim_pos$par
+  v2_pos <- sqrt(optim_pos$value)
 
   vb_neg <- optim_neg$par
   v2_neg <- sqrt(optim_neg$value)
@@ -142,10 +150,9 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
 
 # Functions used by FindCoeffs
 d0 <- function(d, inv_covar, F1, F2, A1, A2) {
+  single_factor = F2 - F1%*%pinv(A1)%*%A2
 
-    single_factor = F2 - F1%*%pinv(A1)%*%A2
-
-    return(t(single_factor)%*%inv_covar%*%single_factor)
+  return(t(single_factor)%*%inv_covar%*%single_factor)
 }
 
 d1 <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2) {
@@ -171,9 +178,14 @@ Objective <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic, positiv
 
   discriminant = d1_^2 - 4*d0_*d2_
 
+  if (!is.finite(discriminant)) {
+    return(Inf)
+  }
+
   if (positive) {
       return(( (-d1_ + sqrt(discriminant))/(2*d0_) )^2)
   } else {
       return(( (-d1_ - sqrt(discriminant))/(2*d0_) )^2)
   }
 }
+

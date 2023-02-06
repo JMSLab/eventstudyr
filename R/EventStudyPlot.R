@@ -113,9 +113,9 @@ EventStudyPlot <- function(estimates,
                            Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
                            Addzeroline = TRUE, Smpath = FALSE) {
 
-    if (!is.character(xtitle)) {stop("xtitle should be a character.")}
-    if (!is.character(ytitle)) {stop("ytitle should be a character.")}
-    if (!is.logical(Addzeroline)) {stop("Addzeroline should be either TRUE or FALSE.")}
+    if (!is.character(xtitle))    {stop("Argument 'xtitle' should be a character.")}
+    if (!is.character(ytitle))    {stop("Argument 'ytitle' should be a character.")}
+    if (!is.logical(Addzeroline)) {stop("Argument 'Addzeroline' should be either TRUE or FALSE.")}
 
 # Estimation Elements -----------------------------------------------------
 

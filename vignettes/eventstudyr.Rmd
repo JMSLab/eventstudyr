@@ -24,7 +24,7 @@ Linear panel models, and the “event-study plots” that often accompany them, 
  
 ## eventstudyr
 
-`eventstudyr` facilitates running linear panel models and constructing "event-study plots" with the suggestions prescrbied in [Freyaldenhoven _et al._ (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf). In particular, it provides functionality for:
+`eventstudyr` facilitates running linear panel models and constructing "event-study plots" with the suggestions prescribed in [Freyaldenhoven _et al._ (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf). In particular, it provides functionality for:
 
 * depicting cumulative estimated effects of a policy
 * measuring the policy's effect relative to a user-controlled normalized period
@@ -35,6 +35,103 @@ Linear panel models, and the “event-study plots” that often accompany them, 
  
 ## Data
  
-## `EventStudy()`
+## EventStudy()
+
+`EventStudy()` estimates the regression model from Equation (2) in Freyaldenhoven et al. (2021) and returns a list object that stores the estimation results (as an lm() object) as well as the arguments given in the function call. It accepts variables specifying the outcome, policy, ID and time variables. One must also specify the number of periods in the past before which the past values of the policy are not supposed to affect the value of the outcome and the number of periods in the future after which the future values of the policy are not supposed to affect the value of the outcome today.
+
+Here is a minimal example of collecting the estimation results with an OLS estimator and a static model:
+
+```{r Basic Eventstudy Example}
+EventStudy(
+   estimator = "OLS",
+   data = df_sample_static,
+   outcomevar = "y_static",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   post = 0,
+   pre = 0
+   )[[1]]
+```
+
+The function optionally accepts variables specifying the controls, the time window, whether fixed effects should be included, and the period to be used for normalization.
+
+Here is an example of collecting the estimation results with an OLS estimator and a static model, specifying the additional variables:
+
+```{r Optional vars example}
+EventStudy(
+   estimator = "OLS",
+   data = df_sample_static,
+   outcomevar = "y_static",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   FE = TRUE,
+   TFE = TRUE,
+   post = 0,
+   pre = 0,
+   overidpre = 0,
+   overidpost = 0,
+   cluster = TRUE,
+   anticipation_effects_normalization = TRUE
+)[[1]]
+```
  
-## `EventStudyPlot()`
+## EventStudyPlot()
+`EventStudyPlot()` prepares an event-study plot based on the suggestions in Freyaldenhoven et al. (2021).
+
+These suggestions are:
+
+1. Normalize $\delta_{-G-1} = 0$ when estimating Equation (2) in Freyaldenhoven et al. (2021).
+2. Include a parenthetical label for the average value of the outcome corresponding to the normalized coefficient.
+3. Plot a uniform sup-t confidence band for the event-time path of the outcome $\delta$, in addition to pointwise confidence intervals for the individual elements of the event-time path.
+4. Include in the plot legend p-values for Wald tests of each of the following hypotheses: 
+  - $H_{0} : \delta_{k} = 0, −G − L_{G} − 1 ≤ k < −G$ (no pre-trends)
+  - $H_{0} : \delta_{M} = \delta_{M+k}, 0 < k ≤ L_{M}$ (dynamics level off)
+5. Set $L_{M} = 1$ and set $L_{G} = M + G$
+6. Plot the least “wiggly” confound whose path is contained in the Wald region CR($\delta$) or the event-time path of the outcome.
+
+This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function to create a plot which follows the suggestions listed above:
+
+```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
+eventstudy_estimates_ols <- EventStudy(
+  estimator = "OLS",
+  data = df_sample_dynamic,
+  outcomevar = "y_base",
+  policyvar = "z",
+  idvar = "id",
+  timevar = "t",
+  controls = "x_r",
+  FE = TRUE,
+  TFE = TRUE,
+  post = 3,
+  pre = 2,
+  overidpre = 4,
+  overidpost = 5,
+  normalize = - 3,
+  cluster = TRUE,
+  anticipation_effects_normalization = TRUE
+)
+
+EventStudyPlot(
+  estimates = eventstudy_estimates_ols,
+  xtitle = "Event time",
+  ytitle = "Coefficient",
+  ybreaks = c(-1.5, -.5, 0, .5, 1.5),
+  conf_level = .95,
+  Supt = .95,
+  num_sim = 1000,
+  seed = 1234,
+  Addmean = FALSE,
+  Preeventcoeffs = TRUE,
+  Posteventcoeffs = TRUE,
+  Nozeroline = FALSE,
+  Smpath = NULL
+)
+```
+
+## References
+
+```
+Freyaldenhoven, S., Hansen, C., Pérez, J.P. and Shapiro, J.M., 2021. Visualization, identification, and estimation in the linear panel event-study design (No. w29170). National Bureau of Economic Research.
+```

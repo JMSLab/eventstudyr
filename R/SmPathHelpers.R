@@ -178,7 +178,7 @@ Objective <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic, positiv
 
   discriminant = d1_^2 - 4*d0_*d2_
 
-  if (!is.finite(discriminant)) {
+  if (discriminant < 0) {
     return(Inf)
   }
 

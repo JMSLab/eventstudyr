@@ -111,19 +111,19 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
   x0 = res_order$vhat[1:ncol(Fb)]
 
   optim_pos <- optim(par = x0,
-                     fn  = ObjectivePositive,
+                     fn  = Objective,
                      d   = coeffs, inv_covar = inv_covar,
                      Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
-                     Wcritic = Wcritic)
+                     Wcritic = Wcritic, positive = T)
 
   vb_pos <- optim_pos$par
   v2_pos <- sqrt(optim_pos$value)
 
   optim_neg <- optim(par = x0,
-                     fn  = ObjectiveNegative,
+                     fn  = Objective,
                      d   = coeffs, inv_covar = inv_covar,
                      Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
-                     Wcritic = Wcritic)
+                     Wcritic = Wcritic, positive = F)
 
   vb_neg <- optim_neg$par
   v2_neg <- sqrt(optim_neg$value)
@@ -135,32 +135,33 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
     vb = vb_neg
     v2 = v2_neg
   }
-  v1 = pinv(A1)%*%(-Ab%*%vb - A2%*%v2)
+  v1 = inv(A1)%*%(-Ab%*%vb - A2%*%v2)
 
-  return(c(vb, v2, v1))
+  return(c(vb, v1, v2))
 }
 
 # Functions used by FindCoeffs
 d0 <- function(d, inv_covar, F1, F2, A1, A2) {
 
-    return(t(F2 - F1%*%pinv(A1)%*%A2)%*%inv_covar%*%(F2 - F1%*%pinv(A1)%*%A2))
+    single_factor = F2 - F1%*%pinv(A1)%*%A2
+
+    return(t(single_factor)%*%inv_covar%*%single_factor)
 }
 
 d1 <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2) {
-  pre_factor  = t((Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d)
+  pre_factor  = (Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d
   post_factor = F2 - F1%*%pinv(A1)%*%A2
 
-  return(2*pre_factor%*%inv_covar%*%post_factor)
+  return(2*t(pre_factor)%*%inv_covar%*%post_factor)
 }
 
 d2 <- function(vb, d, inv_covar, Fb, F1, Ab, A1, Wcritic) {
-  pre_factor  = t((Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d)
-  post_factor = t(pre_factor)
+  single_factor = (Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d
 
-  return(pre_factor%*%inv_covar%*%post_factor - Wcritic)
+  return(t(single_factor)%*%inv_covar%*%single_factor - Wcritic)
 }
 
-ObjectivePositive <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic) {
+Objective <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic, positive = T) {
 
   vb = matrix(vb)
 
@@ -170,18 +171,9 @@ ObjectivePositive <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic)
 
   discriminant = d1_^2 - 4*d0_*d2_
 
-  return(( (-d1_ + sqrt(discriminant))/(2*d0_) )^2)
-}
-
-ObjectiveNegative <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic) {
-
-  vb = matrix(vb)
-
-  d0_ = d0(    d, inv_covar,     F1, F2,     A1, A2)
-  d1_ = d1(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2)
-  d2_ = d2(vb, d, inv_covar, Fb, F1,     Ab, A1,    Wcritic)
-
-  discriminant = d1_^2 - 4*d0_*d2_
-
-  return(( (-d1_ - sqrt(discriminant))/(2*d0_) )^2)
+  if (positive) {
+      return(( (-d1_ + sqrt(discriminant))/(2*d0_) )^2)
+  } else {
+      return(( (-d1_ - sqrt(discriminant))/(2*d0_) )^2)
+  }
 }

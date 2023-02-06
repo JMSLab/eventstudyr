@@ -27,7 +27,6 @@ EventStudyPlot(
     estimates = estimates,
     xtitle = "Event time",
     ytitle = "Coefficient",
-    ybreaks = seq(-2.5, 2.5, .5),
     conf_level = .95,
     Supt = .95,
     num_sim = 1000,

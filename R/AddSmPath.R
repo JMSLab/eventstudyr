@@ -2,8 +2,9 @@
 #'
 #' @description Function to add smoothest path to dataframe with coefficients
 #'
-#' @param df Dataset with coefficients prepared for plotting (must include normalized coefficients)
-#' @param inv_covar Inverse of covariance matrix of coefficients (must include row and column of 0s for normalized coefficients)
+#' @param df Dataset with coefficients prepared for plotting (must include normalized coefficients).
+#' @param coefficients Event-study coefficients (must include normalized coefficients).
+#' @param inv_covar Inverse of covariance matrix of coefficients (must include row and column of zeros for normalized coefficients).
 #' @param conf_level Confidence level to define critical value of Wald region. Should be a real number between 0 and 1, inclusive. Defaults to 0.95.
 #' @param maxorder Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.
 #'

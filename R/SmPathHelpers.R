@@ -96,17 +96,17 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
 
   stopifnot(ncol(Anorm) == ncol(Fmat))
 
-  index_b = 1:(ncol(Anorm)-pN-1)
-  index_1 = (ncol(Anorm)-pN):(ncol(Anorm)-1)
-  index_2 = ncol(Anorm)
+  colindex_b = 1:(ncol(Anorm)-pN-1)
+  colindex_1 = (ncol(Anorm)-pN):(ncol(Anorm)-1)
+  colindex_2 = ncol(Anorm)
 
-  Ab <- Anorm[, index_b, drop = F]
-  A1 <- Anorm[, index_1, drop = F]
-  A2 <- Anorm[, index_2, drop = F]
+  Ab <- Anorm[, colindex_b, drop = F]
+  A1 <- Anorm[, colindex_1, drop = F]
+  A2 <- Anorm[, colindex_2, drop = F]
 
-  Fb <- Fmat[, index_b, drop = F]
-  F1 <- Fmat[, index_1, drop = F]
-  F2 <- Fmat[, index_2, drop = F]
+  Fb <- Fmat[, colindex_b, drop = F]
+  F1 <- Fmat[, colindex_1, drop = F]
+  F2 <- Fmat[, colindex_2, drop = F]
 
   x0 = res_order$vhat[1:ncol(Fb)]
 

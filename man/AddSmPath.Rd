@@ -7,9 +7,11 @@
 AddSmPath(df, coefficients, inv_covar, conf_level = 0.95, maxorder = 10)
 }
 \arguments{
-\item{df}{Dataset with coefficients prepared for plotting (must include normalized coefficients)}
+\item{df}{Dataset with coefficients prepared for plotting (must include normalized coefficients).}
 
-\item{inv_covar}{Inverse of covariance matrix of coefficients (must include row and column of 0s for normalized coefficients)}
+\item{coefficients}{Event-study coefficients (must include normalized coefficients).}
+
+\item{inv_covar}{Inverse of covariance matrix of coefficients (must include row and column of zeros for normalized coefficients).}
 
 \item{conf_level}{Confidence level to define critical value of Wald region. Should be a real number between 0 and 1, inclusive. Defaults to 0.95.}
 

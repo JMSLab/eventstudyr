@@ -93,7 +93,7 @@
 
 PreparePlottingData <- function(df_tidy_estimates, policyvar,
                                 post, overidpost, pre, overidpre, normalization_column,
-                                proxyIV = NULL, Smpath = F) {
+                                proxyIV = NULL) {
 
     if (! is.data.frame(df_tidy_estimates)) {stop("data should be a data frame.")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}

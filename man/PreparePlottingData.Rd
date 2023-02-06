@@ -12,8 +12,7 @@ PreparePlottingData(
   pre,
   overidpre,
   normalization_column,
-  proxyIV = NULL,
-  Smpath = F
+  proxyIV = NULL
 )
 }
 \arguments{

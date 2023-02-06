@@ -5,7 +5,8 @@
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis.
-#' Should be a numeric vector that contains 0. Optional.
+#' Defaults to NULL, which means the breaks are computed automatically.
+#' If custom breaks are selected with the `Addmean` argument set to TRUE, then the breaks must include zero.
 #' @param conf_level Confidence level used for confidence interval
 #' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value.

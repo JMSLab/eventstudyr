@@ -1,5 +1,5 @@
 # Test
-test_that("AddZerosCovar correctly adds zeros where normalized coefficient should go", {
+test_that("AddZerosCovar correctly adds zeros where normalized coefficient should be", {
 
   vcov_matrix_all <- diag(rep(3,10))
   eventstudy_coeffs  <- c(paste0("a", 1:2), paste0("a", 4:9))

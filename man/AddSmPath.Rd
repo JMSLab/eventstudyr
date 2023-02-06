@@ -11,12 +11,12 @@ AddSmPath(df, coefficients, inv_covar, conf_level = 0.95, maxorder = 10)
 
 \item{inv_covar}{Inverse of covariance matrix of coefficients (must include row and column of 0s for normalized coefficients)}
 
-\item{conf_level}{Confidence level to define critical value of Wald region. Defaults to 0.95.}
+\item{conf_level}{Confidence level to define critical value of Wald region. Should be a real number between 0 and 1, inclusive. Defaults to 0.95.}
 
 \item{maxorder}{Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.}
 }
 \value{
-df with smoothest path add as a new column
+df with smoothest path added as a new column
 }
 \description{
 Function to add smoothest path to dataframe with coefficients

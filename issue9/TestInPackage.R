@@ -7,7 +7,7 @@ load_all()
 estimates <- EventStudy(
     estimator = "OLS",
     data = df_sample_dynamic,
-    outcomevar = "y_smooth_m",
+    outcomevar = "y_jump_m",
     policyvar = "z",
     idvar = "id",
     timevar = "t",

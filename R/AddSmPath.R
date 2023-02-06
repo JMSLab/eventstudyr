@@ -9,7 +9,6 @@
 #'
 #' @return df with smoothest path added as a new column
 #' @import pracma
-#' @import Rsolnp
 #' @export
 #'
 #' @examples

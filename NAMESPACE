@@ -12,7 +12,6 @@ export(PrepareLeads)
 export(PrepareModelFormula)
 export(PreparePlottingData)
 export(TestLinear)
-import(Rsolnp)
 import(data.table, except=c(last, first, between))
 import(data.table, except=c(last, first, between))
 

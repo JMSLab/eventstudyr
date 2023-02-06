@@ -20,8 +20,8 @@
 #' Should be TRUE or FALSE. Defaults to TRUE.
 #' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Should be TRUE or FALSE. Defaults to TRUE.
-#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0.
-#' Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
+#' @param Addzeroline Whether or not to plot a dashed horizontal line at y = 0.
+#' Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.
 #' @param Smpath Plot smoothest path of confounder that rationalizes event study coefficients.
 #' Should be TRUE or FALSE. Defaults to FALSE.
 #'
@@ -65,7 +65,7 @@
 #'   Addmean = FALSE,
 #'   Preeventcoeffs = TRUE,
 #'   Posteventcoeffs = TRUE,
-#'   Nozeroline = FALSE,
+#'   Addzeroline = TRUE,
 #'   Smpath = FALSE
 #')
 #'
@@ -103,7 +103,7 @@
 #'   Addmean = FALSE,
 #'   Preeventcoeffs = TRUE,
 #'   Posteventcoeffs = TRUE,
-#'   Nozeroline = FALSE,
+#'   Addzeroline = TRUE,
 #'   Smpath = FALSE
 #')
 
@@ -111,11 +111,11 @@ EventStudyPlot <- function(estimates,
                            xtitle = "Event time", ytitle = "Coefficient", ybreaks = NULL,
                            conf_level = .95, Supt = .95, num_sim = 1000, seed = 1234,
                            Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
-                           Nozeroline = FALSE, Smpath = FALSE) {
+                           Addzeroline = TRUE, Smpath = FALSE) {
 
     if (!is.character(xtitle)) {stop("xtitle should be a character.")}
     if (!is.character(ytitle)) {stop("ytitle should be a character.")}
-    if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
+    if (!is.logical(Addzeroline)) {stop("Addzeroline should be either TRUE or FALSE.")}
 
 # Estimation Elements -----------------------------------------------------
 
@@ -249,7 +249,7 @@ EventStudyPlot <- function(estimates,
     plt <- ggplot(df_plt,
                   aes(x = .data$label, y = .data$estimate))
 
-    if (Nozeroline) {
+    if (Addzeroline) {
         plt <- plt +
             geom_hline(yintercept = 0,
                        color = "green", linetype = "dashed")

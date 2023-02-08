@@ -5,11 +5,14 @@ AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
   v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coeffs)
   covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
 
-  n_coefs = nrow(covar)
+  n_coefs      = length(coeffs_order)
+  needed_zeros = length(norm_column)
 
   # Add row and col of zeros at the end
-  covar           <- rbind(cbind(covar, matrix(0, nrow = n_coefs)),
-                           matrix(0, ncol = n_coefs+1))
+  ZerosRight  = matrix(0, ncol = needed_zeros, nrow = nrow(covar))
+  ZerosBottom = matrix(0, ncol = n_coefs,      nrow = needed_zeros)
+  covar           <- rbind(cbind(covar, ZerosRight),
+                           ZerosBottom)
   rownames(covar) <- c(eventstudy_coeffs, norm_column)
   colnames(covar) <- c(eventstudy_coeffs, norm_column)
 
@@ -22,11 +25,8 @@ AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
 # Computes F matrix using coeff_length and poly_order as arguments
 GetFmat <- function(coeff_length, poly_order) {
 
-  if (poly_order < 1) {
-    stop("Error computing F matrix to search for smoothest path. When constructing Fmat poly_order should be 1 or larger.")
-  }
   k    = seq(0, coeff_length-1)/(coeff_length-1)
-  Fmat = sapply(seq(1, poly_order),
+  Fmat = sapply(seq(1, poly_order+1),
                 function(j) {k^(j-1)})
 
   return(Fmat)
@@ -65,12 +65,12 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
 
   } else {
     Fmat  <- GetFmat(coeff_length, poly_order)
-    Anorm <- matrix(Fmat[norm_index,])
+    Anorm <- Fmat[norm_index, , drop = FALSE]
 
     FtinvVd    = (t(Fmat)%*%inv_covar)%*%matrix(coeffs)
     invFtinvVF = pracma::inv((t(Fmat)%*%inv_covar)%*%Fmat)
-    AtFtinvVFA = (t(Anorm)%*%invFtinvVF)%*%Anorm
-    multiple   = (Anorm%*%pracma::inv(AtFtinvVFA))%*%t(Anorm)
+    AtFtinvVFA = (Anorm%*%invFtinvVF)%*%t(Anorm)
+    multiple   = (t(Anorm)%*%pracma::inv(AtFtinvVFA))%*%Anorm
 
     difference = FtinvVd - (multiple%*%invFtinvVF)%*%FtinvVd
     vhat       = invFtinvVF%*%difference

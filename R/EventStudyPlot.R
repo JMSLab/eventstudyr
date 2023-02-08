@@ -237,8 +237,10 @@ EventStudyPlot <- function(estimates,
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
-        covar <- AddZerosCovar(estimates[[1]]$vcov, eventstudy_coefficients,
-                               normalization_column, df_plt$term)
+        covar <- AddZerosCovar(estimates[[1]]$vcov,
+                               eventstudy_coefficients,
+                               df_plt[df_plt$estimate==0, ]$term,
+                               df_plt$term)
 
         inv_covar <- pracma::pinv(covar)
 

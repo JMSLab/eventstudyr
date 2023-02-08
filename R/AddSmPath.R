@@ -44,7 +44,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
     # Second step: Find minimum coefficient on highest-order term
     if (order == 0) {
 
-        Fmat  <- rep(1, coeff_length)
+        Fmat  <- GetFmat(coeff_length, 0)
         vstar <- matrix(0)
     } else if (order == maxorder) {
 

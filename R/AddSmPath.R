@@ -57,7 +57,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
             vstar <- FindCoeffs(res_order, coefficients, inv_covar, Wcritic, pN, order, norm_idxs, Fmat)
 
-            # Should we try the case pN == order differently?
+            # Should we treat the case pN == order differently?
 
         } else {
             stop(paste0("The smoothest path cannot be found because the number of normalized coefficients is larger than the minimum order. ", unselect_message))

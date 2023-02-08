@@ -117,6 +117,8 @@ EventStudyPlot <- function(estimates,
     if (!is.character(xtitle))    {stop("Argument 'xtitle' should be a character.")}
     if (!is.character(ytitle))    {stop("Argument 'ytitle' should be a character.")}
     if (!is.logical(Addzeroline)) {stop("Argument 'Addzeroline' should be either TRUE or FALSE.")}
+    if (!is.null(ybreaks) &
+        !is.numeric(ybreaks))     {stop("Argument 'ybreaks' should be NULL or a numeric vector.")}
 
 # Estimation Elements -----------------------------------------------------
 
@@ -192,6 +194,7 @@ EventStudyPlot <- function(estimates,
         }
 
         ylabels <- ybreaks
+        ylims   <- c(min(ybreaks), max(ybreaks))
     } else {
         min_value <- min(c(df_plt$estimate, df_plt$ci_lower, df_plt$suptband_lower), na.rm = T)
         max_value <- max(c(df_plt$estimate, df_plt$ci_upper, df_plt$suptband_upper), na.rm = T)
@@ -214,6 +217,23 @@ EventStudyPlot <- function(estimates,
         close_to_max <- ceiling(max_value/step)*step
 
         ybreaks <- seq(close_to_min, close_to_max, step)
+        ylims   <- c(min(ybreaks), max(ybreaks))
+
+        if (length(ybreaks) >= 9) {
+            # Too many breaks, double step size
+            step         <- step*2
+            close_to_min <- floor(min_value/step)*step
+            close_to_max <- ceiling(max_value/step)*step
+
+            ybreaks <- seq(close_to_min, close_to_max, step)
+        } else if (length(ybreaks) <= 3) {
+            # Too few breaks, halve step size
+            step         <- step/2
+            close_to_min <- floor(min_value/step)*step
+            close_to_max <- ceiling(max_value/step)*step
+
+            ybreaks <- seq(close_to_min, close_to_max, step)
+        }
         ylabels <- ybreaks
     }
 
@@ -275,8 +295,9 @@ EventStudyPlot <- function(estimates,
 
     plt <- plt  +
         geom_point(color = "#006600") +
-        scale_y_continuous(breaks = ybreaks, labels = ylabels,
-                           limits = c(ybreaks[1], ybreaks[length(ybreaks)])) +
+        scale_y_continuous(breaks = ybreaks,
+                           labels = ylabels,
+                           limits = ylims) +
         labs(x = xtitle, y = ytitle,
              caption = text_caption) +
         theme_bw() +

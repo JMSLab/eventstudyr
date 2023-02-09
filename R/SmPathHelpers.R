@@ -2,7 +2,7 @@
 AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
                           coeffs_order) {
 
-  v_terms_to_keep <- colnames(vcov_matrix_all) %in% c(eventstudy_coeffs)
+  v_terms_to_keep <- colnames(vcov_matrix_all) %in% eventstudy_coeffs
   covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
 
   n_coefs      = length(coeffs_order)
@@ -42,7 +42,7 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
   poly_order = 0
 
   # Compute Wald value for polynomials of increasing order until Wald Value < Critical Value
-  while (poly_order <= maxorder & Wvalue >= Wcritic ) {
+  while (poly_order <= maxorder & Wvalue >= Wcritic) {
 
     min_results <- SolutionInWaldRegion(coeffs, inv_covar, norm_index, poly_order)
     Wvalue     = min_results$W
@@ -65,7 +65,7 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
 
   } else {
     Fmat  <- GetFmat(coeff_length, poly_order)
-    Anorm <- Fmat[norm_index, , drop = FALSE]
+    Anorm <- Fmat[norm_index, , drop = F]
 
     FtinvVd    = (t(Fmat)%*%inv_covar)%*%matrix(coeffs)
     invFtinvVF = pracma::inv((t(Fmat)%*%inv_covar)%*%Fmat)
@@ -85,7 +85,8 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
 }
 
 # Find coefficients such that square of highest order term is minimized
-FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat) {
+FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat,
+                       maxiter_solver = 1e6) {
 
   if (is.null(dim(Fmat))) { # If one-dimensional make sure it's also a matrix object
      Fmat <- matrix(Fmat)
@@ -113,7 +114,7 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
   optim_pos <- optim(par     = x0,
                      fn      = Objective,
                      method  = "Nelder-Mead",
-                     control = list("maxit" = 1e6),
+                     control = list("maxit" = maxiter_solver),
                      d   = coeffs, inv_covar = inv_covar,
                      Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                      Wcritic = Wcritic, positive = T)
@@ -121,13 +122,13 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
   optim_neg <- optim(par     = x0,
                      fn      = Objective,
                      method  = "Nelder-Mead",
-                     control = list("maxit" = 1e6),
+                     control = list("maxit" = maxiter_solver),
                      d   = coeffs, inv_covar = inv_covar,
                      Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                      Wcritic = Wcritic, positive = F)
 
   if (optim_pos$convergence != 0 | optim_neg$convergence != 0) {
-    stop("Numerical optimization failed when searching for the smoothest path. Please set 'Addsmpath' to FALSE.")
+      stop("Numerical optimization failed when searching for the smoothest path. Please set 'Smpath' to FALSE.")
   }
 
   vb_pos <- optim_pos$par

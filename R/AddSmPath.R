@@ -2,11 +2,12 @@
 #'
 #' @description Function to add smoothest path to dataframe with coefficients
 #'
-#' @param df Dataset with coefficients prepared for plotting (must include normalized coefficients).
-#' @param coefficients Event-study coefficients (must include normalized coefficients).
+#' @param df Dataset with coefficients prepared for plotting (must include coefficients normalized in estimation).
+#' @param coefficients Event-study coefficients (must include coefficients normalized in estimation).
 #' @param inv_covar Inverse of covariance matrix of coefficients (must include row and column of zeros for normalized coefficients).
 #' @param conf_level Confidence level to define critical value of Wald region. Should be a real number between 0 and 1, inclusive. Defaults to 0.95.
 #' @param maxorder Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.
+#' @param maxiter_solver Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 1e6.
 #'
 #' @return df with smoothest path added as a new column
 #' @import pracma
@@ -15,7 +16,7 @@
 #' @examples
 
 AddSmPath <- function(df, coefficients, inv_covar,
-                      conf_level = 0.95, maxorder = 10){
+                      conf_level = 0.95, maxorder = 10, maxiter_solver = 1e6){
 
     if (!is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {
         stop("Argument 'conf_level' should be a real number between 0 and 1, inclusive.")
@@ -29,7 +30,10 @@ AddSmPath <- function(df, coefficients, inv_covar,
     if (!is.matrix(inv_covar)) {
         stop("Argument 'inv_covar' should be a matrix.")
     }
-    unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot'  to FALSE."
+    if (!(maxiter_solver%%1 == 0) | maxiter_solver < 0) {
+        stop("Argument 'maxiter_solver' should be a positive integer.")
+    }
+    unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot' to FALSE."
 
     coeff_length <- length(coefficients)
     Wcritic      <- qchisq(conf_level, coeff_length)
@@ -55,12 +59,11 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
         if (pN <= order) {
 
-            vstar <- FindCoeffs(res_order, coefficients, inv_covar, Wcritic, pN, order, norm_idxs, Fmat)
-
-            # Should we treat the case pN == order differently?
+            vstar <- FindCoeffs(res_order, coefficients, inv_covar, Wcritic, pN, order, norm_idxs, Fmat, maxiter_solver)
 
         } else {
-            stop(paste0("The smoothest path cannot be found because the number of normalized coefficients is larger than the minimum order. ", unselect_message))
+            stop(paste0("The smoothest path cannot be found because the number of normalized coefficients is larger than the minimum order. ",
+                        unselect_message))
         }
 
     }

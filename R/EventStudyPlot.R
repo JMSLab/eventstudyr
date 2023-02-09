@@ -190,7 +190,7 @@ EventStudyPlot <- function(estimates,
 
     if (!is.null(ybreaks)) {
         if (!(0 %in% ybreaks) & Addmean) {
-            stop("If you want to add the mean of y in the y-axis then 'ybreaks' must include 0 (zero).")
+            stop("If you want to add the mean of y in the y-axis then 'ybreaks' must include 0.")
         }
 
         ylabels <- ybreaks
@@ -203,7 +203,7 @@ EventStudyPlot <- function(estimates,
         magnitude <- 10^floor(log10(max_abs))
 
         # Determine step depending on how far the endpoints are from the magnitude
-        mean_ratio <- mean(abs(min_value)/magnitude, max_value/magnitude)
+        mean_ratio <- mean(c(abs(min_value)/magnitude, max_value/magnitude))
         if (mean_ratio > 6.67) {
             step = 3*magnitude
         } else if (mean_ratio > 3.33) {

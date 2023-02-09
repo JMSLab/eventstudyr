@@ -29,7 +29,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
     if (!is.matrix(inv_covar)) {
         stop("Argument 'inv_covar' should be a matrix.")
     }
-    unselect_message <- "Please unselect the 'Addsmpath' option for plotting."
+    unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot'  to FALSE."
 
     coeff_length <- length(coefficients)
     Wcritic      <- qchisq(conf_level, coeff_length)

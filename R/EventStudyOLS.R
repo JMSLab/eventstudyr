@@ -1,6 +1,6 @@
-#' Runs OLS with optional fixed effects and clustering
+#' Runs OLS with optional fixed effects and clustering # Would be nice to spell out OLS - MZW
 #'
-#' @param prepared_model_formula A formula object created in PrepareModelForumla that is passed to EventStudy.
+#' @param prepared_model_formula A formula object created in PrepareModelForumla that is passed to EventStudy. # Is it possible to place a hyperlink to the documentation for PrepareModelFormula? - MZW
 #' @param prepared_data Data frame containing all of the parameters required for EventStudy() plus leads and
 #' lags of the first differenced policy variable and leads and lags of the policy variable.
 #' @param idvar Variable indicating units, should be a character.
@@ -8,9 +8,9 @@
 #' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-#' heteroskedasticity-robust standard errors. Defaults to TRUE.
+#' heteroskedasticity-robust standard errors. Defaults to TRUE. - Just curious, does cluster have to be TRUE if FE is TRUE? - MZW
 #'
-#' @return An estimated model
+#' @return An estimated model # Is there more explanation that can be added to this to make it more specific? - MZW
 #' @import estimatr
 #' @export
 #'

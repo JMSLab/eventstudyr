@@ -1,5 +1,5 @@
 
-#'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
+#'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)  # Is there a reason for the capitalization of "Following" and "Suggestions"? - MZW
 #'
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
@@ -7,7 +7,7 @@
 #' @param ybreaks A vector containing the desired breaks for the y-axis.
 #' Should be a numeric vector that contains 0.
 #' @param conf_level Confidence level used for confidence interval
-#' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
+#' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.  # For consistency, change "inclusively" to "inclusive" - MZW
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value.
 #' Should be a real number between 0 and 1, inclusive. Defaults to .95.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
@@ -15,14 +15,14 @@
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
 #' Should be a natural number. Defaults to 1234.
 #' @param Addmean Adds the mean of the dependent variable in the period used for normalization.
-#' Should be TRUE or FALSE. Defaults to FALSE.
+#' Should be TRUE or FALSE. Defaults to FALSE.  # Can we change the following variable names into snake case like conf_level for consistency? - MZW
 #' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 #' Should be TRUE or FALSE. Defaults to TRUE.
 #' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Should be TRUE or FALSE. Defaults to TRUE.
 #' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0.
 #' Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
-#' @param Smpath PLACE HOLDER
+#' @param Smpath PLACE HOLDER # Will this be updated? - MZW
 #'
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
@@ -68,6 +68,8 @@
 #'   Smpath = NULL
 #')
 #'
+#' # This OLS example gives a warning message: Removed 1 rows containing missing values (geom_segment).
+#'
 #' # IV
 #'
 #'eventstudy_estimates_fhs <- EventStudy(
@@ -105,6 +107,8 @@
 #'   Nozeroline = FALSE,
 #'   Smpath = NULL
 #')
+#'
+#' # This IV example gives a warning message: "Removed 2 rows containing missing values (geom_segment)."
 
 EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
                            Supt = .95, num_sim = 1000, seed = 1234, Addmean = FALSE,

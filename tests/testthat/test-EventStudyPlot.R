@@ -246,3 +246,19 @@ test_that("computed smoothest path for examples is within expectations", {
     expect_true(max_smpath < max_suptband)
     expect_true(min_smpath > min_suptband)
 })
+
+test_that("computed smoothest path for FHS has at least two coefficients almost equal to zero", {
+
+    estimates <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_jump_m",
+                            policyvar = "z", idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_r",
+                            post = 3, pre = 0, overidpre = 3, overidpost = 1, normalize = -1)
+
+    p <- EventStudyPlot(estimates = estimates,
+                        Smpath    = T)
+    
+    normalized_index  <- which(p$data$estimate == 0)
+    normalized_smpath <- p$data$smoothest_path[normalized_index]
+
+    expect_true(length(normalized_index) >= 2)
+    expect_true(all(abs(normalized_smpath) < 1e-10))
+})

@@ -1,4 +1,30 @@
 
+test_that("Dimensions of OLS and FHS estimation output is the same", {
+
+    estimates_ols <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_smooth_m",
+                                policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
+                                post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
+
+    estimates_fhs <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_smooth_m",
+                                policyvar = "z", idvar = "id", timevar = "t", proxy = "eta_r", controls = "x_r",
+                                post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
+
+    expect_equal(length(estimates_ols), length(estimates_fhs))
+
+    # Compare first element of list
+    coeffs_ols <- names(estimates_ols[[1]]$coefficients)
+    coeffs_fhs <- names(estimates_fhs[[1]]$coefficients)
+
+    expect_true(all(coeffs_fhs %in% c(coeffs_ols, "eta_r")))
+    expect_equal(length(coeffs_ols), length(coeffs_fhs))     # FHS: Norm coeff removes one coeff and proxy adds one
+
+    expect_true(all(names(estimates_ols[[1]]) %in% names(estimates_fhs[[1]])))
+
+    # Compare second element of list
+    expect_true(all(names(estimates_ols[[2]]) %in% names(estimates_fhs[[2]])))
+    expect_true(all(names(estimates_fhs[[2]]) %in% names(estimates_ols[[2]])))
+})
+
 
 test_that("correctly changes x-axis and y-axis labels", {
 

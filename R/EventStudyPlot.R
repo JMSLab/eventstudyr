@@ -290,7 +290,7 @@ EventStudyPlot <- function(estimates,
     }
     if (Smpath) {
         plt <- plt +
-            geom_line(aes(y = smoothest_path, group = 1),
+            geom_line(aes(y = .data$smoothest_path, group = 1),
                       color = "black")
     }
 

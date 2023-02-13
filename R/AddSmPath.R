@@ -12,8 +12,6 @@
 #' @return df with smoothest path added as a new column
 #' @import pracma
 #' @export
-#'
-#' @examples
 
 AddSmPath <- function(df, coefficients, inv_covar,
                       conf_level = 0.95, maxorder = 10, maxiter_solver = 1e6){

@@ -1,5 +1,5 @@
 
-test_that("Dimensions of OLS and FHS estimation output is the same", {
+test_that("Dimension of OLS and FHS estimation output is the same", {
 
     estimates_ols <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_smooth_m",
                                 policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",

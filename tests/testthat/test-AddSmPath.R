@@ -1,4 +1,4 @@
-# Test
+
 test_that("AddZerosCovar correctly adds zeros where normalized coefficient should be", {
 
   vcov_matrix_all <- diag(rep(3,10))
@@ -17,7 +17,7 @@ test_that("AddZerosCovar correctly adds zeros where normalized coefficient shoul
 
   expect_equal(covar, expected_matrix)
 })
-# Test
+
 test_that("AddZerosCovar correctly adds zeros where normalized coefficient should be with 2 normalizations", {
 
     vcov_matrix_all <- diag(rep(3,9))

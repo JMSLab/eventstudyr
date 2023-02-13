@@ -11,7 +11,7 @@
 #' @examples
 #' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
 #'
-#' @rawNamespace import(data.table, except=c(last, first, between))
+#' @importFrom data.table setDT setorderv shift :=
 #' @export
 
 

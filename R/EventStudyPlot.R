@@ -29,6 +29,7 @@
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
 #' @importFrom rlang .data
+#' @importFrom data.table setorder
 #' @export
 #'
 #' @examples
@@ -251,7 +252,7 @@ EventStudyPlot <- function(estimates,
 # Optionally Add smooth path ----------------------------------------------
 
     # Order coefficients
-    setorder(df_plt, label)
+    data.table::setorder(df_plt, label)
 
     if (Smpath) {
         coefficients <- df_plt$estimate

@@ -8,7 +8,7 @@ EventStudyPlot(
   estimates,
   xtitle = "Event time",
   ytitle = "Coefficient",
-  ybreaks,
+  ybreaks = NULL,
   conf_level = 0.95,
   Supt = 0.95,
   num_sim = 1000,
@@ -16,8 +16,8 @@ EventStudyPlot(
   Addmean = FALSE,
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
-  Nozeroline = FALSE,
-  Smpath = NULL
+  Addzeroline = TRUE,
+  Smpath = FALSE
 )
 }
 \arguments{
@@ -28,7 +28,8 @@ EventStudyPlot(
 \item{ytitle}{The title for the y-axis. Should be a string. Defaults to "Coefficient".}
 
 \item{ybreaks}{A vector containing the desired breaks for the y-axis.
-Should be a numeric vector that contains 0.}
+Defaults to NULL, which means the breaks are computed automatically.
+If custom breaks are selected with the \code{Addmean} argument set to TRUE, then the breaks must include zero.}
 
 \item{conf_level}{Confidence level used for confidence interval
 expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
@@ -51,10 +52,11 @@ Should be TRUE or FALSE. Defaults to TRUE.}
 \item{Posteventcoeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
 Should be TRUE or FALSE. Defaults to TRUE.}
 
-\item{Nozeroline}{Whether or not to plot a dashed horizontal line at y = 0.
-Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.}
+\item{Addzeroline}{Whether or not to plot a dashed horizontal line at y = 0.
+Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.}
 
-\item{Smpath}{PLACE HOLDER}
+\item{Smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
+Should be TRUE or FALSE. Defaults to FALSE.}
 }
 \value{
 The Event-Study plot as a gpplot2 object
@@ -97,8 +99,8 @@ EventStudyPlot(
   Addmean = FALSE,
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
-  Nozeroline = FALSE,
-  Smpath = NULL
+  Addzeroline = TRUE,
+  Smpath = FALSE
 )
 
 # IV
@@ -135,7 +137,7 @@ EventStudyPlot(
   Addmean = FALSE,
   Preeventcoeffs = TRUE,
   Posteventcoeffs = TRUE,
-  Nozeroline = FALSE,
-  Smpath = NULL
+  Addzeroline = TRUE,
+  Smpath = FALSE
 )
 }

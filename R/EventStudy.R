@@ -149,16 +149,16 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                              leads = 1:num_fd_lead_periods)
     }
 
-
     if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
         data      <- PrepareLeads(data, groupvar = idvar, timevar,
                                          leadvar = policyvar, leads = num_fd_lead_periods)
     } else {
-        data             <- PrepareLags(data, groupvar = idvar, timevar,
-                                    lagvar = policyvar, lags = furthest_lag_period)
-        data             <- PrepareLeads(data, groupvar = idvar, timevar,
-                                    leadvar = policyvar, leads = num_fd_lead_periods)
-        column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
+        data <- PrepareLags(data, groupvar = idvar, timevar,
+                            lagvar = policyvar, lags = furthest_lag_period)
+        data <- PrepareLeads(data, groupvar = idvar, timevar,
+                             leadvar = policyvar, leads = num_fd_lead_periods)
+        
+        column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }
 
@@ -168,7 +168,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                       "periods before the event, so the coefficient at", normalize,
                       "was selected to be normalized to zero. To override this, change anticipation_effects_normalization to FALSE."))
     }
-
 
     if (normalize < 0) {
         if (normalize == -(pre + overidpre + 1)) {
@@ -210,36 +209,32 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (estimator == "OLS") {
-
         event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
 
         OLS_model        <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         event_study_args <- list("estimator" = estimator,
-                              "data" = data,
-                              "outcomevar" = outcomevar,
-                              "policyvar" = policyvar,
-                              "idvar" = idvar,
-                              "timevar" = timevar,
-                              "controls" = controls,
-                              "proxy" = proxy,
-                              "proxyIV" = proxyIV,
-                              "FE" = FE,
-                              "TFE" = TFE,
-                              "post" = post,
-                              "overidpost" = overidpost,
-                              "pre" = pre,
-                              "overidpre" = overidpre,
-                              "normalize" = normalize,
-                              "normalization_column" = normalization_column,
-                              "cluster" = cluster,
-                              "eventstudy_coefficients" = c(str_policy_fd, str_policy_lead, str_policy_lag)
-                              )
+                                 "data" = data,
+                                 "outcomevar" = outcomevar,
+                                 "policyvar" = policyvar,
+                                 "idvar" = idvar,
+                                 "timevar" = timevar,
+                                 "controls" = controls,
+                                 "proxy" = proxy,
+                                 "proxyIV" = proxyIV,
+                                 "FE" = FE,
+                                 "TFE" = TFE,
+                                 "post" = post,
+                                 "overidpost" = overidpost,
+                                 "pre" = pre,
+                                 "overidpre" = overidpre,
+                                 "normalize" = normalize,
+                                 "normalization_column" = normalization_column,
+                                 "cluster" = cluster,
+                                 "eventstudy_coefficients" = c(str_policy_fd, str_policy_lead, str_policy_lag))
 
         return(list(OLS_model, event_study_args))
-
     }
     if (estimator == "FHS") {
-
 
         if (is.null(proxyIV)) {
             Fstart <- 0
@@ -281,6 +276,4 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         return(list(FHS_model, event_study_args))
     }
-
 }
-

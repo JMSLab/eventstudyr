@@ -34,7 +34,8 @@
 #'    cluster = TRUE
 #')
 
-EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar, FE, TFE, cluster) {
+EventStudyOLS <- function(prepared_model_formula, prepared_data,
+                          idvar, timevar, FE, TFE, cluster) {
 
     if (! inherits(prepared_model_formula, "formula")) {stop("prepared_model_formula should be a formula")}
     if (! is.data.frame(prepared_data)) {stop("data should be a data frame.")}
@@ -117,7 +118,6 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data, idvar, timevar,
             data = prepared_data,
             se_type = "stata"
         )
-
 
     }
 

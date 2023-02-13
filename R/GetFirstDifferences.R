@@ -7,8 +7,8 @@
 #'
 #' @seealso \link[data.table]{shift}
 #'
+#' @importFrom data.table setDT setorderv shift :=
 #'
-#' @rawNamespace import(data.table, except=c(last, first, between))
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}

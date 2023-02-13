@@ -1,11 +1,11 @@
-
-#'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)  # Is there a reason for the capitalization of "Following" and "Suggestions"? - MZW
+#'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
 #'
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis.
-#' Should be a numeric vector that contains 0.
+#' Defaults to NULL, which means the breaks are computed automatically.
+#' If custom breaks are selected with the `Addmean` argument set to TRUE, then the breaks must include zero.
 #' @param conf_level Confidence level used for confidence interval
 #' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.  # For consistency, change "inclusively" to "inclusive" - MZW
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value.
@@ -20,13 +20,15 @@
 #' Should be TRUE or FALSE. Defaults to TRUE.
 #' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Should be TRUE or FALSE. Defaults to TRUE.
-#' @param Nozeroline Whether or not to plot a dashed horizontal line at y = 0.
-#' Should be TRUE or FALSE. Defaults to FALSE, meaning the line is plotted.
-#' @param Smpath PLACE HOLDER # Will this be updated? - MZW
+#' @param Addzeroline Whether or not to plot a dashed horizontal line at y = 0.
+#' Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.
+#' @param Smpath Plot smoothest path of confounder that rationalizes event study coefficients.
+#' Should be TRUE or FALSE. Defaults to FALSE.
 #'
 #' @return The Event-Study plot as a gpplot2 object
 #' @import ggplot2 dplyr
 #' @importFrom rlang .data
+#' @importFrom data.table setorder
 #' @export
 #'
 #' @examples
@@ -64,8 +66,8 @@
 #'   Addmean = FALSE,
 #'   Preeventcoeffs = TRUE,
 #'   Posteventcoeffs = TRUE,
-#'   Nozeroline = FALSE,
-#'   Smpath = NULL
+#'   Addzeroline = TRUE,
+#'   Smpath = FALSE
 #')
 #'
 #' # This OLS example gives a warning message: Removed 1 rows containing missing values (geom_segment).
@@ -104,25 +106,27 @@
 #'   Addmean = FALSE,
 #'   Preeventcoeffs = TRUE,
 #'   Posteventcoeffs = TRUE,
-#'   Nozeroline = FALSE,
-#'   Smpath = NULL
+#'   Addzeroline = TRUE,
+#'   Smpath = FALSE
 #')
 #'
 #' # This IV example gives a warning message: "Removed 2 rows containing missing values (geom_segment)."
 
-EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficient", ybreaks, conf_level = .95,
-                           Supt = .95, num_sim = 1000, seed = 1234, Addmean = FALSE,
-                           Preeventcoeffs = TRUE, Posteventcoeffs = TRUE, Nozeroline = FALSE, Smpath = NULL) {
+EventStudyPlot <- function(estimates,
+                           xtitle = "Event time", ytitle = "Coefficient", ybreaks = NULL,
+                           conf_level = .95, Supt = .95, num_sim = 1000, seed = 1234,
+                           Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
+                           Addzeroline = TRUE, Smpath = FALSE) {
 
-    if (!is.character(xtitle)) {stop("xtitle should be a character.")}
-    if (!is.character(ytitle)) {stop("ytitle should be a character.")}
-    if (!is.logical(Nozeroline)) {stop("Nozeroline should be either TRUE or FALSE.")}
-    if (! inherits(ybreaks, "numeric")) {stop("ybreaks should be a numeric vector.")}
-    if (! 0 %in% ybreaks) {stop("0 needs to be one of the specified breaks.")}
+    if (!is.character(xtitle))    {stop("Argument 'xtitle' should be a character.")}
+    if (!is.character(ytitle))    {stop("Argument 'ytitle' should be a character.")}
+    if (!is.logical(Addzeroline)) {stop("Argument 'Addzeroline' should be either TRUE or FALSE.")}
+    if (!is.null(ybreaks) &
+        !is.numeric(ybreaks))     {stop("Argument 'ybreaks' should be NULL or a numeric vector.")}
 
 # Estimation Elements -----------------------------------------------------
 
-    df_estimates <- estimates[[1]]
+    df_estimates      <- estimates[[1]]
     df_estimates_tidy <- estimatr::tidy(estimates[[1]])
 
     df_data                 <- estimates[[2]]$data
@@ -142,7 +146,6 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
     plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
 
     if (plot_Supt) {
-
         df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = Supt,
                                          seed = seed, eventstudy_coefficients = eventstudy_coefficients)
     }
@@ -154,7 +157,7 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
     }
 
-# Optionally Test For Pretrends/Leveing Off -------------------------------
+# Optionally Test For Pretrends/Levelling-Off -------------------------------
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
 
@@ -166,9 +169,8 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         text_pretrends   <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
         text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
         text_caption     <- paste0(text_pretrends, " -- ", text_levelingoff)
-    }
 
-    else if (Preeventcoeffs & !Posteventcoeffs) {
+    } else if (Preeventcoeffs & !Posteventcoeffs) {
 
         pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
 
@@ -185,9 +187,59 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         text_caption <- NULL
     }
 
-    df_plotting <- PreparePlottingData(df_estimates_tidy, policyvar, post, overidpost, pre, overidpre, normalization_column, proxyIV)
+    df_plt <- PreparePlottingData(df_estimates_tidy, policyvar,
+                                  post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
-    y_axis_labels <- ybreaks
+# Construct y breaks ------------------------------------------------------
+
+    if (!is.null(ybreaks)) {
+        if (!(0 %in% ybreaks) & Addmean) {
+            stop("If you want to add the mean of y in the y-axis then 'ybreaks' must include 0.")
+        }
+
+        ylabels <- ybreaks
+        ylims   <- c(min(ybreaks), max(ybreaks))
+    } else {
+        min_value <- min(c(df_plt$estimate, df_plt$ci_lower, df_plt$suptband_lower), na.rm = T)
+        max_value <- max(c(df_plt$estimate, df_plt$ci_upper, df_plt$suptband_upper), na.rm = T)
+        max_abs   <- max(abs(min_value), abs(max_value))
+
+        magnitude <- 10^floor(log10(max_abs))
+
+        # Determine step depending on how far the endpoints are from the magnitude
+        mean_ratio <- mean(c(abs(min_value)/magnitude, max_value/magnitude))
+        if (mean_ratio > 6.67) {
+            step = 3*magnitude
+        } else if (mean_ratio > 3.33) {
+            step = 2*magnitude
+        } else {
+            step = magnitude
+        }
+
+        # Pick multiples of step to ensure zero is included
+        close_to_min <- floor(min_value/step)*step
+        close_to_max <- ceiling(max_value/step)*step
+
+        ybreaks <- seq(close_to_min, close_to_max, step)
+        ylims   <- c(min(ybreaks), max(ybreaks))
+
+        if (length(ybreaks) >= 9) {
+            # Too many breaks, double step size
+            step         <- step*2
+            close_to_min <- floor(min_value/step)*step
+            close_to_max <- ceiling(max_value/step)*step
+
+            ybreaks <- seq(close_to_min, close_to_max, step)
+        } else if (length(ybreaks) <= 3) {
+            # Too few breaks, halve step size
+            step         <- step/2
+            close_to_min <- floor(min_value/step)*step
+            close_to_max <- ceiling(max_value/step)*step
+
+            ybreaks <- seq(close_to_min, close_to_max, step)
+        }
+        ylabels <- ybreaks
+    }
 
 # Optionally Adds Mean ----------------------------------------------------
 
@@ -196,34 +248,65 @@ EventStudyPlot <- function(estimates, xtitle = "Event time", ytitle = "Coefficie
         y_mean <- AddMeans(df_data, normalization_column, policyvar, outcomevar)
 
         index_zero <- which(ybreaks == 0)
-        y_axis_labels[index_zero] <- paste0(y_axis_labels[index_zero], " (", round(y_mean, 2), ")")
+        ylabels[index_zero] <- paste0(ylabels[index_zero], " (", round(y_mean, 2), ")")
 
+    }
+
+# Optionally Add smooth path ----------------------------------------------
+
+    # Order coefficients
+    data.table::setorder(df_plt, label)
+
+    if (Smpath) {
+        coefficients <- df_plt$estimate
+
+        # Add column and row in matrix of coefficients in index of norm columns
+        covar <- AddZerosCovar(estimates[[1]]$vcov,
+                               eventstudy_coefficients,
+                               df_plt[df_plt$estimate==0, ]$term,
+                               df_plt$term)
+
+        inv_covar <- pracma::pinv(covar)
+
+        df_plt <- AddSmPath(df_plt, coefficients, inv_covar)
     }
 
 # Construct Plot ----------------------------------------------------------
 
-    p_Nozeroline <- if(Nozeroline) NULL else ggplot2::geom_hline(yintercept = 0, color = "green", linetype = "dashed")
-    p_Supt <- if(plot_Supt) ggplot2::geom_linerange(ggplot2::aes(ymin = .data$suptband_lower, ymax = .data$suptband_upper)) else NULL
-    p_CI   <- if(plot_CI)   ggplot2::geom_errorbar(ggplot2::aes(ymin = .data$ci_lower, ymax = .data$ci_upper), width = .2) else NULL
+    plt <- ggplot(df_plt,
+                  aes(x = .data$label, y = .data$estimate))
 
-    eventstudy_plot <- ggplot2::ggplot(df_plotting, ggplot2::aes(x = .data$label, y = .data$estimate)) +
-        p_Nozeroline +
-        p_Supt +
-        p_CI +
-        ggplot2::geom_point(color = "#006600", size = 3) +
-        ggplot2::labs(
-            x = xtitle,
-            y = ytitle,
-            caption = text_caption
-            ) +
-        ggplot2::scale_y_continuous(breaks = ybreaks, labels = y_axis_labels,
-                                    limits = c(min(ybreaks), max(ybreaks))) +
-        ggplot2::theme_bw() +
-        ggplot2::theme(
-            panel.grid = ggplot2::element_blank(),
-            plot.caption = ggplot2::element_text(hjust = 0),
-            text = ggplot2::element_text(size = 20)
-            )
+    if (Addzeroline) {
+        plt <- plt +
+            geom_hline(yintercept = 0,
+                       color = "green", linetype = "dashed")
+    }
+    if (plot_Supt) {
+        plt <- plt +
+            geom_linerange(aes(ymin = .data$suptband_lower,
+                               ymax = .data$suptband_upper))
+    }
+    if (plot_CI) {
+        plt <- plt +
+            geom_errorbar(aes(ymin = .data$ci_lower,
+                              ymax = .data$ci_upper), width = .2)
+    }
+    if (Smpath) {
+        plt <- plt +
+            geom_line(aes(y = .data$smoothest_path, group = 1),
+                      color = "black")
+    }
 
-    return(eventstudy_plot)
+    plt <- plt +
+        geom_point(color = "#006600") +
+        scale_y_continuous(breaks = ybreaks,
+                           labels = ylabels,
+                           limits = ylims) +
+        labs(x = xtitle, y = ytitle,
+             caption = text_caption) +
+        theme_bw() +
+        theme(panel.grid   = element_blank(),
+              plot.caption = element_text(hjust = 0))
+
+    return(plt)
 }

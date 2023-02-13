@@ -63,7 +63,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
             stop(paste0("The smoothest path cannot be found because the number of normalized coefficients is larger than the minimum order. ",
                         unselect_message))
         }
-
     }
 
     df["smoothest_path"] = Fmat %*% vstar

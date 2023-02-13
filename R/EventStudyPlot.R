@@ -1,4 +1,3 @@
-
 #'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
 #'
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2.
@@ -294,7 +293,7 @@ EventStudyPlot <- function(estimates,
                       color = "black")
     }
 
-    plt <- plt  +
+    plt <- plt +
         geom_point(color = "#006600") +
         scale_y_continuous(breaks = ybreaks,
                            labels = ylabels,

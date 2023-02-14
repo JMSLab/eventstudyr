@@ -31,7 +31,7 @@ Authors@R:
            role = c("aut")),
     person(given = "JMSLab"
            role = c("cph"))       
-Description: What the package does (one paragraph).
+Description: Estimates linear panel event study models. Plots coefficients following the recommendations in Frehaldenhoven et al. (2021). Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region. Allows instrumental variables estimation following Freyaldenhoven et al. (2019).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:

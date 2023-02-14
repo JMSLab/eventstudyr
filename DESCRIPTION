@@ -2,11 +2,35 @@ Package: eventstudyr
 Title: Estimation and Visualization of Linear Panel Event Studies
 Version: 1.0.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person(given = "Simon",
+           family = "Freyaldenhoven",
+           role = c("aut")),
+    person(given = "Christian",
+           family = "Hansen",
+           role = c("aut")),
+    person(given = "Jorge",
+           family = "Pérez Pérez",
+           role = c("aut")),
+    person(given = "Jesse",
+           family = "Shapiro",
+           role = c("aut")),
+    person(given = "Veli",
+           family = "Andirin",
+           role = c("aut")),
+    person(given = "Richard",
+           family = "Calvo",
+           role = c("aut")),
+    person(given = "Santiago",
+           family = "Hermo",
+           role = c("aut")),
+    person(given = "Nathan",
+           family = "Schor",
+           role = c("aut")),
+    person(given = "Emily",
+           family = "Wang",
+           role = c("aut")),
+    person(given = "JMSLab"
+           role = c("cph"))       
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8

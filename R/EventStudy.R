@@ -95,7 +95,7 @@
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
-                       normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE) {
+                       normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE) { #There is no default values for post and pre arguments. It breaks if I don't specify them
 
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -157,7 +157,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                             lagvar = policyvar, lags = furthest_lag_period)
         data <- PrepareLeads(data, groupvar = idvar, timevar,
                              leadvar = policyvar, leads = num_fd_lead_periods)
-        
+
         column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }

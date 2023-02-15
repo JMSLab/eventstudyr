@@ -14,3 +14,11 @@
 10. Push your code **if it is passing all tests**. Address any warnings/errors
 11. When you open a pull request, uncomment the job `R-CMD-check` in `.github/workflows/R-CMD-check.yaml` to check your code, and then comment out again. Do the
  same before you are ready to wrap-up the pull request to ensure that the changes during the pull did not introduce any bugs.
+
+## Citation
+
+Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, and Jesse M. Shapiro. "Visualization, Identification, and Estimation in the Panel Event-Study Design." [NBER Working Paper No. 29170](https://www.nber.org/papers/w29170),
+August 2021.
+
+Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, Veli M. Andirin, Richard Calvo, Santiago Hermo, Nathan Schor, Emily Wang. "`eventstudyr` package." Code and data repository at https://github.com/JMSLab/eventstudyr, February 2023.
+

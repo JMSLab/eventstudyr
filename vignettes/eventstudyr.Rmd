@@ -68,7 +68,7 @@ results <- EventStudy(estimator = "OLS",
 <details>
   <summary>Click for `results[2]`</summary>
   ```{r}
-  results[1]
+  results[2]
   ```
 </details>
 

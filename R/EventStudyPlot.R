@@ -1,4 +1,4 @@
-#'  Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
+#'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming)
 #'
 #' @param estimates The output from calling EventStudy(). Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
@@ -7,7 +7,7 @@
 #' Defaults to NULL, which means the breaks are computed automatically.
 #' If custom breaks are selected with the `Addmean` argument set to TRUE, then the breaks must include zero.
 #' @param conf_level Confidence level used for confidence interval
-#' expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.  # For consistency, change "inclusively" to "inclusive" - MZW
+#' expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.
 #' @param Supt The confidence level used for obtaining the sup-t bands critical value.
 #' Should be a real number between 0 and 1, inclusive. Defaults to .95.
 #' @param num_sim The number of simulations used in generating the sup-t bands.

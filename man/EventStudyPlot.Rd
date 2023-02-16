@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)}
+\title{Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming)}
 \usage{
 EventStudyPlot(
   estimates,
@@ -32,7 +32,7 @@ Defaults to NULL, which means the breaks are computed automatically.
 If custom breaks are selected with the \code{Addmean} argument set to TRUE, then the breaks must include zero.}
 
 \item{conf_level}{Confidence level used for confidence interval
-expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
+expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.}
 
 \item{Supt}{The confidence level used for obtaining the sup-t bands critical value.
 Should be a real number between 0 and 1, inclusive. Defaults to .95.}
@@ -44,7 +44,7 @@ Should be a natural number. Defaults to 1000.}
 Should be a natural number. Defaults to 1234.}
 
 \item{Addmean}{Adds the mean of the dependent variable in the period used for normalization.
-Should be TRUE or FALSE. Defaults to FALSE.}
+Should be TRUE or FALSE. Defaults to FALSE.  # Can we change the following variable names into snake case like conf_level for consistency? - MZW}
 
 \item{Preeventcoeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 Should be TRUE or FALSE. Defaults to TRUE.}
@@ -62,7 +62,7 @@ Should be TRUE or FALSE. Defaults to FALSE.}
 The Event-Study plot as a gpplot2 object
 }
 \description{
-Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
+Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming)
 }
 \examples{
 
@@ -103,6 +103,8 @@ EventStudyPlot(
   Smpath = FALSE
 )
 
+# This OLS example gives a warning message: Removed 1 rows containing missing values (geom_segment).
+
 # IV
 
 eventstudy_estimates_fhs <- EventStudy(
@@ -140,4 +142,6 @@ EventStudyPlot(
   Addzeroline = TRUE,
   Smpath = FALSE
 )
+
+# This IV example gives a warning message: "Removed 2 rows containing missing values (geom_segment)."
 }

@@ -1,4 +1,4 @@
-#' Runs FHS with optional fixed effects and clustering  # Would be nice to spell out FHS - MZW
+#' Runs FHS with optional fixed effects and clustering described in [Freyaldenhoven, Hansen, and Shapiro](https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609)
 #'
 #' @param prepared_model_formula A formula object created in [PrepareModelFormula()]
 #' that is passed to [EventStudy()].

@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyFHS.R
 \name{EventStudyFHS}
 \alias{EventStudyFHS}
-\title{Runs FHS with optional fixed effects and clustering  # Would be nice to spell out FHS - MZW}
+\title{Runs FHS with optional fixed effects and clustering described in \href{https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609}{Freyaldenhoven, Hansen, and Shapiro}}
 \usage{
 EventStudyFHS(
   prepared_model_formula,
@@ -37,7 +37,7 @@ Defaults to TRUE. Must be TRUE if FE is TRUE.}
 An estimated model # Is there more explanation that can be added to this to make it more specific? - MZW
 }
 \description{
-Runs FHS with optional fixed effects and clustering  # Would be nice to spell out FHS - MZW
+Runs FHS with optional fixed effects and clustering described in \href{https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609}{Freyaldenhoven, Hansen, and Shapiro}
 }
 \examples{
 model_formula <-  PrepareModelFormula(

@@ -10,6 +10,7 @@
 #'
 #' @examples
 #' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+#' # Very subtle but in other example code, each argument is separated by a newline, which makes the arguments easier to see - MZW
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #' @export

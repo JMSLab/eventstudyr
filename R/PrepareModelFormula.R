@@ -1,5 +1,5 @@
 
-#' Prepares a formula object for use in EventStudyOLS or EventStudyFHS
+#' Prepares a formula object for use in EventStudyOLS or EventStudyFHS  # Hyperlinks would be nice! - MZW
 #'
 
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
@@ -35,6 +35,8 @@
 #'                     controls = "x_r",
 #'                     proxy = "eta_m",
 #'                     proxyIV = "z_fd_lead3")
+#'
+#' # The outcomes of these examples have a line that says "<environment: 0x00######>" - what is this for? - MZW
 
 PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL, proxy = NULL, proxyIV = NULL) {
 

@@ -2,9 +2,10 @@ Package: eventstudyr
 Title: Estimation and Visualization of Linear Panel Event Studies
 Version: 1.0.0
 Authors@R: 
-    person(given = "Simon",
+    c(person(given = "Simon",
            family = "Freyaldenhoven",
-           role = c("aut")),
+           email = "simon.freyaldenhoven@phil.frb.org",
+           role = c("aut", "cre")),
     person(given = "Christian",
            family = "Hansen",
            role = c("aut")),
@@ -29,8 +30,8 @@ Authors@R:
     person(given = "Emily",
            family = "Wang",
            role = c("aut")),
-    person(given = "JMSLab"
-           role = c("cph"))       
+    person(given = "JMSLab",
+           role = c("cph")))    
 Description: Estimates linear panel event study models. Plots coefficients following the recommendations in Freyaldenhoven et al. (2021). Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region. Allows instrumental variables estimation following Freyaldenhoven et al. (2019).
 License: MIT + file LICENSE
 Encoding: UTF-8

@@ -10,16 +10,21 @@ write.csv(df_sample_dynamic,
 
 for (yvar in c("y_base", "y_smooth_m", "y_jump_m")) {
 
+    if (yvar == "y_base")     y_breaks = c(-.5, 0, .5, 1)
+    if (yvar == "y_smooth_m") y_breaks = c(-1.3, -1, -.5, 0, .5, .7)
+    if (yvar == "y_jump_m")   y_breaks = c(-.5, 0, .5, 1, 1.5)
+
     estimates_ols <- EventStudy(
         outcomevar = yvar,
         estimator = "OLS", data = df_sample_dynamic,
         policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
         post = 3, overidpost = 1,
         pre  = 0, overidpre  = 3,
-        normalize = - 1,
+        normalize = - 1
     )
     EventStudyPlot(
         estimates = estimates_ols,
+        ybreaks   = y_breaks,
         Smpath    = TRUE
     ) -> p
 

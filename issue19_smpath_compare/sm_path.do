@@ -10,7 +10,8 @@ foreach yvar in y_base y_smooth_m y_jump_m {
     post(3) overidpost(1) pre(0) overidpre(3) norm(-1) ///
     reghdfe
 
-  xteventplot, smpath(line)
+  xteventplot, smpath(line) ylabel(, angle(0)) ///
+    graphregion(color(white)) bgcolor(white)
 
   graph export STATA/`yvar'.png, replace width(1300) height(928)
 }

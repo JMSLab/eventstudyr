@@ -1,9 +1,9 @@
 #' Adds columns to data frame containing confidence intervals around provided estimates.
 #'
 #' @param df_estimates, A data frame with columns for term, estimate, and standard error.
-#' @param policyvar, A string with the name of the policy variable used in EventStudy().  # policyvar is not used in this function - MZW
-#' @param eventstudy_coefficients, A list specifying the names of the columns that were not normalized in EventStudy().
-#' @param conf_level, Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.
+#' @param policyvar, A string with the name of the policy variable used in [EventStudy()].  # policyvar is not used in this function - MZW
+#' @param eventstudy_coefficients, A list specifying the names of the columns that were not normalized in [EventStudy()].
+#' @param conf_level, Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.
 #'
 #'
 #' @import dplyr

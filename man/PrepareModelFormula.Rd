@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrepareModelFormula.R
 \name{PrepareModelFormula}
 \alias{PrepareModelFormula}
-\title{Prepares a formula object for use in EventStudyOLS or EventStudyFHS}
+\title{Prepares a formula object for use in \code{\link[=EventStudyOLS]{EventStudyOLS()}} or \code{\link[=EventStudyFHS]{EventStudyFHS()}}}
 \usage{
 PrepareModelFormula(
   estimator,
@@ -37,7 +37,7 @@ Should be specified if and only if estimator is specified as "FHS". Should be a 
 A formula object to be passed to EventStudy
 }
 \description{
-Prepares a formula object for use in EventStudyOLS or EventStudyFHS
+Prepares a formula object for use in \code{\link[=EventStudyOLS]{EventStudyOLS()}} or \code{\link[=EventStudyFHS]{EventStudyFHS()}}
 }
 \examples{
 PrepareModelFormula(estimator = "OLS", outcomevar = "y_base",
@@ -59,4 +59,6 @@ PrepareModelFormula(estimator = "FHS",
                     controls = "x_r",
                     proxy = "eta_m",
                     proxyIV = "z_fd_lead3")
+
+# The outcomes of these examples have a line that says "<environment: 0x00######>" - what is this for? - MZW
 }

@@ -13,7 +13,7 @@ AddSuptBand(
 )
 }
 \arguments{
-\item{estimates}{The first element extracted from the EventStudy function. Should be a list.}
+\item{estimates}{The first element extracted from \code{\link[=EventStudy]{EventStudy()}}. Should be a list.}
 
 \item{num_sim}{The number of simulations used in generating the sup-t bands.
 Should be a natural number. Defaults to 1000.}
@@ -27,7 +27,7 @@ Should be a natural number.
 Defaults to 1234.}
 
 \item{eventstudy_coefficients}{The names of the event-study coefficients. This vector is
-outputted in the second element of the EventStudy function. Should be a vector of strings.}
+outputted in the second element of the \code{\link[=EventStudy]{EventStudy()}} function. Should be a vector of strings.}
 }
 \value{
 A data.frame that contains the upper and lower sup-t band values

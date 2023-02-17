@@ -1,7 +1,7 @@
 #' Runs OLS with optional fixed effects and clustering # Would be nice to spell out OLS - MZW
 #'
-#' @param prepared_model_formula A formula object created in PrepareModelForumla that is passed to EventStudy. # Is it possible to place a hyperlink to the documentation for PrepareModelFormula? - MZW
-#' @param prepared_data Data frame containing all of the parameters required for EventStudy() plus leads and
+#' @param prepared_model_formula A formula object created in [PrepareModelFormula()] that is passed to [EventStudy()].
+#' @param prepared_data Data frame containing all of the parameters required for [EventStudy()] plus leads and
 #' lags of the first differenced policy variable and leads and lags of the policy variable.
 #' @param idvar Variable indicating units, should be a character.
 #' @param timevar Variable indicating time periods, should be a character.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyFHS.R
 \name{EventStudyFHS}
 \alias{EventStudyFHS}
-\title{Runs FHS with optional fixed effects and clustering}
+\title{Runs FHS with optional fixed effects and clustering  # Would be nice to spell out FHS - MZW}
 \usage{
 EventStudyFHS(
   prepared_model_formula,
@@ -15,10 +15,10 @@ EventStudyFHS(
 )
 }
 \arguments{
-\item{prepared_model_formula}{A formula object created in PrepareModelForumla
-that is passed to EventStudy.}
+\item{prepared_model_formula}{A formula object created in \code{\link[=PrepareModelFormula]{PrepareModelFormula()}}
+that is passed to \code{\link[=EventStudy]{EventStudy()}}.}
 
-\item{prepared_data}{Data frame containing all of the parameters required for EventStudy() plus
+\item{prepared_data}{Data frame containing all of the parameters required for \code{\link[=EventStudy]{EventStudy()}} plus
 leads and lags of the first differenced policy variable and leads and lags of the policy variable.}
 
 \item{idvar}{Variable indicating units, should be a character.}
@@ -34,10 +34,10 @@ If FALSE, will use unclustered heteroskedasticity-robust standard errors.
 Defaults to TRUE. Must be TRUE if FE is TRUE.}
 }
 \value{
-An estimated model
+An estimated model # Is there more explanation that can be added to this to make it more specific? - MZW
 }
 \description{
-Runs FHS with optional fixed effects and clustering
+Runs FHS with optional fixed effects and clustering  # Would be nice to spell out FHS - MZW
 }
 \examples{
 model_formula <-  PrepareModelFormula(

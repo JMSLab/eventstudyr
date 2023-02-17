@@ -19,5 +19,5 @@ GetFirstDifferences(df, groupvar = NULL, timevar, diffvar)
 Adds first difference of a variable as a new column
 }
 \seealso{
-\link[data.table]{shift}
+\link[data.table]{shift}  # Not sure what this is referencing? The link doesn't show up - MZW
 }

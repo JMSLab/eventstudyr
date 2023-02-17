@@ -21,7 +21,7 @@ EventStudyPlot(
 )
 }
 \arguments{
-\item{estimates}{The output from calling EventStudy(). Should be a list of length 2.}
+\item{estimates}{The output from calling \code{\link[=EventStudy]{EventStudy()}}. Should be a list of length 2.}
 
 \item{xtitle}{The title for the x-axis. Should be a string. Defaults to "Event time".}
 

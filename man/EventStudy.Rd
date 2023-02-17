@@ -26,11 +26,11 @@ EventStudy(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV. # Should OLS, FHS, and IV be spelled out, or are we assuming familiarity with these acronyms? - MZW}
 
-\item{data}{The data frame that contains the variables of interest.}
+\item{data}{The data frame that contains the variables of interest.  # To keep consistency across descriptions, get rid of "the" - MZW}
 
-\item{outcomevar}{Variable indicating outcome variable y, should be a character.}
+\item{outcomevar}{Variable indicating outcome variable y, should be a character. # Instead of "should be a character" change to "Character for variable indicating ..." for concision? - MZW}
 
 \item{policyvar}{Variable indicating policy variable z, should be a character.}
 
@@ -38,7 +38,7 @@ EventStudy(
 
 \item{timevar}{Variable indicating time periods, should be a character.}
 
-\item{controls}{Optional vector of controls q, should be a character.}
+\item{controls}{Optional vector of controls q, should be a character. # What is the q for? - MZW}
 
 \item{proxy}{Variable that is thought to be affected by the confound but not by the policy.
 Should be specified if and only if estimator is specified as "FHS". Should be a character.}
@@ -55,7 +55,7 @@ are not supposed to affect the value of the outcome. Should be a whole number. C
 Freyaldenhoven et al. (forthcoming).}
 
 \item{overidpost}{Optional number of event times after "post" to be included in estimation. Defaults to 1.
-Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).}
+Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW}
 
 \item{pre}{Number of periods in the future after which the future values of the policy are
 not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
@@ -70,7 +70,7 @@ Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven e
 heteroskedasticity-robust standard errors. Defaults to TRUE.}
 
 \item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
-when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE}
+when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE  # This variable name is very long - MZW}
 }
 \value{
 A list that contains the estimation output and an object containing the arguments passed to the function

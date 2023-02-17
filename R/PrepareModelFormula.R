@@ -1,6 +1,5 @@
 
-#' Prepares a formula object for use in EventStudyOLS or EventStudyFHS  # Hyperlinks would be nice! - MZW
-#'
+#' Prepares a formula object for use in [EventStudyOLS()] or [EventStudyFHS()]
 
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
 #' @param outcomevar Variable indicating outcome variable y, should be a character.

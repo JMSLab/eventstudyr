@@ -9,11 +9,11 @@ AddCIs(df_estimates, policyvar, eventstudy_coefficients, conf_level = 0.95)
 \arguments{
 \item{df_estimates, }{A data frame with columns for term, estimate, and standard error.}
 
-\item{policyvar, }{A string with the name of the policy variable used in EventStudy().}
+\item{policyvar, }{A string with the name of the policy variable used in \code{\link[=EventStudy]{EventStudy()}}.  # policyvar is not used in this function - MZW}
 
-\item{eventstudy_coefficients, }{A list specifying the names of the columns that were not normalized in EventStudy().}
+\item{eventstudy_coefficients, }{A list specifying the names of the columns that were not normalized in \code{\link[=EventStudy]{EventStudy()}}.}
 
-\item{conf_level, }{Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
+\item{conf_level, }{Confidence level used for confidence interval expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.}
 }
 \description{
 Adds columns to data frame containing confidence intervals around provided estimates.

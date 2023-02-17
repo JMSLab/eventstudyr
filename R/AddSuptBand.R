@@ -5,7 +5,7 @@
 #' underlying simultaneous sup-t confidence bands. R package version
 #' 0.1.0.
 #'
-#' @param estimates The first element extracted from the EventStudy function. Should be a list.
+#' @param estimates The first element extracted from [EventStudy()]. Should be a list.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
 #' Should be a natural number. Defaults to 1000.
 #' @param conf_level The confidence level used for obtaining the sup-t bands critical value.
@@ -15,7 +15,7 @@
 #' Should be a natural number.
 #' Defaults to 1234.
 #' @param eventstudy_coefficients The names of the event-study coefficients. This vector is
-#' outputted in the second element of the EventStudy function. Should be a vector of strings.
+#' outputted in the second element of the [EventStudy()] function. Should be a vector of strings.
 #'
 #' @return A data.frame that contains the upper and lower sup-t band values
 #' for each event-study coefficient.

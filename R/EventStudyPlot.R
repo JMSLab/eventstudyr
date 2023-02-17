@@ -1,6 +1,6 @@
 #'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming)
 #'
-#' @param estimates The output from calling EventStudy(). Should be a list of length 2.
+#' @param estimates The output from calling [EventStudy()]. Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis.

@@ -1,8 +1,8 @@
 #' Runs FHS with optional fixed effects and clustering  # Would be nice to spell out FHS - MZW
 #'
-#' @param prepared_model_formula A formula object created in PrepareModelForumla
-#' that is passed to EventStudy. # Is it possible to place a hyperlink to the documentation for PrepareModelFormula? - MZW
-#' @param prepared_data Data frame containing all of the parameters required for EventStudy() plus
+#' @param prepared_model_formula A formula object created in [PrepareModelFormula()]
+#' that is passed to [EventStudy()].
+#' @param prepared_data Data frame containing all of the parameters required for [EventStudy()] plus
 #' leads and lags of the first differenced policy variable and leads and lags of the policy variable.
 #' @param idvar Variable indicating units, should be a character.
 #' @param timevar Variable indicating time periods, should be a character.
@@ -38,7 +38,7 @@
 #'    cluster = TRUE
 #')
 
-EventStudyFHS <- function(prepared_model_formula, prepared_data, 
+EventStudyFHS <- function(prepared_model_formula, prepared_data,
                           idvar, timevar, FE, TFE, cluster) {
 
   if (! inherits(prepared_model_formula, "formula")) {stop("prepared_model_formula should be a formula")}

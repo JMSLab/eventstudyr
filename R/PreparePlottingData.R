@@ -1,8 +1,8 @@
 
 #' Orders the eventstudy coefficients and generates the x-axis labels
 #'
-#' @param df_tidy_estimates A data.frame created from applying estimatr::tidy()
-#' to the estimation output from EventStudy.
+#' @param df_tidy_estimates A data.frame created from applying \link[estimatr]{tidy}
+#' to the estimation output from [EventStudy()].
 #' At a minimum, it contains a column called "term" with the name for the coefficient and a
 #' column called "estimate" that contains the corresponding estimate. Should be a data.frame.
 #' @param policyvar Variable indicating policy variable z, should be a character.

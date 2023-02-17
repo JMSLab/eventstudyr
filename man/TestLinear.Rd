@@ -2,7 +2,7 @@
 % Please edit documentation in R/TestLinear.R
 \name{TestLinear}
 \alias{TestLinear}
-\title{This function can be used to perform tests of linear hypotheses.}
+\title{This function can be used to perform tests of linear hypotheses.I believe the commas should be removed due to convention and consistency with other functions - MZW}
 \usage{
 TestLinear(
   estimates,
@@ -14,10 +14,10 @@ TestLinear(
 }
 \arguments{
 \item{estimates, }{A list of length 2 containing estimation results and model information.
-Should be an output of EventStudy().}
+Should be an output of \code{\link[=EventStudy]{EventStudy()}}.}
 
 \item{test, }{The hypothesis to be estimated. Accepts inputs that can be passed to
-hypothesis.matrix argument in linearHypothesis() function from car package.}
+hypothesis.matrix argument in \link[car]{linearHypothesis}.}
 
 \item{test_name, }{Name for test input by user. Defaults to "User Test."}
 
@@ -28,7 +28,7 @@ Defaults to TRUE.}
 Defaults to TRUE.}
 }
 \description{
-This function can be used to perform tests of linear hypotheses.
+This function can be used to perform tests of linear hypotheses.I believe the commas should be removed due to convention and consistency with other functions - MZW
 }
 \examples{
 estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",

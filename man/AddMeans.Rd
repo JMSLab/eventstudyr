@@ -11,9 +11,9 @@ AddMeans(df, normalization_column, policyvar, outcomevar, custom_scalar = NULL)
 
 \item{normalization_column}{Variable whose coefficient will be normalized.}
 
-\item{policyvar}{Policy variable.}
+\item{policyvar}{Policy variable.  # Another function uses "A string with the name of the policy variable used in \code{\link[=EventStudy]{EventStudy()}}." for this description. It might be good to use this more detailed description and be consistent across functions. - MZW}
 
-\item{outcomevar}{Outcome variable.}
+\item{outcomevar}{Outcome variable.  # Same as above, a more detailed description would be more helpful. - MZW}
 
 \item{custom_scalar}{Scalar to be displayed along y = 0 line if the user doesn't want the mean computed by the package.}
 }

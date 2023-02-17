@@ -16,8 +16,8 @@ PreparePlottingData(
 )
 }
 \arguments{
-\item{df_tidy_estimates}{A data.frame created from applying estimatr::tidy()
-to the estimation output from EventStudy.
+\item{df_tidy_estimates}{A data.frame created from applying \link[estimatr]{tidy}
+to the estimation output from \code{\link[=EventStudy]{EventStudy()}}.
 At a minimum, it contains a column called "term" with the name for the coefficient and a
 column called "estimate" that contains the corresponding estimate. Should be a data.frame.}
 

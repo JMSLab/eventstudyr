@@ -85,6 +85,7 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
 }
 
 # Find coefficients such that square of highest order term is minimized
+# Num normalized coefficients less than order of polynomial
 FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat,
                        maxiter_solver = 1e6) {
 
@@ -118,7 +119,6 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
                        d   = coeffs, inv_covar = inv_covar,
                        Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                        Wcritic = Wcritic, positive = T)
-
     optim_neg <- optim(par     = x0,
                        fn      = Objective,
                        method  = "Nelder-Mead",
@@ -138,18 +138,17 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
     v2_neg <- sqrt(optim_neg$value)
 
     if (abs(v2_pos) < abs(v2_neg)) {
-    vb = vb_pos
-    v2 = v2_pos
+        vb = vb_pos
+        v2 = v2_pos
     } else {
-    vb = vb_neg
-    v2 = v2_neg
+        vb = vb_neg
+        v2 = v2_neg
     }
     v1 = inv(A1)%*%(-Ab%*%vb - A2%*%v2)
 
     return(c(vb, v1, v2))
 }
 
-# Functions used by FindCoeffs
 d0 <- function(d, inv_covar, F1, F2, A1, A2) {
     single_factor = F2 - F1%*%pinv(A1)%*%A2
 
@@ -191,3 +190,62 @@ Objective <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic,
     }
 }
 
+
+# Find coeffs such that square of highest order term is minimized
+# Num normalized coefficients equals order of polynomial
+FindCoeffsEq <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat,
+                         maxiter_solver = 1e6) {
+
+    if (is.null(dim(Fmat))) { # If one-dimensional make sure it's also a matrix object
+        Fmat <- matrix(Fmat)
+    }
+
+    # Prevent conversion to vector with drop = F
+    Anorm <- Fmat[norm_idxs, , drop = F]
+
+    stopifnot(ncol(Anorm) == ncol(Fmat))
+
+    colindex_1 = (ncol(Anorm)-pN):(ncol(Anorm)-1)
+    colindex_2 = ncol(Anorm)
+
+    A1 <- Anorm[, colindex_1, drop = F]
+    A2 <- Anorm[, colindex_2, drop = F]
+
+    F1 <- Fmat[, colindex_1, drop = F]
+    F2 <- Fmat[, colindex_2, drop = F]
+
+    d0_ = d0Eq(coeffs, inv_covar,         F1, F2, A1, A2)
+    d1_ = d1Eq(coeffs, inv_covar,         F1, F2, A1, A2)
+    d2_ = d2Eq(coeffs, inv_covar, Wcritic)
+
+    discriminant = d1_^2 - 4*d0_*d2_
+
+    v2_pos <- (-d1_ + sqrt(discriminant))/(2*d0_)
+    v2_neg <- (-d1_ - sqrt(discriminant))/(2*d0_)
+
+    if (abs(v2_pos) < abs(v2_neg)) {
+        v2 = v2_pos
+    } else {
+        v2 = v2_neg
+    }
+    v1 = -pinv(A1)%*%(A2%*%v2)
+
+    return(c(v1, v2))
+}
+
+d0Eq <- function(d, inv_covar, F1, F2, A1, A2) {
+    single_factor = F2 - F1%*%pinv(A1)%*%A2
+
+    return(t(single_factor)%*%inv_covar%*%single_factor)
+}
+
+d1Eq <- function(d, inv_covar, F1, F2, A1, A2) {
+    pre_factor = F2 - F1%*%pinv(A1)%*%A2
+
+    return(-2*t(pre_factor)%*%inv_covar%*%d)
+}
+
+d2Eq <- function(d, inv_covar, Wcritic) {
+
+    return(t(d)%*%inv_covar%*%d - Wcritic)
+}

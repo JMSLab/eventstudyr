@@ -10,6 +10,7 @@
 #'
 #' @examples
 #' PrepareLeads(df_sample_dynamic, groupvar = "id", timevar = "t", leadvar = "z", leads = 1:5)
+#' # same spacing comment as in PrepareLags() - MZW
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #' @export

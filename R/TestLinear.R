@@ -1,5 +1,5 @@
 #' This function can be used to perform tests of linear hypotheses.
-#'
+#' # I believe the commas should be removed due to convention and consistency with other functions - MZW
 #' @param estimates, A list of length 2 containing estimation results and model information.
 #' Should be an output of EventStudy().
 #' @param test, The hypothesis to be estimated. Accepts inputs that can be passed to

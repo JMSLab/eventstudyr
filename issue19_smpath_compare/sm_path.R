@@ -28,6 +28,8 @@ for (yvar in c("y_base", "y_smooth_m", "y_jump_m")) {
         Smpath    = TRUE
     ) -> p
 
+    p <- p + geom_point(size = 2.5)
+
     ggsave(sprintf("R/%s.png", yvar), dpi = 250,
            width = 7, height = 5)
 }

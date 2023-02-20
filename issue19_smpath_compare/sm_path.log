@@ -1,0 +1,162 @@
+
+  ___  ____  ____  ____  ____ (R)
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
+  Statistics/Data analysis            StataCorp
+                                      4905 Lakeway Drive
+     Special Edition                  College Station, Texas 77845 USA
+                                      800-STATA-PC        https://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Stata license: 120-user network perpetual
+Serial number: 401606201670
+  Licensed to: Brown University
+               Brown University
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+      3. Maximum number of variables is set to 5,000; see help set_maxvar.
+
+. do ".\sm_path.do" 
+
+. clear all
+
+. 
+. import delimited "data_dynamic.csv"
+(13 vars, 2,000 obs)
+
+. 
+. xtset id t
+       panel variable:  id (strongly balanced)
+        time variable:  t, 1 to 40
+                delta:  1 unit
+
+. 
+. foreach yvar in y_base y_smooth_m y_jump_m {
+  2.   
+.   xtevent `yvar' x_r, policyvar("z") panelvar("id") timevar("t") ///
+>     post(3) overidpost(1) pre(0) overidpre(3) norm(-1) ///
+>     reghdfe
+  3. 
+.   xteventplot, smpath(line) ///
+>     graphregion(color(white)) bgcolor(white)
+  4. 
+.   graph export STATA/`yvar'.png, replace width(1700) height(1214)
+  5. }
+
+No proxy or instruments provided. Implementing OLS estimator
+(MWFE estimator converged in 2 iterations)
+
+HDFE Linear regression                            Number of obs   =      1,650
+Absorbing 2 HDFE groups                           F(   9,   1559) =       1.04
+                                                  Prob > F        =     0.4017
+                                                  R-squared       =     0.0620
+                                                  Adj R-squared   =     0.0078
+                                                  Within R-sq.    =     0.0060
+                                                  Root MSE        =     0.7136
+
+------------------------------------------------------------------------------
+      y_base |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    _k_eq_m4 |   .1494365   .1213376     1.23   0.218    -.0885656    .3874386
+    _k_eq_m3 |   .1347584   .1584829     0.85   0.395    -.1761036    .4456204
+    _k_eq_m2 |   .1025063   .1565634     0.65   0.513    -.2045908    .4096034
+    _k_eq_p0 |   .0642701    .153525     0.42   0.676    -.2368672    .3654075
+    _k_eq_p1 |   .3118715   .1559542     2.00   0.046     .0059694    .6177736
+    _k_eq_p2 |   .2953826   .1560302     1.89   0.059    -.0106687    .6014338
+    _k_eq_p3 |    .121238   .1582789     0.77   0.444    -.1892239    .4316999
+    _k_eq_p4 |   .2230815   .1229985     1.81   0.070    -.0181784    .4643415
+         x_r |  -.0573942   .0334981    -1.71   0.087    -.1231002    .0083118
+       _cons |  -.0976271   .1092773    -0.89   0.372    -.3119731    .1167188
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+-----------------------------------------------------+
+ Absorbed FE | Categories  - Redundant  = Num. Coefs |
+-------------+---------------------------------------|
+          id |        50           0          50     |
+           t |        33           1          32     |
+-----------------------------------------------------+
+
+Note: Smoothest line drawn for system confidence level = 95
+(file STATA/y_base.png written in PNG format)
+
+No proxy or instruments provided. Implementing OLS estimator
+(MWFE estimator converged in 2 iterations)
+
+HDFE Linear regression                            Number of obs   =      1,650
+Absorbing 2 HDFE groups                           F(   9,   1559) =      23.39
+                                                  Prob > F        =     0.0000
+                                                  R-squared       =     0.3878
+                                                  Adj R-squared   =     0.3525
+                                                  Within R-sq.    =     0.1190
+                                                  Root MSE        =     0.7138
+
+------------------------------------------------------------------------------
+  y_smooth_m |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    _k_eq_m4 |   .2881552    .121357     2.37   0.018     .0501149    .5261954
+    _k_eq_m3 |   .2060081   .1585083     1.30   0.194    -.1049038      .51692
+    _k_eq_m2 |   .1381209   .1565885     0.88   0.378    -.1690255    .4452672
+    _k_eq_p0 |  -.1716122   .1535497    -1.12   0.264    -.4727978    .1295734
+    _k_eq_p1 |  -.1238596   .1559792    -0.79   0.427    -.4298108    .1820915
+    _k_eq_p2 |  -.3403392   .1560553    -2.18   0.029    -.6464396   -.0342389
+    _k_eq_p3 |  -.7143965   .1583042    -4.51   0.000    -1.024908   -.4038848
+    _k_eq_p4 |  -.8104353   .1230182    -6.59   0.000    -1.051734   -.5691367
+         x_r |  -.0568685   .0335034    -1.70   0.090     -.122585    .0088481
+       _cons |   41.93844   .1092948   383.72   0.000     41.72406    42.15282
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+-----------------------------------------------------+
+ Absorbed FE | Categories  - Redundant  = Num. Coefs |
+-------------+---------------------------------------|
+          id |        50           0          50     |
+           t |        33           1          32     |
+-----------------------------------------------------+
+
+Note: Smoothest line drawn for system confidence level = 95
+(file STATA/y_smooth_m.png written in PNG format)
+
+No proxy or instruments provided. Implementing OLS estimator
+(MWFE estimator converged in 2 iterations)
+
+HDFE Linear regression                            Number of obs   =      1,650
+Absorbing 2 HDFE groups                           F(   9,   1559) =      10.08
+                                                  Prob > F        =     0.0000
+                                                  R-squared       =     0.1081
+                                                  Adj R-squared   =     0.0566
+                                                  Within R-sq.    =     0.0550
+                                                  Root MSE        =     0.7138
+
+------------------------------------------------------------------------------
+    y_jump_m |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    _k_eq_m4 |   .2881552    .121357     2.37   0.018     .0501149    .5261954
+    _k_eq_m3 |   .2060081   .1585083     1.30   0.194    -.1049038      .51692
+    _k_eq_m2 |   .1381209   .1565885     0.88   0.378    -.1690255    .4452672
+    _k_eq_p0 |   .8283878   .1535497     5.39   0.000     .5272022    1.129573
+    _k_eq_p1 |   .8761404   .1559792     5.62   0.000     .5701892    1.182092
+    _k_eq_p2 |   .6596608   .1560553     4.23   0.000     .3535604    .9657611
+    _k_eq_p3 |   .2856035   .1583042     1.80   0.071    -.0249082    .5961152
+    _k_eq_p4 |   .1895647   .1230182     1.54   0.124     -.051734    .4308633
+         x_r |  -.0568685   .0335034    -1.70   0.090     -.122585    .0088481
+       _cons |   41.93844   .1092948   383.72   0.000     41.72406    42.15282
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+-----------------------------------------------------+
+ Absorbed FE | Categories  - Redundant  = Num. Coefs |
+-------------+---------------------------------------|
+          id |        50           0          50     |
+           t |        33           1          32     |
+-----------------------------------------------------+
+
+Note: Smoothest line drawn for system confidence level = 95
+Warning: Smoothest path optimization found a flat region.
+(file STATA/y_jump_m.png written in PNG format)
+
+. 
+end of do-file

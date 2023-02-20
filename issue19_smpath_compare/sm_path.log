@@ -81,6 +81,8 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 Note: Smoothest line drawn for system confidence level = 95
+Order 0
+Wald value 7.63073826
 (file STATA/y_base.png written in PNG format)
 
 No proxy or instruments provided. Implementing OLS estimator
@@ -118,6 +120,10 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 Note: Smoothest line drawn for system confidence level = 95
+Order 0
+Wald value 201.898674
+Order 1
+Wald value 10.4471715
 (file STATA/y_smooth_m.png written in PNG format)
 
 No proxy or instruments provided. Implementing OLS estimator
@@ -155,6 +161,154 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 Note: Smoothest line drawn for system confidence level = 95
+Order 0
+Wald value 79.5463007
+Order 1
+Wald value 79.3976856
+Order 2
+Wald value 56.5516686
+Order 3
+Wald value 28.2553911
+Order 4
+Wald value 22.863699
+Order 5
+Wald value 8.93509886
+Iteration 0:   f(p) =  8372.1962  
+Iteration 1:   f(p) =  7962.0567  (backed up)
+Iteration 2:   f(p) =  7523.6941  (backed up)
+Iteration 3:   f(p) =  6606.4663  (backed up)
+Iteration 4:   f(p) =  6236.0219  
+Iteration 5:   f(p) =  5978.2373  
+Iteration 6:   f(p) =  5856.0666  (backed up)
+Iteration 7:   f(p) =  5614.7756  
+Iteration 8:   f(p) =  5480.9041  (backed up)
+Iteration 9:   f(p) =  5146.5908  
+Iteration 10:  f(p) =  4965.7167  (backed up)
+Iteration 11:  f(p) =  4656.1514  
+Iteration 12:  f(p) =  4112.2016  
+Iteration 13:  f(p) =  3994.0414  (backed up)
+Iteration 14:  f(p) =  3483.0397  
+Iteration 15:  f(p) =  3387.3064  (backed up)
+Iteration 16:  f(p) =   3152.553  
+Iteration 17:  f(p) =  3065.5327  (backed up)
+Iteration 18:  f(p) =  2986.0424  (backed up)
+Iteration 19:  f(p) =  2908.0855  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 20:  f(p) =  2872.7614  (backed up)
+Iteration 21:  f(p) =  2872.6495  (backed up)
+Iteration 22:  f(p) =  2867.1414  (backed up)
+Iteration 23:  f(p) =  2852.5195  (backed up)
+Iteration 24:  f(p) =  2797.3544  
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 25:  f(p) =  2746.3848  (backed up)
+Iteration 26:  f(p) =  2746.1471  (backed up)
+Iteration 27:  f(p) =   2743.702  (backed up)
+Iteration 28:  f(p) =  2733.0027  (backed up)
+Iteration 29:  f(p) =  2682.8046  
+Iteration 30:  f(p) =  2616.3972  (backed up)
+Iteration 31:  f(p) =  2555.6178  (backed up)
+Iteration 32:  f(p) =  2503.3361  (backed up)
+Iteration 33:  f(p) =   2496.242  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 34:  f(p) =  2434.2055  
+Iteration 35:  f(p) =  2434.1103  (backed up)
+Iteration 36:  f(p) =  2432.8038  (backed up)
+Iteration 37:  f(p) =  2424.7569  (backed up)
+Iteration 38:  f(p) =  2382.6932  
+Iteration 39:  f(p) =  2317.2046  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 40:  f(p) =  2262.9686  (backed up)
+Iteration 41:  f(p) =  2262.7423  (backed up)
+Iteration 42:  f(p) =  2261.7881  (backed up)
+Iteration 43:  f(p) =   2255.964  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 44:  f(p) =  2236.7407  (backed up)
+Iteration 45:  f(p) =  2236.6114  (backed up)
+Iteration 46:  f(p) =  2235.9643  (backed up)
+Iteration 47:  f(p) =  2231.2934  (backed up)
+Iteration 48:  f(p) =  2193.4061  
+Iteration 49:  f(p) =  2167.9894  (backed up)
+Iteration 50:  f(p) =  2145.3941  (backed up)
+Iteration 51:  f(p) =   2123.164  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 52:  f(p) =  2102.0942  (backed up)
+Iteration 53:  f(p) =  2102.0036  (backed up)
+Iteration 54:  f(p) =  2098.8511  (backed up)
+Iteration 55:  f(p) =  2097.1202  (backed up)
+Iteration 56:  f(p) =  2062.3352  
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 57:  f(p) =  2056.8919  (backed up)
+Iteration 58:  f(p) =  2056.7811  (backed up)
+Iteration 59:  f(p) =  2056.4758  (backed up)
+Iteration 60:  f(p) =  2056.3999  (backed up)
+Iteration 61:  f(p) =  2054.0213  (backed up)
+Iteration 62:  f(p) =  2053.9721  (backed up)
+Iteration 63:  f(p) =  2053.9407  (backed up)
+Iteration 64:  f(p) =  2053.9365  
+Iteration 65:  f(p) =  2053.7428  
+Iteration 66:  f(p) =  2053.7081  
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 67:  f(p) =  2053.4435  
+Iteration 68:  f(p) =  2053.2922  (backed up)
+Iteration 69:  f(p) =  2050.9113  (backed up)
+Iteration 70:  f(p) =  2048.3804  (backed up)
+Iteration 71:  f(p) =  1979.8867  
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 72:  f(p) =  1975.0986  (backed up)
+Iteration 73:  f(p) =  1975.0164  (backed up)
+Iteration 74:  f(p) =  1974.6177  (backed up)
+Iteration 75:  f(p) =  1966.5988  (backed up)
+Iteration 76:  f(p) =  1946.1485  (backed up)
+Iteration 77:  f(p) =  1928.6198  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 78:  f(p) =  1917.0596  (backed up)
+Iteration 79:  f(p) =  1916.9819  (backed up)
+Iteration 80:  f(p) =  1916.5331  (backed up)
+Iteration 81:  f(p) =  1901.2526  (backed up)
+cannot compute an improvement -- flat region encountered
+Iteration 0:   f(p) =  8487.5628  
+Iteration 1:   f(p) =  8013.1096  (backed up)
+Iteration 2:   f(p) =  7808.7484  (backed up)
+Iteration 3:   f(p) =  7729.3633  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 4:   f(p) =  7729.3633  (backed up)
+Iteration 5:   f(p) =  7712.9533  (backed up)
+Iteration 6:   f(p) =  7654.0966  (backed up)
+Iteration 7:   f(p) =  7567.3494  (backed up)
+Iteration 8:   f(p) =  7567.3494  (backed up)
+Iteration 9:   f(p) =  7482.4062  (backed up)
+Iteration 10:  f(p) =  7482.4062  (backed up)
+Iteration 11:  f(p) =  7482.4062  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 12:  f(p) =  7482.4062  (backed up)
+Iteration 13:  f(p) =  7481.4603  (backed up)
+Iteration 14:  f(p) =   7475.051  (backed up)
+Iteration 15:  f(p) =  7460.5742  (backed up)
+Iteration 16:  f(p) =  7452.5063  (backed up)
+Iteration 17:  f(p) =  7452.5063  (backed up)
+Iteration 18:  f(p) =  7452.5063  (backed up)
+Iteration 19:  f(p) =  7452.3255  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 20:  f(p) =  7452.3255  (backed up)
+Iteration 21:  f(p) =  7452.2862  (backed up)
+Iteration 22:  f(p) =   7452.145  (backed up)
+Iteration 23:  f(p) =  7450.3634  (backed up)
+Iteration 24:  f(p) =   7449.679  (backed up)
+Iteration 25:  f(p) =   7449.679  (backed up)
+DFP stepping has contracted, resetting DFP Hessian
+Iteration 26:  f(p) =   7449.679  (backed up)
+Iteration 27:  f(p) =  7449.6592  (backed up)
+Iteration 28:  f(p) =  7449.6466  (backed up)
+Iteration 29:  f(p) =  7449.6435  (backed up)
+Iteration 30:  f(p) =  7449.6403  (backed up)
+Iteration 31:  f(p) =  7449.6403  (backed up)
+Iteration 32:  f(p) =  7449.6403  (backed up)
+Iteration 33:  f(p) =  7449.6399  (backed up)
+Iteration 34:  f(p) =  7449.6399  (backed up)
+could not calculate numerical derivatives -- discontinuous region with missing
+values encountered
+could not calculate numerical derivatives -- discontinuous region with missing
+values encountered
 Warning: Smoothest path optimization found a flat region.
 (file STATA/y_jump_m.png written in PNG format)
 

@@ -13,7 +13,7 @@ for (yvar in c("y_base", "y_smooth_m", "y_jump_m")) {
     print(sprintf("*******/// Plotting %s ///*******", yvar))
 
     if (yvar == "y_base")     y_breaks = c(-.5, 0, .5, 1)
-    if (yvar == "y_smooth_m") y_breaks = c(-1.3, -1, -.5, 0, .5, .7)
+    if (yvar == "y_smooth_m") y_breaks = c(-1.25, -1, -.5, 0, .5, 1)
     if (yvar == "y_jump_m")   y_breaks = c(-.5, 0, .5, 1, 1.5)
 
 
@@ -27,7 +27,7 @@ for (yvar in c("y_base", "y_smooth_m", "y_jump_m")) {
         pre  = 0, overidpre  = 3,
         normalize = - 1
     )
-    
+
     print("Creating event study plot")
     EventStudyPlot(
         estimates = estimates_ols,

@@ -83,6 +83,26 @@ Absorbed degrees of freedom:
 Note: Smoothest line drawn for system confidence level = 95
 Order 0
 Wald value 7.63073826
+
+Smothest path:
+
+param[9,1]
+    c1
+r1   0
+r2   0
+r3   0
+r4   0
+r5   0
+r6   0
+r7   0
+r8   0
+r9   0
+
+Optimal Wald value
+
+symmetric WB[1,1]
+    c1
+r1   .
 (file STATA/y_base.png written in PNG format)
 
 No proxy or instruments provided. Implementing OLS estimator
@@ -124,6 +144,26 @@ Order 0
 Wald value 201.898674
 Order 1
 Wald value 10.4471715
+
+Smothest path:
+
+param[9,1]
+            c1
+r1   .33503015
+r2   .22335343
+r3   .11167672
+r4           0
+r5  -.11167672
+r6  -.22335343
+r7  -.33503015
+r8  -.44670686
+r9  -.55838358
+
+Optimal Wald value
+
+symmetric WB[1,1]
+           c1
+r1  10.447172
 (file STATA/y_smooth_m.png written in PNG format)
 
 No proxy or instruments provided. Implementing OLS estimator
@@ -309,6 +349,26 @@ could not calculate numerical derivatives -- discontinuous region with missing
 values encountered
 could not calculate numerical derivatives -- discontinuous region with missing
 values encountered
+
+Smothest path:
+
+param[9,1]
+            c1
+r1   .02389219
+r2  -.02536616
+r3  -.11796747
+r4   2.220e-16
+r5   .27334059
+r6    .4970193
+r7   .47542982
+r8   .18166253
+r9  -.08322743
+
+Optimal Wald value
+
+symmetric WB[1,1]
+           c1
+r1  8.9350989
 Warning: Smoothest path optimization found a flat region.
 (file STATA/y_jump_m.png written in PNG format)
 

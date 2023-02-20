@@ -40,8 +40,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
     # First step: Find lowest possible polynomial order
     res_order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
-    print("Results from searching for minimum feasible order:")
-    print(res_order)
     order     <- res_order$order
     res_order <- res_order$results
 

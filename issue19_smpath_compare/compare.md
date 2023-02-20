@@ -78,7 +78,7 @@ The smoothest paths are somewhat different in this case as well.
 In this case there is a numerical optimization involved to find the optimal path.
 
 - In `R` the solver seems to converge without throwing any errors.
-- In `STATA` the function returns is programmed to return a warning.
+- In `STATA` the function is programmed to return a warning: "Smoothest path optimization found a flat region."
   - The full output of the solver is [here](sm_path.log#L216-L351).
   - The error in the last lines reads `could not calculate numerical derivatives -- discontinuous region with missing values encountered`.
 

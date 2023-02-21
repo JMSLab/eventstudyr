@@ -1,6 +1,8 @@
 [1] "*******/// Plotting y_base ///*******"
 [1] "Estimating event study with OLS"
 [1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
 [1] "Results from searching for minimum feasible order:"
 $order
 [1] 0
@@ -28,12 +30,31 @@ $results$vhat
  [7,]    0
  [8,]    0
  [9,]    0
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 6.807777
+[1] "-"
+[1] "-"
+[1] "-"
+[1] "Smoothest path:"
+      [,1]
+ [1,]    0
+ [2,]    0
+ [3,]    0
+ [4,]    0
+ [5,]    0
+ [6,]    0
+ [7,]    0
+ [8,]    0
+ [9,]    0
 [1] "-"
 [1] "-"
 [1] "-"
 [1] "*******/// Plotting y_smooth_m ///*******"
 [1] "Estimating event study with OLS"
 [1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
 [1] "Results from searching for minimum feasible order:"
 $order
 [1] 1
@@ -72,12 +93,31 @@ $results$vhat
  [7,] -0.3297006
  [8,] -0.4396008
  [9,] -0.5495010
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 16.91898
+[1] "-"
+[1] "-"
+[1] "-"
+[1] "Smoothest path:"
+            [,1]
+ [1,]  0.3297006
+ [2,]  0.2198004
+ [3,]  0.1099002
+ [4,]  0.0000000
+ [5,] -0.1099002
+ [6,] -0.2198004
+ [7,] -0.3297006
+ [8,] -0.4396008
+ [9,] -0.5495010
 [1] "-"
 [1] "-"
 [1] "-"
 [1] "*******/// Plotting y_jump_m ///*******"
 [1] "Estimating event study with OLS"
 [1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
 [1] "Results from searching for minimum feasible order:"
 $order
 [1] 5
@@ -109,6 +149,23 @@ $results$vhat
 [6,]  1.058322e+02
 
 
+[1] "Smoothest path:"
+               [,1]
+ [1,]  1.440138e-01
+ [2,]  1.634500e-01
+ [3,] -1.009247e-01
+ [4,]  3.330669e-16
+ [5,]  4.236425e-01
+ [6,]  7.886504e-01
+ [7,]  7.278215e-01
+ [8,]  2.410251e-01
+ [9,]  4.812271e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 16.91898
+[1] "-"
+[1] "-"
+[1] "-"
 [1] "Smoothest path:"
                [,1]
  [1,]  1.440138e-01

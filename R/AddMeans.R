@@ -2,8 +2,8 @@
 #'
 #' @param df Data frame containing the additional variables created for estimation.
 #' @param normalization_column Variable whose coefficient will be normalized.
-#' @param policyvar Policy variable.  # Another function uses "A string with the name of the policy variable used in [EventStudy()]." for this description. It might be good to use this more detailed description and be consistent across functions. - MZW
-#' @param outcomevar Outcome variable.  # Same as above, a more detailed description would be more helpful. - MZW
+#' @param policyvar A string with the name of the policy variable used in [EventStudy()].
+#' @param outcomevar Variable indicating outcome variable y, should be a character.
 #' @param custom_scalar Scalar to be displayed along y = 0 line if the user doesn't want the mean computed by the package.
 
 

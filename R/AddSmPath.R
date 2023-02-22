@@ -38,16 +38,10 @@ AddSmPath <- function(df, coefficients, inv_covar,
     norm_idxs    <- which(coefficients == 0)
     pN           <- length(norm_idxs)
 
-    print("Critical Wald value:")
-    print(Wcritic)
-
     # First step: Find lowest possible polynomial order
     res_order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
-
     order     <- res_order$order
     res_order <- res_order$results
-
-    print(sprintf("Polynomial order: %s", order))
 
     # Second step: Find minimum coefficient on highest-order term
     if (order == 0) {
@@ -75,12 +69,5 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
     df["smoothest_path"] = Fmat %*% vstar
 
-    print("Smoothest path:")
-    print(df$smoothest_path)
-
-    print("Wald value of optimal path:")
-    Woptim <- (t(df$smoothest_path-coefficients)%*%inv_covar)%*%(df$smoothest_path-coefficients)
-    print(Woptim)
-
-    return(list("df" = df, "order" = order, "Wcritic" = Wcritic, "Woptim" = Woptim))
+    return(df)
 }

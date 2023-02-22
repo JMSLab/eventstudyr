@@ -251,7 +251,7 @@ test_that("computed smoothest path for FHS has at least two coefficients almost 
 
     estimates <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_jump_m",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_r",
-                            post = 3, pre = 0, overidpre = 3, overidpost = 1, normalize = -1)
+                            post = 3, pre = 0, overidpre = 3, overidpost = 1, normalize = -1, proxyIV = "z_fd_lead3")
 
     p <- EventStudyPlot(estimates = estimates,
                         Smpath    = T)

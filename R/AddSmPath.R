@@ -34,8 +34,8 @@ AddSmPath <- function(df, coefficients, inv_covar,
     unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot' to FALSE."
 
     coeff_length <- length(coefficients)
-    Wcritic      <- qchisq(conf_level, coeff_length)
     norm_idxs    <- which(coefficients == 0)
+    Wcritic      <- qchisq(conf_level, coeff_length - length(norm_idxs))
     pN           <- length(norm_idxs)
 
     # First step: Find lowest possible polynomial order

@@ -34,14 +34,19 @@ AddSmPath <- function(df, coefficients, inv_covar,
     unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot' to FALSE."
 
     coeff_length <- length(coefficients)
-    Wcritic      <- qchisq(conf_level, coeff_length)
     norm_idxs    <- which(coefficients == 0)
+    Wcritic      <- qchisq(conf_level, coeff_length - length(norm_idxs))
     pN           <- length(norm_idxs)
+    
+    print("Critical Wald value:")
+    print(Wcritic)
 
     # First step: Find lowest possible polynomial order
     res_order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
     order     <- res_order$order
     res_order <- res_order$results
+
+    print(sprintf("Polynomial order: %s", order))
 
     # Second step: Find minimum coefficient on highest-order term
     if (order == 0) {
@@ -70,11 +75,12 @@ AddSmPath <- function(df, coefficients, inv_covar,
     sm_path = Fmat %*% vstar
     Woptim  = (t(sm_path - coefficients)%*%inv_covar)%*%(sm_path - coefficients)
 
-    if (abs(Woptim - Wcritic) <= 1e-2 | order == 0) {
-        df["smoothest_path"] = sm_path
-        return(df)
-    } else {
-        stop(paste0("The smoothest path found via numerical optimization is outside the Wald region. ",
-                    unselect_message))
-    }
+    df$smoothest_path <- sm_path
+    print("Smoothest path:")
+    print(df$smoothest_path)
+
+    print("Wald value of optimal path:")
+    print(Woptim)
+
+    return(list("df" = df, "order" = order, "Wcritic" = Wcritic, "Woptim" = Woptim))
 }

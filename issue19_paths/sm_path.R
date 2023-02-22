@@ -38,11 +38,14 @@ for (yvar in c("y_smooth_m", "y_jump_m")) {
                     Smpath    = TRUE
                 ) -> result
 
-                p     <- result$plt
-                order <- result$order
-                err   <- 0
+                plt     <- result$plt
 
-                p <- p + geom_point(size = 2.5)
+                order_   <- result$order
+                Wcritic_ <- round(result$Wcritic, 4)
+                Woptim_  <- round(result$Woptim, 4)[1]
+                err      <- 0
+
+                plt <- plt + geom_point(size = 2.5)
 
                 ggsave(sprintf("R/%s_post%s_pre%s.png", yvar, post_, pre_), dpi = 250,
                     width = 7, height = 5)
@@ -50,17 +53,20 @@ for (yvar in c("y_smooth_m", "y_jump_m")) {
             }, error = function(e) {
                 # Handle error here
                 message("Caught an error: ", conditionMessage(e))
-                order <<- NA
-                err   <<- 1
+                order_   <<- NA
+                Wcritic_ <<- NA
+                Woptim_  <<- NA
+                err      <<- 1
             })
 
             if (err == 0) print("Smoothest path found successfully")
             if (err == 1) print("Smoothest path not found")
 
-            all_data <- rbindlist(list(all_data, data.table(
-                yvar = yvar, post = post_, pre = pre_,
-                order = order, error = err
-            )))
+            all_data <- rbindlist(list(
+                all_data,
+                data.table("yvar" = yvar, "post" = post_, "pre" = pre_, "order" = order_,
+                           "Wcritic" = Wcritic_, "Woptim" = Woptim_, "error" = err))
+            )
         }
     }
 }

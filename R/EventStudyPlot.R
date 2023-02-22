@@ -264,7 +264,9 @@ EventStudyPlot <- function(estimates,
 
         inv_covar <- pracma::pinv(covar)
 
-        df_plt <- AddSmPath(df_plt, coefficients, inv_covar)
+        res <- AddSmPath(df_plt, coefficients, inv_covar)
+        df_plt <- res$df
+        order  <- res$order
     }
 
 # Construct Plot ----------------------------------------------------------
@@ -304,5 +306,5 @@ EventStudyPlot <- function(estimates,
         theme(panel.grid   = element_blank(),
               plot.caption = element_text(hjust = 0))
 
-    return(plt)
+    return(list("plt" = plt, "order" = order))
 }

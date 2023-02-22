@@ -1,0 +1,1291 @@
+[1] "*******/// Plotting y_smooth_m ///*******"
+[1] "Creating event study for post = 2, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 14.06714
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+           [,1]
+[1,]  0.2862235
+[2,]  0.1431117
+[3,]  0.0000000
+[4,] -0.1431117
+[5,] -0.2862235
+[6,] -0.4293352
+[7,] -0.5724470
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 14.06714
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 15.50731
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+           [,1]
+[1,]  0.4250016
+[2,]  0.2833344
+[3,]  0.1416672
+[4,]  0.0000000
+[5,] -0.1416672
+[6,] -0.2833344
+[7,] -0.4250016
+[8,] -0.5666687
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 15.50731
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.716917e-01
+ [2,]  3.429883e-01
+ [3,]  2.214719e-01
+ [4,]  1.071424e-01
+ [5,] -2.081668e-17
+ [6,] -9.995545e-02
+ [7,] -1.927239e-01
+ [8,] -2.783054e-01
+ [9,] -3.566999e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 41.06584
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+             [,1]
+ [1,]  0.48611851
+ [2,]  0.36526845
+ [3,]  0.25623157
+ [4,]  0.15900787
+ [5,]  0.07359734
+ [6,]  0.00000000
+ [7,] -0.06178417
+ [8,] -0.11175515
+ [9,] -0.14991296
+[10,] -0.17625759
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 113.1596
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+             [,1]
+ [1,]  0.47702892
+ [2,]  0.35997880
+ [3,]  0.25794679
+ [4,]  0.17093291
+ [5,]  0.09893715
+ [6,]  0.04195952
+ [7,]  0.00000000
+ [8,] -0.02694139
+ [9,] -0.03886466
+[10,] -0.03576981
+[11,] -0.01765684
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 189.4516
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  0.4599172700
+ [2,]  0.3454775395
+ [3,]  0.2472835635
+ [4,]  0.1653353419
+ [5,]  0.0996328748
+ [6,]  0.0501761621
+ [7,]  0.0169652038
+ [8,]  0.0000000000
+ [9,] -0.0007194494
+[10,]  0.0148068557
+[11,]  0.0465789152
+[12,]  0.0945967292
+[1] "Wald value of optimal path:"
+        [,1]
+[1,] 254.958
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 15.50731
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+           [,1]
+[1,]  0.2275872
+[2,]  0.1137936
+[3,]  0.0000000
+[4,] -0.1137936
+[5,] -0.2275872
+[6,] -0.3413808
+[7,] -0.4551744
+[8,] -0.5689680
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 15.50731
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+            [,1]
+ [1,]  0.3297006
+ [2,]  0.2198004
+ [3,]  0.1099002
+ [4,]  0.0000000
+ [5,] -0.1099002
+ [6,] -0.2198004
+ [7,] -0.3297006
+ [8,] -0.4396008
+ [9,] -0.5495010
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 16.91898
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.817681e-01
+ [2,]  3.612780e-01
+ [3,]  2.408199e-01
+ [4,]  1.203939e-01
+ [5,]  3.344764e-17
+ [6,] -1.203618e-01
+ [7,] -2.406916e-01
+ [8,] -3.609892e-01
+ [9,] -4.812548e-01
+[10,] -6.014882e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 18.39013
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.870597e-01
+ [2,]  3.782532e-01
+ [3,]  2.751439e-01
+ [4,]  1.777320e-01
+ [5,]  8.601733e-02
+ [6,]  4.163336e-17
+ [7,] -8.032003e-02
+ [8,] -1.549427e-01
+ [9,] -2.238682e-01
+[10,] -2.870963e-01
+[11,] -3.446271e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 65.45036
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.895637e-01
+ [2,]  3.869612e-01
+ [3,]  2.927622e-01
+ [4,]  2.069665e-01
+ [5,]  1.295742e-01
+ [6,]  6.058542e-02
+ [7,]  2.775558e-17
+ [8,] -5.218200e-02
+ [9,] -9.596058e-02
+[10,] -1.313358e-01
+[11,] -1.583075e-01
+[12,] -1.768758e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 119.5809
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.729113e-01
+ [2,]  3.752988e-01
+ [3,]  2.877042e-01
+ [4,]  2.101275e-01
+ [5,]  1.425688e-01
+ [6,]  8.502793e-02
+ [7,]  3.750500e-02
+ [8,] -1.110223e-16
+ [9,] -2.748708e-02
+[10,] -4.495625e-02
+[11,] -5.240749e-02
+[12,] -4.984082e-02
+[13,] -3.725622e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 179.6565
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+            [,1]
+ [1,]  0.2088922
+ [2,]  0.1044461
+ [3,]  0.0000000
+ [4,] -0.1044461
+ [5,] -0.2088922
+ [6,] -0.3133383
+ [7,] -0.4177843
+ [8,] -0.5222304
+ [9,] -0.6266765
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 16.91898
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+            [,1]
+ [1,]  0.3004948
+ [2,]  0.2003299
+ [3,]  0.1001649
+ [4,]  0.0000000
+ [5,] -0.1001649
+ [6,] -0.2003299
+ [7,] -0.3004948
+ [8,] -0.4006598
+ [9,] -0.5008247
+[10,] -0.6009897
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 18.30704
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+             [,1]
+ [1,]  0.39601242
+ [2,]  0.29700932
+ [3,]  0.19800621
+ [4,]  0.09900311
+ [5,]  0.00000000
+ [6,] -0.09900311
+ [7,] -0.19800621
+ [8,] -0.29700932
+ [9,] -0.39601242
+[10,] -0.49501553
+[11,] -0.59401864
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 19.67514
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.975986e-01
+ [2,]  3.936616e-01
+ [3,]  2.919332e-01
+ [4,]  1.924135e-01
+ [5,]  9.510242e-02
+ [6,] -6.938894e-18
+ [7,] -9.289377e-02
+ [8,] -1.835789e-01
+ [9,] -2.720554e-01
+[10,] -3.583232e-01
+[11,] -4.423824e-01
+[12,] -5.242329e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 34.53748
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  5.136013e-01
+ [2,]  4.154665e-01
+ [3,]  3.223456e-01
+ [4,]  2.342385e-01
+ [5,]  1.511452e-01
+ [6,]  7.306567e-02
+ [7,]  2.775558e-17
+ [8,] -6.805186e-02
+ [9,] -1.310899e-01
+[10,] -1.891141e-01
+[11,] -2.421245e-01
+[12,] -2.901211e-01
+[13,] -3.331039e-01
+[1] "Wald value of optimal path:"
+       [,1]
+[1,] 74.081
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  5.070872e-01
+ [2,]  4.153099e-01
+ [3,]  3.299780e-01
+ [4,]  2.510916e-01
+ [5,]  1.786506e-01
+ [6,]  1.126549e-01
+ [7,]  5.310476e-02
+ [8,]  2.775558e-17
+ [9,] -4.665934e-02
+[10,] -8.687326e-02
+[11,] -1.206418e-01
+[12,] -1.479648e-01
+[13,] -1.688425e-01
+[14,] -1.832747e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 115.2085
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 5, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  2.727036e-01
+ [2,]  1.338583e-01
+ [3,]  3.469447e-18
+ [4,] -1.288714e-01
+ [5,] -2.527558e-01
+ [6,] -3.716533e-01
+ [7,] -4.855638e-01
+ [8,] -5.944874e-01
+ [9,] -6.984240e-01
+[10,] -7.973737e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 18.30704
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 5, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 1"
+[1] "Smoothest path:"
+            [,1]
+ [1,]  0.3197151
+ [2,]  0.2131434
+ [3,]  0.1065717
+ [4,]  0.0000000
+ [5,] -0.1065717
+ [6,] -0.2131434
+ [7,] -0.3197151
+ [8,] -0.4262868
+ [9,] -0.5328584
+[10,] -0.6394301
+[11,] -0.7460018
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 19.67514
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 5, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.964697e-01
+ [2,]  3.039120e-01
+ [3,]  2.065848e-01
+ [4,]  1.050826e-01
+ [5,] -3.469447e-18
+ [6,] -1.080685e-01
+ [7,] -2.185282e-01
+ [8,] -3.307847e-01
+ [9,] -4.442435e-01
+[10,] -5.583098e-01
+[11,] -6.723893e-01
+[12,] -7.858873e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 21.02607
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 5, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+             [,1]
+ [1,]  0.46105862
+ [2,]  0.36314396
+ [3,]  0.26808077
+ [4,]  0.17586904
+ [5,]  0.08650879
+ [6,]  0.00000000
+ [7,] -0.08365732
+ [8,] -0.16446317
+ [9,] -0.24241756
+[10,] -0.31752048
+[11,] -0.38977192
+[12,] -0.45917191
+[13,] -0.52572042
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 40.93447
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 5, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.758847e-01
+ [2,]  3.829524e-01
+ [3,]  2.954674e-01
+ [4,]  2.134296e-01
+ [5,]  1.368391e-01
+ [6,]  6.569593e-02
+ [7,] -1.387779e-17
+ [8,] -6.024866e-02
+ [9,] -1.150500e-01
+[10,] -1.644041e-01
+[11,] -2.083110e-01
+[12,] -2.467705e-01
+[13,] -2.797828e-01
+[14,] -3.073478e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 83.59975
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 5, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 24.99579
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.962774e-01
+ [2,]  4.079487e-01
+ [3,]  3.254306e-01
+ [4,]  2.487232e-01
+ [5,]  1.778264e-01
+ [6,]  1.127403e-01
+ [7,]  5.346482e-02
+ [8,] -2.775558e-17
+ [9,] -4.765417e-02
+[10,] -8.949769e-02
+[11,] -1.255306e-01
+[12,] -1.557528e-01
+[13,] -1.801644e-01
+[14,] -1.987653e-01
+[15,] -2.115555e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 111.6747
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.230883e-01
+ [2,]  1.545868e-01
+ [3,] -6.938894e-18
+ [4,] -1.406721e-01
+ [5,] -2.674295e-01
+ [6,] -3.802721e-01
+ [7,] -4.792001e-01
+ [8,] -5.642133e-01
+ [9,] -6.353119e-01
+[10,] -6.924957e-01
+[11,] -7.357648e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 19.67514
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.443675e-01
+ [2,]  2.889745e-01
+ [3,]  1.405116e-01
+ [4,] -1.734723e-18
+ [5,] -1.315389e-01
+ [6,] -2.530837e-01
+ [7,] -3.636131e-01
+ [8,] -4.621057e-01
+ [9,] -5.475404e-01
+[10,] -6.188956e-01
+[11,] -6.751500e-01
+[12,] -7.152824e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 21.02607
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.931475e-01
+ [2,]  3.169221e-01
+ [3,]  2.231240e-01
+ [4,]  1.160508e-01
+ [5,]  3.469447e-17
+ [6,] -1.207308e-01
+ [7,] -2.418440e-01
+ [8,] -3.590419e-01
+ [9,] -4.680272e-01
+[10,] -5.645020e-01
+[11,] -6.441689e-01
+[12,] -7.027304e-01
+[13,] -7.358887e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 22.36203
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.842959e-01
+ [2,]  3.352246e-01
+ [3,]  2.697701e-01
+ [4,]  1.904216e-01
+ [5,]  9.966849e-02
+ [6,] -2.081668e-17
+ [7,] -1.060945e-01
+ [8,] -2.161258e-01
+ [9,] -3.276045e-01
+[10,] -4.380413e-01
+[11,] -5.449469e-01
+[12,] -6.458320e-01
+[13,] -7.382073e-01
+[14,] -8.195834e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 23.68479
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 24.99579
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.983360e-01
+ [2,]  3.770462e-01
+ [3,]  3.338753e-01
+ [4,]  2.717043e-01
+ [5,]  1.934141e-01
+ [6,]  1.018857e-01
+ [7,]  5.551115e-17
+ [8,] -1.093620e-01
+ [9,] -2.233194e-01
+[10,] -3.389912e-01
+[11,] -4.534965e-01
+[12,] -5.639544e-01
+[13,] -6.674838e-01
+[14,] -7.612039e-01
+[15,] -8.422337e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 24.99579
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 26.29623
+[1] "Polynomial order: 4"
+[1] "Smoothest path:"
+            [,1]
+ [1,]  0.3812571
+ [2,]  0.4033255
+ [3,]  0.3934930
+ [4,]  0.3554633
+ [5,]  0.2930704
+ [6,]  0.2102781
+ [7,]  0.1111800
+ [8,]  0.0000000
+ [9,] -0.1189084
+[10,] -0.2410614
+[11,] -0.3618456
+[12,] -0.4765173
+[13,] -0.5802031
+[14,] -0.6678995
+[15,] -0.7344730
+[16,] -0.7746603
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 26.29623
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 2"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.211523e-01
+ [2,]  1.522305e-01
+ [3,] -6.938894e-18
+ [4,] -1.355393e-01
+ [5,] -2.543874e-01
+ [6,] -3.565442e-01
+ [7,] -4.420098e-01
+ [8,] -5.107841e-01
+ [9,] -5.628672e-01
+[10,] -5.982591e-01
+[11,] -6.169598e-01
+[12,] -6.189692e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 21.02607
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.284175e-01
+ [2,]  2.787131e-01
+ [3,]  1.353851e-01
+ [4,]  8.673617e-19
+ [5,] -1.258760e-01
+ [6,] -2.406767e-01
+ [7,] -3.428357e-01
+ [8,] -4.307867e-01
+ [9,] -5.029634e-01
+[10,] -5.577995e-01
+[11,] -5.937287e-01
+[12,] -6.091847e-01
+[13,] -6.026012e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 22.36203
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.774834e-01
+ [2,]  3.032855e-01
+ [3,]  2.127427e-01
+ [4,]  1.101993e-01
+ [5,]  1.387779e-17
+ [6,] -1.135107e-01
+ [7,] -2.259883e-01
+ [8,] -3.330882e-01
+ [9,] -4.304660e-01
+[10,] -5.137770e-01
+[11,] -5.786768e-01
+[12,] -6.208207e-01
+[13,] -6.358644e-01
+[14,] -6.194631e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 23.68479
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 24.99579
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+             [,1]
+ [1,]  0.36082005
+ [2,]  0.32004975
+ [3,]  0.26018139
+ [4,]  0.18461618
+ [5,]  0.09675532
+ [6,]  0.00000000
+ [7,] -0.10224857
+ [8,] -0.20658920
+ [9,] -0.30962067
+[10,] -0.40794181
+[11,] -0.49815139
+[12,] -0.57684823
+[13,] -0.64063112
+[14,] -0.68609887
+[15,] -0.70985027
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 24.99579
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 26.29623
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.495985e-01
+ [2,]  3.464118e-01
+ [3,]  3.156821e-01
+ [4,]  2.615428e-01
+ [5,]  1.881271e-01
+ [6,]  9.956841e-02
+ [7,]  2.775558e-17
+ [8,] -1.064448e-01
+ [9,] -2.156327e-01
+[10,] -3.234304e-01
+[11,] -4.257045e-01
+[12,] -5.183218e-01
+[13,] -5.971489e-01
+[14,] -6.580525e-01
+[15,] -6.968992e-01
+[16,] -7.095559e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 26.29623
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 27.58711
+[1] "Polynomial order: 3"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  3.297118e-01
+ [2,]  3.560802e-01
+ [3,]  3.509080e-01
+ [4,]  3.184255e-01
+ [5,]  2.628631e-01
+ [6,]  1.884511e-01
+ [7,]  9.941997e-02
+ [8,]  2.775558e-17
+ [9,] -1.055784e-01
+[10,] -2.130850e-01
+[11,] -3.182893e-01
+[12,] -4.169609e-01
+[13,] -5.048697e-01
+[14,] -5.777850e-01
+[15,] -6.314767e-01
+[16,] -6.617143e-01
+[17,] -6.642676e-01
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 27.58711
+[1] "Smoothest path found successfully"
+[1] "*******/// Plotting y_jump_m ///*******"
+[1] "Creating event study for post = 2, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 14.06714
+[1] "Polynomial order: 4"
+[1] "Smoothest path:"
+              [,1]
+[1,]  8.061111e-04
+[2,] -3.486600e-01
+[3,] -9.714451e-17
+[4,]  5.055486e-01
+[5,]  7.894508e-01
+[6,]  6.358740e-01
+[7,] -8.311806e-03
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 14.06714
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 15.50731
+[1] "Polynomial order: 5"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 2, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
+[1] "Polynomial order: 5"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 2, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -1.134574e-01
+ [2,]  9.900799e-02
+ [3,] -9.604221e-02
+ [4,] -2.737732e-01
+ [5,] -2.444615e-01
+ [6,]  6.661338e-16
+ [7,]  3.395979e-01
+ [8,]  5.796932e-01
+ [9,]  5.045169e-01
+[10,] -6.933491e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 18.30704
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+              [,1]
+ [1,] -0.101595939
+ [2,] -0.006957891
+ [3,] -0.088700964
+ [4,] -0.249701261
+ [5,] -0.383510878
+ [6,] -0.358166836
+ [7,]  0.000000000
+ [8,]  0.922555989
+ [9,]  2.715155793
+[10,]  5.773733446
+[11,] 10.600693432
+[1] "Wald value of optimal path:"
+        [,1]
+[1,] 29186.8
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 2, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 6"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  9.785679e-02
+ [2,] -2.436137e-01
+ [3,]  9.043748e-02
+ [4,]  2.481116e-01
+ [5,]  1.035229e-01
+ [6,] -1.346258e-01
+ [7,] -2.098392e-01
+ [8,]  3.552714e-15
+ [9,]  4.050879e-01
+[10,]  7.307831e-01
+[11,]  6.493167e-01
+[12,]  1.612994e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 21.02607
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 15.50731
+[1] "Polynomial order: 4"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 3, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  1.440138e-01
+ [2,]  1.634500e-01
+ [3,] -1.009247e-01
+ [4,]  3.330669e-16
+ [5,]  4.236425e-01
+ [6,]  7.886504e-01
+ [7,]  7.278215e-01
+ [8,]  2.410251e-01
+ [9,]  4.812271e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 16.91898
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 5"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 3, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -0.1810362098
+ [2,]  0.0244809812
+ [3,] -0.1948911484
+ [4,] -0.3500445749
+ [5,] -0.2695747534
+ [6,]  0.0000000000
+ [7,]  0.2940191259
+ [8,]  0.4294604397
+ [9,]  0.3047207496
+[10,] -0.0006035259
+[11,] -0.1259357395
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 19.67514
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 3, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 3, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 4, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 16.91898
+[1] "Polynomial order: 4"
+[1] "Smoothest path:"
+             [,1]
+ [1,] -0.13973740
+ [2,] -0.30172493
+ [3,]  0.00000000
+ [4,]  0.37048761
+ [5,]  0.56488743
+ [6,]  0.48844827
+ [7,]  0.19651826
+ [8,] -0.10545521
+ [9,] -0.06192541
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 16.91898
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  4.101490e-02
+ [2,] -2.288665e-01
+ [3,] -2.330404e-01
+ [4,] -5.551115e-17
+ [5,]  3.200549e-01
+ [6,]  5.387263e-01
+ [7,]  5.129264e-01
+ [8,]  2.283856e-01
+ [9,] -1.168394e-01
+[10,] -2.885715e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 18.30704
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  1.651979e-02
+ [2,]  8.941058e-02
+ [3,] -7.869358e-02
+ [4,] -1.375529e-01
+ [5,] -4.440892e-16
+ [6,]  2.503983e-01
+ [7,]  4.516789e-01
+ [8,]  4.558208e-01
+ [9,]  2.210826e-01
+[10,] -9.565886e-02
+[11,] -4.657055e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 19.67514
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -4.266265e-02
+ [2,]  1.674806e-01
+ [3,]  9.583937e-05
+ [4,] -1.652125e-01
+ [5,] -1.665929e-01
+ [6,]  6.661338e-16
+ [7,]  2.407518e-01
+ [8,]  4.239347e-01
+ [9,]  4.398540e-01
+[10,]  2.607943e-01
+[11,]  9.665383e-04
+[12,] -2.354621e-02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 21.02607
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 4, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 5"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 4, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 5, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 18.30704
+[1] "Polynomial order: 5"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 5, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 5, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 5, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 5, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 7"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 5, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 24.99579
+[1] "Polynomial order: 7"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 6, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 19.67514
+[1] "Polynomial order: 5"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 6, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 6, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 6"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -2.572496e-01
+ [2,] -1.162746e-01
+ [3,] -2.921434e-01
+ [4,] -2.989654e-01
+ [5,]  1.665335e-16
+ [6,]  9.093293e-01
+ [7,]  3.488811e+00
+ [8,]  1.021121e+01
+ [9,]  2.569044e+01
+[10,]  5.748006e+01
+[11,]  1.169423e+02
+[12,]  2.201872e+02
+[13,]  3.890827e+02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 28272231
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 6, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 6, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 24.99579
+[1] "Polynomial order: 7"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 6, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 26.29623
+[1] "Polynomial order: 7"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 7, pre = 2"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 21.02607
+[1] "Polynomial order: 5"
+[1] "Smoothest path:"
+               [,1]
+ [1,]  7.465151e-03
+ [2,] -3.813469e-01
+ [3,] -7.979728e-17
+ [4,]  5.889144e-01
+ [5,]  1.437398e+00
+ [6,]  3.297419e+00
+ [7,]  7.706283e+00
+ [8,]  1.707201e+01
+ [9,]  3.475869e+01
+[10,]  6.517189e+01
+[11,]  1.138440e+02
+[12,]  1.875196e+02
+[1] "Wald value of optimal path:"
+        [,1]
+[1,] 7089717
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 3"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 22.36203
+[1] "Polynomial order: 6"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -6.666020e-02
+ [2,] -2.846681e-01
+ [3,] -2.698482e-01
+ [4,] -3.469447e-17
+ [5,]  4.986180e-01
+ [6,]  1.557524e+00
+ [7,]  4.331797e+00
+ [8,]  1.132541e+01
+ [9,]  2.697610e+01
+[10,]  5.829983e+01
+[11,]  1.155947e+02
+[12,]  2.132046e+02
+[13,]  3.703420e+02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 27863291
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 4"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 23.68479
+[1] "Polynomial order: 6"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -1.281678e-01
+ [2,] -1.444145e-01
+ [3,] -3.238282e-01
+ [4,] -3.016225e-01
+ [5,] -5.551115e-17
+ [6,]  7.861368e-01
+ [7,]  2.858915e+00
+ [8,]  8.142660e+00
+ [9,]  2.026451e+01
+[10,]  4.519044e+01
+[11,]  9.191681e+01
+[12,]  1.732172e+02
+[13,]  3.064449e+02
+[14,]  5.143907e+02
+[1] "Wald value of optimal path:"
+         [,1]
+[1,] 52857166
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 5"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 24.99579
+[1] "Polynomial order: 6"
+[1] "Smoothest path not found"
+[1] "Creating event study for post = 7, pre = 6"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 26.29623
+[1] "Polynomial order: 7"
+[1] "Smoothest path:"
+               [,1]
+ [1,] -7.190922e-02
+ [2,] -7.155724e-02
+ [3,] -8.637781e-02
+ [4,] -2.150092e-01
+ [5,] -3.668827e-01
+ [6,] -3.983554e-01
+ [7,]  1.110223e-15
+ [8,]  1.695568e+00
+ [9,]  6.815948e+00
+[10,]  1.979191e+01
+[11,]  4.877169e+01
+[12,]  1.074372e+02
+[13,]  2.172529e+02
+[14,]  4.101776e+02
+[15,]  7.318705e+02
+[16,]  1.245421e+03
+[1] "Wald value of optimal path:"
+          [,1]
+[1,] 269697554
+[1] "Smoothest path found successfully"
+[1] "Creating event study for post = 7, pre = 7"
+[1] "Creating event study plot"
+[1] "Critical Wald value:"
+[1] 27.58711
+[1] "Polynomial order: 8"
+[1] "Smoothest path not found"

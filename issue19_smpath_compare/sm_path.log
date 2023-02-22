@@ -163,7 +163,7 @@ Optimal Wald value
 
 symmetric WB[1,1]
            c1
-r1  10.447172
+r1  16.918978
 (file STATA/y_smooth_m.png written in PNG format)
 
 No proxy or instruments provided. Implementing OLS estimator
@@ -368,7 +368,7 @@ Optimal Wald value
 
 symmetric WB[1,1]
            c1
-r1  8.9350989
+r1  16.918978
 Warning: Smoothest path optimization found a flat region.
 (file STATA/y_jump_m.png written in PNG format)
 

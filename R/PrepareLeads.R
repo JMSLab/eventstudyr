@@ -9,8 +9,13 @@
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
-#' PrepareLeads(df_sample_dynamic, groupvar = "id", timevar = "t", leadvar = "z", leads = 1:5)
-#' # same spacing comment as in PrepareLags() - MZW
+#' PrepareLeads(
+#'     df_sample_dynamic,
+#'     groupvar = "id",
+#'     timevar = "t",
+#'     leadvar = "z",
+#'     leads = 1:5
+#' )
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #' @export

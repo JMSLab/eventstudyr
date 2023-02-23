@@ -28,7 +28,6 @@ PrepareLeads(
     leadvar = "z",
     leads = 1:5
 )
-# same spacing comment as in PrepareLags() - MZW
 
 }
 \seealso{

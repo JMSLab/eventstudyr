@@ -1,13 +1,13 @@
 #' This function can be used to perform tests of linear hypotheses.
-#' # I believe the commas should be removed due to convention and consistency with other functions - MZW
-#' @param estimates, A list of length 2 containing estimation results and model information.
+#'
+#' @param estimates A list of length 2 containing estimation results and model information.
 #' Should be an output of [EventStudy()].
-#' @param test, The hypothesis to be estimated. Accepts inputs that can be passed to
+#' @param test The hypothesis to be estimated. Accepts inputs that can be passed to
 #' hypothesis.matrix argument in \link[car]{linearHypothesis}.
-#' @param test_name, Name for test input by user. Defaults to "User Test."
-#' @param pretrends, If TRUE, uses pre and overidpre from estimates to test for pre-trends.
+#' @param test_name Name for test input by user. Defaults to "User Test."
+#' @param pretrends If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 #' Defaults to TRUE.
-#' @param leveling_off, If TRUE, uses post and overidpost from estimates to test for leveling-off.
+#' @param leveling_off If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Defaults to TRUE.
 #'
 #' @importFrom car linearHypothesis
@@ -20,8 +20,13 @@
 #'                         post = 3, pre = 2, overidpre = 4, overidpost = 5,
 #'                         normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 #'
-#' TestLinear(estimates, test = "z_fd_lag1 = z_fd", test_name = "Hypothesis Test",
-#'            pretrends = TRUE, leveling_off = TRUE)
+#' TestLinear(
+#'     estimates,
+#'     test = "z_fd_lag1 = z_fd",
+#'     test_name = "Hypothesis Test",
+#'     pretrends = TRUE,
+#'     leveling_off = TRUE
+#'    )
 #'
 
 

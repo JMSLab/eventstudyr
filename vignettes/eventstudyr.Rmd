@@ -68,7 +68,43 @@ results <- EventStudy(estimator = "OLS",
 <details>
   <summary>Click for `results[2]`</summary>
   ```{r}
-  results[2]
+  ## Estimator
+  results[2][[1]]$estimator
+  
+  ## Data
+  results[2][[1]]$data[1:5,]
+  
+  ## Variables
+  results[2][[1]]$outcomevar
+  results[2][[1]]$outcomevar
+  results[2][[1]]$policyvar
+  results[2][[1]]$idvar
+  results[2][[1]]$timevar
+  results[2][[1]]$controls
+  
+  ## Proxies
+  results[2][[1]]$proxy
+  results[2][[1]]$proxyIV
+  
+  ## Fixed Effects
+  results[2][[1]]$FE
+  results[2][[1]]$TFE
+  
+  ## Periods
+  results[2][[1]]$post
+  results[2][[1]]$overidpost
+  results[2][[1]]$pre
+  results[2][[1]]$overidpre
+  
+  ## Normalization
+  results[2][[1]]$normalize
+  results[2][[1]]$normalization_column
+  
+  ## Cluster
+  results[2][[1]]$cluster
+  
+  ## Eventstudy Coefficient
+  results[2][[1]]$eventstudy_coefficients
   ```
 </details>
 
@@ -113,7 +149,43 @@ results <- EventStudy(estimator = "OLS",
 <details>
   <summary>Click for `results[2]`</summary>
   ```{r}
-  results[2]
+  ## Estimator
+  results[2][[1]]$estimator
+  
+  ## Data
+  results[2][[1]]$data[1:5,]
+  
+  ## Variables
+  results[2][[1]]$outcomevar
+  results[2][[1]]$outcomevar
+  results[2][[1]]$policyvar
+  results[2][[1]]$idvar
+  results[2][[1]]$timevar
+  results[2][[1]]$controls
+  
+  ## Proxies
+  results[2][[1]]$proxy
+  results[2][[1]]$proxyIV
+  
+  ## Fixed Effects
+  results[2][[1]]$FE
+  results[2][[1]]$TFE
+  
+  ## Periods
+  results[2][[1]]$post
+  results[2][[1]]$overidpost
+  results[2][[1]]$pre
+  results[2][[1]]$overidpre
+  
+  ## Normalization
+  results[2][[1]]$normalize
+  results[2][[1]]$normalization_column
+  
+  ## Cluster
+  results[2][[1]]$cluster
+  
+  ## Eventstudy Coefficient
+  results[2][[1]]$eventstudy_coefficients
   ```
 </details>
 

@@ -1,4 +1,5 @@
-#'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming)
+#'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming). Note that the message "Removed n
+#'  rows containing missing values (geom_segment)" is expected behavior when either Supt or conf_level is specified.
 #'
 #' @param estimates The output from calling [EventStudy()]. Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".

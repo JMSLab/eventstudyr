@@ -34,7 +34,7 @@ If FALSE, will use unclustered heteroskedasticity-robust standard errors.
 Defaults to TRUE. Must be TRUE if FE is TRUE.}
 }
 \value{
-An estimated model # Is there more explanation that can be added to this to make it more specific? - MZW
+A data.frame that contains the estimates for the event study coefficients.
 }
 \description{
 Runs FHS with optional fixed effects and clustering described in \href{https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609}{Freyaldenhoven, Hansen, and Shapiro}

@@ -10,7 +10,7 @@
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
 #' heteroskedasticity-robust standard errors. Defaults to TRUE. - Just curious, does cluster have to be TRUE if FE is TRUE? - MZW
 #'
-#' @return An estimated model # Is there more explanation that can be added to this to make it more specific? - MZW
+#' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
 #' @export
 #'

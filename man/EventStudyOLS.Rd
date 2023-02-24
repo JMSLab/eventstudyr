@@ -32,7 +32,7 @@ lags of the first differenced policy variable and leads and lags of the policy v
 heteroskedasticity-robust standard errors. Defaults to TRUE. - Just curious, does cluster have to be TRUE if FE is TRUE? - MZW}
 }
 \value{
-An estimated model # Is there more explanation that can be added to this to make it more specific? - MZW
+A data.frame that contains the estimates for the event study coefficients.
 }
 \description{
 Runs OLS with optional fixed effects and clustering # Would be nice to spell out OLS - MZW

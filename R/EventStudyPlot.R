@@ -1,5 +1,4 @@
-#'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming). Note that the message "Removed n
-#'  rows containing missing values (geom_segment)" is expected behavior when either Supt or conf_level is specified.
+#'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming).
 #'
 #' @param estimates The output from calling [EventStudy()]. Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
@@ -295,7 +294,7 @@ EventStudyPlot <- function(estimates,
         plt <- plt +
             geom_errorbar(aes(ymin = .data$ci_lower,
                               ymax = .data$ci_upper),
-                              data = df_plt[df_plt$estimate != 0,], 
+                              data = df_plt[df_plt$estimate != 0,],
                               width = .2)
     }
     if (Smpath) {

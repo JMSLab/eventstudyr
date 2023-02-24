@@ -2,8 +2,7 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming). Note that the message "Removed n
-rows containing missing values (geom_segment)" is expected behavior when either Supt or conf_level is specified.}
+\title{Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming).}
 \usage{
 EventStudyPlot(
   estimates,
@@ -63,8 +62,7 @@ Should be TRUE or FALSE. Defaults to FALSE.}
 The Event-Study plot as a gpplot2 object
 }
 \description{
-Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming). Note that the message "Removed n
-rows containing missing values (geom_segment)" is expected behavior when either Supt or conf_level is specified.
+Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming).
 }
 \examples{
 

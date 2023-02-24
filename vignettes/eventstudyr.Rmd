@@ -34,7 +34,23 @@ Linear panel models, and the “event-study plots” that often accompany them, 
 * plotting the least "wiggly" confound whose path is contained in the Wald region for the event-time path of the outcome. For more details, see the mathematical formulation and solution of the problem [here](https://github.com/JMSLab/EventStudyPackage/issues/7)
  
 ## Data
+
+We will use the `df_sample_static` and `df_sample_dynamic` datasets to demonstrate the basic functionality of `eventstudyr`. These sample data are from the [replication archive](https://data.nber.org/data-appendix/w29170/) for Freyaldenhoven et al. (2021). The documentation can be accessed using `?df_sample_static` and `?df_sample_dynamic`.
  
+
+```{r Data preview df_sample_static}
+
+dim(df_sample_static)
+head(df_sample_static)
+```
+
+```{r Data preview df_sample_dynamic}
+
+dim(df_sample_dynamic)
+head(df_sample_dynamic)
+```
+
+
 ## EventStudy()
 
 `EventStudy()` estimates the regression model from Equation (2) in Freyaldenhoven et al. (2021) and returns a list object that stores the estimation results (as an lm() object) as well as the arguments given in the function call. It accepts variables specifying the outcome, policy, ID and time variables. One must also specify the number of periods in the past before which the past values of the policy are not supposed to affect the value of the outcome and the number of periods in the future after which the future values of the policy are not supposed to affect the value of the outcome today. The function optionally accepts variables specifying the controls, the time window, whether fixed effects should be included, and the period to be used for normalization.

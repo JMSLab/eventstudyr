@@ -1,6 +1,6 @@
 #' Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
 #'
-#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV. # Should OLS, FHS, and IV be spelled out, or are we assuming familiarity with these acronyms? - MZW
+#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.
 #' @param data The data frame that contains the variables of interest.  # To keep consistency across descriptions, get rid of "the" - MZW
 #' @param outcomevar Variable indicating outcome variable y, should be a character. # Instead of "should be a character" change to "Character for variable indicating ..." for concision? - MZW
 #' @param policyvar Variable indicating policy variable z, should be a character.

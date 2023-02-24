@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyOLS.R
 \name{EventStudyOLS}
 \alias{EventStudyOLS}
-\title{Runs OLS with optional fixed effects and clustering # Would be nice to spell out OLS - MZW}
+\title{Runs OLS with optional fixed effects and clustering}
 \usage{
 EventStudyOLS(
   prepared_model_formula,
@@ -35,7 +35,7 @@ heteroskedasticity-robust standard errors. Defaults to TRUE. - Just curious, doe
 A data.frame that contains the estimates for the event study coefficients.
 }
 \description{
-Runs OLS with optional fixed effects and clustering # Would be nice to spell out OLS - MZW
+Runs OLS with optional fixed effects and clustering
 }
 \examples{
 model_formula <-  PrepareModelFormula(

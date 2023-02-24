@@ -26,7 +26,7 @@ EventStudy(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV. # Should OLS, FHS, and IV be spelled out, or are we assuming familiarity with these acronyms? - MZW}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.}
 
 \item{data}{The data frame that contains the variables of interest.  # To keep consistency across descriptions, get rid of "the" - MZW}
 

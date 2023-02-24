@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)}
+\title{Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 \usage{
 EventStudy(
   estimator,
@@ -52,17 +52,17 @@ defaults to the strongest lead of the policy variable based on the first stage.}
 
 \item{post}{The number of periods in the past before which the past values of the policy
 are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
-Freyaldenhoven et al. (forthcoming).}
+\href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
 \item{overidpost}{Optional number of event times after "post" to be included in estimation. Defaults to 1.
-Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW}
+Should be a whole number. Corresponds to L_M in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW}
 
 \item{pre}{Number of periods in the future after which the future values of the policy are
 not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
-Freyaldenhoven et al. (forthcoming).}
+\href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
 \item{overidpre}{Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).}
+Should be a whole number. Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 
@@ -76,7 +76,7 @@ when there are anticipation effects. If set to FALSE, does not make switch. Defa
 A list that contains the estimation output and an object containing the arguments passed to the function
 }
 \description{
-Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
+Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
 }
 \examples{
 EventStudy(

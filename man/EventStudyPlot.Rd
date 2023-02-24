@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming).}
+\title{Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 \usage{
 EventStudyPlot(
   estimates,
@@ -62,7 +62,7 @@ Should be TRUE or FALSE. Defaults to FALSE.}
 The Event-Study plot as a gpplot2 object
 }
 \description{
-Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming).
+Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
 }
 \examples{
 

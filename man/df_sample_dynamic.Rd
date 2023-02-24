@@ -3,7 +3,7 @@
 \docType{data}
 \name{df_sample_dynamic}
 \alias{df_sample_dynamic}
-\title{Sample dataset obtained from the replication archive for Freyaldenhoven et al. (forthcoming)}
+\title{Sample dataset obtained from the replication archive for \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2000 rows and 12 columns.
 }
@@ -14,6 +14,6 @@ Dataset in .dta format can be found in the .zip archive in \url{https://data.nbe
 df_sample_dynamic
 }
 \description{
-Sample dataset obtained from the replication archive for Freyaldenhoven et al. (forthcoming)
+Sample dataset obtained from the replication archive for \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
 }
 \keyword{datasets}

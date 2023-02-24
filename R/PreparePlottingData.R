@@ -9,18 +9,18 @@
 #' @param post The number of periods in the past before
 #' which the past values of the policy are not supposed
 #' to affect the value of the outcome. Should be a whole number.
-#' Corresponds to M in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Corresponds to M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param overidpost Optional number of event times after "post" to be
 #' included in estimation. Defaults to 1. Should be a whole number.
-#' Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param pre Number of periods in the future after which the future values
 #' of the policy are not supposed to affect the value of the outcome today.
 #' Should be a whole number. Corresponds to G in equation (2) of
-#' Freyaldenhoven et al. (forthcoming).
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param overidpre
 #' Optional number of event times earlier than -"pre" to be included in estimation.
 #' Defaults to "post" + "pre". Should be a whole number.
-#' Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param normalization_column The name of the column containing the coefficient that will
 #' be set to 0 in the eventstudy plot. Should be a character.
 #' @param proxyIV Variables to be used as an instrument. Should be a character. if NULL,

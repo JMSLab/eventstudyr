@@ -1,4 +1,4 @@
-#'  Creates an Event-Study Plot following the suggestions in Freyaldenhoven et al. (forthcoming).
+#'  Creates an Event-Study Plot following the suggestions in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
 #' @param estimates The output from calling [EventStudy()]. Should be a list of length 2.
 #' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".

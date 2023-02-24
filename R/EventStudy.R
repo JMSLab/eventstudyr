@@ -1,4 +1,4 @@
-#' Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
+#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.
 #' @param data The data frame that contains the variables of interest.  # To keep consistency across descriptions, get rid of "the" - MZW
@@ -17,14 +17,14 @@
 #' heteroskedasticity-robust standard errors. Defaults to TRUE.
 #' @param post The number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
-#' Freyaldenhoven et al. (forthcoming).
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param overidpost Optional number of event times after "post" to be included in estimation. Defaults to 1.
-#' Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW
+#' Should be a whole number. Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW
 #' @param pre Number of periods in the future after which the future values of the policy are
 #' not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
-#' Freyaldenhoven et al. (forthcoming).
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-#' Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' Should be a whole number. Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
 #' @param anticipation_effects_normalization If set to TRUE, runs default process and switches coefficient to be normalized to 0
 #' when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE  # This variable name is very long - MZW

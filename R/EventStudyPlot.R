@@ -257,6 +257,7 @@ EventStudyPlot <- function(estimates,
 
     # Order coefficients
     data.table::setorder(df_plt, label)
+    ordered_labels <- df_plt$label
 
     if (Smpath) {
         coefficients <- df_plt$estimate
@@ -274,8 +275,10 @@ EventStudyPlot <- function(estimates,
 
 # Construct Plot ----------------------------------------------------------
 
+    df_plt$label_num <- as.numeric(gsub("+", "", df_plt$label, fixed = T))
+
     plt <- ggplot(df_plt,
-                  aes(x = .data$label, y = .data$estimate))
+                  aes(x = .data$label_num, y = .data$estimate))
 
     if (Addzeroline) {
         plt <- plt +
@@ -285,12 +288,15 @@ EventStudyPlot <- function(estimates,
     if (plot_Supt) {
         plt <- plt +
             geom_linerange(aes(ymin = .data$suptband_lower,
-                               ymax = .data$suptband_upper))
+                               ymax = .data$suptband_upper),
+                               data = df_plt[df_plt$estimate != 0,])
     }
     if (plot_CI) {
         plt <- plt +
             geom_errorbar(aes(ymin = .data$ci_lower,
-                              ymax = .data$ci_upper), width = .2)
+                              ymax = .data$ci_upper),
+                              data = df_plt[df_plt$estimate != 0,], 
+                              width = .2)
     }
     if (Smpath) {
         plt <- plt +
@@ -300,6 +306,8 @@ EventStudyPlot <- function(estimates,
 
     plt <- plt +
         geom_point(color = "#006600") +
+        scale_x_continuous(breaks = min(df_plt$label_num):max(df_plt$label_num),
+                           labels = ordered_labels) +
         scale_y_continuous(breaks = ybreaks,
                            labels = ylabels,
                            limits = ylims) +

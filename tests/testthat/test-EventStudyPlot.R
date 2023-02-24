@@ -56,10 +56,10 @@ test_that("x- and y-axis breaks and limits are correct", {
                                   ybreaks   = c(-1.5, -.5, 0, .5, 1.5),
                                   Addmean   = FALSE)
 
-    v_limits_addmeans    <- p_Addmean$scales$scales[[1]]$limits
-    v_limits_no_addmeans <- p_noAddmean$scales$scales[[1]]$limits
-    v_breaks_addmeans    <- p_Addmean$scales$scales[[1]]$breaks
-    v_breaks_no_addmeans <- p_noAddmean$scales$scales[[1]]$breaks
+    v_limits_addmeans    <- p_Addmean$scales$scales[[2]]$limits
+    v_limits_no_addmeans <- p_noAddmean$scales$scales[[2]]$limits
+    v_breaks_addmeans    <- p_Addmean$scales$scales[[2]]$breaks
+    v_breaks_no_addmeans <- p_noAddmean$scales$scales[[2]]$breaks
 
     expect_equal(v_limits_addmeans,    c(-1.5, 1.5))
     expect_equal(v_limits_no_addmeans, c(-1.5, 1.5))
@@ -86,8 +86,8 @@ test_that("correctly adds mean of outcome var", {
                        "z", "y_base")
     y_mean <- round(y_mean, 2)
 
-    v_labels_addmeans    <- p_Addmean$scales$scales[[1]]$labels
-    v_labels_no_addmeans <- p_noAddmean$scales$scales[[1]]$labels
+    v_labels_addmeans    <- p_Addmean$scales$scales[[2]]$labels
+    v_labels_no_addmeans <- p_noAddmean$scales$scales[[2]]$labels
 
     expect_equal(v_labels_addmeans,    c("-1.5", "-0.5", sprintf("0 (%s)", y_mean), "0.5", "1.5"))
     expect_equal(v_labels_no_addmeans, c(-1.5, -.5, 0, .5, 1.5))
@@ -255,7 +255,7 @@ test_that("computed smoothest path for FHS has at least two coefficients almost 
 
     p <- EventStudyPlot(estimates = estimates,
                         Smpath    = T)
-    
+
     normalized_index  <- which(p$data$estimate == 0)
     normalized_smpath <- p$data$smoothest_path[normalized_index]
 

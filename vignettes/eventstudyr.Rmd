@@ -20,18 +20,16 @@ library(eventstudyr)
 
 ## Event Studies
 
-Linear panel models, and the “event-study plots” that often accompany them, are popular tools for learning about policy effects. 
+Linear panel models, and the event-study plots that often accompany them, are popular tools for learning about policy effects. 
  
 ## eventstudyr
 
-`eventstudyr` facilitates running linear panel models and constructing "event-study plots" with the suggestions prescribed in [Freyaldenhoven _et al._ (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf). In particular, it provides functionality for:
+`eventstudyr` facilitates estimating linear panel event-study models and constructing event-study plots following the suggestions in [Freyaldenhoven _et al._ (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf). In particular, it provides functionality for:
 
-* depicting cumulative estimated effects of a policy
-* measuring the policy's effect relative to a user-controlled normalized period
-* including the average value of the outcome corresponding to the normalized coefficient
+* depicting cumulative estimated effects of a policy relative to a user-controlled normalized period
 * adding confidence intervals and sup-t confidence bands
-* testing for the presence of "pre-trends" and dynamics leveling off
-* plotting the least "wiggly" confound whose path is contained in the Wald region for the event-time path of the outcome. For more details, see the mathematical formulation and solution of the problem [here](https://github.com/JMSLab/EventStudyPackage/issues/7)
+* testing for the presence of "pre-trends" and stable dynamics post-event
+* plotting the least "wiggly" confound consistent with the estimates
  
 ## Data
 

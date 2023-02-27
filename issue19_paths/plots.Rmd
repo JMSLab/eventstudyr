@@ -1,4 +1,6 @@
-
+---
+output: github_document
+---
 # Smoothest paths for different settings of EventStudy
 
 We construct event studies using different numbers of leads and lags.

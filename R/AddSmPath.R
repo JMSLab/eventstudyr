@@ -42,9 +42,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
     res_order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
     order     <- res_order$order
     res_order <- res_order$results
-   
-    print(sprintf("Critical Wald value: %s", Wcritic))
-    print(sprintf("Polynomial order: %s", order))
 
     # Second step: Find minimum coefficient on highest-order term
     if (order == 0) {
@@ -72,13 +69,12 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
     sm_path = Fmat %*% vstar
     Woptim  = (t(sm_path - coefficients)%*%inv_covar)%*%(sm_path - coefficients)
-     
-    print("Smoothest path:")
-    print(sm_path)
-    print(sprintf("Wald value of optimal path: %s", Woptim))
 
-    df["smoothest_path"] = sm_path
-    
-    return(list("df" = df, "order" = order, 
-                "Wcritic" = Wcritic, "Woptim" = Woptim))
+    if (abs(Woptim - Wcritic) <= 1e-2 | order == 0) {
+        df["smoothest_path"] = sm_path
+        return(df)
+    } else {
+        stop(paste0("The smoothest path found via numerical optimization is outside the Wald region. ",
+                    unselect_message))
+    }
 }

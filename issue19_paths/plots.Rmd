@@ -24,7 +24,7 @@ Recall that the order of the computed polynomial equals `order`+1.
 
 Order found and number of successes, by outcome:
 
-```{r dt[abs(Wcritic - Woptim) < .1]}
+```{r echo = F, message = F, warning = F}
 knitr::kable(
   dt[, .(Num_found = .N,
          Num_success = sum(success)),

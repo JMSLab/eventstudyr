@@ -16,14 +16,6 @@ that the order of the computed polynomial equals `order`+1.
 
 Order found and number of successes, by outcome:
 
-``` r
-knitr::kable(
-  dt[, .(Num_found = .N,
-         Num_success = sum(success)),
-     by = .(yvar, order)]
-)
-```
-
 | yvar       | order | Num_found | Num_success |
 |:-----------|------:|----------:|------------:|
 | y_smooth_m |     1 |         7 |           7 |

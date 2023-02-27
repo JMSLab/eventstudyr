@@ -14,7 +14,7 @@
 #' @export
 
 AddSmPath <- function(df, coefficients, inv_covar,
-                      conf_level = 0.95, maxorder = 7, maxiter_solver = 1e6){
+                      conf_level = 0.95, maxorder = 7, maxiter_solver = 2e6){
 
     if (!is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {
         stop("Argument 'conf_level' should be a real number between 0 and 1, inclusive.")

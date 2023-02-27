@@ -87,7 +87,7 @@ SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
 # Find coefficients such that square of highest order term is minimized
 # Num normalized coefficients less than order of polynomial
 FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_idxs, Fmat,
-                       maxiter_solver = 1e6) {
+                       maxiter_solver = 2e6) {
 
     if (is.null(dim(Fmat))) { # If one-dimensional make sure it's also a matrix object
         Fmat <- matrix(Fmat)
@@ -115,14 +115,14 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
     optim_pos <- optim(par     = x0,
                        fn      = Objective,
                        method  = "Nelder-Mead",
-                       control = list("maxit" = maxiter_solver),
+                       control = list("maxit" = maxiter_solver, "reltol" = 1e-6),
                        d   = coeffs, inv_covar = inv_covar,
                        Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                        Wcritic = Wcritic, positive = T)
     optim_neg <- optim(par     = x0,
                        fn      = Objective,
                        method  = "Nelder-Mead",
-                       control = list("maxit" = maxiter_solver),
+                       control = list("maxit" = maxiter_solver, "reltol" = 1e-6),
                        d   = coeffs, inv_covar = inv_covar,
                        Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
                        Wcritic = Wcritic, positive = F)

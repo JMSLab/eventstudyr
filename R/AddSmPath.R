@@ -14,13 +14,13 @@
 #' @export
 
 AddSmPath <- function(df, coefficients, inv_covar,
-                      conf_level = 0.95, maxorder = 7, maxiter_solver = 2e6){
+                      conf_level = 0.95, maxorder = 10, maxiter_solver = 2e6){
 
     if (!is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {
         stop("Argument 'conf_level' should be a real number between 0 and 1, inclusive.")
     }
-    if (!(maxorder%%1 == 0) | maxorder < 0 | maxorder > 7) {
-        stop("Argument 'maxorder' should be an integer between 0 and 7.")
+    if (!(maxorder%%1 == 0) | maxorder < 0 | maxorder > 10) {
+        stop("Argument 'maxorder' should be an integer between 0 and 10.")
     }
     if (!is.data.frame(df)) {
         stop("Argument 'df' should be a dataframe.")

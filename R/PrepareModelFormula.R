@@ -12,7 +12,9 @@
 #' @param proxyIV Variables to be used as an instrument. Should be specified if and only if estimator is specified as "FHS". Should be a character.
 #' @return A formula object to be passed to EventStudy
 #' @rawNamespace import(stats, except=c(lag, filter))
-#' @export
+#'
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' PrepareModelFormula(estimator = "OLS", outcomevar = "y_base",

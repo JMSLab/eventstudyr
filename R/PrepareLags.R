@@ -18,8 +18,8 @@
 #' )
 #'
 #' @importFrom data.table setDT setorderv shift :=
-#' @export
-
+#' @keywords internal
+#' @noRd
 
 PrepareLags <- function(df, groupvar = NULL, timevar, lagvar, lags) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}

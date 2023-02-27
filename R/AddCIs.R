@@ -8,7 +8,8 @@
 #'
 #' @import dplyr
 #' @importFrom rlang .data
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' estimates <- EventStudy(

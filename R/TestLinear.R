@@ -11,7 +11,8 @@
 #' Defaults to TRUE.
 #'
 #' @importFrom car linearHypothesis
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",

@@ -9,6 +9,8 @@
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #'
+#' @keywords internal
+#' @noRd
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}

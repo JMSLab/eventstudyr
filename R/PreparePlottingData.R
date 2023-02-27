@@ -30,7 +30,9 @@
 #' and optional plot aesthetics to be used in creating the eventstudy plot
 #' @import stringr
 #' @rawNamespace import(stats, except=c(lag, filter))
-#' @export
+#'
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #'

@@ -21,7 +21,8 @@
 #' for each event-study coefficient.
 #' @import estimatr
 #' @importFrom MASS mvrnorm
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' eventstudy_estimates <- EventStudy(

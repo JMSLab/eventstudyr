@@ -12,7 +12,8 @@
 #'
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' model_formula <-  PrepareModelFormula(

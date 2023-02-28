@@ -3,7 +3,7 @@ Title: Estimation and Visualization of Linear Panel Event Studies
 Version: 1.0.0
 Authors@R: 
     c(person(given = "Simon",
-           family = "Freyaldenhoven"
+           family = "Freyaldenhoven",
            role = c("aut")),
     person(given = "Christian",
            family = "Hansen",
@@ -19,8 +19,7 @@ Authors@R:
            role = c("aut")),
     person(given = "Richard",
            family = "Calvo",
-           email = "rcalvo@hbs.edu",
-           role = c("aut", "cre")),
+           role = c("aut")),
     person(given = "Santiago",
            family = "Hermo",
            role = c("aut")),

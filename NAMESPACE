@@ -2,6 +2,9 @@
 
 export(EventStudy)
 export(EventStudyPlot)
+export(PrepareLags)
+export(PrepareLeads)
+export(TestLinear)
 import(dplyr)
 import(estimatr)
 import(ggplot2)

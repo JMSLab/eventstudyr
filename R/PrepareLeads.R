@@ -18,8 +18,7 @@
 #' )
 #'
 #' @importFrom data.table setDT setorderv shift :=
-#' @keywords internal
-#' @noRd
+#' @export
 
 PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}

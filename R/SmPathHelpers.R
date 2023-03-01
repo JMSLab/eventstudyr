@@ -38,7 +38,6 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
     norm_index <- which(coeffs == 0)
 
     Wvalue = 1e6
-    error  = F
     poly_order = 0
 
     # Compute Wald value for polynomials of increasing order until Wald Value < Critical Value

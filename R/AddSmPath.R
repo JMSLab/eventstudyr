@@ -43,6 +43,10 @@ AddSmPath <- function(df, coefficients, inv_covar,
     order     <- res_order$order
     res_order <- res_order$results
 
+    cat(paste0("Smoothest path note: ",
+               "The lowest degree such that a polynomial is in confidence region is ", 
+                order+1, ".\n"))
+
     # Second step: Find minimum coefficient on highest-order term
     if (order == 0) {
 

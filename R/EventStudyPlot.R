@@ -254,6 +254,21 @@ EventStudyPlot <- function(estimates,
     data.table::setorder(df_plt, label)
 
     if (Smpath) {
+        
+        unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot' to FALSE."
+
+        if (is.null(proxyIV)) {            
+            if (sum(df_plt$estimate == 0) > 1) {
+                stop(paste0("In OLS, the smoothest path can only be computed with one coefficient normalized to zero.", 
+                            unselect_message))
+            }
+        } else {
+            if (sum(df_plt$estimate == 0) > 2) {
+                stop(paste0("In IV, the smoothest path can only be computed with two coefficients normalized to zero.", 
+                            unselect_message))
+            }
+        }
+
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns

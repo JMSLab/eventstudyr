@@ -270,8 +270,8 @@ test_that("smoothest path returns an error when path is outside the Wald region"
         outcomevar = "y_jump_m",
         estimator = "OLS", data = df_sample_dynamic,
         policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
-        post = 2, overidpost = 1,
-        pre  = 0, overidpre  = 6,
+        post = 5, overidpost = 1,
+        pre  = 0, overidpre  = 2,
         normalize = - 1
     )
 

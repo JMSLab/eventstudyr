@@ -63,7 +63,7 @@ results <- EventStudy(estimator = "OLS",
                       idvar = "id",
                       timevar = "t",
                       post = 3,
-                      pre = 2)
+                      pre = 0)
 ```
 ```{r Basic Eventstudy Example - Run Code, echo = FALSE}
 results <- EventStudy(estimator = "OLS",
@@ -73,7 +73,7 @@ results <- EventStudy(estimator = "OLS",
                       idvar = "id",
                       timevar = "t",
                       post = 3,
-                      pre = 2)
+                      pre = 0)
 ```
 ```{r Basic Eventstudy Example - Show Results 1, echo=TRUE, eval=TRUE}
     results[1]

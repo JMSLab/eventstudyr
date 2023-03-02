@@ -53,111 +53,29 @@ head(df_sample_dynamic)
 
 `EventStudy()` estimates the regression model from Equation (2) in Freyaldenhoven et al. (2021) and returns a list object that stores the estimation results (as an lm() object) as well as the arguments given in the function call. It accepts variables specifying the outcome, policy, ID and time variables. One must also specify the number of periods in the past before which the past values of the policy are not supposed to affect the value of the outcome and the number of periods in the future after which the future values of the policy are not supposed to affect the value of the outcome today. The function optionally accepts variables specifying the controls, the time window, whether fixed effects should be included, and the period to be used for normalization.
 
-###### Minimal Example
 Here is a minimal example of collecting the estimation results with an OLS estimator and a static model:
 
 ```{r Basic Eventstudy Example - Show Code, eval = FALSE}
 results <- EventStudy(estimator = "OLS",
-                      data = df_sample_static,
-                      outcomevar = "y_static",
+                      data = df_sample_dynamic,
+                      outcomevar = "y_jump_m",
                       policyvar = "z",
                       idvar = "id",
                       timevar = "t",
-                      post = 0,
-                      pre = 0)
+                      post = 3,
+                      pre = 2)
 ```
 ```{r Basic Eventstudy Example - Run Code, echo = FALSE}
 results <- EventStudy(estimator = "OLS",
-                      data = df_sample_static,
-                      outcomevar = "y_static",
+                      data = df_sample_dynamic,
+                      outcomevar = "y_jump_m",
                       policyvar = "z",
                       idvar = "id",
                       timevar = "t",
-                      post = 0,
-                      pre = 0)
+                      post = 3,
+                      pre = 2)
 ```
 ```{r Basic Eventstudy Example - Show Results 1, echo=TRUE, eval=TRUE}
-    results[1]
-```
-<details>
-  <summary>Click for `results[2]`</summary>
-  ```{r}
-  ## Estimator
-  results[2][[1]]$estimator
-  
-  ## Data
-  results[2][[1]]$data[1:5,]
-  
-  ## Variables
-  results[2][[1]]$outcomevar
-  results[2][[1]]$outcomevar
-  results[2][[1]]$policyvar
-  results[2][[1]]$idvar
-  results[2][[1]]$timevar
-  results[2][[1]]$controls
-  
-  ## Proxies
-  results[2][[1]]$proxy
-  results[2][[1]]$proxyIV
-  
-  ## Fixed Effects
-  results[2][[1]]$FE
-  results[2][[1]]$TFE
-  
-  ## Periods
-  results[2][[1]]$post
-  results[2][[1]]$overidpost
-  results[2][[1]]$pre
-  results[2][[1]]$overidpre
-  
-  ## Normalization
-  results[2][[1]]$normalize
-  results[2][[1]]$normalization_column
-  
-  ## Cluster
-  results[2][[1]]$cluster
-  
-  ## Eventstudy Coefficient
-  results[2][[1]]$eventstudy_coefficients
-  ```
-</details>
-
-###### Full Example
-Here is an example of collecting the estimation results with an OLS estimator and a static model, specifying the additional variables:
-
-```{r Optional vars example - Show code, eval = F}
-results <- EventStudy(estimator = "OLS",
-                      data = df_sample_static,
-                      outcomevar = "y_static",
-                      policyvar = "z",
-                     idvar = "id",
-                     timevar = "t",
-                     FE = TRUE,
-                     TFE = TRUE,
-                     post = 0,
-                     pre = 0,
-                     overidpre = 0,
-                     overidpost = 0,
-                     cluster = TRUE,
-                     anticipation_effects_normalization = TRUE)
-```
-```{r Optional vars example - Run code, eval = T, echo = F}
-results <- EventStudy(estimator = "OLS",
-                      data = df_sample_static,
-                      outcomevar = "y_static",
-                      policyvar = "z",
-                     idvar = "id",
-                     timevar = "t",
-                     FE = TRUE,
-                     TFE = TRUE,
-                     post = 0,
-                     pre = 0,
-                     overidpre = 0,
-                     overidpost = 0,
-                     cluster = TRUE,
-                     anticipation_effects_normalization = TRUE)
-```
-```{r Optional vars example - Show Results 1, echo=TRUE, eval=TRUE}
     results[1]
 ```
 <details>
@@ -222,21 +140,13 @@ This function is designed to use the output of the `EventStudy()` and returns a 
 ```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
 eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
                                        data = df_sample_dynamic,
-                                       outcomevar = "y_base",
+                                       outcomevar = "y_jump_m",
                                        policyvar = "z",
                                        idvar = "id",
                                        timevar = "t",
-                                       controls = "x_r",
-                                       FE = TRUE,
-                                       TFE = TRUE,
                                        post = 3,
-                                       pre = 2,
-                                       overidpre = 4,
-                                       overidpost = 5,
-                                       normalize = - 3,
-                                       cluster = TRUE,
-                                       anticipation_effects_normalization = TRUE)
-
+                                       pre = 2)
+ 
 EventStudyPlot(estimates = eventstudy_estimates_ols,
                xtitle = "Event time",
                ytitle = "Coefficient",
@@ -249,7 +159,7 @@ EventStudyPlot(estimates = eventstudy_estimates_ols,
                Preeventcoeffs = TRUE,
                Posteventcoeffs = TRUE,
                Addzeroline = TRUE,
-               Smpath = TRUE)
+               Smpath = F)
 ```
 
 ## References

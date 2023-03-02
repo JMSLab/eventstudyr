@@ -135,7 +135,7 @@ These suggestions are:
 5. Set $L_{M} = 1$ and set $L_{G} = M + G$
 6. Plot the least “wiggly” confound whose path is contained in the Wald region CR($\delta$) or the event-time path of the outcome.
 
-This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function to create a plot which follows the suggestions listed above:
+This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function with some default settings:
 
 ```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
 eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
@@ -149,17 +149,7 @@ eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
  
 EventStudyPlot(estimates = eventstudy_estimates_ols,
                xtitle = "Event time",
-               ytitle = "Coefficient",
-               ybreaks = c(-1.5, -.5, 0, .5, 1.5),
-               conf_level = .95,
-               Supt = .95,
-               num_sim = 1000,
-               seed = 1234,
-               Addmean = FALSE,
-               Preeventcoeffs = TRUE,
-               Posteventcoeffs = TRUE,
-               Addzeroline = TRUE,
-               Smpath = F)
+               ytitle = "Coefficient")
 ```
 
 ## References

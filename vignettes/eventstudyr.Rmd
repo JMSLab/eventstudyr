@@ -145,7 +145,7 @@ eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
                                        idvar = "id",
                                        timevar = "t",
                                        post = 3,
-                                       pre = 2)
+                                       pre = 0)
  
 EventStudyPlot(estimates = eventstudy_estimates_ols,
                xtitle = "Event time",

@@ -1,7 +1,7 @@
 #' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
-#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.
-#' @param data The data frame that contains the variables of interest.  # To keep consistency across descriptions, get rid of "the" - MZW
+#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
+#' @param data Data frame that contains the variables of interest.
 #' @param outcomevar Variable indicating outcome variable y, should be a character. # Instead of "should be a character" change to "Character for variable indicating ..." for concision? - MZW
 #' @param policyvar Variable indicating policy variable z, should be a character.
 #' @param idvar Variable indicating units, should be a character.
@@ -9,12 +9,12 @@
 #' @param controls Optional vector of controls q, should be a character. # What is the q for? - MZW
 #' @param proxy Variable that is thought to be affected by the confound but not by the policy.
 #' Should be specified if and only if estimator is specified as "FHS". Should be a character.
-#' @param proxyIV Variables to be used as an instrument. Should be a character. If NULL,
-#' defaults to the strongest lead of the policy variable based on the first stage.
+#' @param proxyIV Variables to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+#' Should be a character.If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-#' heteroskedasticity-robust standard errors. Defaults to TRUE.
+#' heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE is TRUE.
 #' @param post The number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).

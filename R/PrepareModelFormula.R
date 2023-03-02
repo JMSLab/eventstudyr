@@ -9,7 +9,8 @@
 #' @param controls Optional vector of controls q, should be a character.
 #' @param proxy Variable that is thought to be affected by the confound but not by the policy.
 #' Should be specified if and only if estimator is specified as "FHS". Should be a character.
-#' @param proxyIV Variables to be used as an instrument. Should be specified if and only if estimator is specified as "FHS". Should be a character.
+#'  @param proxyIV Variables to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+#' Should be a character.If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #' @return A formula object to be passed to EventStudy
 #' @rawNamespace import(stats, except=c(lag, filter))
 #'

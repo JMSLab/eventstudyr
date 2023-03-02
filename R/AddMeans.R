@@ -2,7 +2,7 @@
 #'
 #' @param df Data frame containing the additional variables created for estimation.
 #' @param normalization_column Variable whose coefficient will be normalized.
-#' @param policyvar A string with the name of the policy variable used in [EventStudy()].
+#' @param policyvar Variable indicating policy variable z, should be a character.
 #' @param outcomevar Variable indicating outcome variable y, should be a character.
 #' @param custom_scalar Scalar to be displayed along y = 0 line if the user doesn't want the mean computed by the package.
 #' @keywords internal

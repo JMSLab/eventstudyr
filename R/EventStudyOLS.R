@@ -8,7 +8,7 @@
 #' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
 #' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
 #' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-#' heteroskedasticity-robust standard errors. Defaults to TRUE. - Just curious, does cluster have to be TRUE if FE is TRUE? - MZW
+#' heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE is TRUE.
 #'
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr

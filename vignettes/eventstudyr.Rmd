@@ -33,16 +33,9 @@ Linear panel models, and the event-study plots that often accompany them, are po
  
 ## Data
 
-We will use the `df_sample_static` and `df_sample_dynamic` datasets to demonstrate the basic functionality of `eventstudyr`. These sample data are from the [replication archive](https://data.nber.org/data-appendix/w29170/) for Freyaldenhoven et al. (2021). The documentation can be accessed using `?df_sample_static` and `?df_sample_dynamic`.
+We will use the `df_sample_dynamic` dataset to demonstrate the basic functionality of `eventstudyr`. These sample data are from the [replication archive](https://data.nber.org/data-appendix/w29170/) for Freyaldenhoven et al. (2021). The documentation can be accessed using `?df_sample_dynamic`.
  
-
-```{r Data preview df_sample_static}
-
-dim(df_sample_static)
-head(df_sample_static)
-```
-
-```{r Data preview df_sample_dynamic}
+```{r Data preview}
 
 dim(df_sample_dynamic)
 head(df_sample_dynamic)
@@ -53,7 +46,7 @@ head(df_sample_dynamic)
 
 `EventStudy()` estimates the regression model from Equation (2) in Freyaldenhoven et al. (2021) and returns a list object that stores the estimation results (as an lm() object) as well as the arguments given in the function call. It accepts variables specifying the outcome, policy, ID and time variables. One must also specify the number of periods in the past before which the past values of the policy are not supposed to affect the value of the outcome and the number of periods in the future after which the future values of the policy are not supposed to affect the value of the outcome today. The function optionally accepts variables specifying the controls, the time window, whether fixed effects should be included, and the period to be used for normalization.
 
-Here is a minimal example of collecting the estimation results with an OLS estimator and a static model:
+Here is an example using the sample data:
 
 ```{r Basic Eventstudy Example - Show Code, eval = FALSE}
 results <- EventStudy(estimator = "OLS",
@@ -123,17 +116,6 @@ results <- EventStudy(estimator = "OLS",
 
 ## EventStudyPlot()
 `EventStudyPlot()` prepares an event-study plot based on the suggestions in Freyaldenhoven et al. (2021).
-
-These suggestions are:
-
-1. Normalize $\delta_{-G-1} = 0$ when estimating Equation (2) in Freyaldenhoven et al. (2021).
-2. Include a parenthetical label for the average value of the outcome corresponding to the normalized coefficient.
-3. Plot a uniform sup-t confidence band for the event-time path of the outcome $\delta$, in addition to pointwise confidence intervals for the individual elements of the event-time path.
-4. Include in the plot legend p-values for Wald tests of each of the following hypotheses: 
-  - $H_{0} : \delta_{k} = 0, −G − L_{G} − 1 ≤ k < −G$ (no pre-trends)
-  - $H_{0} : \delta_{M} = \delta_{M+k}, 0 < k ≤ L_{M}$ (dynamics level off)
-5. Set $L_{M} = 1$ and set $L_{G} = M + G$
-6. Plot the least “wiggly” confound whose path is contained in the Wald region CR($\delta$) or the event-time path of the outcome.
 
 This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function with some default settings:
 

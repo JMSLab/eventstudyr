@@ -6,8 +6,8 @@
 #' @param coefficients Event-study coefficients (must include coefficients normalized in estimation).
 #' @param inv_covar Inverse of covariance matrix of coefficients (must include row and column of zeros for normalized coefficients).
 #' @param conf_level Confidence level to define critical value of Wald region. Should be a real number between 0 and 1, inclusive. Defaults to 0.95.
-#' @param maxorder Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 7.
-#' @param maxiter_solver Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 1e6.
+#' @param maxorder Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.
+#' @param maxiter_solver Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 2e6.
 #'
 #' @return df with smoothest path added as a new column
 #' @import pracma

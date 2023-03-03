@@ -43,8 +43,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
     order     <- res_order$order
     res_order <- res_order$results
 
-    print(sprintf("Critical Wald value: %s", Wcritic))
-
     cat(paste0("Smoothest path note: ",
                "The lowest order such that a polynomial is in confidence region is ", 
                 order+1, ".\n"))
@@ -76,12 +74,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
     sm_path = Fmat %*% vstar
     Woptim  = (t(sm_path - coefficients)%*%inv_covar)%*%(sm_path - coefficients)
 
-    print("Smoothest path:")
-    print(sm_path)
-    print(sprintf("Wald value of optimal path: %s", Woptim))
-
     df["smoothest_path"] = sm_path
-
-    return(list("df" = df, "order" = order, 
-                "Wcritic" = Wcritic, "Woptim" = Woptim))
+    return(df)
 }

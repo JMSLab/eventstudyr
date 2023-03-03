@@ -74,11 +74,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
     sm_path = Fmat %*% vstar
     Woptim  = (t(sm_path - coefficients)%*%inv_covar)%*%(sm_path - coefficients)
 
-    if (abs(Woptim - Wcritic) <= 1e-1 | order == 0) {
-        df["smoothest_path"] = sm_path
-        return(df)
-    } else {
-        stop(paste0("The smoothest path found via numerical optimization is outside the Wald region. ",
-                    unselect_message))
-    }
+    df["smoothest_path"] = sm_path
+    return(df)
 }

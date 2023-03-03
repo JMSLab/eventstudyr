@@ -245,7 +245,6 @@ EventStudyPlot <- function(estimates,
 
         index_zero <- which(ybreaks == 0)
         ylabels[index_zero] <- paste0(ylabels[index_zero], " (", round(y_mean, 2), ")")
-
     }
 
 # Optionally Add smooth path ----------------------------------------------

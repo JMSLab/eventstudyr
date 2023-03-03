@@ -131,10 +131,19 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
     }
 
     vb_pos <- optim_pos$par
-    v2_pos <- sqrt(optim_pos$value)
-
     vb_neg <- optim_neg$par
-    v2_neg <- sqrt(optim_neg$value)
+
+    d0_    = d0(coeffs, inv_covar, F1, F2, A1, A2)
+    d1_pos = d1(vb_pos, coeffs, inv_covar, Fb, F1, F2, Ab, A1, A2)
+    d2_pos = d2(vb_pos, coeffs, inv_covar, Fb, F1,     Ab, A1,     Wcritic)
+    d1_neg = d1(vb_neg, coeffs, inv_covar, Fb, F1, F2, Ab, A1, A2)
+    d2_neg = d2(vb_neg, coeffs, inv_covar, Fb, F1,     Ab, A1,     Wcritic)
+
+    discriminat_pos = d1_pos^2 - 4*d0_*d2_pos
+    discriminat_neg = d1_neg^2 - 4*d0_*d2_neg
+
+    v2_pos = (-d1_pos + sqrt(discriminat_pos))/(2*d0_)
+    v2_neg = (-d1_neg - sqrt(discriminat_neg))/(2*d0_)
 
     if (abs(v2_pos) < abs(v2_neg)) {
         vb = vb_pos
@@ -149,25 +158,25 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
 }
 
 d0 <- function(d, inv_covar, F1, F2, A1, A2) {
-    single_factor = F2 - F1%*%pinv(A1)%*%A2
+    single_factor = F2 - F1%*%inv(A1)%*%A2
 
     return(t(single_factor)%*%inv_covar%*%single_factor)
 }
 
 d1 <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2) {
-    pre_factor  = (Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d
-    post_factor = F2 - F1%*%pinv(A1)%*%A2
+    pre_factor  = (Fb - F1%*%(inv(A1)%*%Ab))%*%vb - d
+    post_factor = F2 - F1%*%inv(A1)%*%A2
 
     return(2*t(pre_factor)%*%inv_covar%*%post_factor)
 }
 
 d2 <- function(vb, d, inv_covar, Fb, F1, Ab, A1, Wcritic) {
-    single_factor = (Fb - F1%*%(pinv(A1)%*%Ab))%*%vb - d
+    single_factor = (Fb - F1%*%(inv(A1)%*%Ab))%*%vb - d
 
     return(t(single_factor)%*%inv_covar%*%single_factor - Wcritic)
 }
 
-Objective <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic, 
+Objective <- function(vb, d, inv_covar, Fb, F1, F2, Ab, A1, A2, Wcritic,
                       positive = T) {
 
     vb = matrix(vb)
@@ -227,19 +236,19 @@ FindCoeffsEq <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_
     } else {
         v2 = v2_neg
     }
-    v1 = -pinv(A1)%*%(A2%*%v2)
+    v1 = -inv(A1)%*%(A2%*%v2)
 
     return(c(v1, v2))
 }
 
 d0Eq <- function(d, inv_covar, F1, F2, A1, A2) {
-    single_factor = F2 - F1%*%pinv(A1)%*%A2
+    single_factor = F2 - F1%*%inv(A1)%*%A2
 
     return(t(single_factor)%*%inv_covar%*%single_factor)
 }
 
 d1Eq <- function(d, inv_covar, F1, F2, A1, A2) {
-    pre_factor = F2 - F1%*%pinv(A1)%*%A2
+    pre_factor = F2 - F1%*%inv(A1)%*%A2
 
     return(-2*t(pre_factor)%*%inv_covar%*%d)
 }

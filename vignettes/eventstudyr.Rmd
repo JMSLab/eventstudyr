@@ -1,0 +1,141 @@
+---
+title: "eventstudyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{eventstudyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE}
+library(eventstudyr)
+```
+
+## Event Studies
+
+Linear panel models, and the event-study plots that often accompany them, are popular tools for learning about policy effects. 
+ 
+## eventstudyr
+
+`eventstudyr` facilitates estimating linear panel event-study models and constructing event-study plots following the suggestions in [Freyaldenhoven _et al._ (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf). In particular, it provides functionality for:
+
+* depicting cumulative estimated effects of a policy relative to a user-controlled normalized period
+* adding confidence intervals and sup-t confidence bands
+* testing for the presence of "pre-trends" and stable dynamics post-event
+* plotting the least "wiggly" confound consistent with the estimates
+ 
+## Data
+
+We will use the `df_sample_dynamic` dataset to demonstrate the basic functionality of `eventstudyr`. These sample data are from the [replication archive](https://data.nber.org/data-appendix/w29170/) for Freyaldenhoven et al. (2021). The documentation can be accessed using `?df_sample_dynamic`.
+ 
+```{r Data preview}
+
+dim(df_sample_dynamic)
+head(df_sample_dynamic)
+```
+
+
+## EventStudy()
+
+`EventStudy()` estimates the regression model from Equation (2) in Freyaldenhoven et al. (2021) and returns a list object that stores the estimation results (as an lm() object) as well as the arguments given in the function call. It accepts variables specifying the outcome, policy, ID and time variables. One must also specify the number of periods in the past before which the past values of the policy are not supposed to affect the value of the outcome and the number of periods in the future after which the future values of the policy are not supposed to affect the value of the outcome today. The function optionally accepts variables specifying the controls, the time window, whether fixed effects should be included, and the period to be used for normalization.
+
+Here is an example using the sample data:
+
+```{r Basic Eventstudy Example - Show Code, eval = FALSE}
+results <- EventStudy(estimator = "OLS",
+                      data = df_sample_dynamic,
+                      outcomevar = "y_jump_m",
+                      policyvar = "z",
+                      idvar = "id",
+                      timevar = "t",
+                      post = 3,
+                      pre = 0)
+```
+```{r Basic Eventstudy Example - Run Code, echo = FALSE}
+results <- EventStudy(estimator = "OLS",
+                      data = df_sample_dynamic,
+                      outcomevar = "y_jump_m",
+                      policyvar = "z",
+                      idvar = "id",
+                      timevar = "t",
+                      post = 3,
+                      pre = 0)
+```
+```{r Basic Eventstudy Example - Show Results 1, echo=TRUE, eval=TRUE}
+    results[1]
+```
+<details>
+  <summary>Click for `results[2]`</summary>
+  ```{r}
+  ## Estimator
+  results[2][[1]]$estimator
+  
+  ## Data
+  results[2][[1]]$data[1:5,]
+  
+  ## Variables
+  results[2][[1]]$outcomevar
+  results[2][[1]]$outcomevar
+  results[2][[1]]$policyvar
+  results[2][[1]]$idvar
+  results[2][[1]]$timevar
+  results[2][[1]]$controls
+  
+  ## Proxies
+  results[2][[1]]$proxy
+  results[2][[1]]$proxyIV
+  
+  ## Fixed Effects
+  results[2][[1]]$FE
+  results[2][[1]]$TFE
+  
+  ## Periods
+  results[2][[1]]$post
+  results[2][[1]]$overidpost
+  results[2][[1]]$pre
+  results[2][[1]]$overidpre
+  
+  ## Normalization
+  results[2][[1]]$normalize
+  results[2][[1]]$normalization_column
+  
+  ## Cluster
+  results[2][[1]]$cluster
+  
+  ## Eventstudy Coefficient
+  results[2][[1]]$eventstudy_coefficients
+  ```
+</details>
+
+## EventStudyPlot()
+`EventStudyPlot()` prepares an event-study plot based on the suggestions in Freyaldenhoven et al. (2021).
+
+This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function with some default settings:
+
+```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
+eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
+                                       data = df_sample_dynamic,
+                                       outcomevar = "y_jump_m",
+                                       policyvar = "z",
+                                       idvar = "id",
+                                       timevar = "t",
+                                       post = 3,
+                                       pre = 0)
+ 
+EventStudyPlot(estimates = eventstudy_estimates_ols,
+               xtitle = "Event time",
+               ytitle = "Coefficient")
+```
+
+## References
+
+```
+Freyaldenhoven, S., Hansen, C., Pérez, J.P. and Shapiro, J.M., 2021. Visualization, identification, and estimation in the linear panel event-study design (No. w29170). National Bureau of Economic Research.
+```

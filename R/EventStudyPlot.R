@@ -258,7 +258,7 @@ EventStudyPlot <- function(estimates,
 
         if (!is.null(proxyIV)) {
             if (sum(df_plt$estimate == 0) > 2) {
-                stop(paste0("In IV, the smoothest path can only be computed with two coefficients normalized to zero.", 
+                stop(paste0("The smoothest path is not supported for the FHS estimator with more than one instrument.", 
                             unselect_message))
             }
         }

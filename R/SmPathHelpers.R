@@ -43,7 +43,7 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
     # Compute Wald value for polynomials of increasing order until Wald Value < Critical Value
     while (poly_order <= maxorder & Wvalue >= Wcritic) {
 
-        min_results <- SolutionInWaldRegion(coeffs, inv_covar, norm_index, poly_order)
+        min_results <- MinimizeWald(coeffs, inv_covar, norm_index, poly_order)
         Wvalue     = min_results$W
         poly_order = poly_order + 1
     }
@@ -53,7 +53,7 @@ FindOrder <- function(coeffs, inv_covar, Wcritic, maxorder) {
 }
 
 # Minimize Wald objective given coefficients and inverse covariance matrix
-SolutionInWaldRegion <- function(coeffs, inv_covar, norm_index, poly_order) {
+MinimizeWald <- function(coeffs, inv_covar, norm_index, poly_order) {
 
     coeff_length = length(coeffs)
 

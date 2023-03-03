@@ -5,7 +5,7 @@
 #' @param timevar Variable indicating time periods, should be a character.
 #' @param diffvar Variable whose first difference will be taken, should be a character.
 #'
-#' @seealso \link[data.table]{shift}  # Not sure what this is referencing? The link doesn't show up - MZW
+#' @seealso [data.table::shift()]  # Not sure what this is referencing? The link doesn't show up - MZW
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #'

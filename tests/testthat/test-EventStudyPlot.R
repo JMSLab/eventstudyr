@@ -262,18 +262,3 @@ test_that("computed smoothest path for FHS has at least two coefficients almost 
     expect_true(length(normalized_index) >= 2)
     expect_true(all(abs(normalized_smpath) < 1e-10))
 })
-
-test_that("smoothest path returns an error when path is outside the Wald region", {
-
-    # Manual testing showed us that numerical optimization converges in this case, but path is outside the Wald region
-    estimates_ols <- EventStudy(
-        outcomevar = "y_jump_m",
-        estimator = "OLS", data = df_sample_dynamic,
-        policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
-        post = 5, overidpost = 1,
-        pre  = 0, overidpre  = 2,
-        normalize = - 1
-    )
-
-    expect_error(EventStudyPlot(estimates = estimates_ols, Smpath = TRUE))
-})

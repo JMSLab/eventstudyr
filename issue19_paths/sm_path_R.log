@@ -2,7 +2,7 @@
 [1] "Creating event study for post = 2, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 12.591587243744"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
            [,1]
 [1,]  0.2954646
@@ -17,97 +17,97 @@
 [1] "Creating event study for post = 2, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 14.0671404493402"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
               [,1]
 [1,]  4.552871e-01
-[2,]  3.029786e-01
-[3,]  1.512162e-01
-[4,]  4.336809e-18
-[5,] -1.506701e-01
-[6,] -3.007940e-01
-[7,] -4.503717e-01
-[8,] -5.994033e-01
-[1] "Wald value of optimal path: 14.6372306667926"
+[2,]  3.040709e-01
+[3,]  1.523085e-01
+[4,] -4.336809e-18
+[5,] -1.528547e-01
+[6,] -3.062555e-01
+[7,] -4.602025e-01
+[8,] -6.146956e-01
+[1] "Wald value of optimal path: 14.0671404493402"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 2, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 15.5073130558655"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.557858e-01
- [2,]  3.281374e-01
- [3,]  2.096236e-01
- [4,]  1.002445e-01
- [5,]  4.163336e-17
- [6,] -9.110986e-02
- [7,] -1.730851e-01
- [8,] -2.459257e-01
- [9,] -3.096316e-01
-[1] "Wald value of optimal path: 49.8975690927409"
+ [2,]  3.555413e-01
+ [3,]  2.461622e-01
+ [4,]  1.276484e-01
+ [5,]  1.387779e-17
+ [6,] -1.367831e-01
+ [7,] -2.827007e-01
+ [8,] -4.377531e-01
+ [9,] -6.019400e-01
+[1] "Wald value of optimal path: 15.5073130558655"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 2, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
-             [,1]
- [1,]  0.47318957
- [2,]  0.35262551
- [3,]  0.24502453
- [4,]  0.15038661
- [5,]  0.06871177
- [6,]  0.00000000
- [7,] -0.05574870
- [8,] -0.09853433
- [9,] -0.12835689
-[10,] -0.14521638
-[1] "Wald value of optimal path: 126.289245437696"
+            [,1]
+ [1,]  0.4731896
+ [2,]  0.4044778
+ [3,]  0.3228030
+ [4,]  0.2281650
+ [5,]  0.1205641
+ [6,]  0.0000000
+ [7,] -0.1335271
+ [8,] -0.2800173
+ [9,] -0.4394706
+[10,] -0.6118869
+[1] "Wald value of optimal path: 16.9189776046205"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 2, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
-              [,1]
- [1,]  0.465025400
- [2,]  0.347715928
- [3,]  0.246328551
- [4,]  0.160863269
- [5,]  0.091320084
- [6,]  0.037698994
- [7,]  0.000000000
- [8,] -0.021776898
- [9,] -0.027631701
-[10,] -0.017564408
-[11,]  0.008424981
-[1] "Wald value of optimal path: 203.01675976997"
+               [,1]
+ [1,]  4.650254e-01
+ [2,]  4.273264e-01
+ [3,]  3.737053e-01
+ [4,]  3.041621e-01
+ [5,]  2.186968e-01
+ [6,]  1.173095e-01
+ [7,] -5.551115e-17
+ [8,] -1.332316e-01
+ [9,] -2.823852e-01
+[10,] -4.474610e-01
+[11,] -6.284588e-01
+[1] "Wald value of optimal path: 18.3070380532751"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 2, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
-               [,1]
- [1,]  4.465367e-01
- [2,]  3.313630e-01
- [3,]  2.333169e-01
- [4,]  1.523983e-01
- [5,]  8.860739e-02
- [6,]  4.194401e-02
- [7,]  1.240822e-02
- [8,] -5.551115e-17
- [9,]  4.719363e-03
-[10,]  2.656631e-02
-[11,]  6.554083e-02
-[12,]  1.216429e-01
-[1] "Wald value of optimal path: 270.887037178549"
+            [,1]
+ [1,]  0.4465367
+ [2,]  0.4341285
+ [3,]  0.4045927
+ [4,]  0.3579293
+ [5,]  0.2941383
+ [6,]  0.2132198
+ [7,]  0.1151737
+ [8,]  0.0000000
+ [9,] -0.1323013
+[10,] -0.2817301
+[11,] -0.4482866
+[12,] -0.6319706
+[1] "Wald value of optimal path: 19.6751375726825"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 3, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 14.0671404493402"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
            [,1]
 [1,]  0.2325660
@@ -123,7 +123,7 @@
 [1] "Creating event study for post = 3, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 15.5073130558655"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.3366903
@@ -140,85 +140,85 @@
 [1] "Creating event study for post = 3, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.712421e-01
- [2,]  3.517289e-01
- [3,]  2.333509e-01
- [4,]  1.161079e-01
- [5,] -2.255141e-17
- [6,] -1.149728e-01
- [7,] -2.288105e-01
- [8,] -3.415130e-01
- [9,] -4.530805e-01
-[10,] -5.635129e-01
-[1] "Wald value of optimal path: 20.24625477323"
+ [2,]  3.551342e-01
+ [3,]  2.378913e-01
+ [4,]  1.195132e-01
+ [5,]  7.806256e-17
+ [6,] -1.206483e-01
+ [7,] -2.424317e-01
+ [8,] -3.653501e-01
+ [9,] -4.894037e-01
+[10,] -6.145924e-01
+[1] "Wald value of optimal path: 16.9189776046204"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 3, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
-             [,1]
- [1,]  0.47742525
- [2,]  0.36907934
- [3,]  0.26716386
- [4,]  0.17167881
- [5,]  0.08262419
- [6,]  0.00000000
- [7,] -0.07619376
- [8,] -0.14595708
- [9,] -0.20928998
-[10,] -0.26619244
-[11,] -0.31666448
-[1] "Wald value of optimal path: 72.436827337251"
+            [,1]
+ [1,]  0.4774252
+ [2,]  0.3948011
+ [3,]  0.3057464
+ [4,]  0.2102614
+ [5,]  0.1083459
+ [6,]  0.0000000
+ [7,] -0.1147763
+ [8,] -0.2359831
+ [9,] -0.3636203
+[10,] -0.4976880
+[11,] -0.6381860
+[1] "Wald value of optimal path: 18.3070380532751"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 3, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.814285e-01
- [2,]  3.787697e-01
- [3,]  2.850792e-01
- [4,]  2.003570e-01
- [5,]  1.246031e-01
- [6,]  5.781739e-02
- [7,] -1.387779e-16
- [8,] -4.884911e-02
- [9,] -8.872995e-02
-[10,] -1.196425e-01
-[11,] -1.415868e-01
-[12,] -1.545628e-01
-[1] "Wald value of optimal path: 127.004818972931"
+ [2,]  4.236111e-01
+ [3,]  3.568254e-01
+ [4,]  2.810715e-01
+ [5,]  1.963493e-01
+ [6,]  1.026588e-01
+ [7,]  2.775558e-17
+ [8,] -1.116270e-01
+ [9,] -2.322224e-01
+[10,] -3.617860e-01
+[11,] -5.003178e-01
+[12,] -6.478180e-01
+[1] "Wald value of optimal path: 19.6751375726825"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 3, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
-               [,1]
- [1,]  4.644676e-01
- [2,]  3.666114e-01
- [3,]  2.792564e-01
- [4,]  2.024027e-01
- [5,]  1.360502e-01
- [6,]  8.019887e-02
- [7,]  3.484882e-02
- [8,] -5.551115e-17
- [9,] -2.434759e-02
-[10,] -3.819396e-02
-[11,] -4.153909e-02
-[12,] -3.438300e-02
-[13,] -1.672567e-02
-[1] "Wald value of optimal path: 188.054742463513"
+            [,1]
+ [1,]  0.4644676
+ [2,]  0.4296187
+ [3,]  0.3842687
+ [4,]  0.3284174
+ [5,]  0.2620649
+ [6,]  0.1852112
+ [7,]  0.0978562
+ [8,]  0.0000000
+ [9,] -0.1083574
+[10,] -0.2272161
+[11,] -0.3565760
+[12,] -0.4964371
+[13,] -0.6467994
+[1] "Wald value of optimal path: 21.026069817483"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 4, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 15.5073130558655"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.2138565
@@ -235,7 +235,7 @@
 [1] "Creating event study for post = 4, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.3065074
@@ -253,7 +253,7 @@
 [1] "Creating event study for post = 4, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.4108669
@@ -272,70 +272,70 @@
 [1] "Creating event study for post = 4, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.871342e-01
- [2,]  3.838513e-01
- [3,]  2.834965e-01
- [4,]  1.860696e-01
- [5,]  9.157081e-02
- [6,]  2.775558e-17
- [7,] -8.864280e-02
- [8,] -1.743576e-01
- [9,] -2.571444e-01
-[10,] -3.370031e-01
-[11,] -4.139339e-01
-[12,] -4.879366e-01
-[1] "Wald value of optimal path: 39.0920107483345"
+ [2,]  3.955634e-01
+ [3,]  3.010646e-01
+ [4,]  2.036377e-01
+ [5,]  1.032829e-01
+ [6,] -8.326673e-17
+ [7,] -1.062109e-01
+ [8,] -2.153498e-01
+ [9,] -3.274167e-01
+[10,] -4.424116e-01
+[11,] -5.603345e-01
+[12,] -6.811855e-01
+[1] "Wald value of optimal path: 19.6751375726825"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 4, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  5.034059e-01
- [2,]  4.055402e-01
- [3,]  3.132604e-01
- [4,]  2.265665e-01
- [5,]  1.454584e-01
- [6,]  6.993628e-02
- [7,] -1.387779e-17
- [8,] -6.435040e-02
- [9,] -1.231149e-01
-[10,] -1.762936e-01
-[11,] -2.238863e-01
-[12,] -2.658932e-01
-[13,] -3.023142e-01
-[1] "Wald value of optimal path: 80.6876269840216"
+ [2,]  4.334696e-01
+ [3,]  3.579474e-01
+ [4,]  2.768394e-01
+ [5,]  1.901455e-01
+ [6,]  9.786567e-02
+ [7,]  1.387779e-17
+ [8,] -1.034516e-01
+ [9,] -2.124890e-01
+[10,] -3.271123e-01
+[11,] -4.473215e-01
+[12,] -5.731166e-01
+[13,] -7.044975e-01
+[1] "Wald value of optimal path: 21.0260698174831"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 4, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.981817e-01
- [2,]  4.063116e-01
- [3,]  3.213419e-01
- [4,]  2.432726e-01
- [5,]  1.721038e-01
- [6,]  1.078354e-01
- [7,]  5.046750e-02
- [8,]  2.775558e-17
- [9,] -4.356707e-02
-[10,] -8.023370e-02
-[11,] -1.099999e-01
-[12,] -1.328656e-01
-[13,] -1.488310e-01
-[14,] -1.578958e-01
-[1] "Wald value of optimal path: 122.111355434008"
+ [2,]  4.477142e-01
+ [3,]  3.903463e-01
+ [4,]  3.260779e-01
+ [5,]  2.549091e-01
+ [6,]  1.768398e-01
+ [7,]  9.187013e-02
+ [8,] -2.775558e-17
+ [9,] -9.877057e-02
+[10,] -2.044416e-01
+[11,] -3.170130e-01
+[12,] -4.364849e-01
+[13,] -5.628572e-01
+[14,] -6.961300e-01
+[1] "Wald value of optimal path: 22.362032494827"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  2.906077e-01
@@ -353,7 +353,7 @@
 [1] "Creating event study for post = 5, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 1"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 2.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.3367674
@@ -372,7 +372,7 @@
 [1] "Creating event study for post = 5, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.871760e-01
@@ -392,73 +392,73 @@
 [1] "Creating event study for post = 5, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.398677e-01
- [2,]  3.437552e-01
- [3,]  2.517122e-01
- [4,]  1.637387e-01
- [5,]  7.983460e-02
- [6,] -1.387779e-17
- [7,] -7.576512e-02
- [8,] -1.474608e-01
- [9,] -2.150869e-01
-[10,] -2.786436e-01
-[11,] -3.381309e-01
-[12,] -3.935486e-01
-[13,] -4.448969e-01
-[1] "Wald value of optimal path: 52.2836759673483"
+ [2,]  3.600331e-01
+ [3,]  2.761291e-01
+ [4,]  1.881555e-01
+ [5,]  9.611249e-02
+ [6,]  1.387779e-17
+ [7,] -1.001820e-01
+ [8,] -2.044334e-01
+ [9,] -3.127543e-01
+[10,] -4.251447e-01
+[11,] -5.416046e-01
+[12,] -6.621339e-01
+[13,] -7.867327e-01
+[1] "Wald value of optimal path: 21.0260698174831"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.516191e-01
- [2,]  3.598577e-01
- [3,]  2.746930e-01
- [4,]  1.961248e-01
- [5,]  1.241533e-01
- [6,]  5.877834e-02
- [7,]  1.387779e-17
- [8,] -5.218173e-02
- [9,] -9.776687e-02
-[10,] -1.367554e-01
-[11,] -1.691473e-01
-[12,] -1.949426e-01
-[13,] -2.141414e-01
-[14,] -2.267435e-01
-[1] "Wald value of optimal path: 101.059738663538"
+ [2,]  3.928407e-01
+ [3,]  3.274658e-01
+ [4,]  2.554943e-01
+ [5,]  1.769261e-01
+ [6,]  9.176136e-02
+ [7,] -1.387779e-17
+ [8,] -9.835796e-02
+ [9,] -2.033125e-01
+[10,] -3.148637e-01
+[11,] -4.330115e-01
+[12,] -5.577558e-01
+[13,] -6.890968e-01
+[14,] -8.270344e-01
+[1] "Wald value of optimal path: 22.3620324948269"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 23.6847913048406"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
-               [,1]
- [1,]  4.818204e-01
- [2,]  3.936668e-01
- [3,]  3.119540e-01
- [4,]  2.366818e-01
- [5,]  1.678503e-01
- [6,]  1.054595e-01
- [7,]  4.950940e-02
- [8,] -5.551115e-17
- [9,] -4.306871e-02
-[10,] -7.969673e-02
-[11,] -1.098840e-01
-[12,] -1.336307e-01
-[13,] -1.509366e-01
-[14,] -1.618018e-01
-[15,] -1.662264e-01
-[1] "Wald value of optimal path: 122.453990826791"
+             [,1]
+ [1,]  0.48182041
+ [2,]  0.43231101
+ [3,]  0.37636091
+ [4,]  0.31397012
+ [5,]  0.24513863
+ [6,]  0.16986645
+ [7,]  0.08815357
+ [8,]  0.00000000
+ [9,] -0.09459427
+[10,] -0.19562922
+[11,] -0.30310488
+[12,] -0.41702123
+[13,] -0.53737827
+[14,] -0.66417601
+[15,] -0.79741444
+[1] "Wald value of optimal path: 23.6847913048406"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.422885e-01
@@ -477,7 +477,7 @@
 [1] "Creating event study for post = 6, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.4346660
@@ -497,7 +497,7 @@
 [1] "Creating event study for post = 6, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.841191e-01
@@ -518,7 +518,7 @@
 [1] "Creating event study for post = 6, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.772756e-01
@@ -540,7 +540,7 @@
 [1] "Creating event study for post = 6, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 23.6847913048406"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.894350e-01
@@ -563,7 +563,7 @@
 [1] "Creating event study for post = 6, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 24.9957901397286"
-[1] "Polynomial order: 4"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 5.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.551185e-01
@@ -587,7 +587,7 @@
 [1] "Creating event study for post = 7, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 2"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 3.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.420306e-01
@@ -607,7 +607,7 @@
 [1] "Creating event study for post = 7, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.4171284
@@ -628,7 +628,7 @@
 [1] "Creating event study for post = 7, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
             [,1]
  [1,]  0.3671941
@@ -650,7 +650,7 @@
 [1] "Creating event study for post = 7, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 23.6847913048406"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.533144e-01
@@ -673,7 +673,7 @@
 [1] "Creating event study for post = 7, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 24.9957901397286"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.382248e-01
@@ -697,7 +697,7 @@
 [1] "Creating event study for post = 7, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 26.2962276048642"
-[1] "Polynomial order: 3"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 4.
 [1] "Smoothest path:"
                [,1]
  [1,]  2.986377e-01
@@ -723,7 +723,7 @@
 [1] "Creating event study for post = 2, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 12.591587243744"
-[1] "Polynomial order: 4"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 5.
 [1] "Smoothest path:"
               [,1]
 [1,] -2.993078e-02
@@ -738,7 +738,7 @@
 [1] "Creating event study for post = 2, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 14.0671404493402"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
               [,1]
 [1,]  2.524549e-01
@@ -754,7 +754,7 @@
 [1] "Creating event study for post = 2, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 15.5073130558655"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.551238e-01
@@ -771,7 +771,7 @@
 [1] "Creating event study for post = 2, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  1.955218e-01
@@ -789,7 +789,7 @@
 [1] "Creating event study for post = 2, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  7.973944e-02
@@ -808,7 +808,7 @@
 [1] "Creating event study for post = 2, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
              [,1]
  [1,]  0.01905300
@@ -828,7 +828,7 @@
 [1] "Creating event study for post = 3, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 14.0671404493402"
-[1] "Polynomial order: 4"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 5.
 [1] "Smoothest path:"
               [,1]
 [1,]  1.998540e-02
@@ -844,7 +844,7 @@
 [1] "Creating event study for post = 3, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 15.5073130558655"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,]  9.085521e-02
@@ -861,7 +861,7 @@
 [1] "Creating event study for post = 3, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -2.307443e-02
@@ -879,7 +879,7 @@
 [1] "Creating event study for post = 3, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  7.230894e-02
@@ -898,7 +898,7 @@
 [1] "Creating event study for post = 3, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  9.547642e-02
@@ -918,7 +918,7 @@
 [1] "Creating event study for post = 3, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
              [,1]
  [1,]  0.05376501
@@ -939,7 +939,7 @@
 [1] "Creating event study for post = 4, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 15.5073130558655"
-[1] "Polynomial order: 4"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 5.
 [1] "Smoothest path:"
                [,1]
  [1,]  1.842916e-02
@@ -956,7 +956,7 @@
 [1] "Creating event study for post = 4, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -4.291878e-02
@@ -974,7 +974,7 @@
 [1] "Creating event study for post = 4, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.553695e-03
@@ -993,7 +993,7 @@
 [1] "Creating event study for post = 4, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -7.696492e-02
@@ -1013,7 +1013,7 @@
 [1] "Creating event study for post = 4, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  2.641723e-02
@@ -1034,7 +1034,7 @@
 [1] "Creating event study for post = 4, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  4.223208e-02
@@ -1056,279 +1056,279 @@
 [1] "Creating event study for post = 5, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 16.9189776046204"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.420755e-01
- [2,] -4.575063e-01
- [3,] -6.938894e-18
- [4,]  6.252897e-01
- [5,]  1.664027e+00
- [6,]  4.339965e+00
- [7,]  1.098222e+01
- [8,]  2.515254e+01
- [9,]  5.177259e+01
-[10,]  9.725119e+01
-[1] "Wald value of optimal path: 1955728.55454437"
+ [2,] -4.553851e-01
+ [3,]  6.938894e-18
+ [4,]  4.534722e-01
+ [5,]  5.779708e-01
+ [6,]  3.627093e-01
+ [7,] -1.409644e-02
+ [8,] -3.125004e-01
+ [9,] -3.580988e-01
+[10,] -1.693020e-01
+[1] "Wald value of optimal path: 16.9189776047781"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
               [,1]
- [1,]   0.05097560
- [2,]  -0.09993518
- [3,]  -0.33321273
- [4,]   0.00000000
- [5,]   1.28847857
- [6,]   5.37779036
- [7,]  17.54703578
- [8,]  48.74545752
- [9,] 118.08891771
-[10,] 255.61624309
-[11,] 505.30543815
-[1] "Wald value of optimal path: 47102523.2172717"
+ [1,]  0.050975602
+ [2,] -0.098491472
+ [3,] -0.310113354
+ [4,]  0.000000000
+ [5,]  0.549298565
+ [6,]  0.866193632
+ [7,]  0.707591226
+ [8,]  0.216557548
+ [9,] -0.179883556
+[10,] -0.132821086
+[11,]  0.006604633
+[1] "Wald value of optimal path: 18.3070380587767"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.438157e-01
- [2,]  6.510389e-02
- [3,] -2.325740e-01
- [4,] -3.294738e-01
- [5,] -2.220446e-16
- [6,]  1.252445e+00
- [7,]  5.053077e+00
- [8,]  1.511818e+01
- [9,]  3.832239e+01
-[10,]  8.587083e+01
-[11,]  1.745760e+02
-[12,]  3.282397e+02
-[1] "Wald value of optimal path: 18227003.7666476"
+ [2,]  6.597751e-02
+ [3,] -2.139367e-01
+ [4,] -2.587105e-01
+ [5,]  2.220446e-16
+ [6,]  3.424236e-01
+ [7,]  5.242278e-01
+ [8,]  4.352392e-01
+ [9,]  1.533279e-01
+[10,] -1.065407e-01
+[11,] -1.480905e-01
+[12,] -5.435210e-02
+[1] "Wald value of optimal path: 19.6751375730786"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
-              [,1]
- [1,]  -0.24054723
- [2,]  -0.04997396
- [3,]  -0.29437470
- [4,]  -0.45900384
- [5,]  -0.40267818
- [6,]   0.00000000
- [7,]   1.26374250
- [8,]   4.74499724
- [9,]  13.14169293
-[10,]  31.04030626
-[11,]  65.51025164
-[12,] 126.74559354
-[13,] 228.75408139
-[1] "Wald value of optimal path: 10122840.3025532"
+               [,1]
+ [1,] -2.405472e-01
+ [2,] -4.944815e-02
+ [3,] -2.817553e-01
+ [4,] -3.951184e-01
+ [5,] -2.680718e-01
+ [6,]  8.881784e-16
+ [7,]  2.415752e-01
+ [8,]  3.263847e-01
+ [9,]  2.194792e-01
+[10,] -8.025335e-03
+[11,] -2.155261e-01
+[12,] -2.768332e-01
+[13,] -2.113928e-01
+[1] "Wald value of optimal path: 21.0260698177593"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 7"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 8.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.769939e-01
- [2,] -2.953316e-01
- [3,] -1.299939e-01
- [4,] -2.997783e-01
- [5,] -7.140168e-01
- [6,] -9.860409e-01
- [7,]  3.552714e-15
- [8,]  5.477722e+00
- [9,]  2.325125e+01
-[10,]  6.932091e+01
-[11,]  1.727905e+02
-[12,]  3.821652e+02
-[13,]  7.731485e+02
-[14,]  1.458047e+03
-[1] "Wald value of optimal path: 384077442.942144"
+ [2,] -2.951158e-01
+ [3,] -1.189454e-01
+ [4,] -2.053912e-01
+ [5,] -3.604647e-01
+ [6,] -3.116937e-01
+ [7,] -3.552714e-15
+ [8,]  4.002011e-01
+ [9,]  6.239193e-01
+[10,]  5.127681e-01
+[11,]  1.576449e-01
+[12,] -1.218459e-01
+[13,] -6.998716e-02
+[14,] -1.683163e-01
+[1] "Wald value of optimal path: 22.3620324731359"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 5, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 23.6847913048406"
-[1] "Polynomial order: 7"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 8.
 [1] "Smoothest path:"
                [,1]
  [1,] -2.643265e-01
- [2,] -5.083809e-01
- [3,] -1.933280e-01
- [4,] -2.298864e-01
- [5,] -6.979930e-01
- [6,] -1.386178e+00
- [7,] -1.719297e+00
- [8,]  3.552714e-15
- [9,]  8.110671e+00
-[10,]  3.194818e+01
-[11,]  8.910951e+01
-[12,]  2.097029e+02
-[13,]  4.416568e+02
-[14,]  8.571631e+02
-[15,]  1.560329e+03
-[1] "Wald value of optimal path: 426077269.380721"
+ [2,] -5.082032e-01
+ [3,] -1.838530e-01
+ [4,] -1.435452e-01
+ [5,] -3.341517e-01
+ [6,] -4.608819e-01
+ [7,] -3.378370e-01
+ [8,] -3.552714e-15
+ [9,]  3.487243e-01
+[10,]  4.768012e-01
+[11,]  2.810760e-01
+[12,] -1.171149e-01
+[13,] -4.103483e-01
+[14,] -3.526478e-01
+[15,] -2.907646e-01
+[1] "Wald value of optimal path: 23.6847913229837"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 18.3070380532751"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.157467e-01
- [2,] -4.141447e-01
- [3,] -1.734723e-17
- [4,]  5.727015e-01
- [5,]  1.465614e+00
- [6,]  3.660480e+00
- [7,]  9.063578e+00
- [8,]  2.061017e+01
- [9,]  4.236895e+01
-[10,]  7.964648e+01
-[11,]  1.390917e+02
-[1] "Wald value of optimal path: 3899194.95171393"
+ [2,] -4.124039e-01
+ [3,]  1.734723e-17
+ [4,]  4.316971e-01
+ [5,]  5.743272e-01
+ [6,]  3.964900e-01
+ [7,]  3.929792e-02
+ [8,] -2.880721e-01
+ [9,] -4.128259e-01
+[10,] -3.030000e-01
+[11,] -1.719094e-01
+[1] "Wald value of optimal path: 18.3070380535903"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,]  3.009810e-02
- [2,] -1.535270e-01
- [3,] -2.482629e-01
- [4,]  8.326673e-17
- [5,]  6.880233e-01
- [6,]  2.482523e+00
- [7,]  7.453008e+00
- [8,]  2.001015e+01
- [9,]  4.794968e+01
-[10,]  1.036018e+02
-[11,]  2.050864e+02
-[12,]  3.776729e+02
-[1] "Wald value of optimal path: 27124067.6415217"
+ [2,] -1.529407e-01
+ [3,] -2.388821e-01
+ [4,] -8.326673e-17
+ [5,]  3.878387e-01
+ [6,]  6.503422e-01
+ [7,]  6.144290e-01
+ [8,]  3.023292e-01
+ [9,] -7.984757e-02
+[10,] -2.590783e-01
+[11,] -1.179260e-01
+[12,] -2.257243e-02
+[1] "Wald value of optimal path: 19.6751375732476"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.709256e-01
- [2,] -1.541917e-01
- [3,] -3.718323e-01
- [4,] -3.568760e-01
- [5,]  1.110223e-16
- [6,]  1.001480e+00
- [7,]  3.769934e+00
- [8,]  1.094906e+01
- [9,]  2.748082e+01
-[10,]  6.145774e+01
-[11,]  1.250504e+02
-[12,]  2.355106e+02
-[13,]  4.162490e+02
-[1] "Wald value of optimal path: 32365395.7050668"
+ [2,] -1.535640e-01
+ [3,] -3.584433e-01
+ [4,] -3.060393e-01
+ [5,] -1.110223e-16
+ [6,]  3.477166e-01
+ [7,]  5.163901e-01
+ [8,]  4.007719e-01
+ [9,]  6.000613e-02
+[10,] -3.087627e-01
+[11,] -4.720964e-01
+[12,] -3.372826e-01
+[13,] -2.046680e-01
+[1] "Wald value of optimal path: 21.0260698185795"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,] -2.944278e-01
- [2,] -7.846354e-02
- [3,] -2.628504e-01
- [4,] -3.951924e-01
- [5,] -3.396000e-01
- [6,]  3.330669e-16
- [7,]  9.918470e-01
- [8,]  3.623621e+00
- [9,]  9.885012e+00
-[10,]  2.318558e+01
-[11,]  4.880790e+01
-[12,]  9.439603e+01
-[13,]  1.704792e+02
-[14,]  2.910309e+02
-[1] "Wald value of optimal path: 16158032.6083761"
+ [2,] -7.807139e-02
+ [3,] -2.534390e-01
+ [4,] -3.475474e-01
+ [5,] -2.392121e-01
+ [6,] -3.330669e-16
+ [7,]  2.295262e-01
+ [8,]  3.282702e-01
+ [9,]  2.477717e-01
+[10,]  3.008422e-02
+[11,] -2.096410e-01
+[12,] -3.358626e-01
+[13,] -2.806499e-01
+[14,] -1.669765e-01
+[1] "Wald value of optimal path: 22.3620324941263"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 23.6847913048406"
-[1] "Polynomial order: 7"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 8.
 [1] "Smoothest path:"
                [,1]
- [1,]    0.05436816
- [2,]    0.05891293
- [3,]    0.08444175
- [4,]   -0.09137254
- [5,]   -0.35828853
- [6,]   -0.49211440
- [7,]    0.00000000
- [8,]    2.45339577
- [9,]   10.08466096
-[10,]   29.54110838
-[11,]   73.00677393
-[12,]  160.91073394
-[13,]  325.28354020
-[14,]  613.80757119
-[15,] 1094.60709813
-[1] "Wald value of optimal path: 203001365.108413"
+ [1,]  5.436816e-02
+ [2,]  5.900380e-02
+ [3,]  8.909431e-02
+ [4,] -5.162592e-02
+ [5,] -2.094068e-01
+ [6,] -2.081450e-01
+ [7,]  1.776357e-15
+ [8,]  3.152379e-01
+ [9,]  5.562290e-01
+[10,]  5.658158e-01
+[11,]  3.106074e-01
+[12,] -7.138284e-02
+[13,] -3.208449e-01
+[14,] -2.508226e-01
+[15,] -1.297073e-01
+[1] "Wald value of optimal path: 23.6847913005772"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 6, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 24.9957901397286"
-[1] "Polynomial order: 7"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 8.
 [1] "Smoothest path:"
                [,1]
  [1,] -9.747074e-02
- [2,] -2.520137e-01
- [3,] -7.540844e-02
- [4,] -1.156115e-01
- [5,] -4.075506e-01
- [6,] -8.013477e-01
- [7,] -9.617083e-01
- [8,] -1.776357e-15
- [9,]  4.299455e+00
-[10,]  1.669735e+01
-[11,]  4.620010e+01
-[12,]  1.082818e+02
-[13,]  2.276658e+02
-[14,]  4.417044e+02
-[15,]  8.043956e+02
-[16,]  1.391074e+03
-[1] "Wald value of optimal path: 316174096.723576"
+ [2,] -2.519221e-01
+ [3,] -7.052255e-02
+ [4,] -7.108873e-02
+ [5,] -2.199321e-01
+ [6,] -3.242094e-01
+ [7,] -2.493446e-01
+ [8,] -5.329071e-15
+ [9,]  2.969285e-01
+[10,]  4.688145e-01
+[11,]  3.948273e-01
+[12,]  8.600262e-02
+[13,] -2.906155e-01
+[14,] -4.822410e-01
+[15,] -3.534951e-01
+[16,] -2.609154e-01
+[1] "Wald value of optimal path: 24.9957901290557"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 7, pre = 2"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 19.6751375726825"
-[1] "Polynomial order: 5"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 6.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.037471e-01
- [2,] -4.031125e-01
- [3,] -4.163336e-17
- [4,]  5.710355e-01
- [5,]  1.397199e+00
- [6,]  3.275269e+00
- [7,]  7.799402e+00
- [8,]  1.744895e+01
- [9,]  3.567627e+01
-[10,]  6.699454e+01
-[11,]  1.170655e+02
-[12,]  1.927875e+02
-[1] "Wald value of optimal path: 7500482.22548014"
+ [2,] -4.016490e-01
+ [3,] -1.387779e-17
+ [4,]  4.524909e-01
+ [5,]  6.478805e-01
+ [6,]  5.311807e-01
+ [7,]  2.125478e-01
+ [8,] -1.205286e-01
+ [9,] -2.910361e-01
+[10,] -2.202506e-01
+[11,] -1.554677e-02
+[12,] -5.820924e-02
+[1] "Wald value of optimal path: 19.6751375731975"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 7, pre = 3"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 21.0260698174831"
-[1] "Polynomial order: 7"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 8.
 [1] "Smoothest path:"
                [,1]
  [1,] -7.431204e-03
@@ -1349,76 +1349,76 @@
 [1] "Creating event study for post = 7, pre = 4"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 22.3620324948269"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.420620e-01
- [2,] -1.633994e-01
- [3,] -3.388952e-01
- [4,] -3.093005e-01
- [5,] -1.665335e-16
- [6,]  7.964702e-01
- [7,]  2.893979e+00
- [8,]  8.242429e+00
- [9,]  2.051346e+01
-[10,]  4.574225e+01
-[11,]  9.302531e+01
-[12,]  1.752745e+02
-[13,]  3.100269e+02
-[14,]  5.203111e+02
-[1] "Wald value of optimal path: 54073935.7345648"
+ [2,] -1.629321e-01
+ [3,] -3.289265e-01
+ [4,] -2.714504e-01
+ [5,]  1.665335e-16
+ [6,]  3.097148e-01
+ [7,]  4.715720e-01
+ [8,]  3.887661e-01
+ [9,]  9.746121e-02
+[10,] -2.456285e-01
+[11,] -4.317338e-01
+[12,] -3.245996e-01
+[13,] -4.112734e-02
+[14,] -1.880927e-01
+[1] "Wald value of optimal path: 22.3620324947412"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 7, pre = 5"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 23.6847913048406"
-[1] "Polynomial order: 6"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 7.
 [1] "Smoothest path:"
                [,1]
  [1,] -1.917588e-01
- [2,] -4.512397e-02
- [3,] -2.718592e-01
- [4,] -4.193103e-01
- [5,] -3.576682e-01
- [6,]  3.330669e-16
- [7,]  1.013174e+00
- [8,]  3.664755e+00
- [9,]  9.947393e+00
-[10,]  2.328527e+01
-[11,]  4.899133e+01
-[12,]  9.475996e+01
-[13,]  1.711951e+02
-[14,]  2.923740e+02
-[15,]  4.764460e+02
-[1] "Wald value of optimal path: 43430421.5574866"
+ [2,] -4.473005e-02
+ [3,] -2.624051e-01
+ [4,] -3.714491e-01
+ [5,] -2.568249e-01
+ [6,]  5.551115e-16
+ [7,]  2.473948e-01
+ [8,]  3.544536e-01
+ [9,]  2.664312e-01
+[10,]  2.472559e-02
+[11,] -2.485919e-01
+[12,] -4.016993e-01
+[13,] -3.393992e-01
+[14,] -1.449473e-01
+[15,] -2.373329e-01
+[1] "Wald value of optimal path: 23.6847913034197"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 7, pre = 6"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 24.9957901397286"
-[1] "Polynomial order: 7"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 8.
 [1] "Smoothest path:"
                [,1]
  [1,] -5.819809e-02
- [2,] -7.072343e-02
- [3,] -9.374914e-02
- [4,] -2.251220e-01
- [5,] -3.757629e-01
- [6,] -4.043447e-01
- [7,]  6.661338e-16
- [8,]  1.718076e+00
- [9,]  6.915260e+00
-[10,]  2.010151e+01
-[11,]  4.956789e+01
-[12,]  1.092307e+02
-[13,]  2.209145e+02
-[14,]  4.171047e+02
-[15,]  7.442019e+02
-[16,]  1.266307e+03
-[1] "Wald value of optimal path: 278822667.787951"
+ [2,] -7.066166e-02
+ [3,] -9.058629e-02
+ [4,] -1.981019e-01
+ [5,] -2.745518e-01
+ [6,] -2.112998e-01
+ [7,] -6.661338e-16
+ [8,]  2.645377e-01
+ [9,]  4.377505e-01
+[10,]  4.038605e-01
+[11,]  1.484141e-01
+[12,] -2.063133e-01
+[13,] -4.341801e-01
+[14,] -3.374432e-01
+[15,] -9.559267e-03
+[16,] -2.596573e-01
+[1] "Wald value of optimal path: 24.9957901390664"
 [1] "Smoothest path found successfully"
 [1] "Creating event study for post = 7, pre = 7"
 [1] "Creating event study plot"
 [1] "Critical Wald value: 26.2962276048642"
-[1] "Polynomial order: 8"
+Smoothest path note: The lowest order such that a polynomial is in confidence region is 9.
 [1] "Smoothest path:"
                [,1]
  [1,] -7.116694e-02

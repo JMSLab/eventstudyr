@@ -12,20 +12,20 @@ that the order of the computed polynomial equals `order`+1.
 - The solver converges in all 72 cases.
 - A computation is successful if the absolute difference between the
   Wald critical value and the Wald optimal value is less than 0.1. There
-  were 41 successes.
+  were 72 successes.
 
 Order found and number of successes, by outcome:
 
 | yvar       | order | Num_found | Num_success |
 |:-----------|------:|----------:|------------:|
 | y_smooth_m |     1 |         7 |           7 |
-| y_smooth_m |     2 |        18 |           3 |
+| y_smooth_m |     2 |        18 |          18 |
 | y_smooth_m |     3 |        10 |          10 |
 | y_smooth_m |     4 |         1 |           1 |
 | y_jump_m   |     4 |         3 |           3 |
-| y_jump_m   |     5 |        10 |           7 |
-| y_jump_m   |     6 |        16 |           8 |
-| y_jump_m   |     7 |         6 |           1 |
+| y_jump_m   |     5 |        10 |          10 |
+| y_jump_m   |     6 |        16 |          16 |
+| y_jump_m   |     7 |         6 |           6 |
 | y_jump_m   |     8 |         1 |           1 |
 
 ## Smooth outcome

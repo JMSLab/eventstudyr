@@ -5,21 +5,21 @@
 #' to the estimation output from [EventStudy()].
 #' At a minimum, it contains a column called "term" with the name for the coefficient and a
 #' column called "estimate" that contains the corresponding estimate. Should be a data.frame.
-#' @param policyvar Variable indicating policy variable z, should be a character.
-#' @param post The number of periods in the past before which the past values of the policy
-#' are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
-#' Freyaldenhoven et al. (forthcoming).
-#' @param overidpost Optional number of event times after "post" to be included in estimation. Defaults to 1.
-#' Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
-#' @param pre Number of periods in the future after which the future values of the policy are
-#' not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
-#' Freyaldenhoven et al. (forthcoming).
-#' @param overidpre Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-#' Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param policyvar Character indicating column of policy variable z.
+# @param post Whole number indicating the number of periods in the past before which the past values of the policy
+#' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation. Defaults to 1.
+#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW
+#' @param pre Whole number indicating the number of periods in the future after which the future values of the policy are
+#' not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' @param overidpre Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
+#' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param normalization_column The name of the column containing the coefficient that will
 #' be set to 0 in the eventstudy plot. Should be a character.
-#' @param proxyIV Variables to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
-#' Should be a character.If NULL, defaults to the strongest lead of the policy variable based on the first stage.
+#' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+#' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #'
 #' @return A data.frame that contains the x-axis labels, y-axis estimates,
 #' and optional plot aesthetics to be used in creating the eventstudy plot

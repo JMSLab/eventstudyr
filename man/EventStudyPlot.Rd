@@ -10,14 +10,14 @@ EventStudyPlot(
   ytitle = "Coefficient",
   ybreaks = NULL,
   conf_level = 0.95,
-  Supt = 0.95,
+  supt = 0.95,
   num_sim = 1000,
   seed = 1234,
-  Addmean = FALSE,
-  Preeventcoeffs = TRUE,
-  Posteventcoeffs = TRUE,
-  Addzeroline = TRUE,
-  Smpath = FALSE
+  add_mean = FALSE,
+  pre_event_coeffs = TRUE,
+  post_event_coeffs = TRUE,
+  add_zero_line = TRUE,
+  smpath = FALSE
 )
 }
 \arguments{
@@ -29,12 +29,12 @@ EventStudyPlot(
 
 \item{ybreaks}{A vector containing the desired breaks for the y-axis.
 Defaults to NULL, which means the breaks are computed automatically.
-If custom breaks are selected with the \code{Addmean} argument set to TRUE, then the breaks must include zero.}
+If custom breaks are selected with the \code{add_mean} argument set to TRUE, then the breaks must include zero.}
 
 \item{conf_level}{Confidence level used for confidence interval
 expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.}
 
-\item{Supt}{The confidence level used for obtaining the sup-t bands critical value.
+\item{supt}{The confidence level used for obtaining the sup-t bands critical value.
 Should be a real number between 0 and 1, inclusive. Defaults to .95.}
 
 \item{num_sim}{The number of simulations used in generating the sup-t bands.
@@ -43,19 +43,19 @@ Should be a natural number. Defaults to 1000.}
 \item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible.
 Should be a natural number. Defaults to 1234.}
 
-\item{Addmean}{Adds the mean of the dependent variable in the period used for normalization.
+\item{add_mean}{Adds the mean of the dependent variable in the period used for normalization.
 Should be TRUE or FALSE. Defaults to FALSE.  # Can we change the following variable names into snake case like conf_level for consistency? - MZW}
 
-\item{Preeventcoeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends.
+\item{pre_event_coeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 Should be TRUE or FALSE. Defaults to TRUE.}
 
-\item{Posteventcoeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
+\item{post_event_coeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
 Should be TRUE or FALSE. Defaults to TRUE.}
 
-\item{Addzeroline}{Whether or not to plot a dashed horizontal line at y = 0.
+\item{add_zero_line}{Whether or not to plot a dashed horizontal line at y = 0.
 Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.}
 
-\item{Smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
+\item{smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
 Should be TRUE or FALSE. Defaults to FALSE.}
 }
 \value{
@@ -93,14 +93,14 @@ EventStudyPlot(
   ytitle = "Coefficient",
   ybreaks = c(-1.5, -.5, 0, .5, 1.5),
   conf_level = .95,
-  Supt = .95,
+  supt = .95,
   num_sim = 1000,
   seed = 1234,
-  Addmean = FALSE,
-  Preeventcoeffs = TRUE,
-  Posteventcoeffs = TRUE,
-  Addzeroline = TRUE,
-  Smpath = FALSE
+  add_mean = FALSE,
+  pre_event_coeffs = TRUE,
+  post_event_coeffs = TRUE,
+  add_zero_line = TRUE,
+  smpath = FALSE
 )
 
 # This OLS example gives a warning message: Removed 1 rows containing missing values (geom_segment).
@@ -133,14 +133,14 @@ EventStudyPlot(
   ytitle = "Coefficient",
   ybreaks = seq(-5, 10, 5),
   conf_level = .95,
-  Supt = .95,
+  supt = .95,
   num_sim = 1000,
   seed = 1234,
-  Addmean = FALSE,
-  Preeventcoeffs = TRUE,
-  Posteventcoeffs = TRUE,
-  Addzeroline = TRUE,
-  Smpath = FALSE
+  add_mean = FALSE,
+  pre_event_coeffs = TRUE,
+  post_event_coeffs = TRUE,
+  add_zero_line = TRUE,
+  smpath = FALSE
 )
 
 # This IV example gives a warning message: "Removed 2 rows containing missing values (geom_segment)."

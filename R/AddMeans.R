@@ -1,9 +1,9 @@
 #' Adds the mean of the outcome variable for unit-time pairs where the variable whose coefficient is normalized is non-zero.
 #'
 #' @param df Data frame containing the additional variables created for estimation.
-#' @param normalization_column Variable whose coefficient will be normalized.
-#' @param policyvar Variable indicating policy variable z, should be a character.
-#' @param outcomevar Variable indicating outcome variable y, should be a character.
+#' @param normalization_column Character indicating variable whose coefficient will be normalized.
+#' @param policyvar Character indicating column of policy variable z.
+#' @param outcomevar Character indicating column of outcome variable y.
 #' @param custom_scalar Scalar to be displayed along y = 0 line if the user doesn't want the mean computed by the package.
 #' @keywords internal
 #' @noRd

@@ -2,15 +2,15 @@
 #' Prepares a formula object for use in [EventStudyOLS()] or [EventStudyFHS()]
 
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
-#' @param outcomevar Variable indicating outcome variable y, should be a character.
-#' @param str_policy_fd Vector indicating leads and lags of first differenced policy variable z with the (pre +1)th term omitted for normalization, should be a string.
-#' @param str_policy_lead Variable indicating the (pre + overidpre)th lead of the policy variable z, should be a character.
-#' @param str_policy_lag Variable indicating the (post + overidpost)th lag of the policy variable z, should be a character.
-#' @param controls Optional vector of controls q, should be a character.
-#' @param proxy Variable that is thought to be affected by the confound but not by the policy.
-#' Should be specified if and only if estimator is specified as "FHS". Should be a character.
-#'  @param proxyIV Variables to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
-#' Should be a character.If NULL, defaults to the strongest lead of the policy variable based on the first stage.
+#' @param outcomevar Character indicating column of outcome variable y.
+#' @param str_policy_fd Character indicating vector of leads and lags of first differenced policy variable z with the (pre +1)th term omitted for normalization.
+#' @param str_policy_lead Character indicating variable of the (pre + overidpre)th lead of the policy variable z.
+#' @param str_policy_lag Character indicating variable of the (post + overidpost)th lag of the policy variable z.
+#' @param controls Character indicating optional vector of controls q.
+#' @param proxy Character indicating column of variable that is thought to be affected by the confound but not by the policy.
+#' Should be specified if and only if estimator is specified as "FHS".
+#' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+#' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #' @return A formula object to be passed to EventStudy
 #' @rawNamespace import(stats, except=c(lag, filter))
 #'

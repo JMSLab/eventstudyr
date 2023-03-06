@@ -1,9 +1,9 @@
 #' Adds lags of a variable as new columns
 #'
 #' @param df Data frame that will be modified.
-#' @param groupvar Optional grouping variable, should be a character.
-#' @param timevar Variable indicating time periods, should be a character.
-#' @param lagvar Variable whose lags will be added, should be a character.
+#' @param groupvar Character indicating column of optional grouping variable.
+#' @param timevar Character indicating column of time periods.
+#' @param lagvar Character indicating column of variable whose lags will be added.
 #' @param lags Numeric vector specifying the lags to be computed.
 #'
 #' @seealso \link[data.table]{shift}

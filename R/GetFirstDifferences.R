@@ -1,9 +1,9 @@
 #' Adds first difference of a variable as a new column
 #'
 #' @param df Data frame that will be modified
-#' @param groupvar Optional grouping variable, should be a character.
-#' @param timevar Variable indicating time periods, should be a character.
-#' @param diffvar Variable whose first difference will be taken, should be a character.
+#' @param groupvar Character indicating column of optional grouping variable.
+#' @param timevar Character indicating column of time periods.
+#' @param diffvar Character indicating column of variable whose first difference will be taken.
 #'
 #' @seealso [data.table::shift()]  # Not sure what this is referencing? The link doesn't show up - MZW
 #'

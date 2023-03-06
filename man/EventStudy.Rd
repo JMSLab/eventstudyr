@@ -26,48 +26,48 @@ EventStudy(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.}
 
-\item{data}{The data frame that contains the variables of interest.  # To keep consistency across descriptions, get rid of "the" - MZW}
+\item{data}{Data frame that contains the variables of interest.}
 
-\item{outcomevar}{Variable indicating outcome variable y, should be a character. # Instead of "should be a character" change to "Character for variable indicating ..." for concision? - MZW}
+\item{outcomevar}{Character indicating column of outcome variable y. # Instead of "should be a character" change to "Character for variable indicating ..." for concision? - MZW}
 
-\item{policyvar}{Variable indicating policy variable z, should be a character.}
+\item{policyvar}{Character indicating column of policy variable z.}
 
-\item{idvar}{Variable indicating units, should be a character.}
+\item{idvar}{Character indicating column of units.}
 
-\item{timevar}{Variable indicating time periods, should be a character.}
+\item{timevar}{Character indicating column of time periods.}
 
-\item{controls}{Optional vector of controls q, should be a character. # What is the q for? - MZW}
+\item{controls}{Character indicating optional vector of controls q. # What is the q for? - MZW}
 
-\item{proxy}{Variable that is thought to be affected by the confound but not by the policy.
-Should be specified if and only if estimator is specified as "FHS". Should be a character.}
+\item{proxy}{Character indicating column of variable that is thought to be affected by the confound but not by the policy.
+Should be specified if and only if estimator is specified as "FHS".}
 
-\item{proxyIV}{Variables to be used as an instrument. Should be a character. If NULL,
-defaults to the strongest lead of the policy variable based on the first stage.}
+\item{proxyIV}{Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+If NULL, defaults to the strongest lead of the policy variable based on the first stage.}
 
 \item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
 
 \item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
 
-\item{post}{The number of periods in the past before which the past values of the policy
-are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
+\item{post}{Whole number indicating the number of periods in the past before which the past values of the policy
+are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
 \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
-\item{overidpost}{Optional number of event times after "post" to be included in estimation. Defaults to 1.
-Should be a whole number. Corresponds to L_M in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW}
+\item{overidpost}{Optional whole number indicating the number of event times after "post" to be included in estimation. Defaults to 1.
+Corresponds to L_M in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW}
 
-\item{pre}{Number of periods in the future after which the future values of the policy are
-not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
+\item{pre}{Whole number indicating the number of periods in the future after which the future values of the policy are
+not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
 \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
-\item{overidpre}{Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-Should be a whole number. Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
+\item{overidpre}{Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
+Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 
 \item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-heteroskedasticity-robust standard errors. Defaults to TRUE.}
+heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE is TRUE.}
 
 \item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
 when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE  # This variable name is very long - MZW}

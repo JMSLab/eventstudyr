@@ -5,24 +5,24 @@
 #' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis.
 #' Defaults to NULL, which means the breaks are computed automatically.
-#' If custom breaks are selected with the `Addmean` argument set to TRUE, then the breaks must include zero.
+#' If custom breaks are selected with the `add_mean` argument set to TRUE, then the breaks must include zero.
 #' @param conf_level Confidence level used for confidence interval
 #' expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.
-#' @param Supt The confidence level used for obtaining the sup-t bands critical value.
+#' @param supt The confidence level used for obtaining the sup-t bands critical value.
 #' Should be a real number between 0 and 1, inclusive. Defaults to .95.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
 #' Should be a natural number. Defaults to 1000.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
 #' Should be a natural number. Defaults to 1234.
-#' @param Addmean Adds the mean of the dependent variable in the period used for normalization.
+#' @param add_mean Adds the mean of the dependent variable in the period used for normalization.
 #' Should be TRUE or FALSE. Defaults to FALSE.  # Can we change the following variable names into snake case like conf_level for consistency? - MZW
-#' @param Preeventcoeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
+#' @param pre_event_coeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 #' Should be TRUE or FALSE. Defaults to TRUE.
-#' @param Posteventcoeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
+#' @param post_event_coeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Should be TRUE or FALSE. Defaults to TRUE.
-#' @param Addzeroline Whether or not to plot a dashed horizontal line at y = 0.
+#' @param add_zero_line Whether or not to plot a dashed horizontal line at y = 0.
 #' Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.
-#' @param Smpath Plot smoothest path of confounder that rationalizes event study coefficients.
+#' @param smpath Plot smoothest path of confounder that rationalizes event study coefficients.
 #' Should be TRUE or FALSE. Defaults to FALSE.
 #'
 #' @return The Event-Study plot as a gpplot2 object
@@ -60,14 +60,14 @@
 #'   ytitle = "Coefficient",
 #'   ybreaks = c(-1.5, -.5, 0, .5, 1.5),
 #'   conf_level = .95,
-#'   Supt = .95,
+#'   supt = .95,
 #'   num_sim = 1000,
 #'   seed = 1234,
-#'   Addmean = FALSE,
-#'   Preeventcoeffs = TRUE,
-#'   Posteventcoeffs = TRUE,
-#'   Addzeroline = TRUE,
-#'   Smpath = FALSE
+#'   add_mean = FALSE,
+#'   pre_event_coeffs = TRUE,
+#'   post_event_coeffs = TRUE,
+#'   add_zero_line = TRUE,
+#'   smpath = FALSE
 #')
 #'
 #' # This OLS example gives a warning message: Removed 1 rows containing missing values (geom_segment).
@@ -100,27 +100,27 @@
 #'   ytitle = "Coefficient",
 #'   ybreaks = seq(-5, 10, 5),
 #'   conf_level = .95,
-#'   Supt = .95,
+#'   supt = .95,
 #'   num_sim = 1000,
 #'   seed = 1234,
-#'   Addmean = FALSE,
-#'   Preeventcoeffs = TRUE,
-#'   Posteventcoeffs = TRUE,
-#'   Addzeroline = TRUE,
-#'   Smpath = FALSE
+#'   add_mean = FALSE,
+#'   pre_event_coeffs = TRUE,
+#'   post_event_coeffs = TRUE,
+#'   add_zero_line = TRUE,
+#'   smpath = FALSE
 #')
 #'
 #' # This IV example gives a warning message: "Removed 2 rows containing missing values (geom_segment)."
 
 EventStudyPlot <- function(estimates,
                            xtitle = "Event time", ytitle = "Coefficient", ybreaks = NULL,
-                           conf_level = .95, Supt = .95, num_sim = 1000, seed = 1234,
-                           Addmean = FALSE, Preeventcoeffs = TRUE, Posteventcoeffs = TRUE,
-                           Addzeroline = TRUE, Smpath = FALSE) {
+                           conf_level = .95, supt = .95, num_sim = 1000, seed = 1234,
+                           add_mean = FALSE, pre_event_coeffs = TRUE, post_event_coeffs = TRUE,
+                           add_zero_line = TRUE, smpath = FALSE) {
 
     if (!is.character(xtitle))    {stop("Argument 'xtitle' should be a character.")}
     if (!is.character(ytitle))    {stop("Argument 'ytitle' should be a character.")}
-    if (!is.logical(Addzeroline)) {stop("Argument 'Addzeroline' should be either TRUE or FALSE.")}
+    if (!is.logical(add_zero_line)) {stop("Argument 'add_zero_line' should be either TRUE or FALSE.")}
     if (!is.null(ybreaks) &
         !is.numeric(ybreaks))     {stop("Argument 'ybreaks' should be NULL or a numeric vector.")}
 
@@ -143,10 +143,10 @@ EventStudyPlot <- function(estimates,
 
 # Optionally Add Suptbands/Confidence Intervals ---------------------------
 
-    plot_Supt <- if(!is.null(Supt)) TRUE else FALSE
+    plot_supt <- if(!is.null(supt)) TRUE else FALSE
 
-    if (plot_Supt) {
-        df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = Supt,
+    if (plot_supt) {
+        df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = supt,
                                          seed = seed, eventstudy_coefficients = eventstudy_coefficients)
     }
 
@@ -154,14 +154,14 @@ EventStudyPlot <- function(estimates,
 
     if (plot_CI) {
 
-        df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
+        df_estimates_tidy <- AddCIs(df_estimates_tidy, eventstudy_coefficients, conf_level)
     }
 
 # Optionally Test For Pretrends/Levelling-Off -------------------------------
 
-    df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
+    df_test_linear <- TestLinear(estimates = estimates, pretrends = pre_event_coeffs, leveling_off = post_event_coeffs)
 
-    if (Preeventcoeffs & Posteventcoeffs) {
+    if (pre_event_coeffs & post_event_coeffs) {
 
         pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]
         levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
@@ -170,13 +170,13 @@ EventStudyPlot <- function(estimates,
         text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
         text_caption     <- paste0(text_pretrends, " -- ", text_levelingoff)
 
-    } else if (Preeventcoeffs & !Posteventcoeffs) {
+    } else if (pre_event_coeffs & !post_event_coeffs) {
 
         pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
 
         text_caption <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
 
-    } else if (!Preeventcoeffs & Posteventcoeffs) {
+    } else if (!pre_event_coeffs & post_event_coeffs) {
 
         levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
 
@@ -193,7 +193,7 @@ EventStudyPlot <- function(estimates,
 # Construct y breaks ------------------------------------------------------
 
     if (!is.null(ybreaks)) {
-        if (!(0 %in% ybreaks) & Addmean) {
+        if (!(0 %in% ybreaks) & add_mean) {
             stop("If you want to add the mean of y in the y-axis then 'ybreaks' must include 0.")
         }
 
@@ -243,7 +243,7 @@ EventStudyPlot <- function(estimates,
 
 # Optionally Adds Mean ----------------------------------------------------
 
-    if (Addmean) {
+    if (add_mean) {
 
         y_mean <- AddMeans(df_data, normalization_column, policyvar, outcomevar)
 
@@ -258,7 +258,7 @@ EventStudyPlot <- function(estimates,
     data.table::setorder(df_plt, label)
     ordered_labels <- df_plt$label
 
-    if (Smpath) {
+    if (smpath) {
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
@@ -279,12 +279,12 @@ EventStudyPlot <- function(estimates,
     plt <- ggplot(df_plt,
                   aes(x = .data$label_num, y = .data$estimate))
 
-    if (Addzeroline) {
+    if (add_zero_line) {
         plt <- plt +
             geom_hline(yintercept = 0,
                        color = "green", linetype = "dashed")
     }
-    if (plot_Supt) {
+    if (plot_supt) {
         plt <- plt +
             geom_linerange(aes(ymin = .data$suptband_lower,
                                ymax = .data$suptband_upper),
@@ -297,7 +297,7 @@ EventStudyPlot <- function(estimates,
                               data = df_plt[df_plt$estimate != 0,],
                               width = .2)
     }
-    if (Smpath) {
+    if (smpath) {
         plt <- plt +
             geom_line(aes(y = .data$smoothest_path, group = 1),
                       color = "black")

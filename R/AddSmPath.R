@@ -6,7 +6,7 @@
 #' @param coefficients Event-study coefficients (must include coefficients normalized in estimation).
 #' @param inv_covar Inverse of covariance matrix of coefficients (must include row and column of zeros for normalized coefficients).
 #' @param conf_level Confidence level to define critical value of Wald region. Should be a real number between 0 and 1, inclusive. Defaults to 0.95.
-#' @param maxorder Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.
+#' @param max_order Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.
 #' @param maxiter_solver Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 1e6.
 #'
 #' @return df with smoothest path added as a new column
@@ -15,13 +15,13 @@
 #' @noRd
 
 AddSmPath <- function(df, coefficients, inv_covar,
-                      conf_level = 0.95, maxorder = 10, maxiter_solver = 1e6){
+                      conf_level = 0.95, max_order = 10, maxiter_solver = 1e6){
 
     if (!is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {
         stop("Argument 'conf_level' should be a real number between 0 and 1, inclusive.")
     }
-    if (!(maxorder%%1 == 0) | maxorder < 0 | maxorder > 10) {
-        stop("Argument 'maxorder' should be an integer between 0 and 10.")
+    if (!(max_order%%1 == 0) | max_order < 0 | max_order > 10) {
+        stop("Argument 'max_order' should be an integer between 0 and 10.")
     }
     if (!is.data.frame(df)) {
         stop("Argument 'df' should be a dataframe.")
@@ -40,7 +40,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
     pN           <- length(norm_idxs)
 
     # First step: Find lowest possible polynomial order
-    res_order <- FindOrder(coefficients, inv_covar, Wcritic, maxorder)
+    res_order <- FindOrder(coefficients, inv_covar, Wcritic, max_order)
     order     <- res_order$order
     res_order <- res_order$results
 
@@ -49,7 +49,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
         Fmat  <- GetFmat(coeff_length, 0)
         vstar <- matrix(0)
-    } else if (order == maxorder) {
+    } else if (order == max_order) {
 
         stop(paste0("Smoothest path reached the maximum order. ", unselect_message))
     } else {

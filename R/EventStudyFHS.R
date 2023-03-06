@@ -1,6 +1,6 @@
 #' Runs FHS with optional fixed effects and clustering described in [Freyaldenhoven, Hansen, and Shapiro](https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609)
 #'
-#' @param prepared_model_formulaA formula object created in PrepareModelForumla that is passed to EventStudy.
+#' @param prepared_model_formula A formula object created in PrepareModelForumla that is passed to EventStudy.
 #' @param prepared_data Data frame containing all of the parameters required for EventStudy() plus leads and
 #' lags of the first differenced policy variable and leads and lags of the policy variable.
 #' @param idvar Variable indicating units, should be a character.

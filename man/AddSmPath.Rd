@@ -10,7 +10,7 @@ AddSmPath(
   inv_covar,
   conf_level = 0.95,
   maxorder = 10,
-  maxiter_solver = 1e+06
+  maxiter_solver = 2e+06
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ AddSmPath(
 
 \item{maxorder}{Sets a maximum polynomial order that will be used when calculating lowest possible polynomial order. Should be a whole number. Defaults to 10.}
 
-\item{maxiter_solver}{Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 1e6.}
+\item{maxiter_solver}{Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 2e6.}
 }
 \value{
 df with smoothest path added as a new column

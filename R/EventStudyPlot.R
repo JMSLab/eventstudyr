@@ -153,7 +153,7 @@ EventStudyPlot <- function(estimates,
         df_estimates_tidy <- AddCIs(df_estimates_tidy, policyvar, eventstudy_coefficients, conf_level)
     }
 
-# Optionally Test For Pretrends/Levelling-Off -------------------------------
+# Optionally Test For Pretrends/Levelling-Off -----------------------------
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = Preeventcoeffs, leveling_off = Posteventcoeffs)
 
@@ -245,7 +245,6 @@ EventStudyPlot <- function(estimates,
 
         index_zero <- which(ybreaks == 0)
         ylabels[index_zero] <- paste0(ylabels[index_zero], " (", round(y_mean, 2), ")")
-
     }
 
 # Optionally Add smooth path ----------------------------------------------
@@ -254,6 +253,16 @@ EventStudyPlot <- function(estimates,
     data.table::setorder(df_plt, label)
 
     if (Smpath) {
+        
+        unselect_message <- "Please change the 'Smpath' argument in 'EventStudyPlot' to FALSE."
+
+        if (!is.null(proxyIV)) {
+            if (sum(df_plt$estimate == 0) > 2) {
+                stop(paste0("The smoothest path is not supported for the FHS estimator with more than one instrument.", 
+                            unselect_message))
+            }
+        }
+
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns

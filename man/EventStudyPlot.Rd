@@ -127,6 +127,7 @@ EventStudyPlot(estimates = estimates_ols, supt = NULL)
 ### Change color of dots and theme
 plt_ols +
   geom_point(color = "red") +
+  geom_hline(color = "gray", yintercept = 0) +
   theme_light() +
   theme(panel.grid.minor.x = element_blank())
 

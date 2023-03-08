@@ -134,7 +134,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
     if (! (is.numeric(overidpre) & overidpre >= 0 & overidpre %% 1 == 0)) {stop("overidpre should be a whole number.")}
     if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(pre + overidpre + 1) &
-           normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre + 1) and (post + overidpost).")}
+           normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre + 1) and (post + overidpost).")} #If M=G=LM=LG=0 then normalize=0 the code breaks (which I think is correct), but according it should be fine according to this condition. Thus, the console does not displays that the problem is the normalization coefficient, it says "error matrix" (ES)
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
     if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
     if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}

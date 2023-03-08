@@ -33,84 +33,71 @@
 #'
 #' @examples
 #'
-#' # OLS
+#' # Minimal examples
+#' ### OLS
 #'
-#'eventstudy_estimates_ols <- EventStudy(
-#'   estimator = "OLS",
-#'   data = df_sample_dynamic,
-#'   outcomevar = "y_base",
-#'   policyvar = "z",
-#'   idvar = "id",
-#'   timevar = "t",
-#'   controls = "x_r",
-#'   FE = TRUE,
-#'   TFE = TRUE,
-#'   post = 3,
-#'   pre = 2,
-#'   overidpre = 4,
-#'   overidpost = 5,
-#'   normalize = - 3,
-#'   cluster = TRUE,
-#'   anticipation_effects_normalization = TRUE
-#')
+#' estimates_ols <- EventStudy(
+#'    estimator = "OLS",
+#'    data = df_sample_dynamic,
+#'    outcomevar = "y_smooth_m",
+#'    policyvar = "z",
+#'    idvar = "id",
+#'    timevar = "t",
+#'    controls = "x_r",
+#'    FE = TRUE,
+#'    TFE = TRUE,
+#'    post = 3, overidpost = 5, 
+#'    pre = 2,  overidpre = 4,
+#'    normalize = - 3
+#' )
 #'
-#'EventStudyPlot(
-#'   estimates = eventstudy_estimates_ols,
-#'   xtitle = "Event time",
-#'   ytitle = "Coefficient",
-#'   ybreaks = c(-1.5, -.5, 0, .5, 1.5),
-#'   conf_level = .95,
-#'   supt = .95,
-#'   num_sim = 1000,
-#'   seed = 1234,
-#'   add_mean = FALSE,
-#'   pre_event_coeffs = TRUE,
-#'   post_event_coeffs = TRUE,
-#'   add_zero_line = TRUE,
-#'   smpath = FALSE
-#')
+#' plt_ols <- EventStudyPlot(estimates = estimates_ols)
+#' plt_ols
+#' 
+#' ### IV
 #'
-#' # This OLS example gives a warning message: Removed 1 rows containing missing values (geom_segment).
+#' estimates_fhs <- EventStudy(
+#'    estimator = "FHS",
+#'    data = df_sample_dynamic,
+#'    outcomevar = "y_smooth_m",
+#'    policyvar = "z",
+#'    idvar = "id",
+#'    timevar = "t",
+#'    controls = "x_r",
+#'    proxy = "eta_m",
+#'    post = 2, overidpost = 1, 
+#'    pre = 0,  overidpre = 3,
+#'    normalize = -1
+#' )
 #'
-#' # IV
+#' plt_fhs <- EventStudyPlot(estimates = estimates_fhs)
+#' plt_fhs
 #'
-#'eventstudy_estimates_fhs <- EventStudy(
-#'   estimator = "FHS",
-#'   data = df_sample_dynamic,
-#'   outcomevar = "y_base",
-#'   policyvar = "z",
-#'   idvar = "id",
-#'   timevar = "t",
-#'   controls = "x_r",
-#'   FE = TRUE,
-#'   TFE = TRUE,
-#'   post = 3,
-#'   pre = 0,
-#'   overidpre = 3,
-#'   overidpost = 1,
-#'   normalize = - 1,
-#'   cluster = TRUE,
-#'   proxy = "eta_m",
-#'   anticipation_effects_normalization = TRUE
-#')
-#'
-#'EventStudyPlot(
-#'   estimates = eventstudy_estimates_fhs,
-#'   xtitle = "Event time",
-#'   ytitle = "Coefficient",
-#'   ybreaks = seq(-5, 10, 5),
-#'   conf_level = .95,
-#'   supt = .95,
-#'   num_sim = 1000,
-#'   seed = 1234,
-#'   add_mean = FALSE,
-#'   pre_event_coeffs = TRUE,
-#'   post_event_coeffs = TRUE,
-#'   add_zero_line = TRUE,
-#'   smpath = FALSE
-#')
-#'
-#' # This IV example gives a warning message: "Removed 2 rows containing missing values (geom_segment)."
+#' # Optional arguments
+#' 
+#' ### Change x- and y-axis titles and set ybreaks
+#' EventStudyPlot(estimates = estimates_ols, 
+#'                xtitle = "Relative time", ytitle = "", ybreaks = seq(-2, 1, 0.5))
+#' 
+#' ### Add smoothest path
+#' EventStudyPlot(estimates = estimates_ols, smpath = T)
+#' 
+#' ### Add y-mean to y-axis and line y = 0
+#' EventStudyPlot(estimates = estimates_ols, add_mean = T,
+#'                add_zero_line = T)
+#' 
+#' ### Do not plot supt bands
+#' EventStudyPlot(estimates = estimates_ols, supt = NULL)
+#' 
+#' # Modify plots using ggplot2 functions
+#' 
+#' ### Change color of dots and theme
+#' plt_ols +
+#'   geom_point(color = "red") +
+#'   geom_hline(color = "gray", yintercept = 0) +
+#'   theme_light() +
+#'   theme(panel.grid.minor.x = element_blank())
+#' 
 
 EventStudyPlot <- function(estimates,
                            xtitle = "Event time", ytitle = "Coefficient", ybreaks = NULL,
@@ -161,29 +148,22 @@ EventStudyPlot <- function(estimates,
 
     df_test_linear <- TestLinear(estimates = estimates, pretrends = pre_event_coeffs, leveling_off = post_event_coeffs)
 
+    pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]
+    levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
+    
+    text_pretrends   <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
+    text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
+    
     if (pre_event_coeffs & post_event_coeffs) {
-
-        pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]
-        levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
-
-        text_pretrends   <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
-        text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
-        text_caption     <- paste0(text_pretrends, " -- ", text_levelingoff)
+        text_caption <- paste0(text_pretrends, " -- ", text_levelingoff)
 
     } else if (pre_event_coeffs & !post_event_coeffs) {
-
-        pretrends_p_value <- df_test_linear[df_test_linear["Test"] == "Pre-Trends", "p.value"]
-
-        text_caption <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
+        text_caption <- text_pretrends
 
     } else if (!pre_event_coeffs & post_event_coeffs) {
-
-        levelingoff_p_value <- df_test_linear[df_test_linear["Test"] == "Leveling-Off", "p.value"]
-
-        text_caption <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
+        text_caption <- text_levelingoff
 
     } else {
-
         text_caption <- NULL
     }
 

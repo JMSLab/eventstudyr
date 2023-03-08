@@ -79,62 +79,81 @@ A list that contains the estimation output and an object containing the argument
 Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
 }
 \examples{
-EventStudy(
-   estimator = "OLS",
-   data = df_sample_dynamic,
-   outcomevar = "y_base",
-   policyvar = "z",
-   idvar = "id",
-   timevar = "t",
-   controls = "x_r",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 3,
-   pre = 2,
-   overidpre = 4,
-   overidpost = 5,
-   normalize = - 3,
-   cluster = TRUE,
-   anticipation_effects_normalization = TRUE
-)
 
-# If you would like to estimate a static model:
-EventStudy(
-   estimator = "OLS",
-   data = df_sample_static,
-   outcomevar = "y_static",
-   policyvar = "z",
-   idvar = "id",
-   timevar = "t",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 0,
-   pre = 0,
-   overidpre = 0,
-   overidpost = 0,
-   cluster = TRUE,
-   anticipation_effects_normalization = TRUE
-)
+# A minimal example
+eventstudy_model <- 
+  EventStudy(
+    estimator = "OLS",
+    data = df_sample_dynamic,
+    outcomevar = "y_base",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    pre  = 0, post = 3,
+    normalize = -1
+  )
 
-# If you would like to use IV regression:
-data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+### Access estimates
+eventstudy_model[[1]]
 
-EventStudy(
-   estimator = "FHS",
-   data = data,
-   outcomevar = "y_base",
-   policyvar = "z",
-   idvar = "id",
-   timevar = "t",
-   controls = "x_r",
-   proxy = "eta_m",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 1,
-   overidpost = 2,
-   pre = 1,
-   overidpre = 2,
-   normalize = -1,
-   cluster = TRUE
-)
+### Access arguments
+eventstudy_model[[2]]
+
+# A dynamic OLS model with anticipation effects and controls
+eventstudy_model_dyn <- 
+  EventStudy(
+    estimator = "OLS",
+    data = df_sample_dynamic,
+    outcomevar = "y_base",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    controls = "x_r",
+    FE = TRUE, TFE = TRUE,
+    pre  = 2, overidpre = 4,
+    post = 3, overidpost = 5,
+    normalize = - 3,
+    cluster = TRUE,
+    anticipation_effects_normalization = TRUE
+  )
+
+eventstudy_model_dyn[[1]]
+
+# A static model
+eventstudy_model_static <-
+  EventStudy(
+    estimator = "OLS",
+    data = df_sample_static,
+    outcomevar = "y_static",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    FE = TRUE, TFE = TRUE,
+    post = 0, overidpost = 0,
+    pre = 0,  overidpre = 0,
+    cluster = TRUE
+  )
+
+eventstudy_model_static[[1]]
+
+# A dynamic model estimated using IV
+eventstudy_model_iv <-
+  EventStudy(
+    estimator = "FHS",
+    data = df_sample_dynamic,
+    outcomevar = "y_base",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    controls = "x_r",
+    proxy = "eta_m",
+    FE = TRUE, TFE = TRUE,
+    post = 2, overidpost = 1,
+    pre = 0,  overidpre = 3,
+    normalize = -1,
+    cluster = TRUE
+  )
+
+eventstudy_model_iv[[1]]
+
 }

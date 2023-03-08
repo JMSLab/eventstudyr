@@ -3,7 +3,7 @@
 
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
 #' @param outcomevar Character indicating column of outcome variable y.
-#' @param str_policy_fd Character indicating vector of leads and lags of first differenced policy variable z with the (pre +1)th term omitted for normalization.
+#' @param str_policy_fd Character indicating vector of leads and lags of first differenced policy variable z with the (pre +1)th term omitted for normalization. #It could be another term omitted for normalization (this is only the default) (ES)
 #' @param str_policy_lead Character indicating variable of the (pre + overidpre)th lead of the policy variable z.
 #' @param str_policy_lag Character indicating variable of the (post + overidpost)th lag of the policy variable z.
 #' @param controls Character indicating optional vector of controls q.

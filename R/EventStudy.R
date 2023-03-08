@@ -237,7 +237,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
     if (estimator == "FHS") {
 
-        if (is.null(proxyIV)) {
+        if (is.null(proxyIV)) { #No default proxyIV when M=G=LM=LG=0, probably it is fine that it does not default to anything, but there is no warning message that the code is breaking because it will not default any value of proxyIV in this case (ES)
             Fstart <- 0
             z_fd_lead_indicator <- grepl("^z_fd_lead", str_policy_fd)
             str_policy_fd_lead <- str_policy_fd[z_fd_lead_indicator]

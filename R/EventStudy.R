@@ -126,7 +126,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
     if ((estimator == "OLS" & ! is.null(proxy))) {stop("proxy should only be specified when estimator = 'FHS'.")}
     if ((estimator == "FHS" & ! is.character(proxy))) {stop("proxy should be a character.")}
-    if ((estimator == "OLS" & ! is.null(proxyIV))) {stop("proxyIV should only be specified when estimator = 'FHS'.")}
+    if ((estimator == "OLS" & ! is.null(proxyIV))) {stop("proxyIV should only be specified when estimator = 'FHS'.")} #Missing condition that checks that proxyIV is character (ES)
     if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
     if (! (is.numeric(post) & post >= 0 & post %% 1 == 0)) {stop("post should be a whole number.")}

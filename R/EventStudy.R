@@ -141,7 +141,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     max_period <- max(data[[timevar]], na.rm = T)
     min_period <- min(data[[timevar]], na.rm = T)
-    if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")}
+    if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")} #If overidpre is too big such that the sum of the four parameters is bigger than the data window, the code breaks but the console displays error "No matrix" or "Floop>Fstart". It works fine for the other three parameters (ES)
     if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_fd should be reserved for eventstudyr"))}
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,

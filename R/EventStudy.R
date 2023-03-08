@@ -34,9 +34,9 @@
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' # A minimal example
-#' eventstudy_model <- 
+#' eventstudy_model <-
 #'   EventStudy(
 #'     estimator = "OLS",
 #'     data = df_sample_dynamic,
@@ -50,12 +50,12 @@
 #'
 #' ### Access estimates
 #' eventstudy_model[[1]]
-#' 
+#'
 #' ### Access arguments
 #' eventstudy_model[[2]]
-#' 
+#'
 #' # A dynamic OLS model with anticipation effects and controls
-#' eventstudy_model_dyn <- 
+#' eventstudy_model_dyn <-
 #'   EventStudy(
 #'     estimator = "OLS",
 #'     data = df_sample_dynamic,
@@ -71,9 +71,9 @@
 #'     cluster = TRUE,
 #'     anticipation_effects_normalization = TRUE
 #'   )
-#' 
+#'
 #' eventstudy_model_dyn[[1]]
-#' 
+#'
 #' # A static model
 #' eventstudy_model_static <-
 #'   EventStudy(
@@ -88,7 +88,7 @@
 #'     pre = 0,  overidpre = 0,
 #'     cluster = TRUE
 #'   )
-#' 
+#'
 #' eventstudy_model_static[[1]]
 #'
 #' # A dynamic model estimated using IV
@@ -108,9 +108,9 @@
 #'     normalize = -1,
 #'     cluster = TRUE
 #'   )
-#' 
+#'
 #' eventstudy_model_iv[[1]]
-#' 
+#'
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
@@ -119,7 +119,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
-    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
+    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")} #Console does not display this error. If I run the function with the variables not character it breaks but the console displays "object not found" (ES)
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
     if (! is.character(idvar)) {stop("idvar should be a character.")}
     if (! is.character(timevar)) {stop("timevar should be a character.")}
@@ -228,8 +228,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (estimator == "OLS") {
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, 
-                                                   str_policy_fd, str_policy_lead, str_policy_lag, 
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar,
+                                                   str_policy_fd, str_policy_lead, str_policy_lag,
                                                    controls, proxy, proxyIV)
 
         Model <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
@@ -249,18 +249,18 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                     proxyIV <- var
                 }
             }
-            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV, 
+            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV,
                            ". To specify a different proxyIV use the proxyIV argument."))
         }
 
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, 
-                                                   str_policy_fd, str_policy_lead, str_policy_lag, 
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar,
+                                                   str_policy_fd, str_policy_lead, str_policy_lag,
                                                    controls, proxy, proxyIV)
 
         Model <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         eventstudy_coefficients <- dplyr::setdiff(c(str_policy_fd, str_policy_lead, str_policy_lag), proxyIV)
     }
-    
+
     event_study_args <- list("estimator"  = estimator,
                              "data"       = data,
                              "outcomevar" = outcomevar,
@@ -280,6 +280,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                              "normalization_column"    = normalization_column,
                              "cluster"                 = cluster,
                              "eventstudy_coefficients" = eventstudy_coefficients)
-    
+
     return(list(Model, event_study_args))
 }

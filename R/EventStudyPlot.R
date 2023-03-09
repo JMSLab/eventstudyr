@@ -44,8 +44,7 @@
 #'    idvar = "id",
 #'    timevar = "t",
 #'    controls = "x_r",
-#'    FE = TRUE,
-#'    TFE = TRUE,
+#'    FE = TRUE, TFE = TRUE,
 #'    post = 3, overidpost = 5,
 #'    pre = 2,  overidpre = 4,
 #'    normalize = - 3
@@ -77,7 +76,8 @@
 #'
 #' ### Change x- and y-axis titles and set ybreaks
 #' EventStudyPlot(estimates = estimates_ols,
-#'                xtitle = "Relative time", ytitle = "", ybreaks = seq(-2, 1, 0.5))
+#'                xtitle = "Relative time", ytitle = "",
+#'                ybreaks = seq(-2, 1, 0.5))
 #'
 #' ### Add smoothest path
 #' EventStudyPlot(estimates = estimates_ols, smpath = T)

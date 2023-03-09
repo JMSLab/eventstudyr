@@ -81,7 +81,7 @@ Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers
 \examples{
 
 # A minimal example
-eventstudy_model <- 
+eventstudy_model <-
   EventStudy(
     estimator = "OLS",
     data = df_sample_dynamic,
@@ -89,18 +89,18 @@ eventstudy_model <-
     policyvar = "z",
     idvar = "id",
     timevar = "t",
-    pre  = 0, post = 3,
+    pre = 0, post = 3,
     normalize = -1
   )
 
 ### Access estimates
-eventstudy_model[[1]]
+eventstudy_model$output
 
 ### Access arguments
-eventstudy_model[[2]]
+eventstudy_model$arguments
 
 # A dynamic OLS model with anticipation effects and controls
-eventstudy_model_dyn <- 
+eventstudy_model_dyn <-
   EventStudy(
     estimator = "OLS",
     data = df_sample_dynamic,
@@ -117,7 +117,7 @@ eventstudy_model_dyn <-
     anticipation_effects_normalization = TRUE
   )
 
-eventstudy_model_dyn[[1]]
+eventstudy_model_dyn$output
 
 # A static model
 eventstudy_model_static <-
@@ -134,7 +134,7 @@ eventstudy_model_static <-
     cluster = TRUE
   )
 
-eventstudy_model_static[[1]]
+eventstudy_model_static$output
 
 # A dynamic model estimated using IV
 eventstudy_model_iv <-
@@ -154,6 +154,6 @@ eventstudy_model_iv <-
     cluster = TRUE
   )
 
-eventstudy_model_iv[[1]]
+eventstudy_model_iv$output
 
 }

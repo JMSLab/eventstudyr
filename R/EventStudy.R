@@ -44,15 +44,15 @@
 #'     policyvar = "z",
 #'     idvar = "id",
 #'     timevar = "t",
-#'     pre  = 0, post = 3,
+#'     pre = 0, post = 3,
 #'     normalize = -1
 #'   )
 #'
 #' ### Access estimates
-#' eventstudy_model[[1]]
+#' eventstudy_model$output
 #'
 #' ### Access arguments
-#' eventstudy_model[[2]]
+#' eventstudy_model$arguments
 #'
 #' # A dynamic OLS model with anticipation effects and controls
 #' eventstudy_model_dyn <-
@@ -65,14 +65,14 @@
 #'     timevar = "t",
 #'     controls = "x_r",
 #'     FE = TRUE, TFE = TRUE,
-#'     pre  = 2, overidpre = 4,
 #'     post = 3, overidpost = 5,
+#'     pre  = 2, overidpre  = 4,
 #'     normalize = - 3,
 #'     cluster = TRUE,
 #'     anticipation_effects_normalization = TRUE
 #'   )
 #'
-#' eventstudy_model_dyn[[1]]
+#' eventstudy_model_dyn$output
 #'
 #' # A static model
 #' eventstudy_model_static <-
@@ -85,11 +85,11 @@
 #'     timevar = "t",
 #'     FE = TRUE, TFE = TRUE,
 #'     post = 0, overidpost = 0,
-#'     pre = 0,  overidpre = 0,
+#'     pre  = 0, overidpre  = 0,
 #'     cluster = TRUE
 #'   )
 #'
-#' eventstudy_model_static[[1]]
+#' eventstudy_model_static$output
 #'
 #' # A dynamic model estimated using IV
 #' eventstudy_model_iv <-
@@ -104,12 +104,12 @@
 #'     proxy = "eta_m",
 #'     FE = TRUE, TFE = TRUE,
 #'     post = 2, overidpost = 1,
-#'     pre = 0,  overidpre = 3,
+#'     pre  = 0, overidpre  = 3,
 #'     normalize = -1,
 #'     cluster = TRUE
 #'   )
 #'
-#' eventstudy_model_iv[[1]]
+#' eventstudy_model_iv$output
 #'
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
@@ -233,8 +233,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                                                    str_policy_fd, str_policy_lead, str_policy_lag,
                                                    controls, proxy, proxyIV)
 
-        Model <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
-        eventstudy_coefficients <- c(str_policy_fd, str_policy_lead, str_policy_lag)
+        output       <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+        coefficients <- c(str_policy_fd, str_policy_lead, str_policy_lag)
     }
     if (estimator == "FHS") {
 
@@ -258,8 +258,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                                                    str_policy_fd, str_policy_lead, str_policy_lag,
                                                    controls, proxy, proxyIV)
 
-        Model <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
-        eventstudy_coefficients <- dplyr::setdiff(c(str_policy_fd, str_policy_lead, str_policy_lag), proxyIV)
+        output       <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+        coefficients <- dplyr::setdiff(c(str_policy_fd, str_policy_lead, str_policy_lag), proxyIV)
     }
 
     event_study_args <- list("estimator"  = estimator,
@@ -280,7 +280,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                              "normalize"  = normalize,
                              "normalization_column"    = normalization_column,
                              "cluster"                 = cluster,
-                             "eventstudy_coefficients" = eventstudy_coefficients)
+                             "eventstudy_coefficients" = coefficients)
 
-    return(list(Model, event_study_args)) #Note: If M=G=LM=LG=0 the name of the coefficient is "z_lead0". In other cases are fine (ES)
+    return(list("output"    = output,
+                "arguments" = event_study_args)) #Note: If M=G=LM=LG=0 the name of the coefficient is "z_lead0". In other cases are fine (ES)
 }

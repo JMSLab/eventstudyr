@@ -77,9 +77,8 @@ estimates_ols <- EventStudy(
    idvar = "id",
    timevar = "t",
    controls = "x_r",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 3, overidpost = 5, 
+   FE = TRUE, TFE = TRUE,
+   post = 3, overidpost = 5,
    pre = 2,  overidpre = 4,
    normalize = - 3
 )
@@ -98,7 +97,7 @@ estimates_fhs <- EventStudy(
    timevar = "t",
    controls = "x_r",
    proxy = "eta_m",
-   post = 2, overidpost = 1, 
+   post = 2, overidpost = 1,
    pre = 0,  overidpre = 3,
    normalize = -1
 )
@@ -109,8 +108,9 @@ plt_fhs
 # Optional arguments
 
 ### Change x- and y-axis titles and set ybreaks
-EventStudyPlot(estimates = estimates_ols, 
-               xtitle = "Relative time", ytitle = "", ybreaks = seq(-2, 1, 0.5))
+EventStudyPlot(estimates = estimates_ols,
+               xtitle = "Relative time", ytitle = "",
+               ybreaks = seq(-2, 1, 0.5))
 
 ### Add smoothest path
 EventStudyPlot(estimates = estimates_ols, smpath = T)

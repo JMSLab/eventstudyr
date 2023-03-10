@@ -1,36 +1,36 @@
-#'  Creates an Event-Study Plot following the suggestions in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' Creates an Event-Study Plot following the suggestions in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
-#' @param estimates The output from calling [EventStudy()]. Should be a list of length 2.
-#' @param xtitle The title for the x-axis. Should be a string. Defaults to "Event time".
-#' @param ytitle The title for the y-axis. Should be a string. Defaults to "Coefficient".
+#' @param estimates The output from calling [EventStudy()]. It should be a list of length 2.
+#' @param xtitle The title for the x-axis. It should be a string. Defaults to "Event time".
+#' @param ytitle The title for the y-axis. It should be a string. Defaults to "Coefficient".
 #' @param ybreaks A vector containing the desired breaks for the y-axis.
 #' Defaults to NULL, which means the breaks are computed automatically.
 #' If custom breaks are selected with the `add_mean` argument set to TRUE, then the breaks must include zero.
-#' @param conf_level Confidence level used for confidence interval
+#' @param conf_level Confidence level used for the confidence interval
 #' expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.
 #' @param supt The confidence level used for obtaining the sup-t bands critical value.
-#' Should be a real number between 0 and 1, inclusive. Defaults to .95.
+#' It should be a real number between 0 and 1, inclusive. Defaults to .95.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
-#' Should be a natural number. Defaults to 1000.
+#' It should be a natural number. Defaults to 1000.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
-#' Should be a natural number. Defaults to 1234.
+#' It should be a natural number. Defaults to 1234.
 #' @param add_mean Adds the mean of the dependent variable in the period used for normalization.
-#' Should be TRUE or FALSE. Defaults to FALSE.
+#' It should be TRUE or FALSE. Defaults to FALSE.
 #' @param pre_event_coeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
-#' Should be TRUE or FALSE. Defaults to TRUE.
+#' It should be TRUE or FALSE. Defaults to TRUE.
 #' @param post_event_coeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.
-#' Should be TRUE or FALSE. Defaults to TRUE.
+#' It should be TRUE or FALSE. Defaults to TRUE.
 #' @param add_zero_line Whether or not to plot a dashed horizontal line at y = 0.
-#' Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.
+#' It should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.
 #' @param smpath Plot smoothest path of confounder that rationalizes event study coefficients.
-#' Should be TRUE or FALSE. Defaults to FALSE.
+#' It should be TRUE or FALSE. Defaults to FALSE.
 #'
-#' @return The Event-Study plot as a gpplot2 object
+#' @return The Event-Study plot as a ggplot2 object
 #' @import ggplot2 dplyr
 #' @importFrom rlang .data
 #' @importFrom data.table setorder
 #' @export
-#'
+
 #' @examples
 #'
 #' # Minimal examples

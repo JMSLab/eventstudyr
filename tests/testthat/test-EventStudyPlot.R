@@ -82,7 +82,7 @@ test_that("correctly adds mean of outcome var", {
                                   ybreaks   = c(-1.5, -.5, 0, .5, 1.5),
                                   add_mean   = FALSE)
 
-    y_mean <- AddMeans(estimates[[2]]$data, estimates[[2]]$normalization_column,
+    y_mean <- AddMeans(estimates$arguments$data, estimates$arguments$normalization_column,
                        "z", "y_base")
     y_mean <- round(y_mean, 2)
 

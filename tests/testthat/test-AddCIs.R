@@ -22,7 +22,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     policyvar <- "z"
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
 
     expect_error(AddCIs(df_test, eventstudy_coefficients, 0.95))
 })
@@ -33,9 +33,9 @@ test_that("correctly recognizes missing columns in estimates argument", {
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
-    df_test <- estimatr::tidy(estimates[[1]])
+    df_test <- estimatr::tidy(estimates$output)
 
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
 
     df_test_noterm <- df_test %>% rename(wrongname = term)
     df_test_noest  <- df_test %>% rename(wrongname = estimate)
@@ -52,9 +52,9 @@ test_that("correctly recognizes wrong inputs for conf_level argument", {
                      controls = "x_r", FE = TRUE, TFE = TRUE,
                      post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
-    df_test <- estimatr::tidy(estimates[[1]])
+    df_test <- estimatr::tidy(estimates$output)
 
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
 
     expect_error(AddCIs(df_test, eventstudy_coefficients, "95"))
     expect_error(AddCIs(df_test, eventstudy_coefficients,  95))
@@ -69,7 +69,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
 
     expect_error(AddCIs(df_test, eventstudy_coefficients, 0.95))
 })
@@ -80,9 +80,9 @@ test_that("correctly recognizes missing columns in estimates argument", {
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
-    df_test <- estimatr::tidy(estimates[[1]])
+    df_test <- estimatr::tidy(estimates$output)
 
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
 
     df_test_noterm <- df_test %>% rename(wrongname = term)
     df_test_noest  <- df_test %>% rename(wrongname = estimate)
@@ -99,9 +99,9 @@ test_that("correctly recognizes wrong inputs for conf_level argument", {
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
-    df_test <- estimatr::tidy(estimates[[1]])
+    df_test <- estimatr::tidy(estimates$output)
 
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
 
     expect_error(AddCIs(df_test, eventstudy_coefficients, "95"))
     expect_error(AddCIs(df_test, eventstudy_coefficients,  95))

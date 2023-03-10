@@ -31,11 +31,11 @@
 #'    anticipation_effects_normalization = TRUE
 #' )
 #'
-#' df_estimates_tidy <- estimatr::tidy(estimates[[1]])
+#' df_estimates_tidy <- estimatr::tidy(estimates$output)
 #'
 #' df_estimates_tidy <- AddCIs(
 #'    df_estimates_tidy,
-#'    eventstudy_coefficients = estimates[[2]]$eventstudy_coefficients,
+#'    eventstudy_coefficients = estimates$arguments$eventstudy_coefficients,
 #'    conf_level = 0.95
 #')
 #'

@@ -110,8 +110,8 @@ eventstudy_model_dyn <-
     timevar = "t",
     controls = "x_r",
     FE = TRUE, TFE = TRUE,
-    pre  = 2, overidpre = 4,
     post = 3, overidpost = 5,
+    pre  = 2, overidpre  = 4,
     normalize = - 3,
     cluster = TRUE,
     anticipation_effects_normalization = TRUE
@@ -130,7 +130,7 @@ eventstudy_model_static <-
     timevar = "t",
     FE = TRUE, TFE = TRUE,
     post = 0, overidpost = 0,
-    pre = 0,  overidpre = 0,
+    pre  = 0, overidpre  = 0,
     cluster = TRUE
   )
 
@@ -149,7 +149,7 @@ eventstudy_model_iv <-
     proxy = "eta_m",
     FE = TRUE, TFE = TRUE,
     post = 2, overidpost = 1,
-    pre = 0,  overidpre = 3,
+    pre  = 0, overidpre  = 3,
     normalize = -1,
     cluster = TRUE
   )

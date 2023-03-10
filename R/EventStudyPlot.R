@@ -113,20 +113,20 @@ EventStudyPlot <- function(estimates,
 
 # Estimation Elements -----------------------------------------------------
 
-    df_estimates      <- estimates[[1]]
-    df_estimates_tidy <- estimatr::tidy(estimates[[1]])
+    df_estimates      <- estimates$output
+    df_estimates_tidy <- estimatr::tidy(estimates$output)
 
-    df_data                 <- estimates[[2]]$data
-    outcomevar              <- estimates[[2]]$outcomevar
-    policyvar               <- estimates[[2]]$policyvar
-    post                    <- estimates[[2]]$post
-    overidpost              <- estimates[[2]]$overidpost
-    pre                     <- estimates[[2]]$pre
-    overidpre               <- estimates[[2]]$overidpre
-    normalize               <- estimates[[2]]$normalize
-    normalization_column    <- estimates[[2]]$normalization_column
-    eventstudy_coefficients <- estimates[[2]]$eventstudy_coefficients
-    proxyIV                 <- estimates[[2]]$proxyIV
+    df_data                 <- estimates$arguments$data
+    outcomevar              <- estimates$arguments$outcomevar
+    policyvar               <- estimates$arguments$policyvar
+    post                    <- estimates$arguments$post
+    overidpost              <- estimates$arguments$overidpost
+    pre                     <- estimates$arguments$pre
+    overidpre               <- estimates$arguments$overidpre
+    normalize               <- estimates$arguments$normalize
+    normalization_column    <- estimates$arguments$normalization_column
+    eventstudy_coefficients <- estimates$arguments$eventstudy_coefficients
+    proxyIV                 <- estimates$arguments$proxyIV
 
 # Optionally Add Suptbands/Confidence Intervals ---------------------------
 
@@ -255,7 +255,7 @@ EventStudyPlot <- function(estimates,
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
-        covar <- AddZerosCovar(estimates[[1]]$vcov,
+        covar <- AddZerosCovar(estimates$output$vcov,
                                eventstudy_coefficients,
                                df_plt[df_plt$estimate==0, ]$term,
                                df_plt$term)

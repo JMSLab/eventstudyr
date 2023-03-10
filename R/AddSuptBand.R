@@ -44,11 +44,11 @@
 #' )
 #'
 #' AddSuptBand(
-#'   estimates = eventstudy_estimates[[1]],
+#'   estimates = eventstudy_estimates$output,
 #'   num_sim = 100,
 #'   conf_level = .95,
 #'   seed = 1234,
-#'   eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients
+#'   eventstudy_coefficients = eventstudy_estimates$arguments$eventstudy_coefficients
 #')
 
 AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {

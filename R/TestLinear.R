@@ -33,32 +33,32 @@
 TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends = TRUE, leveling_off = TRUE){
     if (! is.list(estimates) | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
-    if ((! class(estimates[[1]]) %in% c("lm_robust", "iv_robust")) | ! is.list(estimates[[1]])) {
+    if ((! class(estimates$output) %in% c("lm_robust", "iv_robust")) | ! is.list(estimates$output)) {
         stop("The first element of estimates should be a list of class 'lm_robust' with coefficient estimates and standard errors")
     }
-    if (! is.list(estimates[[2]]) | ! is.list(estimates[[2]])) {
+    if (! is.list(estimates$arguments) | ! is.list(estimates$arguments)) {
         stop("The second element of estimates should be a list with argument definitions, an output of EventStudy().")
     }
     if (! is.character(test_name)) {stop("test_name should be of class character. Defaults to 'User Test'.")}
     if (! is.logical(pretrends)) {stop("pretrends should be a logical. Default value is TRUE")}
     if (! is.logical(leveling_off)) {stop("leveling_off should be a logical. Default value is TRUE")}
 
-    if(estimates[[2]]$cluster == TRUE){
+    if(estimates$arguments$cluster == TRUE){
 
-        estimates[[1]]$df.residual <- estimates[[1]]$nclusters - 1
+        estimates$output$df.residual <- estimates$output$nclusters - 1
 
     }
 
-    coefficients <- estimates[[2]]$eventstudy_coefficients
+    coefficients <- estimates$arguments$eventstudy_coefficients
 
-    if (!is.null(estimates[[2]]$proxyIV)){
-        coefficients <- coefficients[coefficients != estimates[[2]]$proxyIV]
+    if (!is.null(estimates$arguments$proxyIV)){
+        coefficients <- coefficients[coefficients != estimates$arguments$proxyIV]
     }
 
     test_results <- data.frame(row.names = c("Test", "F.statistic", "p.value"))
 
     if (!is.na(test)){
-        user_results <- car::linearHypothesis(estimates[[1]], test, test = "F")
+        user_results <- car::linearHypothesis(estimates$output, test, test = "F")
 
         temp <- data.frame("Test"    = test_name,
                            "F"       = user_results[2, ]$F,
@@ -68,8 +68,8 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
     if (pretrends == TRUE){
 
-        G   <- estimates[[2]]$pre
-        L_G <- estimates[[2]]$overidpre
+        G   <- estimates$arguments$pre
+        L_G <- estimates$arguments$overidpre
         k   <- as.character(seq.int(G+1, (G+L_G)))
 
         suffix <- paste0("_lead",k)
@@ -80,7 +80,7 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
         pretrends_hyp <- paste0(delta_k, "=0")
 
-        pretrends_results <- car::linearHypothesis(estimates[[1]], pretrends_hyp, test = "F")
+        pretrends_results <- car::linearHypothesis(estimates$output, pretrends_hyp, test = "F")
 
         temp <- data.frame("Test"        = "Pre-Trends",
                            "F"           = pretrends_results[2, ]$F,
@@ -91,8 +91,8 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
     if (leveling_off == TRUE){
 
-        M   <- estimates[[2]]$post
-        L_M <- estimates[[2]]$overidpost
+        M   <- estimates$arguments$post
+        L_M <- estimates$arguments$overidpost
         k   <- as.character(seq.int(M+1, M+L_M))
 
         suffix_M  <- paste0("_lag",as.character(M))
@@ -106,7 +106,7 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
 
         leveling_off_hyp <- paste0(delta_Mk, "=", delta_M)
 
-        leveling_results <- car::linearHypothesis(estimates[[1]], leveling_off_hyp, test = "F")
+        leveling_results <- car::linearHypothesis(estimates$output, leveling_off_hyp, test = "F")
 
         temp <- data.frame("Test"        = "Leveling-Off",
                            "F"           = leveling_results[2, ]$F,

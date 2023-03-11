@@ -116,7 +116,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
                        normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE) { #There is no default values for post and pre arguments. It breaks if I don't specify them
 
-
+    # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
     if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
@@ -140,13 +140,20 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
     if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
 
+    # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
+    
+    n_units       <- length(unique(data[[idvar]]))
+    n_periods     <- length(unique(data[[timevar]]))
+    n_unique_rows <- dim(subset(data, !duplicated(data[, c(idvar, timevar)])))[1]
+    if (n_unique_rows != n_units*n_periods) {
+        warning("Dataset is unbalanced.")
+    }
 
     num_evenstudy_coeffs <- overidpre + pre + post + overidpost
     num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
     if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window")} 
-    #Note: If the database is not perfectly balanced the package is considering as the data window the higher number of periods that some observation has. Is this desirable? Or it is better that considers the data window the shortest one in the data? Ex: if only one observation has 40 periods and all the others have 30 periods, the package still makes the condition M+G+LM+LG<40 (ES)
-    
+
     if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_fd should be reserved for eventstudyr"))}
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,

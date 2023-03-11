@@ -144,7 +144,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     num_evenstudy_coeffs <- overidpre + pre + post + overidpost
     num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
-    if  (num_periods > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window")} 
+    if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window")} 
     #Note: If the database is not perfectly balanced the package is considering as the data window the higher number of periods that some observation has. Is this desirable? Or it is better that considers the data window the shortest one in the data? Ex: if only one observation has 40 periods and all the others have 30 periods, the package still makes the condition M+G+LM+LG<40 (ES)
     
     if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,

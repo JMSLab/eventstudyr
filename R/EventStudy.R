@@ -119,7 +119,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data)) {stop("data should be a data frame.")}
-    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")} #Console does not display this error. If I run the function with the variables not character it breaks but the console displays "object not found" (ES)
+    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
     if (! is.character(policyvar)) {stop("policyvar should be a character.")}
     if (! is.character(idvar)) {stop("idvar should be a character.")}
     if (! is.character(timevar)) {stop("timevar should be a character.")}
@@ -140,10 +140,13 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
     if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
 
-    max_period <- max(data[[timevar]], na.rm = T)
-    min_period <- min(data[[timevar]], na.rm = T)
-    if  (overidpost + pre + post + overidpost > max_period - min_period - 1) {stop("overidpost + pre + post + overidpost can not exceed the data window")} #If overidpre is too big such that the sum of the four parameters is bigger than the data window, the code breaks but the console displays error "No matrix" or "Floop>Fstart". It works fine for the other three parameters (ES)
+    if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
+
+    num_evenstudy_coeffs <- overidpre + pre + post + overidpost
+    num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
+    if  (num_periods > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window")} 
     #Note: If the database is not perfectly balanced the package is considering as the data window the higher number of periods that some observation has. Is this desirable? Or it is better that considers the data window the shortest one in the data? Ex: if only one observation has 40 periods and all the others have 30 periods, the package still makes the condition M+G+LM+LG<40 (ES)
+    
     if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_fd should be reserved for eventstudyr"))}
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,

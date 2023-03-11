@@ -15,7 +15,7 @@
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
 #' Should be a natural number. Defaults to 1234.
 #' @param add_mean Adds the mean of the dependent variable in the period used for normalization.
-#' Should be TRUE or FALSE. Defaults to FALSE.  # Can we change the following variable names into snake case like conf_level for consistency? - MZW
+#' Should be TRUE or FALSE. Defaults to FALSE.
 #' @param pre_event_coeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 #' Should be TRUE or FALSE. Defaults to TRUE.
 #' @param post_event_coeffs If TRUE, uses post and overidpost from estimates to test for leveling-off.

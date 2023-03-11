@@ -4,7 +4,7 @@
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
 #' @param outcomevar Character indicating column of outcome variable y.
 #' @param str_policy_fd Character indicating vector of leads and lags of first differenced policy variable z with the normalization term omitted.
-#' Defaults to omitting the ((pre +1)th term.
+#' Defaults to omitting the (pre +1)th term.
 #' @param str_policy_lead Character indicating variable of the (pre + overidpre)th lead of the policy variable z.
 #' @param str_policy_lag Character indicating variable of the (post + overidpost)th lag of the policy variable z.
 #' @param controls Character indicating optional vector of controls q.
@@ -41,34 +41,35 @@
 #'
 #' # The outcomes of these examples have a line that says "<environment: 0x00######>" - what is this for? - MZW
 
-PrepareModelFormula <- function(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls = NULL, proxy = NULL, proxyIV = NULL) {
+PrepareModelFormula <- function(estimator, outcomevar, 
+                                str_policy_fd, str_policy_lead, str_policy_lag, 
+                                controls = NULL, proxy = NULL, proxyIV = NULL) {
 
-    if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
-    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
-    if (! is.character(str_policy_fd)) {stop("str_policy_fd should be a character.")}
-    if (! is.character(str_policy_lead)) {stop("str_policy_lead should be a character.")}
-    if (! is.character(str_policy_lag)) {stop("str_policy_lag should be a character.")}
+    if (! estimator %in% c("OLS", "FHS"))      {stop("estimator should be either 'OLS' or 'FHS'.")}
+    if (! is.character(outcomevar))            {stop("outcomevar should be a character.")}
+    if (! is.character(str_policy_fd))         {stop("str_policy_fd should be a character.")}
+    if (! is.character(str_policy_lead))       {stop("str_policy_lead should be a character.")}
+    if (! is.character(str_policy_lag))        {stop("str_policy_lag should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
     if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified with estimator=FHS")}
 
 
     if (estimator == "OLS") {
-
-
         reg_formula <- stats::reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
                                response = outcomevar,
                                intercept = FALSE)
     }
 
     if (estimator == "FHS") {
-
         exogenous <- c(str_policy_fd, str_policy_lead, str_policy_lag, controls)
         exogenous <- exogenous[exogenous != proxy]
         exogenous <- exogenous[exogenous != proxyIV]
-        reg_formula <- as.formula(paste(outcomevar, "~", paste(c(exogenous, proxy), collapse="+"), "|", paste(c(exogenous, proxyIV), collapse="+")))
 
+        reg_formula <- as.formula(paste(outcomevar, "~", 
+                                        paste(c(exogenous, proxy), collapse="+"), 
+                                        "|", 
+                                        paste(c(exogenous, proxyIV), collapse="+")))
     }
 
     return(reg_formula)
-
 }

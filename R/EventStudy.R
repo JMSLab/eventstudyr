@@ -33,6 +33,7 @@
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
+#' @importFrom data.table unique
 #' @export
 #'
 #' @examples
@@ -145,9 +146,11 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
     
-    n_units       <- length(unique(data[[idvar]]))
-    n_periods     <- length(unique(data[[timevar]]))
-    n_unique_rows <- dim(subset(data, !duplicated(data[, c(idvar, timevar)])))[1]
+    data_ids <- as.data.frame(data)[, c(idvar, timevar)]
+
+    n_units       <- length(base::unique(data[[idvar]]))
+    n_periods     <- length(base::unique(data[[timevar]]))
+    n_unique_rows <- nrow(data[!base::duplicated(data_ids),])
     if (n_unique_rows != n_units*n_periods) {
         warning("Dataset is unbalanced.")
     }

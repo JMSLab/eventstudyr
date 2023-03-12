@@ -30,7 +30,7 @@ EventStudy(
 
 \item{data}{Data frame that contains the variables of interest.}
 
-\item{outcomevar}{Character indicating column of outcome variable y. # Instead of "should be a character" change to "Character for variable indicating ..." for concision? - MZW}
+\item{outcomevar}{Character indicating column of outcome variable y.}
 
 \item{policyvar}{Character indicating column of policy variable z.}
 
@@ -38,7 +38,7 @@ EventStudy(
 
 \item{timevar}{Character indicating column of time periods.}
 
-\item{controls}{Character indicating optional vector of controls q. # What is the q for? - MZW}
+\item{controls}{Character indicating optional vector of controls q.}
 
 \item{proxy}{Character indicating column of variable that is thought to be affected by the confound but not by the policy.
 Should be specified if and only if estimator is specified as "FHS".}
@@ -54,14 +54,16 @@ If NULL, defaults to the strongest lead of the policy variable based on the firs
 are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
 \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
-\item{overidpost}{Optional whole number indicating the number of event times after "post" to be included in estimation. Defaults to 1.
-Corresponds to L_M in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW}
+\item{overidpost}{Optional whole number indicating the number of event times after "post" to be included in estimation.
+Defaults to 1.
+Corresponds to L_M in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
 \item{pre}{Whole number indicating the number of periods in the future after which the future values of the policy are
 not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
 \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
-\item{overidpre}{Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
+\item{overidpre}{Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation.
+Defaults to "post" + "pre".
 Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
@@ -70,7 +72,7 @@ Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/wo
 heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE is TRUE.}
 
 \item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
-when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE  # This variable name is very long - MZW}
+when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE.}
 }
 \value{
 A list that contains the estimation output and an object containing the arguments passed to the function
@@ -135,6 +137,9 @@ eventstudy_model_static <-
   )
 
 eventstudy_model_static$output
+
+### Output as data.frame
+estimatr::tidy(eventstudy_model_static$output)
 
 # A dynamic model estimated using IV
 eventstudy_model_iv <-

@@ -44,7 +44,7 @@ Should be a natural number. Defaults to 1000.}
 Should be a natural number. Defaults to 1234.}
 
 \item{add_mean}{Adds the mean of the dependent variable in the period used for normalization.
-Should be TRUE or FALSE. Defaults to FALSE.  # Can we change the following variable names into snake case like conf_level for consistency? - MZW}
+Should be TRUE or FALSE. Defaults to FALSE.}
 
 \item{pre_event_coeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 Should be TRUE or FALSE. Defaults to TRUE.}

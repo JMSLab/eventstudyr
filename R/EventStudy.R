@@ -33,7 +33,6 @@
 #'
 #' @return A list that contains the estimation output and an object containing the arguments passed to the function
 #' @import dplyr
-#' @importFrom data.table unique
 #' @export
 #'
 #' @examples
@@ -93,6 +92,9 @@
 #'   )
 #'
 #' eventstudy_model_static$output
+#' 
+#' ### Output as data.frame
+#' estimatr::tidy(eventstudy_model_static$output)
 #'
 #' # A dynamic model estimated using IV
 #' eventstudy_model_iv <-

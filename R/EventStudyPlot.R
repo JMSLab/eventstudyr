@@ -80,16 +80,17 @@
 #'                ybreaks = seq(-2, 1, 0.5))
 #'
 #' ### Add smoothest path
-#' EventStudyPlot(estimates = estimates_ols, smpath = T)
+#' EventStudyPlot(estimates = estimates_ols, smpath = TRUE)
 #'
 #' ### Add y-mean to y-axis and line y = 0
-#' EventStudyPlot(estimates = estimates_ols, add_mean = T,
-#'                add_zero_line = T)
+#' EventStudyPlot(estimates = estimates_ols, add_mean = TRUE,
+#'                add_zero_line = TRUE)
 #'
 #' ### Do not plot supt bands
 #' EventStudyPlot(estimates = estimates_ols, supt = NULL)
 #'
 #' # Modify plots using ggplot2 functions
+#' library(ggplot2)
 #'
 #' ### Change color of dots, horizontal line, and theme
 #' plt_ols +

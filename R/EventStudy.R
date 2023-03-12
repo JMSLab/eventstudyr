@@ -148,9 +148,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(normalize) & normalize %% 1 == 0 
            & normalize >= -(pre + overidpre + 1) & normalize <= post + overidpost)) {
         stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")
-    } #If M=G=LM=LG=0 then normalize=0 the code breaks (which I think is correct), but according it should be fine according to this condition. Thus, the console does not displays that the problem is the normalization coefficient, it says "error matrix" (ES)
-    # Stop if all coefficients are zero
-
+    }
 
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}

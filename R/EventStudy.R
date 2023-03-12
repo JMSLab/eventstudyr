@@ -144,6 +144,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0))      {stop("overidpost should be a whole number.")}
     if (! (is.numeric(pre)        &  pre >= 0       &  pre %% 1 == 0))            {stop("pre should be a whole number.")}
     if (! (is.numeric(overidpre)  & overidpre >= 0  & overidpre %% 1 == 0))       {stop("overidpre should be a whole number.")}
+    if (normalize == 0 & post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {stop("normalize cannot be zero when post = overidpost = pre = overidpre = 0.")}
     if (! (is.numeric(normalize) & normalize %% 1 == 0 
            & normalize >= -(pre + overidpre + 1) & normalize <= post + overidpost)) {
         stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")

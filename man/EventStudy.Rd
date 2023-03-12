@@ -75,7 +75,7 @@ heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE 
 when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE.}
 }
 \value{
-A list that contains the estimation output and an object containing the arguments passed to the function
+A list that contains, under the name "output", the estimation output as an lm_robust object, and under "arguments" the arguments passed to the function.
 }
 \description{
 Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
@@ -95,8 +95,13 @@ eventstudy_model <-
     normalize = -1
   )
 
-### Access estimates
+### Access estimated model
 eventstudy_model$output
+
+summary(eventstudy_model$output)
+
+### data.frame of estimates
+estimatr::tidy(eventstudy_model$output)
 
 ### Access arguments
 eventstudy_model$arguments
@@ -119,7 +124,7 @@ eventstudy_model_dyn <-
     anticipation_effects_normalization = TRUE
   )
 
-eventstudy_model_dyn$output
+summary(eventstudy_model_dyn$output)
 
 # A static model
 eventstudy_model_static <-
@@ -136,10 +141,7 @@ eventstudy_model_static <-
     cluster = TRUE
   )
 
-eventstudy_model_static$output
-
-### Output as data.frame
-estimatr::tidy(eventstudy_model_static$output)
+summary(eventstudy_model_static$output)
 
 # A dynamic model estimated using IV
 eventstudy_model_iv <-
@@ -159,6 +161,6 @@ eventstudy_model_iv <-
     cluster = TRUE
   )
 
-eventstudy_model_iv$output
+summary(eventstudy_model_iv$output)
 
 }

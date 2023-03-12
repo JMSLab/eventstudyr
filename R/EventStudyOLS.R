@@ -119,7 +119,6 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data,
             data = prepared_data,
             se_type = "stata"
         )
-
     }
 
     return(ols_output)

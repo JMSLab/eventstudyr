@@ -25,7 +25,7 @@
 #' @param smpath Plot smoothest path of confounder that rationalizes event study coefficients.
 #' Should be TRUE or FALSE. Defaults to FALSE.
 #'
-#' @return The Event-Study plot as a gpplot2 object
+#' @return The Event-Study plot as a gpplot2 object.
 #' @import ggplot2 dplyr
 #' @importFrom rlang .data
 #' @importFrom data.table setorder

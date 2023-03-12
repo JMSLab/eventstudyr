@@ -59,7 +59,7 @@ Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.}
 Should be TRUE or FALSE. Defaults to FALSE.}
 }
 \value{
-The Event-Study plot as a gpplot2 object
+The Event-Study plot as a gpplot2 object.
 }
 \description{
 Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.

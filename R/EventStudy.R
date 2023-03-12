@@ -31,7 +31,7 @@
 #' @param anticipation_effects_normalization If set to TRUE, runs default process and switches coefficient to be normalized to 0
 #' when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE.
 #'
-#' @return A list that contains the estimation output and an object containing the arguments passed to the function
+#' @return A list that contains, under the name "output", the estimation output as an lm_robust object, and under "arguments" the arguments passed to the function.
 #' @import dplyr
 #' @export
 #'
@@ -50,8 +50,13 @@
 #'     normalize = -1
 #'   )
 #'
-#' ### Access estimates
+#' ### Access estimated model
 #' eventstudy_model$output
+#' 
+#' summary(eventstudy_model$output)
+#' 
+#' ### data.frame of estimates
+#' estimatr::tidy(eventstudy_model$output)
 #'
 #' ### Access arguments
 #' eventstudy_model$arguments
@@ -74,7 +79,7 @@
 #'     anticipation_effects_normalization = TRUE
 #'   )
 #'
-#' eventstudy_model_dyn$output
+#' summary(eventstudy_model_dyn$output)
 #'
 #' # A static model
 #' eventstudy_model_static <-
@@ -90,11 +95,8 @@
 #'     pre  = 0, overidpre  = 0,
 #'     cluster = TRUE
 #'   )
-#'
-#' eventstudy_model_static$output
 #' 
-#' ### Output as data.frame
-#' estimatr::tidy(eventstudy_model_static$output)
+#' summary(eventstudy_model_static$output)
 #'
 #' # A dynamic model estimated using IV
 #' eventstudy_model_iv <-
@@ -114,7 +116,7 @@
 #'     cluster = TRUE
 #'   )
 #'
-#' eventstudy_model_iv$output
+#' summary(eventstudy_model_iv$output)
 #'
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,

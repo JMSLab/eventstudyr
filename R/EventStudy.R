@@ -1,20 +1,20 @@
 #' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
-#' @param data Data frame that contains the variables of interest.
+#' @param data Data frame containing the variables of interest.
 #' @param outcomevar Character indicating column of outcome variable y.
 #' @param policyvar Character indicating column of policy variable z.
 #' @param idvar Character indicating column of units.
 #' @param timevar Character indicating column of time periods.
-#' @param controls Character indicating optional vector of controls q.
+#' @param controls Optional character vector indicating a set of control variables q.
 #' @param proxy Character indicating column of variable that is thought to be affected by the confound but not by the policy.
 #' Should be specified if and only if estimator is specified as "FHS".
 #' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 #' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
-#' @param FE Specifies if unit fixed-effects should be included. Defaults to TRUE.
-#' @param TFE Specifies if time fixed-effects should be included. Defaults to TRUE.
-#' @param cluster Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-#' heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE is TRUE.
+#' @param FE Logical indicating whether unit fixed-effects should be included. Defaults to TRUE.
+#' @param TFE Logical indicating whether time fixed-effects should be included. Defaults to TRUE.
+#' @param cluster Logical indicating whether to use clustered errors by units. If FALSE, will use unclustered heteroskedasticity-robust standard errors.
+#' Defaults to TRUE. Must be TRUE if FE is TRUE.
 #' @param post Whole number indicating the number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
@@ -28,8 +28,8 @@
 #' Defaults to "post" + "pre".
 #' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
-#' @param anticipation_effects_normalization If set to TRUE, runs default process and switches coefficient to be normalized to 0
-#' when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE.
+#' @param anticipation_effects_normalization If set to TRUE, runs the default process and switches coefficient to be normalized to 0
+#' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.
 #'
 #' @return A list that contains, under the name "output", the estimation output as an lm_robust object, and under "arguments" the arguments passed to the function.
 #' @import dplyr

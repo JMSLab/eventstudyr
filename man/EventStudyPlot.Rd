@@ -59,7 +59,7 @@ Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.}
 Should be TRUE or FALSE. Defaults to FALSE.}
 }
 \value{
-The Event-Study plot as a gpplot2 object.
+The Event-Study plot as a ggplot2 object.
 }
 \description{
 Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
@@ -124,7 +124,7 @@ EventStudyPlot(estimates = estimates_ols, supt = NULL)
 
 # Modify plots using ggplot2 functions
 
-### Change color of dots and theme
+### Change color of dots, horizontal line, and theme
 plt_ols +
   geom_point(color = "red") +
   geom_hline(color = "gray", yintercept = 0) +

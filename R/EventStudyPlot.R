@@ -25,7 +25,7 @@
 #' @param smpath Plot smoothest path of confounder that rationalizes event study coefficients.
 #' Should be TRUE or FALSE. Defaults to FALSE.
 #'
-#' @return The Event-Study plot as a gpplot2 object.
+#' @return The Event-Study plot as a ggplot2 object.
 #' @import ggplot2 dplyr
 #' @importFrom rlang .data
 #' @importFrom data.table setorder
@@ -91,7 +91,7 @@
 #'
 #' # Modify plots using ggplot2 functions
 #'
-#' ### Change color of dots and theme
+#' ### Change color of dots, horizontal line, and theme
 #' plt_ols +
 #'   geom_point(color = "red") +
 #'   geom_hline(color = "gray", yintercept = 0) +

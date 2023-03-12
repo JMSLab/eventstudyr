@@ -28,7 +28,7 @@ EventStudy(
 \arguments{
 \item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.}
 
-\item{data}{Data frame that contains the variables of interest.}
+\item{data}{Data frame containing the variables of interest.}
 
 \item{outcomevar}{Character indicating column of outcome variable y.}
 
@@ -38,7 +38,7 @@ EventStudy(
 
 \item{timevar}{Character indicating column of time periods.}
 
-\item{controls}{Character indicating optional vector of controls q.}
+\item{controls}{Optional character vector indicating a set of control variables q.}
 
 \item{proxy}{Character indicating column of variable that is thought to be affected by the confound but not by the policy.
 Should be specified if and only if estimator is specified as "FHS".}
@@ -46,9 +46,9 @@ Should be specified if and only if estimator is specified as "FHS".}
 \item{proxyIV}{Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 If NULL, defaults to the strongest lead of the policy variable based on the first stage.}
 
-\item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
+\item{FE}{Logical indicating whether unit fixed-effects should be included. Defaults to TRUE.}
 
-\item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
+\item{TFE}{Logical indicating whether time fixed-effects should be included. Defaults to TRUE.}
 
 \item{post}{Whole number indicating the number of periods in the past before which the past values of the policy
 are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
@@ -68,11 +68,11 @@ Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/wo
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 
-\item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-heteroskedasticity-robust standard errors. Defaults to TRUE. Must be TRUE if FE is TRUE.}
+\item{cluster}{Logical indicating whether to use clustered errors by units. If FALSE, will use unclustered heteroskedasticity-robust standard errors.
+Defaults to TRUE. Must be TRUE if FE is TRUE.}
 
-\item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
-when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE.}
+\item{anticipation_effects_normalization}{If set to TRUE, runs the default process and switches coefficient to be normalized to 0
+when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.}
 }
 \value{
 A list that contains, under the name "output", the estimation output as an lm_robust object, and under "arguments" the arguments passed to the function.

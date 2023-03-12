@@ -121,27 +121,35 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
-    if (! is.data.frame(data)) {stop("data should be a data frame.")}
-    if (! is.character(outcomevar)) {stop("outcomevar should be a character.")}
-    if (! is.character(policyvar)) {stop("policyvar should be a character.")}
-    if (! is.character(idvar)) {stop("idvar should be a character.")}
-    if (! is.character(timevar)) {stop("timevar should be a character.")}
+    if (! is.data.frame(data))            {stop("data should be a data frame.")}
+    if (! is.character(outcomevar))       {stop("outcomevar should be a character.")}
+    if (! is.character(policyvar))        {stop("policyvar should be a character.")}
+    if (! is.character(idvar))            {stop("idvar should be a character.")}
+    if (! is.character(timevar))          {stop("timevar should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
-    if ((estimator == "OLS" & ! is.null(proxy))) {stop("proxy should only be specified when estimator = 'FHS'.")}
-    if ((estimator == "FHS" & ! is.character(proxy))) {stop("proxy should be a character.")}
-    if ((estimator == "OLS" & ! is.null(proxyIV))) {stop("proxyIV should only be specified when estimator = 'FHS'.")}
-    if ((estimator == "FHS" & ! is.null(proxyIV) & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
-    if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
-    if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
-    if (! (is.numeric(post) & post >= 0 & post %% 1 == 0)) {stop("post should be a whole number.")}
-    if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0)) {stop("overidpost should be a whole number.")}
-    if (! (is.numeric(pre) & pre >= 0 & pre %% 1 == 0)) {stop("pre should be a whole number.")}
-    if (! (is.numeric(overidpre) & overidpre >= 0 & overidpre %% 1 == 0)) {stop("overidpre should be a whole number.")}
-    if (! (is.numeric(normalize) & normalize %% 1 == 0 & normalize >= -(pre + overidpre + 1) &
-           normalize <= post + overidpost)) {stop("normalize should be an integer between - (pre + overidpre + 1) and (post + overidpost).")} #If M=G=LM=LG=0 then normalize=0 the code breaks (which I think is correct), but according it should be fine according to this condition. Thus, the console does not displays that the problem is the normalization coefficient, it says "error matrix" (ES)
+
+    if ((estimator == "OLS" & ! is.null(proxy)))       {stop("proxy should only be specified when estimator = 'FHS'.")}
+    if ((estimator == "FHS" & ! is.character(proxy)))  {stop("proxy should be a character.")}
+    if ((estimator == "OLS" & ! is.null(proxyIV)))     {stop("proxyIV should only be specified when estimator = 'FHS'.")}
+    if ((estimator == "FHS" & 
+        ! is.null(proxyIV) & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
+
+    if (! is.logical(FE))      {stop("FE should be either TRUE or FALSE.")}
+    if (! is.logical(TFE))     {stop("TFE should be either TRUE or FALSE.")}
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
-    if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
+    if (FE & !cluster)         {stop("cluster=TRUE is required when FE=TRUE.")}
     if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
+
+    if (! (is.numeric(post)       &  post >= 0      &  post %% 1 == 0))           {stop("post should be a whole number.")}
+    if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0))      {stop("overidpost should be a whole number.")}
+    if (! (is.numeric(pre)        &  pre >= 0       &  pre %% 1 == 0))            {stop("pre should be a whole number.")}
+    if (! (is.numeric(overidpre)  & overidpre >= 0  & overidpre %% 1 == 0))       {stop("overidpre should be a whole number.")}
+    if (! (is.numeric(normalize) & normalize %% 1 == 0 
+           & normalize >= -(pre + overidpre + 1) & normalize <= post + overidpost)) {
+        stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")
+    } #If M=G=LM=LG=0 then normalize=0 the code breaks (which I think is correct), but according it should be fine according to this condition. Thus, the console does not displays that the problem is the normalization coefficient, it says "error matrix" (ES)
+    # Stop if all coefficients are zero
+
 
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}

@@ -116,6 +116,11 @@ EventStudyPlot <- function(estimates,
     df_estimates      <- estimates$output
     df_estimates_tidy <- estimatr::tidy(estimates$output)
 
+    static_model <- nrow(df_estimates_tidy) == 1
+    if (static_model) {
+        stop("EventStudyPlot() does not support static models.")
+    }
+
     df_data                 <- estimates$arguments$data
     outcomevar              <- estimates$arguments$outcomevar
     policyvar               <- estimates$arguments$policyvar

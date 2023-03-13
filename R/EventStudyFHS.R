@@ -1,4 +1,4 @@
-#' Runs FHS with optional fixed effects and clustering described in [Freyaldenhoven, Hansen, and Shapiro](https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609)
+#' Implements proxy IV estimator proposed in [Freyaldenhoven, Hansen, and Shapiro](https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20180609)
 #'
 #' @param prepared_model_formula A formula object created in PrepareModelForumla that is passed to EventStudy.
 #' @param prepared_data Data frame containing all of the parameters required for EventStudy() plus leads and

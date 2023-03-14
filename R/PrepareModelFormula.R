@@ -39,10 +39,9 @@
 #'                     proxy = "eta_m",
 #'                     proxyIV = "z_fd_lead3")
 #'
-#' # The outcomes of these examples have a line that says "<environment: 0x00######>" - what is this for? - MZW
 
-PrepareModelFormula <- function(estimator, outcomevar, 
-                                str_policy_fd, str_policy_lead, str_policy_lag, 
+PrepareModelFormula <- function(estimator, outcomevar,
+                                str_policy_fd, str_policy_lead, str_policy_lag,
                                 controls = NULL, proxy = NULL, proxyIV = NULL) {
 
     if (! estimator %in% c("OLS", "FHS"))      {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -65,9 +64,9 @@ PrepareModelFormula <- function(estimator, outcomevar,
         exogenous <- exogenous[exogenous != proxy]
         exogenous <- exogenous[exogenous != proxyIV]
 
-        reg_formula <- as.formula(paste(outcomevar, "~", 
-                                        paste(c(exogenous, proxy), collapse="+"), 
-                                        "|", 
+        reg_formula <- as.formula(paste(outcomevar, "~",
+                                        paste(c(exogenous, proxy), collapse="+"),
+                                        "|",
                                         paste(c(exogenous, proxyIV), collapse="+")))
     }
 

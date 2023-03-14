@@ -310,6 +310,12 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                              "cluster"                 = cluster,
                              "eventstudy_coefficients" = coefficients)
 
+    if (pre == 0 & overidpre == 0 & post == 0 & overidpost == 0) {
+
+        output$term <- policyvar
+        event_study_args$eventstudy_coefficients <- policyvar
+    }
+
     return(list("output"    = output,
-                "arguments" = event_study_args)) #Note: If M=G=LM=LG=0 the name of the coefficient is "z_lead0". In other cases are fine (ES)
+                "arguments" = event_study_args))
 }

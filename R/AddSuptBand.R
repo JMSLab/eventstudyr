@@ -54,7 +54,7 @@
 AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {
 
     if (! class(estimates) %in% c("lm_robust", "iv_robust")) {
-    stop("estimates is not a data frame with coefficient estimates and standard errors")
+        stop("estimates is not a data frame with coefficient estimates and standard errors")
     }
     if (! is.numeric(num_sim) | num_sim %% 1 != 0 | num_sim <= 0) {stop("num_sim should be a natural number.")}
     if (! is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {stop("conf_level should be a real number between 0 and 1, inclusive.")}

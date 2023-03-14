@@ -18,13 +18,13 @@
 #' @param post Whole number indicating the number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
-#' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation. 
+#' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation.
 #' Defaults to 1.
 #' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param pre Whole number indicating the number of periods in the future after which the future values of the policy are
 #' not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
-#' @param overidpre Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation. 
+#' @param overidpre Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation.
 #' Defaults to "post" + "pre".
 #' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
@@ -52,9 +52,9 @@
 #'
 #' ### Access estimated model
 #' eventstudy_model$output
-#' 
+#'
 #' summary(eventstudy_model$output)
-#' 
+#'
 #' ### data.frame of estimates
 #' estimatr::tidy(eventstudy_model$output)
 #'
@@ -95,7 +95,7 @@
 #'     pre  = 0, overidpre  = 0,
 #'     cluster = TRUE
 #'   )
-#' 
+#'
 #' summary(eventstudy_model_static$output)
 #'
 #' # A dynamic model estimated using IV
@@ -132,11 +132,12 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! is.character(timevar))          {stop("timevar should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
 
-    if ((estimator == "OLS" & ! is.null(proxy)))       {stop("proxy should only be specified when estimator = 'FHS'.")}
-    if ((estimator == "FHS" & ! is.character(proxy)))  {stop("proxy should be a character.")}
-    if ((estimator == "OLS" & ! is.null(proxyIV)))     {stop("proxyIV should only be specified when estimator = 'FHS'.")}
-    if ((estimator == "FHS" & 
-        ! is.null(proxyIV) & ! is.character(proxyIV))) {stop("proxyIV should be a character.")}
+    if ((estimator == "OLS" & ! is.null(proxy)))        {stop("proxy should only be specified when estimator = 'FHS'.")}
+    if ((estimator == "FHS" & ! is.character(proxy)))   {stop("proxy should be a character.")}
+    if ((estimator == "OLS" & ! is.null(proxyIV)))      {stop("proxyIV should only be specified when estimator = 'FHS'.")}
+    if ((estimator == "FHS" &
+        ! is.null(proxyIV) & ! is.character(proxyIV)))  {stop("proxyIV should be a character.")}
+    if (estimator == "FHS" & pre == 0 & overidpre == 0) {stop("When FHS is TRUE, you must have at least one lead. Either pre or overidpre must be greater than 0.")}
 
     if (! is.logical(FE))      {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE))     {stop("TFE should be either TRUE or FALSE.")}
@@ -149,14 +150,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! (is.numeric(pre)        &  pre >= 0       &  pre %% 1 == 0))            {stop("pre should be a whole number.")}
     if (! (is.numeric(overidpre)  & overidpre >= 0  & overidpre %% 1 == 0))       {stop("overidpre should be a whole number.")}
     if (normalize == 0 & post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {stop("normalize cannot be zero when post = overidpost = pre = overidpre = 0.")}
-    if (! (is.numeric(normalize) & normalize %% 1 == 0 
+    if (! (is.numeric(normalize) & normalize %% 1 == 0
            & normalize >= -(pre + overidpre + 1) & normalize <= post + overidpost)) {
         stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")
     }
 
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
-    
+
     data_ids <- as.data.frame(data)[, c(idvar, timevar)]
 
     n_units       <- length(base::unique(data[[idvar]]))
@@ -168,7 +169,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     num_evenstudy_coeffs <- overidpre + pre + post + overidpost
     num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
-    if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window.")} 
+    if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window.")}
 
     if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
                                                                                    "_fd should be reserved for eventstudyr."))}

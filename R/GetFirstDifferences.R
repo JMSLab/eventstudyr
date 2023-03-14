@@ -5,7 +5,7 @@
 #' @param timevar Character indicating column of time periods.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
 #'
-#' @seealso [data.table::shift()]  # Not sure what this is referencing? The link doesn't show up - MZW
+#' @seealso [data.table::shift()]
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #'

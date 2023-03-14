@@ -168,14 +168,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     num_evenstudy_coeffs <- overidpre + pre + post + overidpost
     num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
-    if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window")} 
+    if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window.")} 
 
     if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_fd should be reserved for eventstudyr"))}
+                                                                                   "_fd should be reserved for eventstudyr."))}
     if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_lead should be reserved for eventstudyr"))}
+                                                                                     "_lead should be reserved for eventstudyr."))}
     if  (sum(grepl(paste0(policyvar, "_lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                    "_lag should be reserved for eventstudyr"))}
+                                                                                    "_lag should be reserved for eventstudyr."))}
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre
@@ -198,7 +198,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
         data      <- PrepareLeads(data, groupvar = idvar, timevar,
-                                         leadvar = policyvar, leads = num_fd_lead_periods)
+                                  leadvar = policyvar, leads = num_fd_lead_periods)
     } else {
         data <- PrepareLags(data, groupvar = idvar, timevar,
                             lagvar = policyvar, lags = furthest_lag_period)
@@ -209,7 +209,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data[column_subtract_1] <- 1 - data[column_subtract_1]
     }
 
-    if (pre !=0 & normalize == -1 & anticipation_effects_normalization) {
+    if (pre != 0 & normalize == -1 & anticipation_effects_normalization) {
         normalize <- -pre - 1
         warning(paste("You allowed for anticipation effects", pre,
                       "periods before the event, so the coefficient at", normalize,

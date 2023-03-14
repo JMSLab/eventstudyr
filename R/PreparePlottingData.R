@@ -10,7 +10,7 @@
 #' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation. Defaults to 1.
-#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).  # Delete "should be a whole number" and instead say "Optional whole number of event times..." ? - MZW
+#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param pre Whole number indicating the number of periods in the future after which the future values of the policy are
 #' not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).

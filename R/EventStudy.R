@@ -31,7 +31,7 @@
 #' @param anticipation_effects_normalization If set to TRUE, runs the default process and switches coefficient to be normalized to 0
 #' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.
 #'
-#' @return A list that contains, under the name "output", the estimation output as an lm_robust object, and under "arguments" the arguments passed to the function.
+#' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
 #' @export
 #'

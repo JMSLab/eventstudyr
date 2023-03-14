@@ -40,20 +40,15 @@
 #'                                        controls = "x_r",
 #'                                        FE = TRUE,
 #'                                        TFE = TRUE,
-#'                                        post = 3,
-#'                                        pre = 2,
-#'                                        overidpre = 4,
-#'                                        overidpost = 5,
+#'                                        post = 3, overidpost = 5,
+#'                                        pre = 2,  overidpre = 4,
 #'                                        normalize = - 3,
-#'                                        cluster = TRUE,
-#'                                        anticipation_effects_normalization = TRUE)[[1]])
+#'                                        anticipation_effects_normalization = TRUE)$output)
 #'
 #' PreparePlottingData(df_tidy_estimates = tidy_eventstudy_estimates,
 #'                     policyvar = "z",
-#'                     post = 3,
-#'                     overidpost = 5,
-#'                     pre = 2,
-#'                     overidpre = 4,
+#'                     post = 3, overidpost = 5,
+#'                     pre = 2,  overidpre = 4,
 #'                     normalization_column = "z_fd_lead3",
 #'                     proxyIV = NULL)
 #'
@@ -70,20 +65,15 @@
 #'                                        proxy = "eta_m",
 #'                                        FE = TRUE,
 #'                                        TFE = TRUE,
-#'                                        post = 1,
-#'                                        overidpost = 2,
-#'                                        pre = 1,
-#'                                        overidpre = 2,
+#'                                        post = 1, overidpost = 2,
+#'                                        pre = 1,  overidpre = 2,
 #'                                        normalize = -1,
-#'                                        cluster = TRUE,
-#'                                        anticipation_effects_normalization = TRUE)[[1]])
+#'                                        anticipation_effects_normalization = TRUE)$output)
 #'
 #' PreparePlottingData(df_tidy_estimates = tidy_eventstudy_estimates,
 #'                     policyvar = "z",
-#'                     post = 3,
-#'                     overidpost = 5,
-#'                     pre = 2,
-#'                     overidpre = 4,
+#'                     post = 1, overidpost = 2,
+#'                     pre = 1,  overidpre = 2,
 #'                     normalization_column = "z_fd_lead2",
 #'                     proxyIV = "z_fd_lead3")
 #'

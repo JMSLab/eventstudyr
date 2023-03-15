@@ -1,6 +1,6 @@
-#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
 #'
-#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
+#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in [Freyaldenhoven et al. (2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
 #' @param data Data frame containing the variables of interest.
 #' @param outcomevar Character indicating column of outcome variable y.
 #' @param policyvar Character indicating column of policy variable z.
@@ -17,16 +17,16 @@
 #' Defaults to TRUE. Must be TRUE if FE is TRUE.
 #' @param post Whole number indicating the number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
-#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
 #' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation.
 #' Defaults to 1.
-#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
 #' @param pre Whole number indicating the number of periods in the future after which the future values of the policy are
 #' not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
-#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
 #' @param overidpre Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation.
 #' Defaults to "post" + "pre".
-#' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
 #' @param anticipation_effects_normalization If set to TRUE, runs the default process and switches coefficient to be normalized to 0
 #' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.

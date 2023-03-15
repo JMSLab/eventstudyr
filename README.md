@@ -4,7 +4,7 @@
 
 The **eventstudyr** package implements tools for estimating linear panel event study models, following the recommendations in Freyaldenhoven et al. (2021).
 Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region.
-Allows instrumental variables estimation following Freyaldenhoven et al. (2019).
+Allows instrumental variables estimation following [Freyaldenhoven et al. (2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
 
 ## Installation
 

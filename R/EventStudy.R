@@ -137,7 +137,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if ((estimator == "OLS" & ! is.null(proxyIV)))      {stop("proxyIV should only be specified when estimator = 'FHS'.")}
     if ((estimator == "FHS" &
         ! is.null(proxyIV) & ! is.character(proxyIV)))  {stop("proxyIV should be a character.")}
-    if (estimator == "FHS" & pre == 0 & overidpre == 0) {stop("When FHS is TRUE, you must have at least one lead. Either pre or overidpre must be greater than 0.")}
+    if (estimator == "FHS" & pre == 0 & overidpre == 0 & is.null(proxyIV)) {
+        stop("When FHS is TRUE, proxyIV must be specified explicitly when there are no leads in the model.")
+    }
 
     if (! is.logical(FE))      {stop("FE should be either TRUE or FALSE.")}
     if (! is.logical(TFE))     {stop("TFE should be either TRUE or FALSE.")}

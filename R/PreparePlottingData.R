@@ -6,7 +6,7 @@
 #' At a minimum, it contains a column called "term" with the name for the coefficient and a
 #' column called "estimate" that contains the corresponding estimate. Should be a data.frame.
 #' @param policyvar Character indicating column of policy variable z.
-# @param post Whole number indicating the number of periods in the past before which the past values of the policy
+#' @param post Whole number indicating the number of periods in the past before which the past values of the policy
 #' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
 #' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation. Defaults to 1.

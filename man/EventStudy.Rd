@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
+\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 \usage{
 EventStudy(
   estimator,
@@ -26,7 +26,7 @@ EventStudy(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in \href{https://www.aeaweb.org/articles?id=10.1257/aer.20180609}{Freyaldenhoven et al. (2019)}.}
 
 \item{data}{Data frame containing the variables of interest.}
 
@@ -52,19 +52,19 @@ If NULL, defaults to the strongest lead of the policy variable based on the firs
 
 \item{post}{Whole number indicating the number of periods in the past before which the past values of the policy
 are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
-\href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
+\href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
 \item{overidpost}{Optional whole number indicating the number of event times after "post" to be included in estimation.
 Defaults to 1.
-Corresponds to L_M in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
+Corresponds to L_M in equation (2) of \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
 \item{pre}{Whole number indicating the number of periods in the future after which the future values of the policy are
 not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
-\href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
+\href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
 \item{overidpre}{Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation.
 Defaults to "post" + "pre".
-Corresponds to L_G in equation (2) of \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.}
+Corresponds to L_G in equation (2) of \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 
@@ -75,10 +75,10 @@ Defaults to TRUE. Must be TRUE if FE is TRUE.}
 when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.}
 }
 \value{
-A list that contains, under the name "output", the estimation output as an lm_robust object, and under "arguments" the arguments passed to the function.
+A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 }
 \description{
-Estimates Equation (2) in \href{https://www.nber.org/system/files/working_papers/w29170/w29170.pdf}{Freyaldenhoven et al. (2021)}.
+Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.
 }
 \examples{
 

@@ -30,11 +30,11 @@ estimates_ols <- EventStudy(
    idvar = "id",
    timevar = "t",
    controls = "x_r",
-   pre = 0,  overidpost = 4
+   pre = 0,  post = 4
 )
 
-plt_ols <- EventStudyPlot(estimates = estimates_ols)
-plt_ols
+plt <- EventStudyPlot(estimates = estimates_ols)
+plt
 ```
 
 ## Citation

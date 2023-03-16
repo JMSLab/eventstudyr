@@ -44,7 +44,7 @@
 AddCIs <- function(df_estimates, eventstudy_coefficients, conf_level = 0.95) {
     if (! inherits(df_estimates, "data.frame")) {stop("df_estimates should be a data frame")}
     if (!all(c("term", "estimate", "std.error") %in% colnames(df_estimates))) {
-        stop("df_estimates should include columns 'term', 'estimate', and 'std.error'")
+        stop("df_estimates should include columns 'term', 'estimate', and 'std.error'.")
     }
     if (! is.character(eventstudy_coefficients)) {stop("eventstudy_coefficients should be a character vector.")}
     if (! is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {stop("conf_level should be a real number between 0 and 1, inclusive.")}

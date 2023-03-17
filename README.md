@@ -1,24 +1,46 @@
 # eventstudyr
 
-## Development Workflow
+## Overview
 
-1. Create a function using `usethis::use_r("functionName")`
-2. Add `if(fail_condition){stop("message here")}` or `if(fail_condition){warning("message here")}` statements that perform checks on all of the functions' arguments and throw an appropriate error or warning
-3. Use `devtools::load_all()` (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> on Windows) to informally test drive the function
-4. Write documentation for the function using the language from the [Design Document](https://github.com/JMSLab/EventStudyR/blob/105846629de1f1979eca01c8b6809249a4111199/issue1/DesignDocument.pdf). Create a working example if the function is going to be user facing (this will also help you to run informal tests more quickly)
-5. Recompile function documentation using `devtools::document()` (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> on Windows) to make sure the documentation is up to date
-6. Run `usethis::use_test("functionName")` (should use the same functionName as in step 1). Add tests
-7. Run the tests using `devtools::test()` (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd> on Windows) to make sure that all of the tests are passing, addressing any warnings and errors
-8. Run `devtools::check()` (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> on Windows) and address any notes, errors, or warnings
-9. Commit changes
-10. Push your code **if it is passing all tests**. Address any warnings/errors
-11. When you open a pull request, uncomment the job `R-CMD-check` in `.github/workflows/R-CMD-check.yaml` to check your code, and then comment out again. Do the
- same before you are ready to wrap-up the pull request to ensure that the changes during the pull did not introduce any bugs.
+The **eventstudyr** package implements tools for estimating linear panel event study models, following the recommendations in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
+Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region.
+Allows instrumental variables estimation following [Freyaldenhoven et al. (2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
+
+## Installation
+
+```R
+# Install from GitHub
+install.packages("devtools")
+devtools::install_github("JMSLab/eventstudyr")
+```
+
+## Usage
+
+Find a minimal example below. 
+For more examples see the package documentation.
+
+```R
+library(eventstudyr)
+
+estimates_ols <- EventStudy(
+   estimator = "OLS",
+   data = df_sample_dynamic,   # Use package sample data
+   outcomevar = "y_smooth_m",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   controls = "x_r",
+   pre = 0,  post = 4
+)
+
+plt <- EventStudyPlot(estimates = estimates_ols)
+plt
+```
 
 ## Citation
 
 Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, and Jesse M. Shapiro. "Visualization, Identification, and Estimation in the Panel Event-Study Design." [NBER Working Paper No. 29170](https://www.nber.org/papers/w29170),
 August 2021.
 
-Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, Veli M. Andirin, Richard Calvo, Santiago Hermo, Nathan Schor, Emily Wang. "`eventstudyr` package." Code and data repository at https://github.com/JMSLab/eventstudyr, February 2023.
+Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, Veli M. Andirin, Richard Calvo, Santiago Hermo, Nathan Schor, Emily Wang. "`eventstudyr` package." Code and data repository at https://github.com/JMSLab/eventstudyr, March 2023.
 

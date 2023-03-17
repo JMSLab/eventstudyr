@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)}
+\title{Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 \usage{
 EventStudyPlot(
   estimates,
@@ -10,18 +10,18 @@ EventStudyPlot(
   ytitle = "Coefficient",
   ybreaks = NULL,
   conf_level = 0.95,
-  Supt = 0.95,
+  supt = 0.95,
   num_sim = 1000,
   seed = 1234,
-  Addmean = FALSE,
-  Preeventcoeffs = TRUE,
-  Posteventcoeffs = TRUE,
-  Addzeroline = TRUE,
-  Smpath = FALSE
+  add_mean = FALSE,
+  pre_event_coeffs = TRUE,
+  post_event_coeffs = TRUE,
+  add_zero_line = TRUE,
+  smpath = FALSE
 )
 }
 \arguments{
-\item{estimates}{The output from calling EventStudy(). Should be a list of length 2.}
+\item{estimates}{The output from calling \code{\link[=EventStudy]{EventStudy()}}. Should be a list of length 2.}
 
 \item{xtitle}{The title for the x-axis. Should be a string. Defaults to "Event time".}
 
@@ -29,12 +29,12 @@ EventStudyPlot(
 
 \item{ybreaks}{A vector containing the desired breaks for the y-axis.
 Defaults to NULL, which means the breaks are computed automatically.
-If custom breaks are selected with the \code{Addmean} argument set to TRUE, then the breaks must include zero.}
+If custom breaks are selected with the \code{add_mean} argument set to TRUE, then the breaks must include zero.}
 
 \item{conf_level}{Confidence level used for confidence interval
-expressed as a real number between 0 and 1, inclusively. Defaults to 0.95.}
+expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.}
 
-\item{Supt}{The confidence level used for obtaining the sup-t bands critical value.
+\item{supt}{The confidence level used for obtaining the sup-t bands critical value.
 Should be a real number between 0 and 1, inclusive. Defaults to .95.}
 
 \item{num_sim}{The number of simulations used in generating the sup-t bands.
@@ -43,101 +43,93 @@ Should be a natural number. Defaults to 1000.}
 \item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible.
 Should be a natural number. Defaults to 1234.}
 
-\item{Addmean}{Adds the mean of the dependent variable in the period used for normalization.
+\item{add_mean}{Adds the mean of the dependent variable in the period used for normalization.
 Should be TRUE or FALSE. Defaults to FALSE.}
 
-\item{Preeventcoeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends.
+\item{pre_event_coeffs}{If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 Should be TRUE or FALSE. Defaults to TRUE.}
 
-\item{Posteventcoeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
+\item{post_event_coeffs}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
 Should be TRUE or FALSE. Defaults to TRUE.}
 
-\item{Addzeroline}{Whether or not to plot a dashed horizontal line at y = 0.
+\item{add_zero_line}{Whether or not to plot a dashed horizontal line at y = 0.
 Should be TRUE or FALSE. Defaults to TRUE, meaning the line is plotted.}
 
-\item{Smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
+\item{smpath}{Plot smoothest path of confounder that rationalizes event study coefficients.
 Should be TRUE or FALSE. Defaults to FALSE.}
 }
 \value{
-The Event-Study plot as a gpplot2 object
+The Event-Study plot as a ggplot2 object.
 }
 \description{
-Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (forthcoming)
+Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.
 }
 \examples{
 
-# OLS
+# Minimal examples
+### OLS
 
-eventstudy_estimates_ols <- EventStudy(
-  estimator = "OLS",
-  data = df_sample_dynamic,
-  outcomevar = "y_base",
-  policyvar = "z",
-  idvar = "id",
-  timevar = "t",
-  controls = "x_r",
-  FE = TRUE,
-  TFE = TRUE,
-  post = 3,
-  pre = 2,
-  overidpre = 4,
-  overidpost = 5,
-  normalize = - 3,
-  cluster = TRUE,
-  anticipation_effects_normalization = TRUE
+estimates_ols <- EventStudy(
+   estimator = "OLS",
+   data = df_sample_dynamic,
+   outcomevar = "y_smooth_m",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   controls = "x_r",
+   FE = TRUE, TFE = TRUE,
+   post = 3, overidpost = 5,
+   pre = 2,  overidpre = 4,
+   normalize = - 3
 )
 
-EventStudyPlot(
-  estimates = eventstudy_estimates_ols,
-  xtitle = "Event time",
-  ytitle = "Coefficient",
-  ybreaks = c(-1.5, -.5, 0, .5, 1.5),
-  conf_level = .95,
-  Supt = .95,
-  num_sim = 1000,
-  seed = 1234,
-  Addmean = FALSE,
-  Preeventcoeffs = TRUE,
-  Posteventcoeffs = TRUE,
-  Addzeroline = TRUE,
-  Smpath = FALSE
+plt_ols <- EventStudyPlot(estimates = estimates_ols)
+plt_ols
+
+### IV
+
+estimates_fhs <- EventStudy(
+   estimator = "FHS",
+   data = df_sample_dynamic,
+   outcomevar = "y_smooth_m",
+   policyvar = "z",
+   idvar = "id",
+   timevar = "t",
+   controls = "x_r",
+   proxy = "eta_m",
+   post = 2, overidpost = 1,
+   pre = 0,  overidpre = 3,
+   normalize = -1
 )
 
-# IV
+plt_fhs <- EventStudyPlot(estimates = estimates_fhs)
+plt_fhs
 
-eventstudy_estimates_fhs <- EventStudy(
-  estimator = "FHS",
-  data = df_sample_dynamic,
-  outcomevar = "y_base",
-  policyvar = "z",
-  idvar = "id",
-  timevar = "t",
-  controls = "x_r",
-  FE = TRUE,
-  TFE = TRUE,
-  post = 3,
-  pre = 0,
-  overidpre = 3,
-  overidpost = 1,
-  normalize = - 1,
-  cluster = TRUE,
-  proxy = "eta_m",
-  anticipation_effects_normalization = TRUE
-)
+# Optional arguments
 
-EventStudyPlot(
-  estimates = eventstudy_estimates_fhs,
-  xtitle = "Event time",
-  ytitle = "Coefficient",
-  ybreaks = seq(-5, 10, 5),
-  conf_level = .95,
-  Supt = .95,
-  num_sim = 1000,
-  seed = 1234,
-  Addmean = FALSE,
-  Preeventcoeffs = TRUE,
-  Posteventcoeffs = TRUE,
-  Addzeroline = TRUE,
-  Smpath = FALSE
-)
+### Change x- and y-axis titles and set ybreaks
+EventStudyPlot(estimates = estimates_ols,
+               xtitle = "Relative time", ytitle = "",
+               ybreaks = seq(-2, 1, 0.5))
+
+### Add smoothest path
+EventStudyPlot(estimates = estimates_ols, smpath = TRUE)
+
+### Add y-mean to y-axis and line y = 0
+EventStudyPlot(estimates = estimates_ols, add_mean = TRUE,
+               add_zero_line = TRUE)
+
+### Do not plot supt bands
+EventStudyPlot(estimates = estimates_ols, supt = NULL)
+
+# Modify plots using ggplot2 functions
+library(ggplot2)
+
+### Change color of dots, horizontal line, and theme
+plt_ols +
+  geom_point(color = "red") +
+  geom_hline(color = "gray", yintercept = 0) +
+  theme_light() +
+  theme(panel.grid.minor.x = element_blank())
+
 }

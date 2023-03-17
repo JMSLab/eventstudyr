@@ -50,16 +50,16 @@ test_that("x- and y-axis breaks and limits are correct", {
 
     p_Addmean <- EventStudyPlot(estimates = estimates,
                                 ybreaks   = c(-1.5, -.5, 0, .5, 1.5),
-                                Addmean   = TRUE)
+                                add_mean   = TRUE)
 
     p_noAddmean <- EventStudyPlot(estimates = estimates,
                                   ybreaks   = c(-1.5, -.5, 0, .5, 1.5),
-                                  Addmean   = FALSE)
+                                  add_mean   = FALSE)
 
-    v_limits_addmeans    <- p_Addmean$scales$scales[[1]]$limits
-    v_limits_no_addmeans <- p_noAddmean$scales$scales[[1]]$limits
-    v_breaks_addmeans    <- p_Addmean$scales$scales[[1]]$breaks
-    v_breaks_no_addmeans <- p_noAddmean$scales$scales[[1]]$breaks
+    v_limits_addmeans    <- p_Addmean$scales$scales[[2]]$limits
+    v_limits_no_addmeans <- p_noAddmean$scales$scales[[2]]$limits
+    v_breaks_addmeans    <- p_Addmean$scales$scales[[2]]$breaks
+    v_breaks_no_addmeans <- p_noAddmean$scales$scales[[2]]$breaks
 
     expect_equal(v_limits_addmeans,    c(-1.5, 1.5))
     expect_equal(v_limits_no_addmeans, c(-1.5, 1.5))
@@ -76,18 +76,18 @@ test_that("correctly adds mean of outcome var", {
 
     p_Addmean <- EventStudyPlot(estimates = estimates,
                                 ybreaks   = c(-1.5, -.5, 0, .5, 1.5),
-                                Addmean   = TRUE)
+                                add_mean   = TRUE)
 
     p_noAddmean <- EventStudyPlot(estimates = estimates,
                                   ybreaks   = c(-1.5, -.5, 0, .5, 1.5),
-                                  Addmean   = FALSE)
+                                  add_mean   = FALSE)
 
-    y_mean <- AddMeans(estimates[[2]]$data, estimates[[2]]$normalization_column,
+    y_mean <- AddMeans(estimates$arguments$data, estimates$arguments$normalization_column,
                        "z", "y_base")
     y_mean <- round(y_mean, 2)
 
-    v_labels_addmeans    <- p_Addmean$scales$scales[[1]]$labels
-    v_labels_no_addmeans <- p_noAddmean$scales$scales[[1]]$labels
+    v_labels_addmeans    <- p_Addmean$scales$scales[[2]]$labels
+    v_labels_no_addmeans <- p_noAddmean$scales$scales[[2]]$labels
 
     expect_equal(v_labels_addmeans,    c("-1.5", "-0.5", sprintf("0 (%s)", y_mean), "0.5", "1.5"))
     expect_equal(v_labels_no_addmeans, c(-1.5, -.5, 0, .5, 1.5))
@@ -100,10 +100,10 @@ test_that("sup-t bands are appropriately present or absent", {
                             controls = "x_r", post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
     p_supt <- EventStudyPlot(estimates = estimates,
-                             Supt = .95)
+                             supt = .95)
 
     p_no_supt <- EventStudyPlot(estimates = estimates,
-                                Supt = NULL)
+                                supt = NULL)
 
     expect_true(p_supt$labels$ymin    == "suptband_lower")
     expect_true(p_no_supt$labels$ymin != "suptband_lower")
@@ -119,10 +119,10 @@ test_that("confidence intervals are appropriately present or absent", {
                             controls = "x_r", post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
     p_ci <- EventStudyPlot(estimates = estimates,
-                           conf_level = .95, Supt = NULL)
+                           conf_level = .95, supt = NULL)
 
     p_no_ci <- EventStudyPlot(estimates = estimates,
-                              conf_level = NULL, Supt = NULL)
+                              conf_level = NULL, supt = NULL)
 
     expect_equal(p_ci$labels$ymin, "ci_lower")
     expect_equal(p_ci$labels$ymax, "ci_upper")
@@ -138,23 +138,23 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
 
     p_pre_post_caption <- EventStudyPlot(estimates       = estimates,
                                          ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                         Preeventcoeffs  = TRUE,
-                                         Posteventcoeffs = TRUE)$labels$caption
+                                         pre_event_coeffs  = TRUE,
+                                         post_event_coeffs = TRUE)$labels$caption
 
     p_pre_caption      <- EventStudyPlot(estimates       = estimates,
                                          ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                         Preeventcoeffs  = TRUE,
-                                         Posteventcoeffs = FALSE)$labels$caption
+                                         pre_event_coeffs  = TRUE,
+                                         post_event_coeffs = FALSE)$labels$caption
 
     p_post_caption     <- EventStudyPlot(estimates       = estimates,
                                          ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                         Preeventcoeffs  = FALSE,
-                                         Posteventcoeffs = TRUE)$labels$caption
+                                         pre_event_coeffs  = FALSE,
+                                         post_event_coeffs = TRUE)$labels$caption
 
     p_neither_caption   <- EventStudyPlot(estimates       = estimates,
                                           ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                          Preeventcoeffs  = FALSE,
-                                          Posteventcoeffs = FALSE)$labels$caption
+                                          pre_event_coeffs  = FALSE,
+                                          post_event_coeffs = FALSE)$labels$caption
 
     regex_for_p_value <- "1\\.0*$|0\\.\\d+" # 1 followed by . and then zero or more 0's or 0 then . then any number
     regex_pretrends   <- "Pretrends p-value = "
@@ -197,7 +197,7 @@ test_that("Sup-t bands are wider than confidence intervals", {
 
     p <- EventStudyPlot(estimates = estimates,
                         conf_level = .95,
-                        Supt = .95)
+                        supt = .95)
 
     ci_lower       <- na.omit(p$data$ci_lower)
     ci_upper       <- na.omit(p$data$ci_upper)
@@ -219,7 +219,7 @@ test_that("computed smoothest path for examples is within expectations", {
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
     p <- EventStudyPlot(estimates = estimates,
-                        Smpath    = T)
+                        smpath    = T)
 
     expect_equal(p$data$smoothest_path, matrix(rep(0, nrow(p$data))))
 
@@ -228,7 +228,7 @@ test_that("computed smoothest path for examples is within expectations", {
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = -3)
 
     p <- EventStudyPlot(estimates = estimates,
-                        Smpath    = T)
+                        smpath    = T)
 
     normalized_index  <- which(p$data$estimate == 0)
     normalized_smpath <- p$data$smoothest_path[normalized_index]
@@ -254,7 +254,7 @@ test_that("computed smoothest path for FHS has at least two coefficients almost 
                             post = 3, pre = 0, overidpre = 3, overidpost = 1, normalize = -1, proxyIV = "z_fd_lead3")
 
     p <- EventStudyPlot(estimates = estimates,
-                        Smpath    = T)
+                        smpath    = T)
 
     normalized_index  <- which(p$data$estimate == 0)
     normalized_smpath <- p$data$smoothest_path[normalized_index]

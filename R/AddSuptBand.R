@@ -5,23 +5,23 @@
 #' underlying simultaneous sup-t confidence bands. R package version
 #' 0.1.0.
 #'
-#' @param estimates The first element extracted from the EventStudy function. Should be a list.
+#' @param estimates The first element extracted from [EventStudy()]. Should be a list.
 #' @param num_sim The number of simulations used in generating the sup-t bands.
 #' Should be a natural number. Defaults to 1000.
 #' @param conf_level The confidence level used for obtaining the sup-t bands critical value.
-#' Should be a real number between
-#' 0 and 1, inclusive. Defaults to .95.
+#' Should be a real number between 0 and 1, inclusive. Defaults to .95.
 #' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
 #' Should be a natural number.
 #' Defaults to 1234.
 #' @param eventstudy_coefficients The names of the event-study coefficients. This vector is
-#' outputted in the second element of the EventStudy function. Should be a vector of strings.
+#' outputted in the second element of the [EventStudy()] function. Should be a vector of strings.
 #'
 #' @return A data.frame that contains the upper and lower sup-t band values
 #' for each event-study coefficient.
 #' @import estimatr
 #' @importFrom MASS mvrnorm
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' eventstudy_estimates <- EventStudy(
@@ -44,19 +44,19 @@
 #' )
 #'
 #' AddSuptBand(
-#'   estimates = eventstudy_estimates[[1]],
+#'   estimates = eventstudy_estimates$output,
 #'   num_sim = 100,
 #'   conf_level = .95,
 #'   seed = 1234,
-#'   eventstudy_coefficients = eventstudy_estimates[[2]]$eventstudy_coefficients
+#'   eventstudy_coefficients = eventstudy_estimates$arguments$eventstudy_coefficients
 #')
 
 AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {
 
-    if (! class(estimates) %in% c("lm_robust", "iv_robust") & (typeof(estimates) != "list")) {
-    stop("estimates is not a data frame with coefficient estimates and standard errors")
+    if (! class(estimates) %in% c("lm_robust", "iv_robust")) {
+        stop("estimates is not a data frame with coefficient estimates and standard errors")
     }
-    if (! is.numeric(num_sim) | num_sim %% 1 != 0) {stop("num_sim should be a natural number.")}
+    if (! is.numeric(num_sim) | num_sim %% 1 != 0 | num_sim <= 0) {stop("num_sim should be a natural number.")}
     if (! is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {stop("conf_level should be a real number between 0 and 1, inclusive.")}
     if (! is.numeric(seed) | seed %%  1 != 0) {stop("seed should be an integer.")}
     if (! is.character(eventstudy_coefficients)) {stop("eventstudy_coefficients should be a character.")}

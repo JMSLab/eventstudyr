@@ -1,26 +1,41 @@
 #' Adds lags of a variable as new columns
 #'
 #' @param df Data frame that will be modified.
-#' @param groupvar Optional grouping variable, should be a character.
-#' @param timevar Variable indicating time periods, should be a character.
-#' @param lagvar Variable whose lags will be added, should be a character.
+#' @param groupvar Character indicating column of optional grouping variable.
+#' @param timevar Character indicating column of time periods.
+#' @param lagvar Character indicating column of variable whose lags will be added.
 #' @param lags Numeric vector specifying the lags to be computed.
 #'
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
-#' PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+#' PrepareLags(
+#'     df_sample_dynamic,
+#'     groupvar = "id",
+#'     timevar = "t",
+#'     lagvar = "z",
+#'     lags = 1:5
+#' )
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #' @export
 
-
 PrepareLags <- function(df, groupvar = NULL, timevar, lagvar, lags) {
-    if (! is.data.frame(df)) {stop("df should be a data frame.")}
-    if ((! is.null(groupvar)) & (! is.character(groupvar))) {stop("groupvar should be a character.")}
-    if (! is.character(timevar)) {stop("timevar should be a character.")}
-    if (! is.character(lagvar)) {stop("lagvar should be a character.")}
-    if (! is.numeric(lags)) {stop("lags should be numeric.")}
+    if (! is.data.frame(df)) {
+        stop("df should be a data frame.")
+    }
+    if ((! is.null(groupvar)) & (! is.character(groupvar))) {
+        stop("groupvar should be a character.")
+    }
+    if (! is.character(timevar)) {
+        stop("timevar should be a character.")
+    }
+    if (! is.character(lagvar)) {
+        stop("lagvar should be a character.")
+    }
+    if (! is.numeric(lags)) {
+        stop("lags should be numeric.")
+    }
 
     df <- data.table::setDT(df)
 

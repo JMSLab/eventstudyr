@@ -9,11 +9,11 @@ PrepareLeads(df, groupvar = NULL, timevar, leadvar, leads)
 \arguments{
 \item{df}{Data frame that will be modified.}
 
-\item{groupvar}{Optional grouping variable, should be a character.}
+\item{groupvar}{Character indicating column of optional grouping variable.}
 
-\item{timevar}{Variable indicating time periods, should be a character.}
+\item{timevar}{Character indicating column of time periods.}
 
-\item{leadvar}{Variable whose leads will be added, should be a character.}
+\item{leadvar}{Character indicating column of variable whose leads will be added.}
 
 \item{leads}{Numeric vector specifying the leads to be computed.}
 }
@@ -21,7 +21,13 @@ PrepareLeads(df, groupvar = NULL, timevar, leadvar, leads)
 Adds leads of a variable as new columns
 }
 \examples{
-PrepareLeads(df_sample_dynamic, groupvar = "id", timevar = "t", leadvar = "z", leads = 1:5)
+PrepareLeads(
+    df_sample_dynamic,
+    groupvar = "id",
+    timevar = "t",
+    leadvar = "z",
+    leads = 1:5
+)
 
 }
 \seealso{

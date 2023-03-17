@@ -1,36 +1,33 @@
 
 #' Orders the eventstudy coefficients and generates the x-axis labels
 #'
-#' @param df_tidy_estimates A data.frame created from applying estimatr::tidy()
-#' to the estimation output from EventStudy.
+#' @param df_tidy_estimates A data.frame created from applying \link[estimatr]{tidy}
+#' to the estimation output from [EventStudy()].
 #' At a minimum, it contains a column called "term" with the name for the coefficient and a
 #' column called "estimate" that contains the corresponding estimate. Should be a data.frame.
-#' @param policyvar Variable indicating policy variable z, should be a character.
-#' @param post The number of periods in the past before
-#' which the past values of the policy are not supposed
-#' to affect the value of the outcome. Should be a whole number.
-#' Corresponds to M in equation (2) of Freyaldenhoven et al. (forthcoming).
-#' @param overidpost Optional number of event times after "post" to be
-#' included in estimation. Defaults to 1. Should be a whole number.
-#' Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).
-#' @param pre Number of periods in the future after which the future values
-#' of the policy are not supposed to affect the value of the outcome today.
-#' Should be a whole number. Corresponds to G in equation (2) of
-#' Freyaldenhoven et al. (forthcoming).
-#' @param overidpre
-#' Optional number of event times earlier than -"pre" to be included in estimation.
-#' Defaults to "post" + "pre". Should be a whole number.
-#' Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).
+#' @param policyvar Character indicating column of policy variable z.
+#' @param post Whole number indicating the number of periods in the past before which the past values of the policy
+#' are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' @param overidpost Optional whole number indicating the number of event times after "post" to be included in estimation. Defaults to 1.
+#' Corresponds to L_M in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' @param pre Whole number indicating the number of periods in the future after which the future values of the policy are
+#' not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
+#' [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
+#' @param overidpre Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
+#' Corresponds to L_G in equation (2) of [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #' @param normalization_column The name of the column containing the coefficient that will
 #' be set to 0 in the eventstudy plot. Should be a character.
-#' @param proxyIV Variables to be used as an instrument. Should be a character. if NULL,
-#' defaults to the strongest lead of the policy variable based on the first stage.
+#' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+#' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #'
 #' @return A data.frame that contains the x-axis labels, y-axis estimates,
 #' and optional plot aesthetics to be used in creating the eventstudy plot
 #' @import stringr
 #' @rawNamespace import(stats, except=c(lag, filter))
-#' @export
+#'
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #'
@@ -43,20 +40,15 @@
 #'                                        controls = "x_r",
 #'                                        FE = TRUE,
 #'                                        TFE = TRUE,
-#'                                        post = 3,
-#'                                        pre = 2,
-#'                                        overidpre = 4,
-#'                                        overidpost = 5,
+#'                                        post = 3, overidpost = 5,
+#'                                        pre = 2,  overidpre = 4,
 #'                                        normalize = - 3,
-#'                                        cluster = TRUE,
-#'                                        anticipation_effects_normalization = TRUE)[[1]])
+#'                                        anticipation_effects_normalization = TRUE)$output)
 #'
 #' PreparePlottingData(df_tidy_estimates = tidy_eventstudy_estimates,
 #'                     policyvar = "z",
-#'                     post = 3,
-#'                     overidpost = 5,
-#'                     pre = 2,
-#'                     overidpre = 4,
+#'                     post = 3, overidpost = 5,
+#'                     pre = 2,  overidpre = 4,
 #'                     normalization_column = "z_fd_lead3",
 #'                     proxyIV = NULL)
 #'
@@ -73,20 +65,15 @@
 #'                                        proxy = "eta_m",
 #'                                        FE = TRUE,
 #'                                        TFE = TRUE,
-#'                                        post = 1,
-#'                                        overidpost = 2,
-#'                                        pre = 1,
-#'                                        overidpre = 2,
+#'                                        post = 1, overidpost = 2,
+#'                                        pre = 1,  overidpre = 2,
 #'                                        normalize = -1,
-#'                                        cluster = TRUE,
-#'                                        anticipation_effects_normalization = TRUE)[[1]])
+#'                                        anticipation_effects_normalization = TRUE)$output)
 #'
 #' PreparePlottingData(df_tidy_estimates = tidy_eventstudy_estimates,
 #'                     policyvar = "z",
-#'                     post = 3,
-#'                     overidpost = 5,
-#'                     pre = 2,
-#'                     overidpre = 4,
+#'                     post = 1, overidpost = 2,
+#'                     pre = 1,  overidpre = 2,
 #'                     normalization_column = "z_fd_lead2",
 #'                     proxyIV = "z_fd_lead3")
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)}
+\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 \usage{
 EventStudy(
   estimator,
@@ -26,115 +26,141 @@ EventStudy(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV.}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in \href{https://www.aeaweb.org/articles?id=10.1257/aer.20180609}{Freyaldenhoven et al. (2019)}.}
 
-\item{data}{The data frame that contains the variables of interest.}
+\item{data}{Data frame containing the variables of interest.}
 
-\item{outcomevar}{Variable indicating outcome variable y, should be a character.}
+\item{outcomevar}{Character indicating column of outcome variable y.}
 
-\item{policyvar}{Variable indicating policy variable z, should be a character.}
+\item{policyvar}{Character indicating column of policy variable z.}
 
-\item{idvar}{Variable indicating units, should be a character.}
+\item{idvar}{Character indicating column of units.}
 
-\item{timevar}{Variable indicating time periods, should be a character.}
+\item{timevar}{Character indicating column of time periods.}
 
-\item{controls}{Optional vector of controls q, should be a character.}
+\item{controls}{Optional character vector indicating a set of control variables q.}
 
-\item{proxy}{Variable that is thought to be affected by the confound but not by the policy.
-Should be specified if and only if estimator is specified as "FHS". Should be a character.}
+\item{proxy}{Character indicating column of variable that is thought to be affected by the confound but not by the policy.
+Should be specified if and only if estimator is specified as "FHS".}
 
-\item{proxyIV}{Variables to be used as an instrument. Should be a character. If NULL,
-defaults to the strongest lead of the policy variable based on the first stage.}
+\item{proxyIV}{Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
+If NULL, defaults to the strongest lead of the policy variable based on the first stage.}
 
-\item{FE}{Specifies if unit fixed-effects should be included. Defaults to TRUE.}
+\item{FE}{Logical indicating whether unit fixed-effects should be included. Defaults to TRUE.}
 
-\item{TFE}{Specifies if time fixed-effects should be included. Defaults to TRUE.}
+\item{TFE}{Logical indicating whether time fixed-effects should be included. Defaults to TRUE.}
 
-\item{post}{The number of periods in the past before which the past values of the policy
-are not supposed to affect the value of the outcome. Should be a whole number. Corresponds to M in equation (2) of
-Freyaldenhoven et al. (forthcoming).}
+\item{post}{Whole number indicating the number of periods in the past before which the past values of the policy
+are not supposed to affect the value of the outcome. Corresponds to M in equation (2) of
+\href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
-\item{overidpost}{Optional number of event times after "post" to be included in estimation. Defaults to 1.
-Should be a whole number. Corresponds to L_M in equation (2) of Freyaldenhoven et al. (forthcoming).}
+\item{overidpost}{Optional whole number indicating the number of event times after "post" to be included in estimation.
+Defaults to 1.
+Corresponds to L_M in equation (2) of \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
-\item{pre}{Number of periods in the future after which the future values of the policy are
-not supposed to affect the value of the outcome today. Should be a whole number. Corresponds to G in equation (2) of
-Freyaldenhoven et al. (forthcoming).}
+\item{pre}{Whole number indicating the number of periods in the future after which the future values of the policy are
+not supposed to affect the value of the outcome today. Corresponds to G in equation (2) of
+\href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
-\item{overidpre}{Optional number of event times earlier than -"pre" to be included in estimation. Defaults to "post" + "pre".
-Should be a whole number. Corresponds to L_G in equation (2) of Freyaldenhoven et al. (forthcoming).}
+\item{overidpre}{Optional whole number indicating the number of event times earlier than -"pre" to be included in estimation.
+Defaults to "post" + "pre".
+Corresponds to L_G in equation (2) of \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
 
 \item{normalize}{Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.}
 
-\item{cluster}{Specifies whether to use clustered errors by units. If FALSE, will use unclustered
-heteroskedasticity-robust standard errors. Defaults to TRUE.}
+\item{cluster}{Logical indicating whether to use clustered errors by units. If FALSE, will use unclustered heteroskedasticity-robust standard errors.
+Defaults to TRUE. Must be TRUE if FE is TRUE.}
 
-\item{anticipation_effects_normalization}{If set to TRUE, runs default process and switches coefficient to be normalized to 0
-when there are anticipation effects. If set to FALSE, does not make switch. Defaults to TRUE}
+\item{anticipation_effects_normalization}{If set to TRUE, runs the default process and switches coefficient to be normalized to 0
+when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.}
 }
 \value{
-A list that contains the estimation output and an object containing the arguments passed to the function
+A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 }
 \description{
-Estimates Equation (2) in Freyaldenhoven et al. (forthcoming)
+Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.
 }
 \examples{
-EventStudy(
-   estimator = "OLS",
-   data = df_sample_dynamic,
-   outcomevar = "y_base",
-   policyvar = "z",
-   idvar = "id",
-   timevar = "t",
-   controls = "x_r",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 3,
-   pre = 2,
-   overidpre = 4,
-   overidpost = 5,
-   normalize = - 3,
-   cluster = TRUE,
-   anticipation_effects_normalization = TRUE
-)
 
-# If you would like to estimate a static model:
-EventStudy(
-   estimator = "OLS",
-   data = df_sample_static,
-   outcomevar = "y_static",
-   policyvar = "z",
-   idvar = "id",
-   timevar = "t",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 0,
-   pre = 0,
-   overidpre = 0,
-   overidpost = 0,
-   cluster = TRUE,
-   anticipation_effects_normalization = TRUE
-)
+# A minimal example
+eventstudy_model <-
+  EventStudy(
+    estimator = "OLS",
+    data = df_sample_dynamic,
+    outcomevar = "y_base",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    pre = 0, post = 3,
+    normalize = -1
+  )
 
-# If you would like to use IV regression:
-data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+### Access estimated model
+eventstudy_model$output
 
-EventStudy(
-   estimator = "FHS",
-   data = data,
-   outcomevar = "y_base",
-   policyvar = "z",
-   idvar = "id",
-   timevar = "t",
-   controls = "x_r",
-   proxy = "eta_m",
-   FE = TRUE,
-   TFE = TRUE,
-   post = 1,
-   overidpost = 2,
-   pre = 1,
-   overidpre = 2,
-   normalize = -1,
-   cluster = TRUE
-)
+summary(eventstudy_model$output)
+
+### data.frame of estimates
+estimatr::tidy(eventstudy_model$output)
+
+### Access arguments
+eventstudy_model$arguments
+
+# A dynamic OLS model with anticipation effects and controls
+eventstudy_model_dyn <-
+  EventStudy(
+    estimator = "OLS",
+    data = df_sample_dynamic,
+    outcomevar = "y_base",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    controls = "x_r",
+    FE = TRUE, TFE = TRUE,
+    post = 3, overidpost = 5,
+    pre  = 2, overidpre  = 4,
+    normalize = - 3,
+    cluster = TRUE,
+    anticipation_effects_normalization = TRUE
+  )
+
+summary(eventstudy_model_dyn$output)
+
+# A static model
+eventstudy_model_static <-
+  EventStudy(
+    estimator = "OLS",
+    data = df_sample_static,
+    outcomevar = "y_static",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    FE = TRUE, TFE = TRUE,
+    post = 0, overidpost = 0,
+    pre  = 0, overidpre  = 0,
+    cluster = TRUE
+  )
+
+summary(eventstudy_model_static$output)
+
+# A dynamic model estimated using IV
+eventstudy_model_iv <-
+  EventStudy(
+    estimator = "FHS",
+    data = df_sample_dynamic,
+    outcomevar = "y_base",
+    policyvar = "z",
+    idvar = "id",
+    timevar = "t",
+    controls = "x_r",
+    proxy = "eta_m",
+    FE = TRUE, TFE = TRUE,
+    post = 2, overidpost = 1,
+    pre  = 0, overidpre  = 3,
+    normalize = -1,
+    cluster = TRUE
+  )
+
+summary(eventstudy_model_iv$output)
+
 }

@@ -1,14 +1,16 @@
 #' Adds first difference of a variable as a new column
 #'
 #' @param df Data frame that will be modified
-#' @param groupvar Optional grouping variable, should be a character.
-#' @param timevar Variable indicating time periods, should be a character.
-#' @param diffvar Variable whose first difference will be taken, should be a character.
+#' @param groupvar Character indicating column of optional grouping variable.
+#' @param timevar Character indicating column of time periods.
+#' @param diffvar Character indicating column of variable whose first difference will be taken.
 #'
-#' @seealso \link[data.table]{shift}
+#' @seealso [data.table::shift()]
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #'
+#' @keywords internal
+#' @noRd
 
 GetFirstDifferences <- function(df, groupvar = NULL, timevar, diffvar) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}

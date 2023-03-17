@@ -9,11 +9,11 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 \arguments{
 \item{df}{Data frame that will be modified.}
 
-\item{groupvar}{Optional grouping variable, should be a character.}
+\item{groupvar}{Character indicating column of optional grouping variable.}
 
-\item{timevar}{Variable indicating time periods, should be a character.}
+\item{timevar}{Character indicating column of time periods.}
 
-\item{lagvar}{Variable whose lags will be added, should be a character.}
+\item{lagvar}{Character indicating column of variable whose lags will be added.}
 
 \item{lags}{Numeric vector specifying the lags to be computed.}
 }
@@ -21,7 +21,13 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 Adds lags of a variable as new columns
 }
 \examples{
-PrepareLags(df_sample_dynamic, groupvar = "id", timevar = "t", lagvar = "z", lags = 1:5)
+PrepareLags(
+    df_sample_dynamic,
+    groupvar = "id",
+    timevar = "t",
+    lagvar = "z",
+    lags = 1:5
+)
 
 }
 \seealso{

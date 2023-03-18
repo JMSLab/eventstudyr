@@ -1,8 +1,10 @@
 import os
 import glob
+import time
 
-with open('code/make.log', 'w') as f:
-    f.write('This file was created by make.py')
+with open('make.log', 'w') as f:
+    f.write('This file was created by make.py\n')
+    f.write(f'Current date: {time.strftime("%Y-%m-%d -- %H:%M:%S")}\n\n')
 
 do_files = glob.glob('code/*.do')
 
@@ -15,8 +17,8 @@ for ff in log_files:
 for ff in do_files:
     os.system(f'{stata} /e {ff}')
 
-    with open('code/make.log', 'a') as f:
-        f.write(f'Execution of {ff} completed')
+    with open('make.log', 'a') as f:
+        f.write(f'Execution of {ff} completed\n')
 
     ff_base = os.path.basename(ff)
     ff_log = ff_base.replace('.do', '.log')

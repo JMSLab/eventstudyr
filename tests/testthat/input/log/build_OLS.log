@@ -19,7 +19,7 @@ Notes:
       2. Unicode is supported; see help unicode_advice.
       3. Maximum number of variables is set to 5,000; see help set_maxvar.
 
-. do "code\build.do" 
+. do "code\build_OLS.do" 
 
 . clear all
 

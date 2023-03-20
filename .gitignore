@@ -4,7 +4,6 @@
 *.pyc
 *.lyx~
 *.lyx#
-*.RDS
 *.RData
 *.Rhistory
 *.Rapp.history

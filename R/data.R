@@ -1,13 +1,9 @@
 #' Sample dataset obtained from the replication archive for [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
-#' @source Dataset in .dta format can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
-"df_sample_dynamic"
-
+#' @source Dataset in .dta format can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/} "df_sample_dynamic"
 #' Sample dataset obtained from the replication archive for [Freyaldenhoven et al. (2021)](https://www.nber.org/system/files/working_papers/w29170/w29170.pdf).
 #'
-#' @source Dataset in .dta format can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
-"df_sample_static"
-
+#' @source Dataset in .dta format can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/} "df_sample_static"
 #' Sample dataset used in the Examples section in the EventStudyOLS documentation
 #'
 #' @format A data frame with 2000 rows and 13 variables (lead and lags created using post = 1, pre = 1, overidpre = 2, overidpost = 2):
@@ -27,9 +23,7 @@
 #'   \item{z_lead3}{3 period lead of z}
 #'   }
 #'
-#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
-"df_EventStudyOLS_example"
-
+#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/} "df_EventStudyOLS_example"
 #' Sample dataset used in the Examples section in the EventStudyFHS documentation
 #'
 #' @format A data frame with 2000 rows and 14 variables (lead and lags created using post = 1, pre = 1, overidpre = 2, overidpost = 2):
@@ -50,7 +44,4 @@
 #'   \item{eta_m}{the proxy variable}
 #'   }
 #'
-#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
-"df_EventStudyFHS_example"
-
-
+#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/} "df_EventStudyFHS_example"

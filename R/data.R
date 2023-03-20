@@ -51,6 +51,6 @@
 #'   }
 #'
 #' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
-"df_EventStudyFHS_example"
+# "df_EventStudyFHS_example"
 
 

@@ -47,5 +47,5 @@ df_EventStudyFHS_example <- df_lag_lead[c("id", "t", "z", "y_base", "x_r", "z_fd
                                           "z_fd_lag1", "z_fd_lag2", "z_lag3","z_lead3", "eta_m")]
 
 usethis::use_data(df_EventStudyOLS_example, overwrite = TRUE, version = 3)
-usethis::use_data(df_EventStudyFHS_example, overwrite = TRUE, version = 3)
+# usethis::use_data(df_EventStudyFHS_example, overwrite = TRUE, version = 3)
 

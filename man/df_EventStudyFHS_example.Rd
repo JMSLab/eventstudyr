@@ -24,7 +24,7 @@ A data frame with 2000 rows and 14 variables (lead and lags created using post =
 }
 }
 \source{
-raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
+raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}. Code for creating the example dataset can be found in \verb{/data-raw/df_EventStudyFHS_example.R}
 }
 \usage{
 df_EventStudyFHS_example

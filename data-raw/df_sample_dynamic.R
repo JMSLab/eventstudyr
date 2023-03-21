@@ -1,4 +1,3 @@
-## code to prepare `df_sample_dynamic` dataset goes here
 
 library(haven)
 

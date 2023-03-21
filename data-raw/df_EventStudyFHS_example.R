@@ -1,4 +1,3 @@
-## code to prepare `df_EventStudyFHS_example` dataset goes here
 
 library(dplyr)
 library(haven)

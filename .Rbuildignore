@@ -2,5 +2,7 @@
 ^\.Rproj\.user$
 ^\.github$
 ^LICENSE\.md$
+^DEVELOPMENT\.md$
 ^issue[0-9]+$
 ^examples$
+^data-raw$

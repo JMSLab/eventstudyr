@@ -27,7 +27,7 @@
 #'   \item{z_lead3}{3 period lead of z}
 #'   }
 #'
-#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
+#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}. Code for creating the example dataset can be found in `/data-raw/df_EventStudyOLS_example.R`
 "df_EventStudyOLS_example"
 
 #' Sample dataset used in the Examples section in the EventStudyFHS documentation
@@ -50,7 +50,7 @@
 #'   \item{eta_m}{the proxy variable}
 #'   }
 #'
-#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}
+#' @source raw dataset can be found in the .zip archive in \url{https://data.nber.org/data-appendix/w29170/}. Code for creating the example dataset can be found in `/data-raw/df_EventStudyFHS_example.R`
 "df_EventStudyFHS_example"
 
 

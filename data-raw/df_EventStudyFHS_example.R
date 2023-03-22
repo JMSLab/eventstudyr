@@ -1,14 +1,10 @@
+
 library(dplyr)
 library(haven)
 
 indir  <- 'examples/source/raw/eventstudy_illustration_data/orig'
-outdir <- 'data'
 
 df_sample_dynamic <- read_dta(sprintf('%s/simulation_data_dynamic.dta', indir))
-save(df_sample_dynamic, file = sprintf('%s/df_sample_dynamic.RData', outdir))
-
-df_sample_static  <- read_dta(sprintf('%s/simulation_data_static.dta', indir))
-save(df_sample_static, file = sprintf('%s/df_sample_static.RData', outdir))
 
 policyvar <- "z"
 idvar <- "id"
@@ -39,13 +35,8 @@ df_lag_lead      <- PrepareLeads(df_lag, groupvar = idvar, timevar,
 column_subtract_1              <- paste0(policyvar, "_lead", num_fd_lead_periods)
 df_lag_lead[column_subtract_1] <- 1 - df_lag_lead[column_subtract_1]
 
-df_EventStudyOLS_example <- df_lag_lead[c("id", "t", "z", "y_base", "x_r", "z_fd",
-                             "z_fd_lead1", "z_fd_lead2", "z_fd_lead3",
-                             "z_fd_lag1", "z_fd_lag2", "z_lag3","z_lead3")]
-
 df_EventStudyFHS_example <- df_lag_lead[c("id", "t", "z", "y_base", "x_r", "z_fd",
                                           "z_fd_lead1", "z_fd_lead2", "z_fd_lead3",
                                           "z_fd_lag1", "z_fd_lag2", "z_lag3","z_lead3", "eta_m")]
 
-save(df_EventStudyOLS_example, file = sprintf('%s/df_EventStudyOLS_example.RData', outdir))
-save(df_EventStudyFHS_example, file = sprintf('%s/df_EventStudyFHS_example.RData', outdir))
+usethis::use_data(df_EventStudyFHS_example, overwrite = TRUE, version = 3)

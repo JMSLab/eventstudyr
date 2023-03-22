@@ -1,5 +1,5 @@
 ### Overview
-This directory includes sample datasets downloaded from the replication archive for Freyaldenhoven et al. (forthcoming).
+This directory includes sample datasets downloaded from the replication archive for [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170)
 
 ### Source
 NBER

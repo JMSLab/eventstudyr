@@ -6,3 +6,4 @@
 ^issue[0-9]+$
 ^examples$
 ^data-raw$
+^vignettes$

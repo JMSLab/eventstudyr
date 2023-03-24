@@ -244,7 +244,8 @@ EventStudyPlot <- function(estimates,
 # Optionally Add smooth path ----------------------------------------------
 
     # Order coefficients
-    data.table::setorder(df_plt, label)
+    label_var = "label"
+    data.table::setorderv(df_plt, c(label_var))
     ordered_labels <- df_plt$label
 
     if (smpath) {

@@ -43,4 +43,3 @@ Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, and Jesse M. Shapir
 August 2021.
 
 Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, Veli M. Andirin, Richard Calvo, Santiago Hermo, Nathan Schor, Emily Wang. "`eventstudyr` package." Code and data repository at https://github.com/JMSLab/eventstudyr, March 2023.
-

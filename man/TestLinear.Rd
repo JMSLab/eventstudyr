@@ -27,6 +27,9 @@ Defaults to TRUE.}
 \item{leveling_off}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
 Defaults to TRUE.}
 }
+\value{
+A data frame containing the F-statistic and p-value for the specified test(s).
+}
 \description{
 This function can be used to perform tests of linear hypotheses.
 }

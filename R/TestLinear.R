@@ -10,6 +10,7 @@
 #' @param leveling_off If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Defaults to TRUE.
 #'
+#' @return A data frame containing the F-statistic and p-value for the specified test(s).
 #' @importFrom car linearHypothesis
 #' @export
 #'

@@ -17,6 +17,9 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 
 \item{lags}{Numeric vector specifying the lags to be computed.}
 }
+\value{
+The passed data frame augmented with columns called lagvar_lagN, where lagvar is the value specified and N is the selected lag(s).
+}
 \description{
 Adds lags of a variable as new columns
 }
@@ -28,6 +31,7 @@ PrepareLags(
     lagvar = "z",
     lags = 1:5
 )
+
 
 }
 \seealso{

@@ -6,6 +6,8 @@
 #' @param leadvar Character indicating column of variable whose leads will be added.
 #' @param leads Numeric vector specifying the leads to be computed.
 #'
+#' @return The passed data frame augmented with columns called leadvar_leadN, where leadvar is the value specified and N is the selected lead(s).
+#'
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples

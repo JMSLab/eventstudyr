@@ -6,6 +6,8 @@
 #' @param lagvar Character indicating column of variable whose lags will be added.
 #' @param lags Numeric vector specifying the lags to be computed.
 #'
+#' @return The passed data frame augmented with columns called lagvar_lagN, where lagvar is the value specified and N is the selected lag(s).
+#'
 #' @seealso \link[data.table]{shift}
 #'
 #' @examples
@@ -16,6 +18,7 @@
 #'     lagvar = "z",
 #'     lags = 1:5
 #' )
+#'
 #'
 #' @importFrom data.table setDT setorderv shift :=
 #' @export

@@ -17,6 +17,9 @@ PrepareLeads(df, groupvar = NULL, timevar, leadvar, leads)
 
 \item{leads}{Numeric vector specifying the leads to be computed.}
 }
+\value{
+The passed data frame augmented with columns called leadvar_leadN, where leadvar is the value specified and N is the selected lead(s).
+}
 \description{
 Adds leads of a variable as new columns
 }

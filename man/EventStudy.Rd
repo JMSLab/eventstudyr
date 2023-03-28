@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
+\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
 \usage{
 EventStudy(
   estimator,
@@ -78,7 +78,7 @@ when there are anticipation effects. If set to FALSE, does not make the switch. 
 A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 }
 \description{
-Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.
+Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}
 }
 \examples{
 

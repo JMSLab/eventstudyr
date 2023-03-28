@@ -2,7 +2,7 @@
 % Please edit documentation in R/TestLinear.R
 \name{TestLinear}
 \alias{TestLinear}
-\title{This function can be used to perform tests of linear hypotheses.}
+\title{Perform tests of linear hypotheses}
 \usage{
 TestLinear(
   estimates,
@@ -31,7 +31,7 @@ Defaults to TRUE.}
 A data frame containing the F-statistic and p-value for the specified test(s).
 }
 \description{
-This function can be used to perform tests of linear hypotheses.
+Perform tests of linear hypotheses
 }
 \examples{
 estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",

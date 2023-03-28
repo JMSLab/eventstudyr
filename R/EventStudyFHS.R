@@ -12,6 +12,7 @@
 #'
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
+#' @importFrom stats qnorm pnorm
 #' @keywords internal
 #' @noRd
 #'
@@ -65,9 +66,9 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data,
 
       fhs_output$std.error <- fhs_output$std.error / sqrt((N - K) / (N - n - K + 1))
       fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
-      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
-      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
-      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
+      fhs_output$p.value <- 2*stats::pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
+      fhs_output$conf.low <- fhs_output$coefficients - stats::qnorm(0.975) * fhs_output$std.error
+      fhs_output$conf.high <- fhs_output$coefficients + stats::qnorm(0.975) * fhs_output$std.error
       fhs_output$vcov <- fhs_output$vcov / ((N - K) / (N - n - K + 1))
 
   } else if (FE & (!TFE) & cluster) {
@@ -85,9 +86,9 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data,
 
       fhs_output$std.error <- fhs_output$std.error / sqrt((N - K)/(N - n - K + 1))
       fhs_output$statistic <- fhs_output$coefficients / fhs_output$std.error
-      fhs_output$p.value <- 2*pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
-      fhs_output$conf.low <- fhs_output$coefficients - qnorm(0.975) * fhs_output$std.error
-      fhs_output$conf.high <- fhs_output$coefficients + qnorm(0.975) * fhs_output$std.error
+      fhs_output$p.value <- 2*stats::pnorm(abs(fhs_output$statistic), lower.tail = FALSE)
+      fhs_output$conf.low <- fhs_output$coefficients - stats::qnorm(0.975) * fhs_output$std.error
+      fhs_output$conf.high <- fhs_output$coefficients + stats::qnorm(0.975) * fhs_output$std.error
       fhs_output$vcov <- fhs_output$vcov / ((N - K) / (N - n - K + 1))
 
   } else if ((!FE) & TFE & (!cluster)) {

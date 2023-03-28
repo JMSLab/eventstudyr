@@ -33,6 +33,8 @@
 #'
 #' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
+#' @import estimatr
+#' @importFrom stats reformulate
 #' @export
 #'
 #' @examples

@@ -13,8 +13,8 @@
 #' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 #' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #' @return A formula object to be passed to EventStudy
-#' @rawNamespace import(stats, except=c(lag, filter))
 #'
+#' @importFrom stats reformulate as.formula
 #' @keywords internal
 #' @noRd
 #'
@@ -64,7 +64,7 @@ PrepareModelFormula <- function(estimator, outcomevar,
         exogenous <- exogenous[exogenous != proxy]
         exogenous <- exogenous[exogenous != proxyIV]
 
-        reg_formula <- as.formula(paste(outcomevar, "~",
+        reg_formula <- stats::as.formula(paste(outcomevar, "~",
                                         paste(c(exogenous, proxy), collapse="+"),
                                         "|",
                                         paste(c(exogenous, proxyIV), collapse="+")))

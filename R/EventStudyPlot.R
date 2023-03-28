@@ -27,6 +27,7 @@
 #'
 #' @return The Event-Study plot as a ggplot2 object.
 #' @import ggplot2 dplyr
+#' @import estimatr
 #' @importFrom rlang .data
 #' @importFrom data.table setorder
 #' @export

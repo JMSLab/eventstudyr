@@ -10,7 +10,8 @@
 #' @param maxiter_solver Sets the maximum number of iterations when searching for the smoothest path with minimum squared term in highest order coefficient. Should be a positive whole number. Defaults to 2e6.
 #'
 #' @return df with smoothest path added as a new column
-#' @import pracma
+#' @importFrom pracma inv pinv
+#' @importFrom stats qchisq
 #' @keywords internal
 #' @noRd
 
@@ -36,7 +37,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
 
     coeff_length <- length(coefficients)
     norm_idxs    <- which(coefficients == 0)
-    Wcritic      <- qchisq(conf_level, coeff_length - length(norm_idxs))
+    Wcritic      <- stats::qchisq(conf_level, coeff_length - length(norm_idxs))
     pN           <- length(norm_idxs)
 
     # First step: Find lowest possible polynomial order
@@ -45,7 +46,7 @@ AddSmPath <- function(df, coefficients, inv_covar,
     res_order <- res_order$results
 
     cat(paste0("Smoothest path note: ",
-               "The lowest order such that a polynomial is in confidence region is ", 
+               "The lowest order such that a polynomial is in confidence region is ",
                 order+1, ".\n"))
 
     # Second step: Find minimum coefficient on highest-order term

@@ -21,7 +21,7 @@ PrepareLeads(df, groupvar = NULL, timevar, leadvar, leads)
 The passed data frame augmented with columns called leadvar_leadN, where leadvar is the value specified and N is the selected lead(s).
 }
 \description{
-Adds leads of a variable as new columns
+\code{PrepareLeads} adds future values of a variable for a given number of periods based upon the time variable.
 }
 \examples{
 PrepareLeads(

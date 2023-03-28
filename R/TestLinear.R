@@ -1,5 +1,7 @@
 #' Perform tests of linear hypotheses
 #'
+#' @description `TestLinear` tests whether a variable is equal to a given quantity or to another variable.
+#'
 #' @param estimates A list of length 2 containing estimation results and model information.
 #' Should be an output of [EventStudy()].
 #' @param test The hypothesis to be estimated. Accepts inputs that can be passed to

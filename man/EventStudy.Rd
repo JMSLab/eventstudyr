@@ -78,7 +78,7 @@ when there are anticipation effects. If set to FALSE, does not make the switch. 
 A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 }
 \description{
-Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}
+\code{EventStudy} uses either OLS or \href{https://www.aeaweb.org/articles?id=10.1257/aer.20180609}{FHS} to study the effects of a policy on a given outcome.
 }
 \examples{
 

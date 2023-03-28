@@ -31,7 +31,7 @@ Defaults to TRUE.}
 A data frame containing the F-statistic and p-value for the specified test(s).
 }
 \description{
-Perform tests of linear hypotheses
+\code{TestLinear} tests whether a variable is equal to a given quantity or to another variable.
 }
 \examples{
 estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",

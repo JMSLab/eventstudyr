@@ -1,5 +1,7 @@
 #' Adds lags of a variable as new columns
 #'
+#' @description `PrepareLags` adds past values of a variable for a given number of periods based upon the time variable.
+#'
 #' @param df Data frame that will be modified.
 #' @param groupvar Character indicating column of optional grouping variable.
 #' @param timevar Character indicating column of time periods.

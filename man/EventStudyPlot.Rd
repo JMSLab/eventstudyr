@@ -59,7 +59,7 @@ Should be TRUE or FALSE. Defaults to FALSE.}
 The Event-Study plot as a ggplot2 object.
 }
 \description{
-Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}
+\code{EventStudyPlot} takes the output from \code{\link[=EventStudy]{EventStudy()}} and combines it with additional optional arguments to facilitate constructing an Event-Study Plot.
 }
 \examples{
 

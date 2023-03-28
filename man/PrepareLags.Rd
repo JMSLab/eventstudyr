@@ -21,7 +21,7 @@ PrepareLags(df, groupvar = NULL, timevar, lagvar, lags)
 The passed data frame augmented with columns called lagvar_lagN, where lagvar is the value specified and N is the selected lag(s).
 }
 \description{
-Adds lags of a variable as new columns
+\code{PrepareLags} adds past values of a variable for a given number of periods based upon the time variable.
 }
 \examples{
 PrepareLags(

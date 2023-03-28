@@ -1,4 +1,4 @@
-#' This function can be used to perform tests of linear hypotheses.
+#' Perform tests of linear hypotheses
 #'
 #' @param estimates A list of length 2 containing estimation results and model information.
 #' Should be an output of [EventStudy()].

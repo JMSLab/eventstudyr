@@ -9,11 +9,10 @@
 #' @param conf_level Confidence level used for confidence interval
 #' expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.
 #' @param supt The confidence level used for obtaining the sup-t bands critical value.
-#' Should be a real number between 0 and 1, inclusive. Defaults to .95.
+#' Should be a real number between 0 and 1, inclusive. Defaults to .95. Sup-t bands are simulation-based,
+#' so you must set a seed if you would like your sup-t band results to be reproducible (see examples).
 #' @param num_sim The number of simulations used in generating the sup-t bands.
 #' Should be a natural number. Defaults to 1000.
-#' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
-#' Should be a natural number. Defaults to 1234.
 #' @param add_mean Adds the mean of the dependent variable in the period used for normalization.
 #' Should be TRUE or FALSE. Defaults to FALSE.
 #' @param pre_event_coeffs If TRUE, uses pre and overidpre from estimates to test for pre-trends.
@@ -33,6 +32,8 @@
 #' @export
 #'
 #' @examples
+#'
+#' #
 #'
 #' # Minimal examples
 #' ### OLS
@@ -90,6 +91,10 @@
 #' ### Do not plot supt bands
 #' EventStudyPlot(estimates = estimates_ols, supt = NULL)
 #'
+#' ### Setting seed prior to plotting sup-t bands
+#' set.seed(1234)
+#' EventStudyPlot(estimates = estimates_ols)
+#'
 #' # Modify plots using ggplot2 functions
 #' library(ggplot2)
 #'
@@ -103,8 +108,8 @@
 
 EventStudyPlot <- function(estimates,
                            xtitle = "Event time", ytitle = "Coefficient", ybreaks = NULL,
-                           conf_level = .95, supt = .95, num_sim = 1000, seed = 1234,
-                           add_mean = FALSE, pre_event_coeffs = TRUE, post_event_coeffs = TRUE,
+                           conf_level = .95, supt = .95, num_sim = 1000, add_mean = FALSE,
+                           pre_event_coeffs = TRUE, post_event_coeffs = TRUE,
                            add_zero_line = TRUE, smpath = FALSE) {
 
     if (!is.character(xtitle))    {stop("Argument 'xtitle' should be a character.")}
@@ -141,7 +146,7 @@ EventStudyPlot <- function(estimates,
 
     if (plot_supt) {
         df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = supt,
-                                         seed = seed, eventstudy_coefficients = eventstudy_coefficients)
+                                         eventstudy_coefficients = eventstudy_coefficients)
     }
 
     plot_CI <- if(!is.null(conf_level)) TRUE else FALSE

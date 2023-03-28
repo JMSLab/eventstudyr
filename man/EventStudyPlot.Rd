@@ -12,7 +12,6 @@ EventStudyPlot(
   conf_level = 0.95,
   supt = 0.95,
   num_sim = 1000,
-  seed = 1234,
   add_mean = FALSE,
   pre_event_coeffs = TRUE,
   post_event_coeffs = TRUE,
@@ -35,13 +34,11 @@ If custom breaks are selected with the \code{add_mean} argument set to TRUE, the
 expressed as a real number between 0 and 1, inclusive. Defaults to 0.95.}
 
 \item{supt}{The confidence level used for obtaining the sup-t bands critical value.
-Should be a real number between 0 and 1, inclusive. Defaults to .95.}
+Should be a real number between 0 and 1, inclusive. Defaults to .95. Sup-t bands are simulation-based,
+so you must set a seed if you would like your sup-t band results to be reproducible (see examples).}
 
 \item{num_sim}{The number of simulations used in generating the sup-t bands.
 Should be a natural number. Defaults to 1000.}
-
-\item{seed}{The pseudorandom state used to make drawing "random" numbers reproducible.
-Should be a natural number. Defaults to 1234.}
 
 \item{add_mean}{Adds the mean of the dependent variable in the period used for normalization.
 Should be TRUE or FALSE. Defaults to FALSE.}
@@ -65,6 +62,8 @@ The Event-Study plot as a ggplot2 object.
 Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}
 }
 \examples{
+
+#
 
 # Minimal examples
 ### OLS
@@ -121,6 +120,10 @@ EventStudyPlot(estimates = estimates_ols, add_mean = TRUE,
 
 ### Do not plot supt bands
 EventStudyPlot(estimates = estimates_ols, supt = NULL)
+
+### Setting seed prior to plotting sup-t bands
+set.seed(1234)
+EventStudyPlot(estimates = estimates_ols)
 
 # Modify plots using ggplot2 functions
 library(ggplot2)

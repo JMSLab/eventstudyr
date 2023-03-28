@@ -31,6 +31,9 @@ Authors@R:
            email = "emwang@hbs.edu",
            role = c("aut", "cre")),
     person(given = "JMSLab",
+           role = c("cph")),
+    person(given = "Ryan",
+           family = "Kessler",
            role = c("cph")))    
 Description: Estimates linear panel event study models. Plots coefficients following the recommendations in Freyaldenhoven et al. (2021). Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region. Allows instrumental variables estimation following Freyaldenhoven et al. (2019).
 License: MIT + file LICENSE

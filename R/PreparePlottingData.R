@@ -136,7 +136,6 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar,
 
     }
 
-
     df_normalization_column <- data.frame(
         "term"     = normalization_column,
         "estimate" = 0,

@@ -1,4 +1,4 @@
-#' Runs OLS with optional fixed effects and clustering
+#' Runs Ordinary Least Squares (OLS) with optional fixed effects and clustering
 #'
 #' @param prepared_model_formula A formula object created in [PrepareModelFormula()] that is passed to [EventStudy()].
 #' @param prepared_data Data frame containing all of the parameters required for [EventStudy()] plus leads and

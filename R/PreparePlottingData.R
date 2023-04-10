@@ -24,7 +24,8 @@
 #' @return A data.frame that contains the x-axis labels, y-axis estimates,
 #' and optional plot aesthetics to be used in creating the eventstudy plot
 #' @import stringr
-#' @rawNamespace import(stats, except=c(lag, filter))
+#' @importFrom stats setNames
+#' @import estimatr
 #'
 #' @keywords internal
 #' @noRd
@@ -134,7 +135,6 @@ PreparePlottingData <- function(df_tidy_estimates, policyvar,
         v_normalization_other[which(supt_or_ci_present)] <- NA
 
     }
-
 
     df_normalization_column <- data.frame(
         "term"     = normalization_column,

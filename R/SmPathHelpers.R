@@ -111,20 +111,20 @@ FindCoeffs <- function(res_order, coeffs, inv_covar, Wcritic, pN, order, norm_id
 
     x0 = res_order$vhat[1:ncol(Fb)]
 
-    optim_pos <- optim(par     = x0,
-                       fn      = Objective,
-                       method  = "Nelder-Mead",
-                       control = list("maxit" = maxiter_solver, "reltol" = 1e-6),
-                       d   = coeffs, inv_covar = inv_covar,
-                       Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
-                       Wcritic = Wcritic, positive = T)
-    optim_neg <- optim(par     = x0,
-                       fn      = Objective,
-                       method  = "Nelder-Mead",
-                       control = list("maxit" = maxiter_solver, "reltol" = 1e-6),
-                       d   = coeffs, inv_covar = inv_covar,
-                       Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
-                       Wcritic = Wcritic, positive = F)
+    optim_pos <- stats::optim(par     = x0,
+                              fn      = Objective,
+                              method  = "Nelder-Mead",
+                              control = list("maxit" = maxiter_solver, "reltol" = 1e-6),
+                              d   = coeffs, inv_covar = inv_covar,
+                              Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
+                              Wcritic = Wcritic, positive = T)
+    optim_neg <- stats::optim(par     = x0,
+                              fn      = Objective,
+                              method  = "Nelder-Mead",
+                              control = list("maxit" = maxiter_solver, "reltol" = 1e-6),
+                              d   = coeffs, inv_covar = inv_covar,
+                              Fb  = Fb, F1 = F1, F2 = F2, Ab = Ab, A1 = A1, A2 = A2,
+                              Wcritic = Wcritic, positive = F)
 
     if (optim_pos$convergence != 0 | optim_neg$convergence != 0) {
         stop("Numerical optimization failed when searching for the smoothest path. Please set 'Smpath' to FALSE.")

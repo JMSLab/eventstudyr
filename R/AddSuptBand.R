@@ -10,9 +10,6 @@
 #' Should be a natural number. Defaults to 1000.
 #' @param conf_level The confidence level used for obtaining the sup-t bands critical value.
 #' Should be a real number between 0 and 1, inclusive. Defaults to .95.
-#' @param seed The pseudorandom state used to make drawing "random" numbers reproducible.
-#' Should be a natural number.
-#' Defaults to 1234.
 #' @param eventstudy_coefficients The names of the event-study coefficients. This vector is
 #' outputted in the second element of the [EventStudy()] function. Should be a vector of strings.
 #'
@@ -47,18 +44,16 @@
 #'   estimates = eventstudy_estimates$output,
 #'   num_sim = 100,
 #'   conf_level = .95,
-#'   seed = 1234,
 #'   eventstudy_coefficients = eventstudy_estimates$arguments$eventstudy_coefficients
 #')
 
-AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234, eventstudy_coefficients) {
+AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, eventstudy_coefficients) {
 
     if (! class(estimates) %in% c("lm_robust", "iv_robust")) {
         stop("estimates is not a data frame with coefficient estimates and standard errors")
     }
     if (! is.numeric(num_sim) | num_sim %% 1 != 0 | num_sim <= 0) {stop("num_sim should be a natural number.")}
     if (! is.numeric(conf_level) | conf_level < 0 | conf_level > 1) {stop("conf_level should be a real number between 0 and 1, inclusive.")}
-    if (! is.numeric(seed) | seed %%  1 != 0) {stop("seed should be an integer.")}
     if (! is.character(eventstudy_coefficients)) {stop("eventstudy_coefficients should be a character.")}
 
     vcov_matrix_all <- estimates$vcov
@@ -66,7 +61,6 @@ AddSuptBand <- function(estimates, num_sim = 1000, conf_level = .95, seed = 1234
     vcov_matrix <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
 
     v_std_errors <- t(sqrt(diag(vcov_matrix)))
-    set.seed(seed)
     draws <- MASS::mvrnorm(n = num_sim, mu = rep(0, nrow(vcov_matrix)), Sigma = vcov_matrix)
     t <- draws / (v_std_errors %x% matrix(rep(1, num_sim)))
 

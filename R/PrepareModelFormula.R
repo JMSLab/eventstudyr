@@ -13,8 +13,8 @@
 #' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 #' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #' @return A formula object to be passed to EventStudy
-#' @rawNamespace import(stats, except=c(lag, filter))
 #'
+#' @importFrom stats reformulate as.formula
 #' @keywords internal
 #' @noRd
 #'
@@ -52,11 +52,12 @@ PrepareModelFormula <- function(estimator, outcomevar,
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
     if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified with estimator=FHS")}
 
-
     if (estimator == "OLS") {
-        reg_formula <- stats::reformulate(termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
-                               response = outcomevar,
-                               intercept = FALSE)
+        reg_formula <- stats::reformulate(
+            termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
+            response = outcomevar,
+            intercept = FALSE
+        )
     }
 
     if (estimator == "FHS") {
@@ -64,10 +65,12 @@ PrepareModelFormula <- function(estimator, outcomevar,
         exogenous <- exogenous[exogenous != proxy]
         exogenous <- exogenous[exogenous != proxyIV]
 
-        reg_formula <- as.formula(paste(outcomevar, "~",
-                                        paste(c(exogenous, proxy), collapse="+"),
-                                        "|",
-                                        paste(c(exogenous, proxyIV), collapse="+")))
+        reg_formula <- stats::as.formula(
+            paste(outcomevar, "~",
+            paste(c(exogenous, proxy), collapse="+"),
+            "|",
+            paste(c(exogenous, proxyIV), collapse="+"))
+        )
     }
 
     return(reg_formula)

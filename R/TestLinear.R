@@ -1,4 +1,6 @@
-#' This function can be used to perform tests of linear hypotheses.
+#' Perform Tests of Linear Hypotheses
+#'
+#' @description `TestLinear` tests linear restrictions on coefficients.
 #'
 #' @param estimates A list of length 2 containing estimation results and model information.
 #' Should be an output of [EventStudy()].
@@ -10,6 +12,7 @@
 #' @param leveling_off If TRUE, uses post and overidpost from estimates to test for leveling-off.
 #' Defaults to TRUE.
 #'
+#' @return A data frame containing the F-statistic and p-value for the specified test(s).
 #' @importFrom car linearHypothesis
 #' @export
 #'

@@ -1,6 +1,10 @@
-# MIT License
+The eventstudyr package as a whole is distributed under MIT. The eventstudyr package includes one other open source software component that is distributed under MIT. The component is a GitHub repository called suptCriticalValue
 
-Copyright (c) 2023 JMSLab
+A copy of the license agreements used by this component is included below.
+
+MIT License
+
+Copyright (c) 2021 Ryan Kessler
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +23,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-# Licenses for incorporated dependencies
-
-* [suptCriticalValue](https://github.com/ryanedmundkessler/suptCriticalValue/blob/c1dd6b2e9aaeaa7990efa2c857e76806d23bea9e/LICENSE)

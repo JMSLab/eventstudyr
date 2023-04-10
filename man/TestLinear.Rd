@@ -2,7 +2,7 @@
 % Please edit documentation in R/TestLinear.R
 \name{TestLinear}
 \alias{TestLinear}
-\title{This function can be used to perform tests of linear hypotheses.}
+\title{Perform Tests of Linear Hypotheses}
 \usage{
 TestLinear(
   estimates,
@@ -27,8 +27,11 @@ Defaults to TRUE.}
 \item{leveling_off}{If TRUE, uses post and overidpost from estimates to test for leveling-off.
 Defaults to TRUE.}
 }
+\value{
+A data frame containing the F-statistic and p-value for the specified test(s).
+}
 \description{
-This function can be used to perform tests of linear hypotheses.
+\code{TestLinear} tests linear restrictions on coefficients.
 }
 \examples{
 estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",

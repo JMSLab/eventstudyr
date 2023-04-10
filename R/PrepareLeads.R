@@ -1,10 +1,14 @@
 #' Adds leads of a variable as new columns
 #'
+#' @description `PrepareLeads` adds future values of a variable for a given number of periods based upon the time variable.
+#'
 #' @param df Data frame that will be modified.
 #' @param groupvar Character indicating column of optional grouping variable.
 #' @param timevar Character indicating column of time periods.
 #' @param leadvar Character indicating column of variable whose leads will be added.
 #' @param leads Numeric vector specifying the leads to be computed.
+#'
+#' @return The passed data frame augmented with columns called leadvar_leadN, where leadvar is the value specified and N is the selected lead(s).
 #'
 #' @seealso \link[data.table]{shift}
 #'
@@ -18,7 +22,8 @@
 #' )
 #'
 #' @importFrom data.table setDT setorderv shift :=
-#' @export
+#' @keywords internal
+#' @noRd
 
 PrepareLeads <- function(df, groupvar = NULL, timevar, leadvar, leads) {
     if (! is.data.frame(df)) {

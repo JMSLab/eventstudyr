@@ -1,6 +1,8 @@
-#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).
+#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170)
 #'
-#' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in [Freyaldenhoven et al. (2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
+#' @description `EventStudy` uses regression methods to estimate the effect of a policy on a given outcome.
+#'
+#' @param estimator Accepts one of "OLS" or "FHS". If "OLS" is specified, implements Ordinary Least Squares. If "FHS" is specified, implements Instrumental Variables (IV) estimator proposed in [Freyaldenhoven Hansen Shapiro (FHS, 2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
 #' @param data Data frame containing the variables of interest.
 #' @param outcomevar Character indicating column of outcome variable y.
 #' @param policyvar Character indicating column of policy variable z.
@@ -33,6 +35,8 @@
 #'
 #' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
+#' @import estimatr
+#' @importFrom stats reformulate
 #' @export
 #'
 #' @examples

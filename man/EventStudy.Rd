@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.}
+\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
 \usage{
 EventStudy(
   estimator,
@@ -26,7 +26,7 @@ EventStudy(
 )
 }
 \arguments{
-\item{estimator}{Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in \href{https://www.aeaweb.org/articles?id=10.1257/aer.20180609}{Freyaldenhoven et al. (2019)}.}
+\item{estimator}{Accepts one of "OLS" or "FHS". If "OLS" is specified, implements Ordinary Least Squares. If "FHS" is specified, implements Instrumental Variables (IV) estimator proposed in \href{https://www.aeaweb.org/articles?id=10.1257/aer.20180609}{Freyaldenhoven Hansen Shapiro (FHS, 2019)}.}
 
 \item{data}{Data frame containing the variables of interest.}
 
@@ -78,7 +78,7 @@ when there are anticipation effects. If set to FALSE, does not make the switch. 
 A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 }
 \description{
-Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}.
+\code{EventStudy} uses regression methods to estimate the effect of a policy on a given outcome.
 }
 \examples{
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/TestLinear.R
 \name{TestLinear}
 \alias{TestLinear}
-\title{Perform tests of linear hypotheses}
+\title{Perform Tests of Linear Hypotheses}
 \usage{
 TestLinear(
   estimates,

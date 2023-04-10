@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Creates an Event-Study Plot following the suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
+\title{Creates an Event-Study Plot Following the Suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
 \usage{
 EventStudyPlot(
   estimates,

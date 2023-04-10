@@ -1,4 +1,4 @@
-#' Perform tests of linear hypotheses
+#' Perform Tests of Linear Hypotheses
 #'
 #' @description `TestLinear` tests linear restrictions on coefficients.
 #'

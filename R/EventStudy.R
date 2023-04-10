@@ -1,6 +1,6 @@
 #' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170)
 #'
-#' @description `EventStudy` uses either OLS or [FHS](https://www.aeaweb.org/articles?id=10.1257/aer.20180609) to study the effects of a policy on a given outcome.
+#' @description `EventStudy` uses either ordinary least squares (OLS) or Freyaldenhoven, Hansen, and Shapiro [(FHS)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609) to study the effects of a policy on a given outcome.
 #'
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in [Freyaldenhoven et al. (2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
 #' @param data Data frame containing the variables of interest.

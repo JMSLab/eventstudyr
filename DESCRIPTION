@@ -35,7 +35,7 @@ Authors@R:
     person(given = "Ryan",
            family = "Kessler",
            role = c("cph")))    
-Description: Estimates linear panel event study models. Plots coefficients following the recommendations in Freyaldenhoven et al. (2021). Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region. Allows instrumental variables estimation following Freyaldenhoven et al. (2019).
+Description: Estimates linear panel event study models. Plots coefficients following the recommendations in Freyaldenhoven et al. (2021) <doi:10.3386/w29170>. Includes sup-t bands, testing for key hypotheses, least wiggly path through the Wald region. Allows instrumental variables estimation following Freyaldenhoven et al. (2019) <doi:10.1257/aer.20180609>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:

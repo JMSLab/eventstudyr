@@ -4,5 +4,6 @@ bibentry(
   bibtype = "Misc",
   title    = "eventstudyr package",
   author   = "Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, Veli M. Andirin, Richard Calvo, Santiago Hermo, Nathan Schor, Emily Wang",
-  url      = "https://github.com/JMSLab/eventstudyr"
+  url      = "https://github.com/JMSLab/eventstudyr",
+  year     = 2023
   )

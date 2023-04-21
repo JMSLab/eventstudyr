@@ -1,3 +1,9 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* added DOI to the citations in the Description field
+* replaced calls to citEntry() with bibentry()
+
 ## Test environments
 * local R installation, R 4.0.3
 * ubuntu 16.04 (on travis-ci), R 4.0.3

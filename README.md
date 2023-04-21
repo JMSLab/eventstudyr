@@ -9,7 +9,10 @@ Allows instrumental variables estimation following [Freyaldenhoven et al. (2019)
 ## Installation
 
 ```R
-# Install from GitHub
+# Install from CRAN
+install.packages("eventstudyr")
+
+# Install latest version from GitHub
 install.packages("devtools")
 devtools::install_github("JMSLab/eventstudyr")
 ```

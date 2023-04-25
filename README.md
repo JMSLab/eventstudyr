@@ -20,7 +20,7 @@ devtools::install_github("JMSLab/eventstudyr")
 ## Usage
 
 Find a minimal example below. 
-For more examples see the package documentation.
+For more examples see the package [documentation](https://cran.r-project.org/web/packages/eventstudyr/eventstudyr.pdf) and [vignette](https://cran.r-project.org/web/packages/eventstudyr/vignettes/documentation.html).
 
 ```R
 library(eventstudyr)

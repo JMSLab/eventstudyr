@@ -251,7 +251,7 @@ test_that("subtraction is peformed on the correct column", {
     overidpre <- 2
     overidpost <- 2
 
-    df_first_diff <- GetFirstDifferences(df = df_sample_static, groupvar = "id", timevar = "t", diffvar = "z")
+    df_first_diff <- ComputeFirstDifferences(df = df_sample_static, idvar = "id", timevar = "t", diffvar = "z")
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre
@@ -466,7 +466,7 @@ test_that("subtraction is peformed on the correct column", {
     overidpre <- 2
     overidpost <- 2
 
-    df_first_diff <- GetFirstDifferences(df = df_sample_static, groupvar = "id", timevar = "t", diffvar = "z")
+    df_first_diff <- ComputeFirstDifferences(df = df_sample_static, idvar = "id", timevar = "t", diffvar = "z")
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre

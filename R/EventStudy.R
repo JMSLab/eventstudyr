@@ -171,18 +171,21 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     n_unique_rows <- nrow(data[!base::duplicated(data_ids),])
     if (n_unique_rows != n_units*n_periods) {
         warning("Dataset is unbalanced.")
+        unbalanced <- TRUE
+    } else {
+        unbalanced <- FALSE
     }
 
     num_evenstudy_coeffs <- overidpre + pre + post + overidpost
     num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
     if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window.")}
 
-    if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_fd should be reserved for eventstudyr."))}
-    if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                     "_lead should be reserved for eventstudyr."))}
-    if  (sum(grepl(paste0(policyvar, "_lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                    "_lag should be reserved for eventstudyr."))}
+    for (tag in c("_fd", "_lead", "_lag")) {
+        if  (sum(grepl(paste0(policyvar, tag), colnames(data))) > 0) {
+            warning(paste0("Variables starting with ", policyvar, tag, 
+                           " should be reserved for usage by eventstudyr."))
+        }
+    }
 
     num_fd_lag_periods   <- post + overidpost - 1
     num_fd_lead_periods  <- pre + overidpre

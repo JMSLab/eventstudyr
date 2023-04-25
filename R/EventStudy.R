@@ -193,26 +193,26 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     furthest_lag_period  <- num_fd_lag_periods + 1
 
     if (post + overidpost + pre + overidpre > 0) {
-        data <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
+        data <- ComputeFirstDifferences(data, idvar, timevar, policyvar, unbalanced)
     }
 
     if (post + overidpost - 1 >= 1) {
-        data <- PrepareLags(data, groupvar = idvar, timevar,
+        data <- PrepareLags(data, idvar, timevar,
                             lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
     }
 
     if (pre + overidpre >= 1) {
-        data <- PrepareLeads(data, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"),
+        data <- PrepareLeads(data, idvar, timevar, leadvar = paste0(policyvar, "_fd"),
                              leads = 1:num_fd_lead_periods)
     }
 
     if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
-        data      <- PrepareLeads(data, groupvar = idvar, timevar,
+        data      <- PrepareLeads(data, idvar, timevar,
                                   leadvar = policyvar, leads = num_fd_lead_periods)
     } else {
-        data <- PrepareLags(data, groupvar = idvar, timevar,
+        data <- PrepareLags(data, idvar, timevar,
                             lagvar = policyvar, lags = furthest_lag_period)
-        data <- PrepareLeads(data, groupvar = idvar, timevar,
+        data <- PrepareLeads(data, idvar, timevar,
                              leadvar = policyvar, leads = num_fd_lead_periods)
 
         column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)

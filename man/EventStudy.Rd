@@ -130,8 +130,8 @@ summary(eventstudy_model_dyn$output)
 eventstudy_model_static <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_static,
-    outcomevar = "y_static",
+    data = df_sample_dynamic,
+    outcomevar = "y_jump_m",
     policyvar = "z",
     idvar = "id",
     timevar = "t",

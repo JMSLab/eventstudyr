@@ -42,7 +42,7 @@
 #'
 #' estimates_ols <- EventStudy(
 #'    estimator = "OLS",
-#'    data = df_sample_dynamic,
+#'    data = example_data,
 #'    outcomevar = "y_smooth_m",
 #'    policyvar = "z",
 #'    idvar = "id",
@@ -61,7 +61,7 @@
 #'
 #' estimates_fhs <- EventStudy(
 #'    estimator = "FHS",
-#'    data = df_sample_dynamic,
+#'    data = example_data,
 #'    outcomevar = "y_smooth_m",
 #'    policyvar = "z",
 #'    idvar = "id",

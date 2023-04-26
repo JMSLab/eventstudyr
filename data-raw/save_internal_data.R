@@ -4,7 +4,7 @@ library(haven)
 
 indir  <- 'examples/source/raw/eventstudy_illustration_data/orig'
 
-df_sample_dynamic <- read_dta(sprintf('%s/simulation_data_dynamic.dta', indir))
+example_data <- read_dta(sprintf('%s/simulation_data_dynamic.dta', indir))
 
 policyvar <- "z"
 idvar <- "id"
@@ -15,7 +15,7 @@ pre <- 1
 overidpost <- 2
 overidpre <- 2
 
-df_first_diff <- GetFirstDifferences(df = df_sample_dynamic, timevar = "t", groupvar="id", diffvar = "z")
+df_first_diff <- GetFirstDifferences(df = example_data, timevar = "t", groupvar="id", diffvar = "z")
 
 num_fd_lag_periods   <- post + overidpost - 1
 num_fd_lead_periods  <- pre + overidpre

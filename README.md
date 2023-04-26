@@ -27,7 +27,7 @@ library(eventstudyr)
 
 estimates_ols <- EventStudy(
    estimator = "OLS",
-   data = df_sample_dynamic,   # Use package sample data
+   data = example_data,   # Use package sample data
    outcomevar = "y_smooth_m",
    policyvar = "z",
    idvar = "id",

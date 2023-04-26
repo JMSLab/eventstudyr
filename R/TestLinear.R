@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#' estimates <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+#' estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
 #'                         policyvar = "z", idvar = "id", timevar = "t",
 #'                         controls = "x_r", FE = TRUE, TFE = TRUE,
 #'                         post = 3, pre = 2, overidpre = 4, overidpost = 5,

@@ -23,7 +23,7 @@
 #' @examples
 #' eventstudy_estimates <- EventStudy(
 #'   estimator = "OLS",
-#'   data = df_sample_dynamic,
+#'   data = example_data,
 #'   outcomevar = "y_base",
 #'   policyvar = "z",
 #'   idvar = "id",

@@ -86,7 +86,7 @@ A list that contains, under "output", the estimation output as an lm_robust obje
 eventstudy_model <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",
@@ -110,7 +110,7 @@ eventstudy_model$arguments
 eventstudy_model_dyn <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",
@@ -130,7 +130,7 @@ summary(eventstudy_model_dyn$output)
 eventstudy_model_static <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_jump_m",
     policyvar = "z",
     idvar = "id",
@@ -147,7 +147,7 @@ summary(eventstudy_model_static$output)
 eventstudy_model_iv <-
   EventStudy(
     estimator = "FHS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",

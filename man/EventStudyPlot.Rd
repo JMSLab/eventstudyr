@@ -70,7 +70,7 @@ The Event-Study plot as a ggplot2 object.
 
 estimates_ols <- EventStudy(
    estimator = "OLS",
-   data = df_sample_dynamic,
+   data = example_data,
    outcomevar = "y_smooth_m",
    policyvar = "z",
    idvar = "id",
@@ -89,7 +89,7 @@ plt_ols
 
 estimates_fhs <- EventStudy(
    estimator = "FHS",
-   data = df_sample_dynamic,
+   data = example_data,
    outcomevar = "y_smooth_m",
    policyvar = "z",
    idvar = "id",

@@ -1,10 +1,11 @@
-#' Adds first difference of a variable as a new column
+#' Adds first differences of a variable, robustly to missing values, as new columns in a panel dataset
 #'
 #' @param df Data frame that will be modified
 #' @param idvar Character indicating column of grouping variable.
 #' @param timevar Character indicating column of time variable.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
 #' @param unbalanced Logical indicating whether the dataset is unbalanced.
+#' @param return_df Logical indicating whether the function should return a data frame.
 #'
 #' @seealso [data.table::shift()]
 #'
@@ -14,7 +15,7 @@
 #' @noRd
 
 ComputeFirstDifferences <- function(df, idvar, timevar, diffvar, 
-                                    unbalanced = FALSE) {
+                                    unbalanced = FALSE, return_df = TRUE) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}
     if ((! is.null(idvar)) & (! is.character(idvar))) {stop("idvar should be a character.")}
     if (! is.character(timevar)) {stop("timevar should be a character.")}
@@ -28,7 +29,7 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
         df[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))), 
            by = idvar]
     } else {
-        ## Create datset with all combinations to compute first differences
+        ## Create dataset with all combinations to compute first differences
         all_combinations <- CJ(unique(df[[idvar]]), unique(df[[timevar]]))
         setnames(all_combinations, new = c(idvar, timevar))
         
@@ -44,7 +45,9 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
                     by = c(idvar, timevar), all.x = TRUE)
     }
 
-    df <- as.data.frame(df)
+    if (return_df) {
+        df <- as.data.frame(df)
+    }
 
     return(df)
 }

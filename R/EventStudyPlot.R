@@ -66,8 +66,7 @@
 #'    policyvar = "z",
 #'    idvar = "id",
 #'    timevar = "t",
-#'    controls = "x_r",
-#'    proxy = "eta_m",
+#'    proxy = "x_r",
 #'    post = 2, overidpost = 1,
 #'    pre = 0,  overidpre = 3,
 #'    normalize = -1

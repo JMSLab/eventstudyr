@@ -23,8 +23,7 @@ plt_ols <- EventStudyPlot(
     estimates = estimates_ols,
     pre_event_coeffs = FALSE,
     post_event_coeffs = FALSE,
-    add_zero_line = FALSE,
-    smpath = TRUE
+    add_zero_line = FALSE
 ) + theme_minimal() +
     scale_x_continuous(breaks = NULL, name = NULL) +
     scale_y_continuous(breaks = NULL, name = NULL)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
+\title{Estimates Equation (2) in Freyaldenhoven et al. (2021)}
 \usage{
 EventStudy(
   estimator,

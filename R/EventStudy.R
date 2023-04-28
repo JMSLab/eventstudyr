@@ -1,4 +1,4 @@
-#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170)
+#' Estimates Equation (2) in Freyaldenhoven et al. (2021)
 #'
 #' @description `EventStudy` uses regression methods to estimate the effect of a policy on a given outcome.
 #'

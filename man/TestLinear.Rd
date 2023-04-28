@@ -17,7 +17,7 @@ TestLinear(
 Should be an output of \code{\link[=EventStudy]{EventStudy()}}.}
 
 \item{test}{The hypothesis to be estimated. Accepts inputs that can be passed to
-hypothesis.matrix argument in \link[car]{linearHypothesis}.}
+hypothesis.matrix argument in \code{car::linearHypothesis()}.}
 
 \item{test_name}{Name for test input by user. Defaults to "User Test."}
 

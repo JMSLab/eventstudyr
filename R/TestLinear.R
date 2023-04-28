@@ -5,7 +5,7 @@
 #' @param estimates A list of length 2 containing estimation results and model information.
 #' Should be an output of [EventStudy()].
 #' @param test The hypothesis to be estimated. Accepts inputs that can be passed to
-#' hypothesis.matrix argument in \link[car]{linearHypothesis}.
+#' hypothesis.matrix argument in `car::linearHypothesis()`.
 #' @param test_name Name for test input by user. Defaults to "User Test."
 #' @param pretrends If TRUE, uses pre and overidpre from estimates to test for pre-trends.
 #' Defaults to TRUE.

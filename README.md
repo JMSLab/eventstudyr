@@ -47,6 +47,6 @@ August 2021.
 
 Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, Veli M. Andirin, Richard Calvo, Santiago Hermo, Nathan Schor, Emily Wang. "`eventstudyr` package." Code and data repository at https://github.com/JMSLab/eventstudyr, March 2023.
 
-## Acknowledgements
+## Acknowledgments
 
 Thank you to Eliana Sena Sarmiento and Melissa Wu for their excellent work testing and reviewing `eventstudyr`.

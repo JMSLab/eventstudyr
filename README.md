@@ -45,6 +45,7 @@ estimates_ols <- EventStudy(
 plt <- EventStudyPlot(estimates = estimates_ols)
 plt
 ```
+<img src='man/figures/readme_plot.png' />
 
 ## Citation
 

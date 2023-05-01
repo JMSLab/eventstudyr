@@ -49,4 +49,4 @@ Simon Freyaldenhoven, Christian Hansen, Jorge Pérez Pérez, Jesse M. Shapiro, V
 
 ## Acknowledgments
 
-Thank you to Eliana Sena Sarmiento and Melissa Wu for their excellent work testing and reviewing `eventstudyr`.
+Thank you to Eliana Sena Sarmiento and Melissa Wu for their excellent work testing and reviewing `eventstudyr` prior to its public release.

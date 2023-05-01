@@ -1,5 +1,10 @@
 # eventstudyr <img src='man/figures/logo.png' align="right" height="139" />
 
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/eventstudyr)](https://CRAN.R-project.org/package=eventstudyr)
+<!-- badges: end -->
+
+
 ## Overview
 
 The **eventstudyr** package implements tools for estimating linear panel event study models, following the recommendations in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170).

@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/eventstudyr)](https://CRAN.R-project.org/package=eventstudyr)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/eventstudyr)](https://r-pkg.org/pkg/eventstudyr)
 <!-- badges: end -->
 
 

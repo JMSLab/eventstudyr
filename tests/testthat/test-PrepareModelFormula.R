@@ -16,7 +16,7 @@ test_that("formula does not have an intercept for OLS", {
   str_policy_vars <- c("Z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
 
   fmla            <- PrepareModelFormula(estimator, outcomevar, str_policy_vars)
-  expect_equal(attr(terms(reg), "intercept"), 0)
+  expect_equal(attr(terms(fmla), "intercept"), 0)
 })
 
 test_that("vars in str_policy_vars argument are incorporated into formula for OLS", {

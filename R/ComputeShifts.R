@@ -33,17 +33,19 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
     if (! is.data.frame(df)) {
         stop("df should be a data frame.")
     }
-    if ((! is.character(idvar))) {
-        stop("idvar should be a character.")
-    }
-    if (! is.character(timevar)) {
-        stop("timevar should be a character.")
-    }
-    if (! is.character(shiftvar)) {
-        stop("shiftvar should be a character.")
+    for (var in c(idvar, timevar, shiftvar)) {
+        if ((! is.character(var))) {
+            stop(paste0(var, " should be a character."))
+        }
+        if (! var %in% colnames(df)) {
+            stop(paste0(var, " should be the name of a variable in the dataset."))
+        }
     }
     if (! is.logical(unbalanced)) {
         stop("unbalanced should be logical.")
+    }
+    if (! is.logical(return_df)) {
+        stop("return_df should be logical.")
     }
     if (! is.numeric(shiftvalues)) {
         stop("shiftvalues should be numeric.")

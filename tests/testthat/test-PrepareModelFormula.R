@@ -3,95 +3,45 @@ test_that("outcomevar is the dependent variable for OLS", {
 
   estimator       <-  "OLS"
   outcomevar      <- "y_base"
-  str_policy_fd   <-  c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-                      "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-                      "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7")
-  str_policy_lead <- "z_lead6"
-  str_policy_lag  <- "z_lag8"
-  controls        <- "x_r"
+  str_policy_vars <- c("Z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
 
-  reg             <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
-  expect_equal(all.vars(reg)[1], outcomevar)
+  fmla            <- PrepareModelFormula(estimator, outcomevar, str_policy_vars)
+  expect_equal(all.vars(fmla)[1], outcomevar)
 })
 
 test_that("formula does not have an intercept for OLS", {
 
-  estimator       <-  "OLS"
+  estimator       <- "OLS"
   outcomevar      <- "y_base"
-  str_policy_fd   <-  c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-                        "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-                        "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7")
-  str_policy_lead <- "z_lead6"
-  str_policy_lag  <- "z_lag8"
-  controls        <- "x_r"
+  str_policy_vars <- c("Z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
 
-  reg             <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
+  fmla            <- PrepareModelFormula(estimator, outcomevar, str_policy_vars)
   expect_equal(attr(terms(reg), "intercept"), 0)
-
 })
 
-test_that("str_policy_fd arguments are incorporated into formula for OLS", {
+test_that("vars in str_policy_vars argument are incorporated into formula for OLS", {
 
-  estimator              <-  "OLS"
-  outcomevar             <- "y_base"
-  str_policy_fd          <-  c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-                               "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-                               "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7")
-  str_policy_lead        <- "z_lead6"
-  str_policy_lag         <- "z_lag8"
-  controls               <- "x_r"
+  estimator       <- "OLS"
+  outcomevar      <- "y_base"
+  str_policy_vars <- c("z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
 
-  reg                    <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
-  str_policy_fd_in_model <- str_policy_fd %in% attr(terms(reg), "term.labels")
-  expect_equal(sum(str_policy_fd_in_model), length(str_policy_fd))
+  fmla            <- PrepareModelFormula(estimator, outcomevar, str_policy_vars)
+
+  z_vars_mask <- grepl("z_fd|z_lead|z_lag", attr(terms(fmla), "term.labels"))
+  expect_equal(sum(z_vars_mask), length(str_policy_vars))
 })
 
-test_that("str_policy_lead arguments are incorporated into formula for OLS", {
+test_that("control arguments are incorporated into formula for OLS", {
 
-  estimator                <-  "OLS"
-  outcomevar               <- "y_base"
-  str_policy_fd            <-  c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-                                 "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-                                 "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7")
-  str_policy_lead          <- "z_lead6"
-  str_policy_lag           <- "z_lag8"
-  controls                 <- "x_r"
+  estimator       <- "OLS"
+  outcomevar      <- "y_base"
+  str_policy_vars <- c("z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
+  ctrls           <- c("x1", "x2")
 
-  reg                      <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
-  str_policy_lead_in_model <- str_policy_lead %in% attr(terms(reg), "term.labels")
-  expect_equal(sum(str_policy_lead_in_model), length(str_policy_lead))
-})
-
-test_that("str_policy_lag arguments are incorporated into formula for OLS", {
-
-  estimator               <-  "OLS"
-  outcomevar              <- "y_base"
-  str_policy_fd           <-  c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-                                "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-                                "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7")
-  str_policy_lead         <- "z_lead6"
-  str_policy_lag          <- "z_lag8"
-  controls                <- "x_r"
-
-  reg                     <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
-  str_policy_lag_in_model <- str_policy_lag %in% attr(terms(reg), "term.labels")
-  expect_equal(sum(str_policy_lag_in_model), length(str_policy_lag))
-})
-
-test_that("controls arguments are incorporated into formula for OLS", {
-
-  estimator         <-  "OLS"
-  outcomevar        <- "y_base"
-  str_policy_fd     <-  c("z_fd_lead1", "z_fd_lead2", "z_fd_lead4",
-                          "z_fd_lead5", "z_fd_lead6", "z_fd_lag1", "z_fd_lag2",
-                          "z_fd_lag3", "z_fd_lag4", "z_fd_lag5", "z_fd_lag6", "z_fd_lag7")
-  str_policy_lead   <- "z_lead6"
-  str_policy_lag    <- "z_lag8"
-  controls          <- "x_r"
-
-  reg               <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls)
-  controls_in_model <- controls %in% attr(terms(reg), "term.labels")
-  expect_equal(sum(controls_in_model), length(controls))
+  fmla            <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                         controls = ctrls)
+  controls_in_model <- attr(terms(fmla), "term.labels") %in% ctrls
+  expect_equal(sum(controls_in_model), length(ctrls))
 })
 
 test_that("formula for IV regression is correct", {
@@ -104,13 +54,27 @@ test_that("formula for IV regression is correct", {
     proxy             <-  "eta_m"
     proxyIV           <-  "z_fd_lead3"
 
-    reg <- PrepareModelFormula(estimator, outcomevar, str_policy_fd, str_policy_lead, str_policy_lag, controls, proxy, proxyIV)
+    fmla <- PrepareModelFormula(estimator, outcomevar,
+                                str_policy_vars = c(str_policy_fd, str_policy_lead, str_policy_lag),
+                                static = FALSE,
+                                controls, proxy, proxyIV)
 
-    expect_equal(class(reg), "formula")
-    expect_equal(deparse(reg[[2]]), "y_base")
-    expect_equal(sort(all.vars(reg[[c(3,2)]])),
+    expect_equal(class(fmla), "formula")
+    expect_equal(deparse(fmla[[2]]), "y_base")
+    expect_equal(sort(all.vars(fmla[[c(3,2)]])),
                  sort(c("z_fd", "z_fd_lead2", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3", "z_lead3", "z_lag4", "x_r", "eta_m")))
-    expect_equal(sort(all.vars(reg[[c(3,3)]])),
+    expect_equal(sort(all.vars(fmla[[c(3,3)]])),
                  sort(c("z_fd", "z_fd_lead2", "z_fd_lead3", "z_fd_lag1", "z_fd_lag2", "z_fd_lag3", "z_lead3", "z_lag4", "x_r")))
 })
 
+test_that("formula for static model is correct", {
+    estimator       <- "OLS"
+    outcomevar      <- "y_base"
+    str_policy_vars <- "z"
+
+    fmla <- PrepareModelFormula(estimator, outcomevar, str_policy_vars, static = TRUE)
+
+    expect_equal(class(fmla), "formula")
+    expect_equal(deparse(fmla[[2]]), "y_base")
+    expect_equal(all.vars(fmla[[3]]), "z")
+})

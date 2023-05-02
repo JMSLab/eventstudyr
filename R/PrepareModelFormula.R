@@ -12,6 +12,7 @@
 #' Should be specified if and only if estimator is specified as "FHS".
 #' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 #' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
+#' @param static Indicates whether the model to be estimated is static
 #' @return A formula object to be passed to EventStudy
 #'
 #' @importFrom stats reformulate as.formula
@@ -41,7 +42,7 @@
 #'
 
 PrepareModelFormula <- function(estimator, outcomevar,
-                                str_policy_fd, str_policy_lead, str_policy_lag,
+                                str_policy_vars, static = FALSE,
                                 controls = NULL, proxy = NULL, proxyIV = NULL) {
 
     if (! estimator %in% c("OLS", "FHS"))      {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -52,16 +53,21 @@ PrepareModelFormula <- function(estimator, outcomevar,
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
     if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified with estimator=FHS")}
 
+    if (! is.logical(static) )                   {stop("static should be a logical.")}
+    if (  static & length(str_policy_vars) > 1)  {stop("str_policy_vars must have one variable with static=TRUE")}
+    if (! static & length(str_policy_vars) <= 1) {stop("str_policy_vars must have more than one variable with static=FALSE")}
+    if (  static & !is.null(proxyIV))            {stop("static model is not compatible with estimator=FHS")}
+
     if (estimator == "OLS") {
         reg_formula <- stats::reformulate(
-            termlabels = c(str_policy_fd, str_policy_lead, str_policy_lag, controls),
+            termlabels = c(str_policy_vars, controls),
             response = outcomevar,
             intercept = FALSE
         )
     }
 
     if (estimator == "FHS") {
-        exogenous <- c(str_policy_fd, str_policy_lead, str_policy_lag, controls)
+        exogenous <- c(str_policy_vars, controls)
         exogenous <- exogenous[exogenous != proxy]
         exogenous <- exogenous[exogenous != proxyIV]
 

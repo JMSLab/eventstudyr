@@ -9,12 +9,12 @@
 #'
 #' @seealso [data.table::shift()]
 #'
-#' @importFrom data.table CJ setDT setorderv shift :=
+#' @importFrom data.table setDT setorderv setnames shift := CJ
 #'
 #' @keywords internal
 #' @noRd
 
-ComputeFirstDifferences <- function(df, idvar, timevar, diffvar, 
+ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
                                     unbalanced = FALSE, return_df = TRUE) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}
     if ((! is.null(idvar)) & (! is.character(idvar))) {stop("idvar should be a character.")}
@@ -26,22 +26,22 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
     data.table::setorderv(df, cols = c(idvar, timevar))
 
     if (!unbalanced) {
-        df[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))), 
+        df[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
            by = idvar]
     } else {
         ## Create dataset with all combinations to compute first differences
         all_combinations <- CJ(unique(df[[idvar]]), unique(df[[timevar]]))
         setnames(all_combinations, new = c(idvar, timevar))
-        
-        df_all <- merge(df, all_combinations, 
+
+        df_all <- merge(df, all_combinations,
                         by = c(idvar, timevar), all = TRUE)
-        
-        df_all[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))), 
+
+        df_all[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
                 by = idvar]
-        
+
         ## Bring first differences back to the original dataset
         vars_to_keep <- c(idvar, timevar, paste0(diffvar, "_fd"))
-        df <- merge(df, df_all[, ..vars_to_keep], 
+        df <- merge(df, df_all[, ..vars_to_keep],
                     by = c(idvar, timevar), all.x = TRUE)
     }
 

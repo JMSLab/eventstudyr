@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudyPlot.R
 \name{EventStudyPlot}
 \alias{EventStudyPlot}
-\title{Creates an Event-Study Plot Following the Suggestions in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
+\title{Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (2021)}
 \usage{
 EventStudyPlot(
   estimates,
@@ -70,7 +70,7 @@ The Event-Study plot as a ggplot2 object.
 
 estimates_ols <- EventStudy(
    estimator = "OLS",
-   data = df_sample_dynamic,
+   data = example_data,
    outcomevar = "y_smooth_m",
    policyvar = "z",
    idvar = "id",
@@ -89,13 +89,12 @@ plt_ols
 
 estimates_fhs <- EventStudy(
    estimator = "FHS",
-   data = df_sample_dynamic,
+   data = example_data,
    outcomevar = "y_smooth_m",
    policyvar = "z",
    idvar = "id",
    timevar = "t",
-   controls = "x_r",
-   proxy = "eta_m",
+   proxy = "x_r",
    post = 2, overidpost = 1,
    pre = 0,  overidpre = 3,
    normalize = -1

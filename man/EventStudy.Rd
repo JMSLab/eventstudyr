@@ -2,7 +2,7 @@
 % Please edit documentation in R/EventStudy.R
 \name{EventStudy}
 \alias{EventStudy}
-\title{Estimates Equation (2) in \href{https://www.nber.org/papers/w29170}{Freyaldenhoven et al. (2021)}}
+\title{Estimates Equation (2) in Freyaldenhoven et al. (2021)}
 \usage{
 EventStudy(
   estimator,
@@ -86,7 +86,7 @@ A list that contains, under "output", the estimation output as an lm_robust obje
 eventstudy_model <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",
@@ -110,7 +110,7 @@ eventstudy_model$arguments
 eventstudy_model_dyn <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",
@@ -130,8 +130,8 @@ summary(eventstudy_model_dyn$output)
 eventstudy_model_static <-
   EventStudy(
     estimator = "OLS",
-    data = df_sample_static,
-    outcomevar = "y_static",
+    data = example_data,
+    outcomevar = "y_jump_m",
     policyvar = "z",
     idvar = "id",
     timevar = "t",
@@ -147,13 +147,12 @@ summary(eventstudy_model_static$output)
 eventstudy_model_iv <-
   EventStudy(
     estimator = "FHS",
-    data = df_sample_dynamic,
+    data = example_data,
     outcomevar = "y_base",
     policyvar = "z",
     idvar = "id",
     timevar = "t",
-    controls = "x_r",
-    proxy = "eta_m",
+    proxy = "x_r",
     FE = TRUE, TFE = TRUE,
     post = 2, overidpost = 1,
     pre  = 0, overidpre  = 3,

@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' PrepareLags(
-#'     df_sample_dynamic,
+#'     example_data,
 #'     groupvar = "id",
 #'     timevar = "t",
 #'     lagvar = "z",

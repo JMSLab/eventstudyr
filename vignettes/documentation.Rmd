@@ -33,12 +33,12 @@ Linear panel models, and the event-study plots that often accompany them, are po
  
 ## Data
 
-We will use the `df_sample_dynamic` dataset to demonstrate the basic functionality of `eventstudyr`. These sample data are from the [replication archive](https://data.nber.org/data-appendix/w29170/) for Freyaldenhoven et al. (2021). The documentation can be accessed using `?df_sample_dynamic`.
+We will use the `example_data` dataset to demonstrate the basic functionality of `eventstudyr`. These sample data are from the [replication archive](https://data.nber.org/data-appendix/w29170/) for Freyaldenhoven et al. (2021). The documentation can be accessed using `?example_data`.
  
 ```{r Data preview}
 
-dim(df_sample_dynamic)
-head(df_sample_dynamic)
+dim(example_data)
+head(example_data)
 ```
 
 
@@ -50,7 +50,7 @@ Here is an example using the sample data:
 
 ```{r Basic Eventstudy Example - Show Code, eval = FALSE}
 results <- EventStudy(estimator = "OLS",
-                      data = df_sample_dynamic,
+                      data = example_data,
                       outcomevar = "y_jump_m",
                       policyvar = "z",
                       idvar = "id",
@@ -60,7 +60,7 @@ results <- EventStudy(estimator = "OLS",
 ```
 ```{r Basic Eventstudy Example - Run Code, echo = FALSE}
 results <- EventStudy(estimator = "OLS",
-                      data = df_sample_dynamic,
+                      data = example_data,
                       outcomevar = "y_jump_m",
                       policyvar = "z",
                       idvar = "id",
@@ -121,7 +121,7 @@ This function is designed to use the output of the `EventStudy()` and returns a 
 
 ```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
 eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
-                                       data = df_sample_dynamic,
+                                       data = example_data,
                                        outcomevar = "y_jump_m",
                                        policyvar = "z",
                                        idvar = "id",

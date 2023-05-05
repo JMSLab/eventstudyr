@@ -1,4 +1,4 @@
-#' Creates an Event-Study Plot Following the Suggestions in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170)
+#' Creates an Event-Study Plot Following the Suggestions in Freyaldenhoven et al. (2021)
 #'
 #' @description `EventStudyPlot` takes the output from [EventStudy()] and combines it with additional optional arguments to facilitate constructing an Event-Study Plot.
 #'
@@ -42,7 +42,7 @@
 #'
 #' estimates_ols <- EventStudy(
 #'    estimator = "OLS",
-#'    data = df_sample_dynamic,
+#'    data = example_data,
 #'    outcomevar = "y_smooth_m",
 #'    policyvar = "z",
 #'    idvar = "id",
@@ -61,13 +61,12 @@
 #'
 #' estimates_fhs <- EventStudy(
 #'    estimator = "FHS",
-#'    data = df_sample_dynamic,
+#'    data = example_data,
 #'    outcomevar = "y_smooth_m",
 #'    policyvar = "z",
 #'    idvar = "id",
 #'    timevar = "t",
-#'    controls = "x_r",
-#'    proxy = "eta_m",
+#'    proxy = "x_r",
 #'    post = 2, overidpost = 1,
 #'    pre = 0,  overidpre = 3,
 #'    normalize = -1

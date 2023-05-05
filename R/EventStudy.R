@@ -1,4 +1,4 @@
-#' Estimates Equation (2) in [Freyaldenhoven et al. (2021)](https://www.nber.org/papers/w29170)
+#' Estimates Equation (2) in Freyaldenhoven et al. (2021)
 #'
 #' @description `EventStudy` uses regression methods to estimate the effect of a policy on a given outcome.
 #'
@@ -45,7 +45,7 @@
 #' eventstudy_model <-
 #'   EventStudy(
 #'     estimator = "OLS",
-#'     data = df_sample_dynamic,
+#'     data = example_data,
 #'     outcomevar = "y_base",
 #'     policyvar = "z",
 #'     idvar = "id",
@@ -69,7 +69,7 @@
 #' eventstudy_model_dyn <-
 #'   EventStudy(
 #'     estimator = "OLS",
-#'     data = df_sample_dynamic,
+#'     data = example_data,
 #'     outcomevar = "y_base",
 #'     policyvar = "z",
 #'     idvar = "id",
@@ -89,8 +89,8 @@
 #' eventstudy_model_static <-
 #'   EventStudy(
 #'     estimator = "OLS",
-#'     data = df_sample_static,
-#'     outcomevar = "y_static",
+#'     data = example_data,
+#'     outcomevar = "y_jump_m",
 #'     policyvar = "z",
 #'     idvar = "id",
 #'     timevar = "t",
@@ -106,13 +106,12 @@
 #' eventstudy_model_iv <-
 #'   EventStudy(
 #'     estimator = "FHS",
-#'     data = df_sample_dynamic,
+#'     data = example_data,
 #'     outcomevar = "y_base",
 #'     policyvar = "z",
 #'     idvar = "id",
 #'     timevar = "t",
-#'     controls = "x_r",
-#'     proxy = "eta_m",
+#'     proxy = "x_r",
 #'     FE = TRUE, TFE = TRUE,
 #'     post = 2, overidpost = 1,
 #'     pre  = 0, overidpre  = 3,

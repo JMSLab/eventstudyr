@@ -33,7 +33,7 @@
 #' @examples
 #'
 #' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "OLS",
-#'                                        data = df_sample_dynamic,
+#'                                        data = example_data,
 #'                                        outcomevar = "y_base",
 #'                                        policyvar = "z",
 #'                                        idvar = "id",
@@ -54,7 +54,7 @@
 #'                     proxyIV = NULL)
 #'
 #' # If you would like to use IV regression:
-#' data <- df_sample_dynamic[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
+#' data <- example_data[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
 #'
 #' tidy_eventstudy_estimates <- estimatr::tidy(EventStudy(estimator = "FHS",
 #'                                        data = data,

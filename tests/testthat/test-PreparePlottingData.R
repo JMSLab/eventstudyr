@@ -4,7 +4,7 @@
 test_that("labels are unique", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE,
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -32,7 +32,7 @@ test_that("labels are unique", {
 test_that("the correct labels are created", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE,
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -59,7 +59,7 @@ test_that("the correct labels are created", {
 test_that("the labels are ordered correctly", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE,
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -86,7 +86,7 @@ test_that("the labels are ordered correctly", {
 test_that("the control variable is removed", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE,
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -113,7 +113,7 @@ test_that("the control variable is removed", {
 test_that("the largest lag label is correctly created", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                     policyvar = "z", idvar = "id", timevar = "t",
                                     controls = "x_r", FE = TRUE, TFE = TRUE,
                                     post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -142,7 +142,7 @@ test_that("the largest lag label is correctly created", {
 test_that("the largest lead label is correctly created", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE,
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -171,7 +171,7 @@ test_that("the largest lead label is correctly created", {
 test_that("all columns besides 'term' and 'label' are 0 for the normalization column", {
 
 
-    list_EventStudy <- EventStudy(estimator = "OLS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE,
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -206,7 +206,7 @@ test_that("all columns besides 'term' and 'label' are 0 for the normalization co
 test_that("all columns besides 'term' and 'label' are 0 for the proxyIV column", {
 
 
-    list_EventStudy <- EventStudy(estimator = "FHS", data = df_sample_dynamic, outcomevar = "y_base",
+    list_EventStudy <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                                   post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)

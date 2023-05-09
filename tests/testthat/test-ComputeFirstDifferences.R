@@ -39,7 +39,8 @@ test_that("correctly computes differences with a balanced dataset", {
         policy_fd_expected = c(NA, 2, NA, 1, NA, 1, NA, 1, 1)
     )
 
-    df_out <- ComputeFirstDifferences(df, "id", "time", "policy", timevar_holes = TRUE)
+    df_out <- ComputeFirstDifferences(df, "id", "time", "policy", 
+                                      timevar_holes = TRUE)
 
     expect_identical(df_out$policy_fd, df$policy_fd_expected)
 })

@@ -3,7 +3,7 @@ test_that("outcomevar is the dependent variable for OLS", {
 
   estimator       <-  "OLS"
   outcomevar      <- "y_base"
-  str_policy_vars <- c("Z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
+  str_policy_vars <- c("z_lead2", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_lag2")
 
   fmla            <- PrepareModelFormula(estimator, outcomevar, str_policy_vars)
   expect_equal(all.vars(fmla)[1], outcomevar)

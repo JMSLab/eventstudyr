@@ -4,7 +4,7 @@
 #' @param idvar Character indicating column of grouping variable.
 #' @param timevar Character indicating column of time variable.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
-#' @param unbalanced Logical indicating whether the dataset is unbalanced.
+#' @param timevar_holes Logical indicating whether the panel contains missing values in the time variable.
 #' @param return_df Logical indicating whether the function should return a data frame.
 #'
 #' @seealso [data.table::shift()]
@@ -15,17 +15,17 @@
 #' @noRd
 
 ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
-                                    unbalanced = FALSE, return_df = TRUE) {
+                                    timevar_holes = FALSE, return_df = TRUE) {
     if (! is.data.frame(df)) {stop("df should be a data frame.")}
     if ((! is.null(idvar)) & (! is.character(idvar))) {stop("idvar should be a character.")}
     if (! is.character(timevar)) {stop("timevar should be a character.")}
     if (! is.character(diffvar)) {stop("diffvar should be a character.")}
-    if (! is.logical(unbalanced)) {stop("unbalanced should be a logical.")}
+    if (! is.logical(timevar_holes)) {stop("timevar_holes should be a logical.")}
 
     data.table::setDT(df)
     data.table::setorderv(df, cols = c(idvar, timevar))
 
-    if (!unbalanced) {
+    if (!timevar_holes) {
         df[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
            by = idvar]
     } else {

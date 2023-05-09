@@ -7,7 +7,7 @@
 #' @param timevar Character indicating column of time periods.
 #' @param shiftvar Character indicating column of variable that will be shifted.
 #' @param shiftvalues Numeric vector specifying the leads/lags to be computed. For example, '-1:1' will compute the lag, current, and lead values.
-#' @param unbalanced Logical indicating whether the dataset is unbalanced.
+#' @param timevar_holes Logical indicating whether the panel contains missing values in the time variable.
 #' @param return_df Logical indicating whether the function should return a data frame.
 #'
 #' @return The passed data frame augmented with columns called lagvar_lagN, where lagvar is the value specified and N is the selected lag(s).
@@ -29,7 +29,7 @@
 #' @noRd
 
 ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
-                          unbalanced = FALSE, return_df = TRUE) {
+                          timevar_holes = FALSE, return_df = TRUE) {
     if (! is.data.frame(df)) {
         stop("df should be a data frame.")
     }
@@ -41,8 +41,8 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
             stop(paste0(var, " should be the name of a variable in the dataset."))
         }
     }
-    if (! is.logical(unbalanced)) {
-        stop("unbalanced should be logical.")
+    if (! is.logical(timevar_holes)) {
+        stop("timevar_holes should be logical.")
     }
     if (! is.logical(return_df)) {
         stop("return_df should be logical.")
@@ -75,7 +75,7 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
         return(dat)
     }
 
-    if (!unbalanced) {
+    if (!timevar_holes) {
         df = compute_shifts(df, idvar, shiftvar, shiftvalues, lags, leads)
     } else {
         ## Create dataset with all combinations to compute shifts

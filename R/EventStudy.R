@@ -37,6 +37,7 @@
 #' @import dplyr
 #' @import estimatr
 #' @importFrom stats reformulate
+#' @importFrom data.table setorderv get diff as.data.table
 #' @export
 #'
 #' @examples
@@ -175,6 +176,24 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         unbalanced <- FALSE
     }
 
+    data.table::setorderv(data, c(idvar, timevar))
+
+    detect_holes <- function(dt, idvar, timevar) {
+        dt <- data.table::as.data.table(dt)
+        holes_per_id <- dt[, .SD[!is.na(get(timevar))], by = c(idvar)
+                         ][, .(holes = any(base::diff(get(timevar)) != 1)), 
+                            by = c(idvar)]
+        
+        return(any(holes_per_id$holes))
+    }
+
+    if (detect_holes(data, idvar, timevar)) {
+        warning("Dataset contains holes in the time variable ", timevar, ".")
+        timevar_holes <- TRUE
+    } else {
+        timevar_holes <- FALSE
+    }
+
     if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
         static <- TRUE
     } else {
@@ -196,12 +215,12 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     num_fd_lags  <- post + overidpost - 1
     num_fd_leads <- pre  + overidpre
 
-    furthest_lag_period  <- num_fd_lags + 1
+    furthest_lag_period <- num_fd_lags + 1
 
     if (static) {
         message("post, overidpost, pre, and overidpre are set to 0. A static model will be estimated.")
     } else {
-        data <- ComputeFirstDifferences(data, idvar, timevar, policyvar, unbalanced)
+        data <- ComputeFirstDifferences(data, idvar, timevar, policyvar, timevar_holes)
 
         if ((post + overidpost - 1 >= 1) & (pre + overidpre >= 1)) {
             shift_values = c(-num_fd_leads:-1, 1:num_fd_lags)
@@ -215,13 +234,15 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         data <- ComputeShifts(data, idvar, timevar,
                               shiftvar    = paste0(policyvar, "_fd"),
-                              shiftvalues = shift_values)
+                              shiftvalues = shift_values,
+                              timevar_holes = timevar_holes)
     }
 
     if (!static) {
         data <- ComputeShifts(data, idvar, timevar,
                               shiftvar    = policyvar,
-                              shiftvalues = c(-num_fd_leads, furthest_lag_period))
+                              shiftvalues = c(-num_fd_leads, furthest_lag_period),
+                              timevar_holes = timevar_holes)
 
         lead_endpoint_var <- paste0(policyvar, "_lead", num_fd_leads)
         data[lead_endpoint_var] <- 1 - data[lead_endpoint_var]

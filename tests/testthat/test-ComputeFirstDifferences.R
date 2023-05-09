@@ -12,7 +12,7 @@ test_that("correctly recognizes wrong variable type for diffvar variable", {
 
 test_that("a column with _fd suffix is added", {
     df_test <- read.csv("./input/df_test.csv")
-    
+
     df_diff <- ComputeFirstDifferences(df_test, "country", "periods", "values")
 
     expect_true("values_fd" %in% colnames(df_diff))
@@ -26,7 +26,7 @@ test_that("correctly computes differences with an unbalanced dataset", {
         policy_fd_expected = c(NA, 2, -1, 2, NA, 1, 1, 1)
     )
 
-    df_out <- ComputeFirstDifferences(df, "id", "time", "policy", unbalanced = FALSE)
+    df_out <- ComputeFirstDifferences(df, "id", "time", "policy", timevar_holes = FALSE)
 
     expect_identical(df_out$policy_fd, df$policy_fd_expected)
 })
@@ -39,7 +39,7 @@ test_that("correctly computes differences with a balanced dataset", {
         policy_fd_expected = c(NA, 2, NA, 1, NA, 1, NA, 1, 1)
     )
 
-    df_out <- ComputeFirstDifferences(df, "id", "time", "policy", unbalanced = TRUE)
+    df_out <- ComputeFirstDifferences(df, "id", "time", "policy", timevar_holes = TRUE)
 
     expect_identical(df_out$policy_fd, df$policy_fd_expected)
 })

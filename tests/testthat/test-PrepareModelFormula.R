@@ -31,7 +31,7 @@ test_that("vars in str_policy_vars argument are incorporated into formula for OL
   expect_equal(sum(z_vars_mask), length(str_policy_vars))
 })
 
-test_that("control arguments are incorporated into formula for OLS", {
+test_that("controls argument is incorporated into formula", {
 
   estimator       <- "OLS"
   outcomevar      <- "y_base"

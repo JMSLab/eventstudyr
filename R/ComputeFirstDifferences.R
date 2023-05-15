@@ -1,7 +1,7 @@
 #' Adds first differences of a variable, robustly to missing values, as new columns in a panel dataset
 #'
 #' @param df Data frame that will be modified
-#' @param idvar Character indicating column of grouping variable.
+#' @param idvar Character indicating column of units.
 #' @param timevar Character indicating column of time variable.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
 #' @param timevar_holes Logical indicating whether the panel contains missing values in the time variable.

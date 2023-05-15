@@ -163,6 +163,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
+    if (! all(data[[timevar]] %% 1 == 0)) {
+        stop("timevar column in dataset should be a vector of integers.")
+    }
 
     data_ids <- as.data.frame(data)[, c(idvar, timevar)]
 

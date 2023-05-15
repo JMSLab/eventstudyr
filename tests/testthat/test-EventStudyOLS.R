@@ -288,7 +288,7 @@ test_that("FE = FALSE,
 
     df_test_EventStudyOLS <- read.csv("./input/df_test_EventStudyOLS.csv")
 
-    estimator       <-  "OLS"
+    estimator       <- "OLS"
     outcomevar      <- "y_base"
     str_policy_vars <- c("z_lead3", "z_fd_lead3", "z_fd_lead2", "z_fd", "z_fd_lag1", "z_fd_lag2", "z_lag3")
     controls        <- "x_r"

@@ -3,7 +3,7 @@
 #' @description `ComputeShifts` adds rows to a panel dataset with leads or lags of a variable.
 #'
 #' @param df Data frame that will be modified.
-#' @param idvar Character indicating column of optional grouping variable.
+#' @param idvar Character indicating column of units.
 #' @param timevar Character indicating column of time periods.
 #' @param shiftvar Character indicating column of variable that will be shifted.
 #' @param shiftvalues Numeric vector specifying the leads/lags to be computed. For example, '-1:1' will compute the lag, current, and lead values.

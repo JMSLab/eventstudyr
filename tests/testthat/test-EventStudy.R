@@ -38,7 +38,8 @@ test_that("correctly throws an error when normalized coefficient is outside even
     expect_error(EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE))
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE))
 })
 
 test_that("throws an error when post + pre + overidpre + overidpost exceeds the data window", {
@@ -52,7 +53,8 @@ test_that("throws an error when post + pre + overidpre + overidpost exceeds the 
     expect_error(EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE))
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE))
 })
 
 test_that("removes the correct column when normalize < 0", {
@@ -90,7 +92,8 @@ test_that("removes the correct column when normalize = 0", {
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -111,7 +114,8 @@ test_that("does not create a first differenced variable when post, overidpost, p
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -129,7 +133,8 @@ test_that("tests that package and STATA output agree when post, overidpost, pre,
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     coef_package <- outputs$output$coefficients[[1]]
     std_package  <- outputs$output$std.error[[1]]
@@ -154,7 +159,8 @@ test_that("does not create shiftvalues of differenced variable when post + overi
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -174,7 +180,8 @@ test_that("does not create leads of differenced variable when pre + overidpre < 
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -194,7 +201,8 @@ test_that("removes the correct column when normalize > 0", {
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -215,7 +223,8 @@ test_that("removes the correct column when normalize = - (pre + overidpre + 1)",
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -235,7 +244,8 @@ test_that("removes the correct column when normalize = post + overidpost", {
     outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -373,7 +383,8 @@ test_that("removes the correct column when normalize = 0", {
     outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 
@@ -455,7 +466,8 @@ test_that("removes the correct column when normalize = post + overidpost", {
     outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, "eta_m",
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
     shiftvalues <- outputs$output$term
 

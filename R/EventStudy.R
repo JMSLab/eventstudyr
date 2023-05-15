@@ -37,7 +37,7 @@
 #' @import dplyr
 #' @import estimatr
 #' @importFrom stats reformulate
-#' @importFrom data.table setorderv get diff as.data.table
+#' @importFrom data.table setorderv as.data.table .SD
 #' @export
 #'
 #' @examples
@@ -180,8 +180,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     detect_holes <- function(dt, idvar, timevar) {
         dt <- data.table::as.data.table(dt)
-        holes_per_id <- dt[, .SD[!is.na(get(timevar))], by = c(idvar)
-                         ][, .(holes = any(base::diff(get(timevar)) != 1)), 
+        holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)
+                         ][, list(holes = any(base::diff(base::get(timevar)) != 1)), 
                             by = c(idvar)]
         
         return(any(holes_per_id$holes))

@@ -11,6 +11,8 @@
 #'
 #' @importFrom data.table setDT setorderv setnames shift := CJ
 #'
+#' @importFrom data.table setDT setorderv setnames shift := CJ .SD
+#'
 #' @keywords internal
 #' @noRd
 
@@ -41,7 +43,8 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
 
         ## Bring first differences back to the original dataset
         vars_to_keep <- c(idvar, timevar, paste0(diffvar, "_fd"))
-        df <- merge(df, df_all[, ..vars_to_keep],
+        
+        df <- merge(df, df_all[, .SD, .SDcols = vars_to_keep],
                     by = c(idvar, timevar), all.x = TRUE)
     }
 

@@ -24,7 +24,7 @@
 #' )
 #'
 #'
-#' @importFrom data.table setDT setorderv shift := CJ
+#' @importFrom data.table setDT setorderv shift := CJ .SD
 #' @keywords internal
 #' @noRd
 
@@ -83,7 +83,8 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
         setnames(all_combinations, new = c(idvar, timevar))
 
         vars_to_keep <- c(idvar, timevar, shiftvar)
-        df_all <- merge(df[, ..vars_to_keep], all_combinations,
+        
+        df_all <- merge(df[, .SD, .SDcols = vars_to_keep], all_combinations,
                         by = c(idvar, timevar), all = TRUE)
 
         df_all = compute_shifts(df_all, idvar, shiftvar, shiftvalues, lags, leads)

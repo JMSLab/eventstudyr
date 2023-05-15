@@ -18,7 +18,7 @@ test_that("a column with _fd suffix is added", {
     expect_true("values_fd" %in% colnames(df_diff))
 })
 
-test_that("correctly computes differences with an unbalanced dataset", {
+test_that("correctly computes differences with a balanced dataset", {
     df <- data.frame(
         id     = rep(c("A", "B"), each = 4),
         time   = rep(1:4, times = 2),

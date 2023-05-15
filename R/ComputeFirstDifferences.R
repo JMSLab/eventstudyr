@@ -2,7 +2,7 @@
 #'
 #' @param df Data frame that will be modified
 #' @param idvar Character indicating column of units.
-#' @param timevar Character indicating column of time variable.
+#' @param timevar Character indicating column of time periods.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
 #' @param timevar_holes Logical indicating whether the panel contains missing values in the time variable.
 #' @param return_df Logical indicating whether the function should return a data frame.

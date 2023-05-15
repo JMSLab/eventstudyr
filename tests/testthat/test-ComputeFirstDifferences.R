@@ -31,7 +31,7 @@ test_that("correctly computes differences with an unbalanced dataset", {
     expect_identical(df_out$policy_fd, df$policy_fd_expected)
 })
 
-test_that("correctly computes differences with a balanced dataset", {
+test_that("correctly computes differences with a dataset that has holes in time var", {
     df <- data.frame(
         id = c(rep("A", 4), rep("B", 2), rep("C", 3)),
         time = c(1, 2, 4, 5, 2, 3, 2, 3, 4),

@@ -1,15 +1,23 @@
-#' Adds first differences of a variable, robustly to missing values, as new columns in a panel dataset
+#' Adds first differences of a variable, robustly to gaps in time variable, as new columns in a panel dataset
 #'
 #' @param df Data frame that will be modified
 #' @param idvar Character indicating column of units.
 #' @param timevar Character indicating column of time periods.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
-#' @param timevar_holes Logical indicating whether the panel contains missing values in the time variable.
+#' @param timevar_holes Logical indicating whether the panel contains gaps in the time variable.
 #' @param return_df Logical indicating whether the function should return a data frame.
+#'
+#' @return The passed dataset augmented with columns that reflect the desired first differences
 #'
 #' @seealso [data.table::shift()]
 #'
-#' @importFrom data.table setDT setorderv setnames shift := CJ
+#' @examples
+#' ComputeFirstDifferences(
+#'     example_data,
+#'     idvar = "id",
+#'     timevar = "t",
+#'     diffvar = "z"
+#' )
 #'
 #' @importFrom data.table setDT setorderv setnames shift := CJ .SD
 #'

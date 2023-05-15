@@ -191,7 +191,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (detect_holes(data, idvar, timevar)) {
-        warning("Dataset contains holes in the time variable ", timevar, ".")
+        warning(paste0("Note: gaps of more than one in the time variable '", timevar, "' were detected. ",
+                       "Treating these as gaps in the panel."))
         timevar_holes <- TRUE
     } else {
         timevar_holes <- FALSE

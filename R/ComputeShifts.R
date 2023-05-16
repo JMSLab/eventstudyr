@@ -77,11 +77,12 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
         df = compute_shifts(df, idvar, shiftvar, shiftvalues, lags, leads)
     } else {
         ## Create dataset with all combinations to compute shifts
-        all_combinations <- CJ(unique(df[[idvar]]), unique(df[[timevar]]))
+        all_combinations <- CJ(unique(df[[idvar]]),
+                               min(df[[timevar]]):max(df[[timevar]]))
         setnames(all_combinations, new = c(idvar, timevar))
 
         vars_to_keep <- c(idvar, timevar, shiftvar)
-        
+
         df_all <- merge(df[, .SD, .SDcols = vars_to_keep], all_combinations,
                         by = c(idvar, timevar), all = TRUE)
 

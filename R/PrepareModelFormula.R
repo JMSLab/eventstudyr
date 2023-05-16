@@ -43,7 +43,7 @@ PrepareModelFormula <- function(estimator, outcomevar,
 
     if (! estimator %in% c("OLS", "FHS"))      {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.character(outcomevar))            {stop("outcomevar should be a character.")}
-    if (! is.character(str_policy_vars))       {stop("str_policy_fd should be a character.")}
+    if (! is.character(str_policy_vars))       {stop("str_policy_vars should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
     if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified when estimator is FHS.")}
     if (is.null(proxy) & estimator == "FHS")   {stop("proxy must be specified when estimator is FHS.")}

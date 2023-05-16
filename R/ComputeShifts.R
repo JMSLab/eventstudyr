@@ -5,7 +5,7 @@
 #' @param timevar Character indicating column of time periods.
 #' @param shiftvar Character indicating column of variable that will be shifted.
 #' @param shiftvalues Numeric vector specifying the leads/lags to be computed. For example, '-1:1' will compute the lag, current, and lead values.
-#' @param timevar_holes Logical indicating whether the panel contains gaps in the time variable.
+#' @param timevar_holes Logical indicating whether the panel contains gaps in the time variable. Defaults to FALSE.
 #' @param return_df Logical indicating whether the function should return a data frame.
 #'
 #' @return The passed dataset augmented with columns that reflect the desired shift values

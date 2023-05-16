@@ -45,12 +45,13 @@ PrepareModelFormula <- function(estimator, outcomevar,
     if (! is.character(outcomevar))            {stop("outcomevar should be a character.")}
     if (! is.character(str_policy_vars))       {stop("str_policy_fd should be a character.")}
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
-    if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified with estimator=FHS")}
+    if (is.null(proxyIV) & estimator == "FHS") {stop("proxyIV must be specified when estimator is FHS.")}
+    if (is.null(proxy) & estimator == "FHS")   {stop("proxy must be specified when estimator is FHS.")}
 
     if (! is.logical(static) )                   {stop("static should be a logical.")}
-    if (  static & length(str_policy_vars) > 1)  {stop("str_policy_vars must have one variable with static=TRUE")}
-    if (! static & length(str_policy_vars) <= 1) {stop("str_policy_vars must have more than one variable with static=FALSE")}
-    if (  static & !is.null(proxyIV))            {stop("static model is not compatible with estimator=FHS")}
+    if (  static & length(str_policy_vars) > 1)  {stop("str_policy_vars must have one variable with static = TRUE.")}
+    if (! static & length(str_policy_vars) <= 1) {stop("str_policy_vars must have more than one variable with static = FALSE.")}
+    if (  static & !is.null(proxyIV))            {stop("static model is not compatible with FHS estimator.")}
 
     if (estimator == "OLS") {
         reg_formula <- stats::reformulate(

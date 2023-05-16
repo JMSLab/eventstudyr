@@ -1,6 +1,6 @@
 #' Adds first differences of a variable, robustly to gaps in time variable, as new columns in a panel dataset
 #'
-#' @param df Data frame that will be modified
+#' @param df Data frame that will be modified.
 #' @param idvar Character indicating column of units.
 #' @param timevar Character indicating column of time periods.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
@@ -26,11 +26,23 @@
 
 ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
                                     timevar_holes = FALSE, return_df = TRUE) {
-    if (! is.data.frame(df)) {stop("df should be a data frame.")}
-    if ((! is.null(idvar)) & (! is.character(idvar))) {stop("idvar should be a character.")}
-    if (! is.character(timevar)) {stop("timevar should be a character.")}
-    if (! is.character(diffvar)) {stop("diffvar should be a character.")}
-    if (! is.logical(timevar_holes)) {stop("timevar_holes should be a logical.")}
+    if (! is.data.frame(df)) {
+        stop("df should be a data frame.")
+    }
+    for (var in c(idvar, timevar, diffvar)) {
+        if ((! is.character(var))) {
+            stop(paste0(var, " should be a character."))
+        }
+        if (! var %in% colnames(df)) {
+            stop(paste0(var, " should be the name of a variable in the dataset."))
+        }
+    }
+    if (! is.logical(timevar_holes)) {
+        stop("timevar_holes should be logical.")
+    }
+    if (! is.logical(return_df)) {
+        stop("return_df should be logical.")
+    }
 
     data.table::setDT(df)
     data.table::setorderv(df, cols = c(idvar, timevar))

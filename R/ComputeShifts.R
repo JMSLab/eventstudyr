@@ -39,17 +39,17 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
             stop(paste0(var, " should be the name of a variable in the dataset."))
         }
     }
-    if (! is.logical(timevar_holes)) {
-        stop("timevar_holes should be logical.")
-    }
-    if (! is.logical(return_df)) {
-        stop("return_df should be logical.")
-    }
     if (! is.numeric(shiftvalues)) {
         stop("shiftvalues should be numeric.")
     }
     if (0 %in% shiftvalues & length(shiftvalues) == 1) {
         stop("shiftvalues must be different than 0 to compute leads/lags.")
+    }
+    if (! is.logical(timevar_holes)) {
+        stop("timevar_holes should be logical.")
+    }
+    if (! is.logical(return_df)) {
+        stop("return_df should be logical.")
     }
 
     data.table::setDT(df)

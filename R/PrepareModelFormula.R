@@ -9,7 +9,7 @@
 #' Should be specified if and only if estimator is specified as "FHS".
 #' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 #' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
-#' @param static Indicates whether the model to be estimated is static
+#' @param static Indicates whether the model to be estimated is static. Defaults to FALSE.
 #' @return A formula object to be passed to EventStudy
 #'
 #' @importFrom stats reformulate as.formula

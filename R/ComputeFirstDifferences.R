@@ -5,7 +5,7 @@
 #' @param timevar Character indicating column of time periods.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
 #' @param timevar_holes Logical indicating whether the panel contains gaps in the time variable. Defaults to FALSE.
-#' @param return_df Logical indicating whether the function should return a data frame.
+#' @param return_df Logical indicating whether the function should return a data frame (TRUE) or data.table (FALSE). Defaults to TRUE.
 #'
 #' @return The passed dataset augmented with columns that reflect the desired first differences
 #'

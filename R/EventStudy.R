@@ -37,6 +37,7 @@
 #' @import dplyr
 #' @import estimatr
 #' @importFrom stats reformulate
+#' @importFrom data.table setorderv as.data.table .SD
 #' @export
 #'
 #' @examples
@@ -162,6 +163,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
+    if (! all(data[[timevar]] %% 1 == 0)) {
+        stop("timevar column in dataset should be a vector of integers.")
+    }
 
     data_ids <- as.data.frame(data)[, c(idvar, timevar)]
 
@@ -170,56 +174,90 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     n_unique_rows <- nrow(data[!base::duplicated(data_ids),])
     if (n_unique_rows != n_units*n_periods) {
         warning("Dataset is unbalanced.")
+        unbalanced <- TRUE
+    } else {
+        unbalanced <- FALSE
+    }
+
+    data.table::setorderv(data, c(idvar, timevar))
+
+    detect_holes <- function(dt, idvar, timevar) {
+        dt <- data.table::as.data.table(dt)
+        holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)
+                         ][, list(holes = any(base::diff(base::get(timevar)) != 1)), 
+                            by = c(idvar)]
+        
+        return(any(holes_per_id$holes))
+    }
+
+    if (detect_holes(data, idvar, timevar)) {
+        warning(paste0("Note: gaps of more than one in the time variable '", timevar, "' were detected. ",
+                       "Treating these as gaps in the panel."))
+        timevar_holes <- TRUE
+    } else {
+        timevar_holes <- FALSE
+    }
+
+    if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
+        static <- TRUE
+    } else {
+        static <- FALSE
     }
 
     num_evenstudy_coeffs <- overidpre + pre + post + overidpost
     num_periods          <- max(data[[timevar]], na.rm = T) - min(data[[timevar]], na.rm = T)
     if  (num_evenstudy_coeffs > num_periods - 1) {stop("overidpre + pre + post + overidpost cannot exceed the data window.")}
 
-    if  (sum(grepl(paste0(policyvar, "_fd"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                   "_fd should be reserved for eventstudyr."))}
-    if  (sum(grepl(paste0(policyvar, "_lead"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                     "_lead should be reserved for eventstudyr."))}
-    if  (sum(grepl(paste0(policyvar, "_lag"), colnames(data))) > 0) {warning(paste0("Variables starting with ", policyvar,
-                                                                                    "_lag should be reserved for eventstudyr."))}
-
-    num_fd_lag_periods   <- post + overidpost - 1
-    num_fd_lead_periods  <- pre + overidpre
-
-    furthest_lag_period  <- num_fd_lag_periods + 1
-
-    if (post + overidpost + pre + overidpre > 0) {
-        data <- GetFirstDifferences(df = data, groupvar = idvar, timevar, diffvar = policyvar)
+    for (tag in c("_fd", "_lead", "_lag")) {
+        if  (sum(grepl(paste0(policyvar, tag), colnames(data))) > 0) {
+            warning(paste0("Variables starting with ", policyvar, tag,
+                           " should be reserved for usage by eventstudyr."))
+        }
     }
 
-    if (post + overidpost - 1 >= 1) {
-        data <- PrepareLags(data, groupvar = idvar, timevar,
-                            lagvar = paste0(policyvar, "_fd"), lags = 1:num_fd_lag_periods)
-    }
+    # Compute shifts in policy variable
+    num_fd_lags  <- post + overidpost - 1
+    num_fd_leads <- pre  + overidpre
 
-    if (pre + overidpre >= 1) {
-        data <- PrepareLeads(data, groupvar = idvar, timevar, leadvar = paste0(policyvar, "_fd"),
-                             leads = 1:num_fd_lead_periods)
-    }
+    furthest_lag_period <- num_fd_lags + 1
 
-    if (post == 0 & overidpost == 0 & pre == 0 & overidpre == 0) {
-        data      <- PrepareLeads(data, groupvar = idvar, timevar,
-                                  leadvar = policyvar, leads = num_fd_lead_periods)
+    if (static) {
+        message("post, overidpost, pre, and overidpre are set to 0. A static model will be estimated.")
     } else {
-        data <- PrepareLags(data, groupvar = idvar, timevar,
-                            lagvar = policyvar, lags = furthest_lag_period)
-        data <- PrepareLeads(data, groupvar = idvar, timevar,
-                             leadvar = policyvar, leads = num_fd_lead_periods)
+        data <- ComputeFirstDifferences(data, idvar, timevar, policyvar, timevar_holes)
 
-        column_subtract_1 <- paste0(policyvar, "_lead", num_fd_lead_periods)
-        data[column_subtract_1] <- 1 - data[column_subtract_1]
+        if ((post + overidpost - 1 >= 1) & (pre + overidpre >= 1)) {
+            shift_values = c(-num_fd_leads:-1, 1:num_fd_lags)
+        }
+        else if (pre + overidpre < 1) {
+            shift_values = 1:num_fd_lags
+        }
+        else if (post + overidpost - 1 < 1) {
+            shift_values = -num_fd_leads:-1
+        }
+
+        data <- ComputeShifts(data, idvar, timevar,
+                              shiftvar    = paste0(policyvar, "_fd"),
+                              shiftvalues = shift_values,
+                              timevar_holes = timevar_holes)
+    }
+
+    if (!static) {
+        data <- ComputeShifts(data, idvar, timevar,
+                              shiftvar    = policyvar,
+                              shiftvalues = c(-num_fd_leads, furthest_lag_period),
+                              timevar_holes = timevar_holes)
+
+        lead_endpoint_var <- paste0(policyvar, "_lead", num_fd_leads)
+        data[lead_endpoint_var] <- 1 - data[lead_endpoint_var]
     }
 
     if (pre != 0 & normalize == -1 & anticipation_effects_normalization) {
         normalize <- -pre - 1
         warning(paste("You allowed for anticipation effects", pre,
                       "periods before the event, so the coefficient at", normalize,
-                      "was selected to be normalized to zero. To override this, change anticipation_effects_normalization to FALSE."))
+                      "was selected to be normalized to zero.",
+                      "To override this, change anticipation_effects_normalization to FALSE."))
     }
 
     if (normalize < 0) {
@@ -242,40 +280,35 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         }
     }
 
-    if (normalize == -(pre + overidpre + 1) &  (post + overidpost + pre + overidpre > 0)) {
-        # the latter condition is to avoid removing all variables in the case where M = L_M = G = L_G = 0
-        str_policy_fd   <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_fd"))))
-        str_policy_lead <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lead")), - dplyr::all_of(normalization_column)))
-        str_policy_lag  <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lag"))))
-    } else if (normalize == (post + overidpost)) {
-        str_policy_fd   <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_fd"))))
-        str_policy_lead <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lead"))))
-        str_policy_lag  <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lag")), - dplyr::all_of(normalization_column)))
+    if (static) {
+        str_policy_vars = policyvar
     } else {
-        str_policy_fd   <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_fd")), - dplyr::all_of(normalization_column)))
-        str_policy_lead <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lead"))))
-        str_policy_lag  <- names(dplyr::select(data, dplyr::starts_with(paste0(policyvar, "_lag"))))
-    }
+        all_vars <- names(data)[grepl(policyvar, names(data))]
 
-    if (post + overidpost - 1 < 0) {
-        str_policy_fd <- str_policy_fd[str_policy_fd != paste0(policyvar, "_fd")]
+        lead_endpoint_var <- all_vars[grepl(paste0("^", policyvar, "_lead"), all_vars)]
+        lead_fd_vars      <- all_vars[grepl(paste0("^", policyvar, "_fd_lead"), all_vars)]
+        fd_var            <- paste0(policyvar, "_fd")
+        lag_fd_vars       <- all_vars[grepl(paste0("^", policyvar, "_fd_lag"), all_vars)]
+        lag_endpoint_var  <- all_vars[grepl(paste0("^", policyvar, "_lag"), all_vars)]
+
+        str_policy_vars <- c(lead_endpoint_var, lead_fd_vars, fd_var, lag_fd_vars, lag_endpoint_var)
+        str_policy_vars <- str_policy_vars[!(str_policy_vars %in% normalization_column)]
     }
 
     if (estimator == "OLS") {
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar,
-                                                   str_policy_fd, str_policy_lead, str_policy_lag,
-                                                   controls, proxy, proxyIV)
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                                   static, controls, proxy, proxyIV)
 
         output       <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
-        coefficients <- c(str_policy_fd, str_policy_lead, str_policy_lag)
+        coefficients <- str_policy_vars
     }
     if (estimator == "FHS") {
 
         if (is.null(proxyIV)) {
             Fstart <- 0
-            z_fd_lead_indicator <- grepl("^z_fd_lead", str_policy_fd)
-            str_policy_fd_lead <- str_policy_fd[z_fd_lead_indicator]
-            for (var in str_policy_fd_lead) {
+            str_fd_leads <- str_policy_vars[grepl("^z_fd_lead", str_policy_vars)]
+
+            for (var in str_fd_leads) {
                 lm <- lm(data = data, formula = stats::reformulate(termlabels = var, response = proxy))
                 Floop <- summary(lm)$fstatistic["value"]
                 if (Floop > Fstart) {
@@ -287,12 +320,11 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                            ". To specify a different proxyIV use the proxyIV argument."))
         }
 
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar,
-                                                   str_policy_fd, str_policy_lead, str_policy_lag,
-                                                   controls, proxy, proxyIV)
+        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                                   static, controls, proxy, proxyIV)
 
         output       <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
-        coefficients <- dplyr::setdiff(c(str_policy_fd, str_policy_lead, str_policy_lag), proxyIV)
+        coefficients <- dplyr::setdiff(str_policy_vars, proxyIV)
     }
 
     event_study_args <- list("estimator"  = estimator,

@@ -1,6 +1,6 @@
 Package: eventstudyr
 Title: Estimation and Visualization of Linear Panel Event Studies
-Version: 1.0.2
+Version: 1.1.0
 Authors@R: 
     c(person(given = "Simon",
            family = "Freyaldenhoven",

@@ -17,4 +17,4 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
 ## Package changes
 
  * dropped unused example datasets
- * improved the functionality for `EventStudy()` in a backwards compatible manor (hence, we increment the minor version number)
+ * improved the functionality for `EventStudy()` in a backwards compatible manner (hence, we increment the minor version number)

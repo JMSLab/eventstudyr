@@ -16,6 +16,6 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
 
 ## Package changes
 
- * dropped unnecessary example data
+ * removed unnecessary example data
  * backwards compatible improvement to `EventStudy()` to streamline first-differencing and allow for gaps in panel
  

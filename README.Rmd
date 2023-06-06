@@ -46,6 +46,7 @@ For more examples see the package [documentation](https://cran.r-project.org/pac
 #| fig.alt = "Event-study plot using the example data of the package
 #|  and default plotting options."
 library(eventstudyr)
+set.seed(10) # for reproducibility of sup-t bands
 
 estimates_ols <- EventStudy(
    estimator = "OLS",

@@ -40,6 +40,7 @@ and
 
 ``` r
 library(eventstudyr)
+set.seed(10) # for reproducibility of sup-t bands
 
 estimates_ols <- EventStudy(
    estimator = "OLS",

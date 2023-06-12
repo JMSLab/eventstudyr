@@ -40,12 +40,13 @@ devtools::install_github("JMSLab/eventstudyr")
 ## Usage
 
 Find a minimal example below. 
-For more examples see the package [documentation](https://cran.r-project.org/web/packages/eventstudyr/eventstudyr.pdf) and [vignette](https://cran.r-project.org/web/packages/eventstudyr/vignettes/documentation.html).
+For more examples see the package [documentation](https://cran.r-project.org/package=eventstudyr/eventstudyr.pdf) and [vignette](https://cran.r-project.org/package=eventstudyr/vignettes/documentation.html).
 
 ```{r example}
 #| fig.alt = "Event-study plot using the example data of the package
 #|  and default plotting options."
 library(eventstudyr)
+set.seed(10) # for reproducibility of sup-t bands
 
 estimates_ols <- EventStudy(
    estimator = "OLS",

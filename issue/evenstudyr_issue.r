@@ -4,24 +4,17 @@ library(ggplot2)
 library(ggthemes)
 library(data.table)
 set.seed(23)
-source("R/EventStudy.R")
-source("R/EventStudyPlot.R")
-source("R/ComputeFirstDifferences.R")
-source("R/ComputeShifts.R")
-source("R/PrepareModelFormula.R")
-source("R/EventStudyOLS.R")
-source("R/AddSuptBand.R")
-source("R/AddCIs.R")
-source("R/PreparePlottingData.R")
-source("R/AddSmPath.R")
-source("R/AddMeans.R")
-source("R/data.R")
-source("R/EventStudyFHS.R")
-source("R/EventStudyOLS.R")
-source("R/SmPathHelpers.R")
+packages.sources <- list.files(path = "R/", pattern = ".R",
+                               full.names = TRUE, all.files = TRUE)
+sapply(file.sources,source,.GlobalEnv)
+load(file = "data/example_data.rda")
+tests.sources <- list.files(path = "tests/testthat/", pattern = ".R",
+                            full.names = TRUE, all.files = TRUE)
+sapply(tests.sources,source,.GlobalEnv)
+source("tests/testthat.R")
 
 main <- function() {
-    outstub <- "C:/Users/Moses/Downloads/eventstudyr_issue"
+    outstub <- "issue"
     estimates_ols <- EventStudy(
         estimator = "OLS",
         data = example_data,

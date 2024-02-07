@@ -22,4 +22,4 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
 
  * removed unnecessary example data
  * backwards compatible improvement to `EventStudy()` to streamline first-differencing and allow for gaps in panel
- 
+ * increased the tolerance to 1e-4 in the solver for finding the smoothest path in order to fix non-convergence error

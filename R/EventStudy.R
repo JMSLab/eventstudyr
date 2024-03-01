@@ -103,6 +103,23 @@
 #'
 #' summary(eventstudy_model_static$output)
 #'
+#' # A dynamic model with an unbalanced panel#'
+#' data_unbal <- example_data[1:(nrow(example_data)-1),]  # drop last row to make unbalanced
+#'
+#' eventstudy_model_unbal <-
+#'  EventStudy(
+#'     estimator = "OLS",
+#'     data = data_unbal,
+#'     outcomevar = "y_base",
+#'     policyvar = "z",
+#'     idvar = "id",
+#'     timevar = "t",
+#'     pre = 0, post = 3,
+#'     normalize = -1
+#'   )
+#'
+#' summary(eventstudy_model_unbal$output)
+#'
 #' # A dynamic model estimated using IV
 #' eventstudy_model_iv <-
 #'   EventStudy(
@@ -184,15 +201,15 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     detect_holes <- function(dt, idvar, timevar) {
         dt <- data.table::as.data.table(dt)
         holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)
-                         ][, list(holes = any(base::diff(base::get(timevar)) != 1)), 
+                         ][, list(holes = any(base::diff(base::get(timevar)) != 1)),
                             by = c(idvar)]
-        
+
         return(any(holes_per_id$holes))
     }
 
     if (detect_holes(data, idvar, timevar)) {
-        warning(paste0("Note: gaps of more than one in the time variable '", timevar, "' were detected. ",
-                       "Treating these as gaps in the panel."))
+        warning(paste0("Note: gaps of more than one unit in the time variable '", timevar, "' were detected. ",
+                       "Treating these as gaps in the panel dimension."))
         timevar_holes <- TRUE
     } else {
         timevar_holes <- FALSE
@@ -228,11 +245,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         if ((post + overidpost - 1 >= 1) & (pre + overidpre >= 1)) {
             shift_values = c(-num_fd_leads:-1, 1:num_fd_lags)
-        }
-        else if (pre + overidpre < 1) {
+        } else if (pre + overidpre < 1) {
             shift_values = 1:num_fd_lags
-        }
-        else if (post + overidpost - 1 < 1) {
+        } else if (post + overidpost - 1 < 1) {
             shift_values = -num_fd_leads:-1
         }
 

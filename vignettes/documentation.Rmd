@@ -69,7 +69,7 @@ results <- EventStudy(estimator = "OLS",
                       pre = 0)
 ```
 ```{r Basic Eventstudy Example - Show Results 1, echo=TRUE, eval=TRUE}
-    summary(results$output)
+summary(results$output)
 ```
 <details>
   <summary>Click for `results$arguments`</summary>
@@ -92,7 +92,7 @@ results <- EventStudy(estimator = "OLS",
   results$arguments$proxy
   results$arguments$proxyIV
   
-  ## Fixed Effects
+  ## Fixed effects
   results$arguments$FE
   results$arguments$TFE
   
@@ -109,7 +109,7 @@ results <- EventStudy(estimator = "OLS",
   ## Cluster
   results$arguments$cluster
   
-  ## Eventstudy Coefficient
+  ## Eventstudy coefficients
   results$arguments$eventstudy_coefficients
   ```
 </details>

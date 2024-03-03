@@ -103,7 +103,7 @@
 #'
 #' summary(eventstudy_model_static$output)
 #'
-#' # A dynamic model with an unbalanced panel#'
+#' # A dynamic model with an unbalanced panel
 #' data_unbal <- example_data[1:(nrow(example_data)-1),]  # drop last row to make unbalanced
 #'
 #' eventstudy_model_unbal <-

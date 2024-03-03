@@ -1,6 +1,6 @@
 ## Notes
 
-Resubmission of the package with minor patch update.
+Resubmission of the package with patch update.
 
 ## R CMD check results
 
@@ -12,12 +12,6 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
 
  * We saw 0 new problems
  * We failed to check 0 packages
-
-## Test environments
-
-* local R installation, R 4.0.3
-* ubuntu 16.04 (on travis-ci), R 4.0.3
-* win-builder (devel)
 
 ## Package changes
 

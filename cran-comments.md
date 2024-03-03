@@ -1,6 +1,6 @@
 ## Notes
 
-* we changed the URLs in the README to the canonical form
+Resubmission of the package with minor patch update.
 
 ## R CMD check results
 
@@ -14,12 +14,12 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
  * We failed to check 0 packages
 
 ## Test environments
+
 * local R installation, R 4.0.3
 * ubuntu 16.04 (on travis-ci), R 4.0.3
 * win-builder (devel)
 
 ## Package changes
 
- * removed unnecessary example data
- * backwards compatible improvement to `EventStudy()` to streamline first-differencing and allow for gaps in panel
- * increased the tolerance to 1e-4 in the solver for finding the smoothest path in order to fix non-convergence error
+ * fixed a bug in `ComputeShifts()` that caused function to fail for unbalanced panels
+ * changed maintainer

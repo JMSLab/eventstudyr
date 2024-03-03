@@ -90,7 +90,7 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
 
         ## Bring shifts back to the original dataset
         df <- merge(df, df_all,
-                    by = c(idvar, timevar), all.x = TRUE)
+                    by = c(idvar, timevar, shiftvar), all.x = TRUE)
     }
 
     if (return_df) {

@@ -67,6 +67,27 @@ test_that("the columns added have correct suffixes", {
     expect_true(all(grepl("_lead", v_newvars)))
 })
 
+test_that("correctly shifts variable when there are no holes in timevar", {
+    df <- data.frame(
+        id      = c(rep("A", 4), rep("B", 2), rep("C", 3)),
+        time    = c(1, 2, 3, 4, 1, 2, 1, 2, 3),
+        z       = c(10, 12, 13, 14, 8, 9, 10, 11, 12),
+        z_lag1  = c(NA, 10, 12, 13, NA, 8, NA, 10, 11),
+        z_lead1 = c(12, 13, 14, NA, 9, NA, 11, 12, NA)
+    )
+
+    df_shifts <- ComputeShifts(df[, c("id", "time", "z")],
+                               idvar = "id", timevar = "time",
+                               shiftvar = "z",
+                               shiftvalues = c(-1, 1),
+                               timevar_holes = FALSE)
+
+    expect_equal(df$z_lead1, df_shifts$z_lead1)
+    expect_equal(df$z_lag1,  df_shifts$z_lag1)
+
+    expect_true(all(c("id", "time", "z") %in% colnames(df_shifts)))
+})
+
 test_that("correctly shifts variable when there are holes in timevar", {
     df <- data.frame(
         id      = c(rep("A", 4), rep("B", 2), rep("C", 3)),
@@ -84,4 +105,6 @@ test_that("correctly shifts variable when there are holes in timevar", {
 
     expect_equal(df$z_lead1, df_shifts$z_lead1)
     expect_equal(df$z_lag1,  df_shifts$z_lag1)
+
+    expect_true(all(c("id", "time", "z") %in% colnames(df_shifts)))
 })

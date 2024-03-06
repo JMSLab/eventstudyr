@@ -8,3 +8,4 @@
 ^vignettes/eventstudyr.Rmd$
 ^cran-comments\.md$
 ^README\.Rmd$
+^revdep$

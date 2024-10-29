@@ -52,7 +52,7 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
            by = idvar]
     } else {
         ## Create dataset with all combinations to compute first differences
-        all_combinations <- CJ(unique(df[[idvar]]),
+        all_combinations <- data.table::CJ(unique(df[[idvar]]),
                                min(df[[timevar]]):max(df[[timevar]]))
         setnames(all_combinations, new = c(idvar, timevar))
 

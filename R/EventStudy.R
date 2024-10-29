@@ -245,7 +245,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (static) {
         message("post, overidpost, pre, and overidpre are set to 0. A static model will be estimated.")
     } else {
-        data <- ComputeFirstDifferences(data, idvar, timevar, policyvar, timevar_holes)
+        data <- ComputeFirstDifferences(data, idvar, timevar, policyvar, timevar_holes, return_df = FALSE)
 
         if ((post + overidpost - 1 >= 1) & (pre + overidpre >= 1)) {
             shift_values = c(-num_fd_leads:-1, 1:num_fd_lags)

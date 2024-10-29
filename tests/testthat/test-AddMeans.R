@@ -13,8 +13,7 @@ test_that("means are computed correctly when a first differenced variable is nor
                               sample_estimation[[2]]$policyvar,
                               sample_estimation[[2]]$outcomevar)
 
-    mean_manual   <- mean(df_estimation[df_estimation[,"z_fd_lead1"] != 0, ]$y_base,
-                          na.rm = T)
+    mean_manual <- df_estimation[z_fd_lead1 != 0, mean(y_base, na.rm = TRUE)]
 
     expect_equal(mean_function, mean_manual)
 
@@ -33,8 +32,7 @@ test_that("means are computed correctly when the furthest lead is normalized", {
                               sample_estimation[[2]]$policyvar,
                               sample_estimation[[2]]$outcomevar)
 
-    mean_manual   <- mean(df_estimation[df_estimation[,"z_lead4"] == 0, ]$y_base,
-                          na.rm = T)
+    mean_manual <- df_estimation[z_lead4 == 0, mean(y_base, na.rm = TRUE)]
 
     expect_equal(mean_function, mean_manual)
 })

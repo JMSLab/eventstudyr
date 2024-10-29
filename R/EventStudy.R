@@ -199,6 +199,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         unbalanced <- FALSE
     }
 
+    if (n_unique_rows != nrow(data)) {
+        warning("idvar-timevar pairs do not uniquely identify all rows in the data.")
+    }
 
     detect_holes <- function(dt, idvar, timevar) {
         holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)

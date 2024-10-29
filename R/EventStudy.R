@@ -258,17 +258,19 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data <- ComputeShifts(data, idvar, timevar,
                               shiftvar    = paste0(policyvar, "_fd"),
                               shiftvalues = shift_values,
-                              timevar_holes = timevar_holes)
+                              timevar_holes = timevar_holes,
+                              return_df = FALSE)
     }
 
     if (!static) {
         data <- ComputeShifts(data, idvar, timevar,
                               shiftvar    = policyvar,
                               shiftvalues = c(-num_fd_leads, furthest_lag_period),
-                              timevar_holes = timevar_holes)
+                              timevar_holes = timevar_holes,
+                              return_df = FALSE)
 
         lead_endpoint_var <- paste0(policyvar, "_lead", num_fd_leads)
-        data[lead_endpoint_var] <- 1 - data[lead_endpoint_var]
+        data[, (lead_endpoint_var) := 1 - get(lead_endpoint_var)]
     }
 
     if (pre != 0 & normalize == -1 & anticipation_effects_normalization) {

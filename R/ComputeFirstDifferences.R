@@ -44,12 +44,18 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
         stop("return_df should be logical.")
     }
 
-    data.table::setDT(df)
+    # ZP: are the above checks necessary? 
+    # At least the first one is already checked by EventStudy() but you might intend that this function be used standalone.?
+
+    data.table::setDT(df) 
     data.table::setorderv(df, cols = c(idvar, timevar))
+    # ZP: would these above be necessary if we are inputting a dt from EventStudy()?
+    # I think it's necessary only if we intend that this function to be used standalone (outside of EventStudy())
 
     if (!timevar_holes) {
         df[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
            by = idvar]
+           # ZP: here we're introducing the problem seen in #51
     } else {
         ## Create dataset with all combinations to compute first differences
         all_combinations <- data.table::CJ(unique(df[[idvar]]),
@@ -61,6 +67,7 @@ ComputeFirstDifferences <- function(df, idvar, timevar, diffvar,
 
         df_all[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
                 by = idvar]
+        # ZP: here we're introducing the problem seen in #51
 
         ## Bring first differences back to the original dataset
         vars_to_keep <- c(idvar, timevar, paste0(diffvar, "_fd"))

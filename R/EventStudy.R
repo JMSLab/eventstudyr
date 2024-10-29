@@ -184,7 +184,10 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         stop("timevar column in dataset should be a vector of integers.")
     }
 
-    data_ids <- as.data.frame(data)[, c(idvar, timevar)]
+    data.table::setDT(data, key = c(idvar, timevar))
+    data.table::setorderv(data, c(idvar, timevar))
+    # Warn if ids are duplicated
+    data_ids <- data[, .(get(idvar), get(timevar))]
 
     n_units       <- length(base::unique(data[[idvar]]))
     n_periods     <- length(base::unique(data[[timevar]]))
@@ -196,10 +199,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         unbalanced <- FALSE
     }
 
-    data.table::setorderv(data, c(idvar, timevar))
 
     detect_holes <- function(dt, idvar, timevar) {
-        dt <- data.table::as.data.table(dt)
         holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)
                          ][, list(holes = any(base::diff(base::get(timevar)) != 1)),
                             by = c(idvar)]

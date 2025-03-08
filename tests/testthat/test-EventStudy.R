@@ -1,4 +1,24 @@
 
+# Housekeeping ------------------------------------------------------------
+
+test_that("does not modify input data object", {
+
+    old_data <- copy(example_data)
+
+    outputs <- suppressWarnings(
+        EventStudy(
+            estimator = "OLS", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = 2, pre = 3, overidpre = 4, 
+                          overidpost = 11, normalize = - 1, 
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+    )
+
+    expect_true(identical(old_data, example_data))
+
+})
+
 # OLS ---------------------------------------------------------------------
 
 test_that("correctly creates highest order shiftvalues", {

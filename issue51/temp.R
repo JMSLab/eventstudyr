@@ -14,15 +14,15 @@ MockComputeFirstDifferences <- function(data) {
 }
 
 
-MockES <- function(data) {
+MockEventStudy <- function(data) {
 
     data <- MockComputeFirstDifferences(data)
 
     return(names(copy))
 }
 
-MockES(dt)
-names(dt)
+# MockES(dt)
+# names(dt)
 MockES(df)
 names(df)
 
@@ -36,12 +36,13 @@ MockEventStudyDeepCopy <- function(data) {
     return(names(copy))
 }
 
-MockEventStudyDeepCopy(dt)
-names(dt)
+# MockEventStudyDeepCopy(dt)
+# names(dt)
 
 
 # Time Benchmarks
 dt_large <- rbindlist(replicate(1000000, dt, simplify = FALSE))
+dt_large |> names()
 df_large = as.data.frame(dt_large)
 
 # Benchmark against original
@@ -63,29 +64,40 @@ MockEventStudyShallowCopy <- function(data) {
 
 MockEventStudyShallowCopy2 <- function(data) {
 
-    copy = copy(data)
+    copy = data
     copy <- MockComputeFirstDifferences(copy)
 
     return(names(copy))
 }
 
+print('Original Time')
 time_orig <- system.time(MockEventStudyOrig(df_large))
-print(time_orig) # 1.158
-names(df_large) # no mpg_fd7
+print(time_orig)
+print(paste0('Adding redundant cols?, ', 'mpg_fd' %in% names(df_large)))
 
+dt_large <- rbindlist(replicate(1000000, dt, simplify = FALSE))
+print('Time if using no copy')
+time_no_copy <- system.time(MockEventStudy(dt_large))
+print(time_no_copy)
+print(paste0('Adding redundant cols?, ', 'mpg_fd' %in% names(dt_large)))
+
+dt_large <- rbindlist(replicate(1000000, dt, simplify = FALSE))
+print('Time if using deep copy i.e. copy()')
 time_deep_copy <- system.time(MockEventStudyDeepCopy(dt_large))
-print(time_deep_copy) # 1.147
-names(dt_large) # no mpg_fd7
+print(time_deep_copy)
+print(paste0('Adding redundant cols?, ', 'mpg_fd' %in% names(dt_large)))
 
+dt_large <- rbindlist(replicate(1000000, dt, simplify = FALSE))
+print('Time if using shallow copy i.e. [T,]')
 time_shallow_copy <- system.time(MockEventStudyShallowCopy(dt_large))
-print(time_shallow_copy) # 0.029
-names(dt_large) # no mpg_fd
+print(time_shallow_copy)
+print(paste0('Adding redundant cols?, ', 'mpg_fd' %in% names(dt_large)))
 # read more on https://github.com/Rdatatable/data.table/issues/3665
 
-time_no_copy <- system.time(MockEventStudy(dt_large))
-print(time_no_copy) # 0.03
-names(dt_large) # mpg_fd
-
-time_shallow_copy2 <- system.time(MockEventStudyShallowCopy2(dt_large))
+dt_large <- rbindlist(replicate(1000000, dt, simplify = FALSE))
+print('Time if using shallow copy i.e. <-')
+time_shallow_copy <- system.time(MockEventStudyShallowCopy2(dt_large))
 print(time_shallow_copy)
-names(dt_large) # no mpg_fd
+print(paste0('Adding redundant cols?, ', 'mpg_fd' %in% names(dt_large)))
+
+

@@ -23,8 +23,6 @@
 !data/*.RData
 !data/*.rda
 *.csv
-
-
 inst/doc
 revdep/
 *.Rproj

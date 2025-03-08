@@ -187,9 +187,12 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         stop("timevar column in dataset should be a vector of integers.")
     }
 
-    data.table::setDT(data, key = c(idvar, timevar))
+    if (is.data.table(data)) {
+        dt <- data.table::copy(data)
+    } else {
+        dt <- data.table::as.data.table(data)
+    }
     data.table::setorderv(data, c(idvar, timevar))
-    # Warn if ids are duplicated
     data_ids <- data[, .(get(idvar), get(timevar))]
 
     # Check panel balance and unique keys

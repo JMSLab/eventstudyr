@@ -14,7 +14,7 @@ MockComputeFirstDifferences <- function(data) {
 }
 
 
-MockEventStudy <- function(data) {
+MockES <- function(data) {
 
     data <- MockComputeFirstDifferences(data)
 
@@ -61,6 +61,14 @@ MockEventStudyShallowCopy <- function(data) {
     return(names(copy))
 }
 
+MockEventStudyShallowCopy2 <- function(data) {
+
+    copy = copy(data)
+    copy <- MockComputeFirstDifferences(copy)
+
+    return(names(copy))
+}
+
 time_orig <- system.time(MockEventStudyOrig(df_large))
 print(time_orig) # 1.158
 names(df_large) # no mpg_fd7
@@ -77,3 +85,7 @@ names(dt_large) # no mpg_fd
 time_no_copy <- system.time(MockEventStudy(dt_large))
 print(time_no_copy) # 0.03
 names(dt_large) # mpg_fd
+
+time_shallow_copy2 <- system.time(MockEventStudyShallowCopy2(dt_large))
+print(time_shallow_copy)
+names(dt_large) # no mpg_fd

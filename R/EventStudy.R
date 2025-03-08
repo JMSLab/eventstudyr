@@ -169,6 +169,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
     if (FE & !cluster)         {stop("cluster=TRUE is required when FE=TRUE.")}
     if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
+    if (! is.logical(allow_duplicate_id)) {stop("allow_duplicate_id should be either TRUE or FALSE.")}
 
     if (! (is.numeric(post)       &  post >= 0      &  post %% 1 == 0))           {stop("post should be a whole number.")}
     if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0))      {stop("overidpost should be a whole number.")}
@@ -191,6 +192,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     # Warn if ids are duplicated
     data_ids <- data[, .(get(idvar), get(timevar))]
 
+    # Check panel balance and unique keys
     n_units       <- length(base::unique(data[[idvar]]))
     n_periods     <- length(base::unique(data[[timevar]]))
     n_unique_rows <- nrow(data[!base::duplicated(data_ids),])
@@ -200,7 +202,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     } else {
         unbalanced <- FALSE
     }
-
     if (n_unique_rows != nrow(data)) {
         if (allow_duplicate_id == TRUE) {
             warning("idvar-timevar pairs do not uniquely identify all rows in the data.")

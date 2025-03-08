@@ -149,10 +149,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data))            {stop("data should be a data frame.")}
-    if (! is.character(outcomevar))       {stop("outcomevar should be a character.")}
-    if (! is.character(policyvar))        {stop("policyvar should be a character.")}
-    if (! is.character(idvar))            {stop("idvar should be a character.")}
-    if (! is.character(timevar))          {stop("timevar should be a character.")}
+    for (var in c(idvar, timevar, outcomevar, policyvar)) {
+        if ((! is.character(var))) {
+            stop(paste0(var, " should be a character."))
+        }
+        if (! var %in% colnames(df)) {
+            stop(paste0(var, " should be the name of a variable in the dataset."))
+        }
+    }
     if (! (is.null(controls) | is.character(controls))) {stop("controls should be either NULL or a character.")}
 
     if ((estimator == "OLS" & ! is.null(proxy)))        {stop("proxy should only be specified when estimator = 'FHS'.")}

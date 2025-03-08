@@ -32,6 +32,7 @@
 #' @param normalize Specifies the event-time coefficient to be normalized. Defaults to - pre - 1.
 #' @param anticipation_effects_normalization If set to TRUE, runs the default process and switches coefficient to be normalized to 0
 #' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.
+#' @param allow_duplicate_id If TRUE, the function estimates a regression where duplicated ID-time rows are weighted by their duplication count. If FALSE, the function raises an error if duplicate unit-time keys exist in the input data. Default is FALSE.
 #'
 #' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
@@ -142,7 +143,8 @@
 
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
-                       normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE) {
+                       normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE,
+                       allow_duplicate_id = FALSE) {
 
     # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -200,7 +202,11 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (n_unique_rows != nrow(data)) {
-        warning("idvar-timevar pairs do not uniquely identify all rows in the data.")
+        if (allow_duplicate_id == TRUE) {
+            warning("idvar-timevar pairs do not uniquely identify all rows in the data.")
+        } else if (allow_duplicate_id == FALSE) {
+            stop("idvar-timevar pairs do not uniquely identify all rows in the data. Turn on allow_duplicate_id if you want to proceed with weighted duplicated rows.")
+        }
     }
 
     detect_holes <- function(dt, idvar, timevar) {

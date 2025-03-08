@@ -22,7 +22,8 @@ EventStudy(
   overidpre = post + pre,
   normalize = -1 * (pre + 1),
   cluster = TRUE,
-  anticipation_effects_normalization = TRUE
+  anticipation_effects_normalization = TRUE,
+  allow_duplicate_id = FALSE
 )
 }
 \arguments{
@@ -73,6 +74,8 @@ Defaults to TRUE. Must be TRUE if FE is TRUE.}
 
 \item{anticipation_effects_normalization}{If set to TRUE, runs the default process and switches coefficient to be normalized to 0
 when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.}
+
+\item{allow_duplicate_id}{If TRUE, the function estimates a regression where duplicated ID-time rows are weighted by their duplication count. If FALSE, the function raises an error if duplicate unit-time keys exist in the input data. Default is FALSE.}
 }
 \value{
 A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.

@@ -38,7 +38,7 @@
 #' @import dplyr
 #' @import estimatr
 #' @importFrom stats reformulate
-#' @importFrom data.table setorderv as.data.table .SD
+#' @importFrom data.table setorderv as.data.table is.data.table .SD
 #' @export
 #'
 #' @examples
@@ -153,7 +153,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         if ((! is.character(var))) {
             stop(paste0(var, " should be a character."))
         }
-        if (! var %in% colnames(df)) {
+        if (! var %in% colnames(data)) {
             stop(paste0(var, " should be the name of a variable in the dataset."))
         }
     }
@@ -192,9 +192,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (is.data.table(data)) {
-        dt <- data.table::copy(data)
+        data <- data.table::copy(data)
     } else {
-        dt <- data.table::as.data.table(data)
+        data <- data.table::as.data.table(data)
     }
     data.table::setorderv(data, c(idvar, timevar))
     data_ids <- data[, .(get(idvar), get(timevar))]

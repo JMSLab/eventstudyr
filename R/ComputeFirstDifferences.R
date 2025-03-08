@@ -27,7 +27,7 @@
 ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
                                     timevar_holes = FALSE, return_df = FALSE) {
     if (! is.data.table(dt)) {
-        stop("dt should be a data table.")
+        stop("Input data should be a data table.")
     }
     for (var in c(idvar, timevar, diffvar)) {
         if ((! is.character(var))) {

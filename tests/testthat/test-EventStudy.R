@@ -1,9 +1,10 @@
 
 # Housekeeping ------------------------------------------------------------
 
-test_that("does not modify input data object", {
-
-    old_data <- copy(example_data)
+test_that("does not modify input data if input is data.table", {
+    
+    setDT(example_data)
+    example_data_old <- copy(example_data)
 
     outputs <- suppressWarnings(
         EventStudy(
@@ -15,9 +16,10 @@ test_that("does not modify input data object", {
                           cluster = TRUE, anticipation_effects_normalization = TRUE)
     )
 
-    expect_true(identical(old_data, example_data))
+    expect_true(identical(example_data_old, example_data))
 
 })
+
 
 # OLS ---------------------------------------------------------------------
 

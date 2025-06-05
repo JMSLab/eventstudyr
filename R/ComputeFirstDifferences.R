@@ -69,7 +69,7 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
     }
 
     if (return_df) {
-        return(data.table::as.data.frame(dt))
+        return(as.data.frame(dt))
     }
 
     return(dt)

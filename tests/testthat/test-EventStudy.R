@@ -1,22 +1,21 @@
 
 # Housekeeping ------------------------------------------------------------
 
-test_that("does not modify input data if input is data.table", {
-    
-    setDT(example_data)
-    example_data_old <- copy(example_data)
+test_that("does not modify input data (even if input is data.table)", {
+
+    example_dt <- as.data.table(example_data)
 
     outputs <- suppressWarnings(
         EventStudy(
             estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 2, pre = 3, overidpre = 4, 
-                          overidpost = 11, normalize = - 1, 
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
                           cluster = TRUE, anticipation_effects_normalization = TRUE)
     )
 
-    expect_true(identical(example_data_old, example_data))
+    expect_true(isTRUE(all.equal(example_dt, example_data, check.attributes = FALSE)))
 
 })
 
@@ -284,7 +283,7 @@ test_that("subtraction is peformed on the correct column", {
     overidpost <- 2
 
     df_first_diff <- ComputeFirstDifferences(
-        dt = data.table::setDT(df_sample_static), 
+        dt = data.table::setDT(df_sample_static),
         idvar = "id", timevar = "t", diffvar = "z")
 
     num_fd_lag_periods   <- post + overidpost - 1

@@ -1,5 +1,5 @@
 test_that("correctly calculates conf_level at 0.95", {
-    df_test <- as.data.frame(data.table::fread("./input/df_test_AddCI.csv"))
+    df_test <- data.table::fread("./input/df_test_AddCI.csv")
 
     policyvar <- "z"
     eventstudy_coefficients <- c("z_fd_lag1", "z_fd_lead1")

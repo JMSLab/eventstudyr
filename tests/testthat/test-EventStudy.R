@@ -3,7 +3,7 @@
 
 test_that("does not modify input data (even if input is data.table)", {
 
-    example_dt <- as.data.table(example_data)
+    example_dt <- data.table::as.data.table(example_data)
 
     outputs <- suppressWarnings(
         EventStudy(

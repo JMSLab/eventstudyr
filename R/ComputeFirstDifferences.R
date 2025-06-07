@@ -56,7 +56,7 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
         setnames(all_combinations, new = c(idvar, timevar))
 
         dt_all <- data.table::merge.data.table(dt, all_combinations,
-                        by = c(idvar, timevar), all = TRUE)
+                                               by = c(idvar, timevar), all = TRUE)
 
         dt_all[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
                 by = idvar]

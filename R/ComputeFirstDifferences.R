@@ -52,7 +52,7 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
     } else {
         ## Create dataset with all combinations to compute first differences
         all_combinations <- data.table::CJ(unique(dt[[idvar]]),
-                               min(dt[[timevar]]):max(dt[[timevar]]))
+                                           min(dt[[timevar]]):max(dt[[timevar]]))
         setnames(all_combinations, new = c(idvar, timevar))
 
         dt_all <- data.table::merge.data.table(dt, all_combinations,

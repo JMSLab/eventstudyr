@@ -1,6 +1,6 @@
 ## Notes
 
-Resubmission of the package with patch update.
+Re-submission of the package with patch update.
 
 ## R CMD check results
 

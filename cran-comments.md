@@ -15,5 +15,4 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
 
 ## Package changes
 
- * fixed a bug in `ComputeShifts()` that caused function to fail for unbalanced panels
- * changed maintainer
+ * Implemented patch updates for compatibility with `ggplot2` 3.6.0

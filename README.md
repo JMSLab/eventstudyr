@@ -57,7 +57,8 @@ plt <- EventStudyPlot(estimates = estimates_ols)
 plt
 ```
 
-<img src="man/figures/README-example-1.png" alt="Event-study plot using the example data of the package and default plotting options."  />
+<img src="man/figures/README-example-1.png" alt="Event-study plot using the example data of the package
+ and default plotting options."  />
 
 ## Citation
 

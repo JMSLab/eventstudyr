@@ -168,12 +168,13 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         stop("When estimator is 'FHS' and there are no leads in the model, proxyIV must be specified explicitly.")
     }
 
-    if (! is.logical(FE))      {stop("FE should be either TRUE or FALSE.")}
-    if (! is.logical(TFE))     {stop("TFE should be either TRUE or FALSE.")}
-    if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
+    for (var in c(FE, TFE, cluster, anticipation_effects_normalization, allow_duplicate_id)) {
+        if (! is.logical(var)) {
+            stop(paste0(var, " should be either TRUE or FALSE."))
+        }
+    }
+
     if (FE & !cluster)         {stop("cluster=TRUE is required when FE=TRUE.")}
-    if (! is.logical(anticipation_effects_normalization)) {stop("anticipation_effects_normalization should be either TRUE or FALSE.")}
-    if (! is.logical(allow_duplicate_id)) {stop("allow_duplicate_id should be either TRUE or FALSE.")}
 
     if (! (is.numeric(post)       &  post >= 0      &  post %% 1 == 0))           {stop("post should be a whole number.")}
     if (! (is.numeric(overidpost) & overidpost >= 0 & overidpost %% 1 == 0))      {stop("overidpost should be a whole number.")}

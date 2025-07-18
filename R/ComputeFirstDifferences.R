@@ -68,9 +68,5 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
                                            by = c(idvar, timevar), all.x = TRUE)
     }
 
-    if (return_df) {
-        return(as.data.frame(dt))
-    }
-
     return(dt)
 }

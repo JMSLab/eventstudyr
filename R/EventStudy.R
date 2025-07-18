@@ -198,7 +198,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data <- data.table::as.data.table(data)
     }
     data.table::setorderv(data, c(idvar, timevar))
-    data_ids <- data[, .(get(idvar), get(timevar))]
+    data_ids <- data[, .SD, .SDcols = c(idvar, timevar)]
 
     # Check panel balance and unique keys
     n_units       <- length(base::unique(data[[idvar]]))

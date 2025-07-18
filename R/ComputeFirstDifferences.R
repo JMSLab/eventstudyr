@@ -65,7 +65,7 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
         vars_to_keep <- c(idvar, timevar, paste0(diffvar, "_fd"))
 
         dt <- data.table::merge.data.table(dt, dt_all[, .SD, .SDcols = vars_to_keep],
-                    by = c(idvar, timevar), all.x = TRUE)
+                                           by = c(idvar, timevar), all.x = TRUE)
     }
 
     if (return_df) {

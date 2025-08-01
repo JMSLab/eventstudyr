@@ -282,8 +282,9 @@ test_that("subtraction is peformed on the correct column", {
     overidpre  <- 2
     overidpost <- 2
 
+    data.table::setDT(df_sample_static)
     df_first_diff <- ComputeFirstDifferences(
-        dt = data.table::setDT(df_sample_static),
+        dt = df_sample_static,
         idvar = "id", timevar = "t", diffvar = "z")
 
     num_fd_lag_periods   <- post + overidpost - 1

@@ -25,7 +25,7 @@
 
 ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
                                     timevar_holes = FALSE) {
-    if (! is.data.table(dt)) {
+    if (! data.table::is.data.table(dt)) {
         stop("Input data should be a data table.")
     }
     for (var in c(idvar, timevar, diffvar)) {
@@ -43,18 +43,18 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
     data.table::setorderv(dt, cols = c(idvar, timevar))
 
     if (!timevar_holes) {
-        dt[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
+        dt[, paste0(diffvar, "_fd") := get(diffvar) - data.table::shift((get(diffvar))),
            by = idvar]
     } else {
         ## Create dataset with all combinations to compute first differences
         all_combinations <- data.table::CJ(unique(dt[[idvar]]),
                                            min(dt[[timevar]]):max(dt[[timevar]]))
-        setnames(all_combinations, new = c(idvar, timevar))
+        data.table::setnames(all_combinations, new = c(idvar, timevar))
 
         dt_all <- data.table::merge.data.table(dt, all_combinations,
                                                by = c(idvar, timevar), all = TRUE)
 
-        dt_all[, paste0(diffvar, "_fd") := get(diffvar) - shift((get(diffvar))),
+        dt_all[, paste0(diffvar, "_fd") := get(diffvar) - data.table::shift((get(diffvar))),
                 by = idvar]
 
         ## Bring first differences back to the original dataset

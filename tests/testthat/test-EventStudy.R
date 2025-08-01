@@ -304,13 +304,9 @@ test_that("subtraction is peformed on the correct column", {
 
 
     col_subtract_1   <- paste0("z", "_lead", num_fd_lead_periods)
-    df_shift_minus_1 <- 1 - df_lag_lead[col_subtract_1]
 
-    num_equal <- sum(df_shift_minus_1[col_subtract_1] == 1 - df_lag_lead[col_subtract_1], na.rm = TRUE)
-    num_na    <- sum(is.na(df_shift_minus_1[col_subtract_1]))
     column_subtract_degree <- as.double(stringr::str_extract(col_subtract_1, "(?<=lead)[0-9]+"))
 
-    expect_equal(num_equal + num_na, nrow(df_lag_lead))
     expect_equal(column_subtract_degree, pre + overidpre)
 })
 

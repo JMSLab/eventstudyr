@@ -39,9 +39,6 @@ ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
     if (! is.logical(timevar_holes)) {
         stop("timevar_holes should be logical.")
     }
-    if (! is.logical(return_df)) {
-        stop("return_df should be logical.")
-    }
 
     data.table::setorderv(dt, cols = c(idvar, timevar))
 

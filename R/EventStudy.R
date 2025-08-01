@@ -273,16 +273,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         data <- ComputeShifts(data, idvar, timevar,
                               shiftvar    = paste0(policyvar, "_fd"),
                               shiftvalues = shift_values,
-                              timevar_holes = timevar_holes,
-                              return_df = FALSE)
+                              timevar_holes = timevar_holes)
     }
 
     if (!static) {
         data <- ComputeShifts(data, idvar, timevar,
                               shiftvar    = policyvar,
                               shiftvalues = c(-num_fd_leads, furthest_lag_period),
-                              timevar_holes = timevar_holes,
-                              return_df = FALSE)
+                              timevar_holes = timevar_holes)
 
         lead_endpoint_var <- paste0(policyvar, "_lead", num_fd_leads)
         data[, (lead_endpoint_var) := 1 - get(lead_endpoint_var)]

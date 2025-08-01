@@ -4,10 +4,11 @@
 test_that("does not modify input data (even if input is data.table)", {
 
     example_dt <- data.table::as.data.table(example_data)
+    example_dt_copy <- data.table::copy(example_dt)
 
     outputs <- suppressWarnings(
         EventStudy(
-            estimator = "OLS", data = example_data, outcomevar = "y_base",
+            estimator = "OLS", data = example_dt, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = 2, pre = 3, overidpre = 4,
@@ -15,8 +16,7 @@ test_that("does not modify input data (even if input is data.table)", {
                           cluster = TRUE, anticipation_effects_normalization = TRUE)
     )
 
-    expect_true(isTRUE(all.equal(example_dt, example_data, check.attributes = FALSE)))
-
+    expect_true(isTRUE(all.equal(example_dt, example_dt_copy, check.attributes = FALSE)))
 })
 
 

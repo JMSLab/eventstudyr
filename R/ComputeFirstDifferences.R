@@ -5,7 +5,6 @@
 #' @param timevar Character indicating column of time periods.
 #' @param diffvar Character indicating column of variable whose first difference will be taken.
 #' @param timevar_holes Logical indicating whether the panel contains gaps in the time variable. Defaults to FALSE.
-#' @param return_df Logical indicating whether the function should return a data frame (TRUE) or data.table (FALSE). Defaults to FALSE
 #'
 #' @return The passed dataset augmented with columns that reflect the desired first differences
 #'
@@ -25,7 +24,7 @@
 #' @noRd
 
 ComputeFirstDifferences <- function(dt, idvar, timevar, diffvar,
-                                    timevar_holes = FALSE, return_df = FALSE) {
+                                    timevar_holes = FALSE) {
     if (! is.data.table(dt)) {
         stop("Input data should be a data table.")
     }

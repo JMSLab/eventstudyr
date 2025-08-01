@@ -33,6 +33,7 @@
 #' @param anticipation_effects_normalization If set to TRUE, runs the default process and switches coefficient to be normalized to 0
 #' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.
 #' @param allow_duplicate_id If TRUE, the function estimates a regression where duplicated ID-time rows are weighted by their duplication count. If FALSE, the function raises an error if duplicate unit-time keys exist in the input data. Default is FALSE.
+#' @param avoid_internal_copy If TRUE, the function avoids making an internal deep copy of the input data, and instead directly modifies the input data.table. Default is FALSE.
 #'
 #' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
@@ -144,7 +145,7 @@
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
                        normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE,
-                       allow_duplicate_id = FALSE) {
+                       allow_duplicate_id = FALSE, avoid_internal_copy = FALSE) {
 
     # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
@@ -168,7 +169,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         stop("When estimator is 'FHS' and there are no leads in the model, proxyIV must be specified explicitly.")
     }
 
-    for (var in c(FE, TFE, cluster, anticipation_effects_normalization, allow_duplicate_id)) {
+    for (var in c(FE, TFE, cluster, anticipation_effects_normalization, allow_duplicate_id, avoid_internal_copy)) {
         if (! is.logical(var)) {
             stop(paste0(var, " should be either TRUE or FALSE."))
         }
@@ -185,6 +186,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
            & normalize >= -(pre + overidpre + 1) & normalize <= post + overidpost)) {
         stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")
     }
+    if (avoid_internal_copy & ! is.data.table(data)) {
+        warning("`data` is not a data.table so `avoid_internal_copy` == TRUE does not do anything.")
+    }
 
     # Check for errors in data
     if (! is.numeric(data[[timevar]])) {stop("timevar column in dataset should be numeric.")}
@@ -193,7 +197,9 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (is.data.table(data)) {
-        data <- data.table::copy(data)
+        if (!avoid_internal_copy) {
+            data <- copy(data)
+        }
     } else {
         data <- data.table::as.data.table(data)
     }

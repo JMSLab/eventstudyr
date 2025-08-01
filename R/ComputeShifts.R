@@ -21,14 +21,14 @@
 #' )
 #'
 #'
-#' @importFrom data.table setDT setorderv shift := CJ .SD
+#' @importFrom data.table setorderv shift := CJ .SD
 #' @keywords internal
 #' @noRd
 
 ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
                           timevar_holes = FALSE) {
-    if (! is.data.frame(df)) {
-        stop("df should be a data frame.")
+    if (! data.table::is.data.table(df)) {
+        stop("df should be a data.table.")
     }
     for (var in c(idvar, timevar, shiftvar)) {
         if ((! is.character(var))) {
@@ -48,7 +48,6 @@ ComputeShifts <- function(df, idvar, timevar, shiftvar, shiftvalues,
         stop("timevar_holes should be logical.")
     }
 
-    data.table::setDT(df)
     data.table::setorderv(df, cols = c(idvar, timevar))
 
     lags  <-    shiftvalues[shiftvalues >  0]

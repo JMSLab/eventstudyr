@@ -18,7 +18,7 @@
 #'     diffvar = "z"
 #' )
 #'
-#' @importFrom data.table setDT setorderv setnames shift := CJ .SD
+#' @importFrom data.table setorderv setnames shift := CJ .SD
 #'
 #' @keywords internal
 #' @noRd

@@ -198,7 +198,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     if (is.data.table(data)) {
         if (!avoid_internal_copy) {
-            data <- copy(data)
+            data <- data.table::copy(data)
         }
     } else {
         data <- data.table::as.data.table(data)

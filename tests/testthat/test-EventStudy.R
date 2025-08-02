@@ -1,7 +1,7 @@
 
 # Housekeeping ------------------------------------------------------------
 
-test_that("does not modify input data (even if input is data.table)", {
+test_that("does not modify input data (even if input is data.table) when avoid_internal_copy = FALSE", {
 
     example_dt <- data.table::as.data.table(example_data)
     example_dt_copy <- data.table::copy(example_dt)
@@ -19,6 +19,27 @@ test_that("does not modify input data (even if input is data.table)", {
     expect_true(isTRUE(all.equal(example_dt, example_dt_copy, check.attributes = FALSE)))
 })
 
+test_that("input dt IS modified in-place when avoid_internal_copy = TRUE", {
+
+    example_dt <- data.table::as.data.table(example_data)
+    example_dt_copy <- data.table::copy(example_dt)
+    address_before  <- rlang::obj_address(example_dt)
+
+    outputs <- suppressWarnings(
+        EventStudy(
+            estimator = "OLS", data = example_dt, outcomevar = "y_base",
+            policyvar = "z", idvar = "id", timevar = "t",
+            controls = "x_r", FE = TRUE, TFE = TRUE,
+            post = 2, pre = 3, overidpre = 4,
+            overidpost = 11, normalize = - 1,
+            cluster = TRUE, anticipation_effects_normalization = TRUE,
+            avoid_internal_copy = TRUE)
+    )
+    address_after <- rlang::obj_address(example_dt)
+
+    expect_equal(address_before, address_after)
+    expect_true(isFALSE(identical(example_dt, example_dt_copy)))
+})
 
 # OLS ---------------------------------------------------------------------
 

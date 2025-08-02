@@ -186,7 +186,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
            & normalize >= -(pre + overidpre + 1) & normalize <= post + overidpost)) {
         stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")
     }
-    if (avoid_internal_copy & ! is.data.table(data)) {
+    if (avoid_internal_copy & ! data.table::is.data.table(data)) {
         warning("`data` is not a data.table so `avoid_internal_copy` == TRUE does not do anything.")
     }
 
@@ -196,7 +196,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         stop("timevar column in dataset should be a vector of integers.")
     }
 
-    if (is.data.table(data)) {
+    if (data.table::is.data.table(data)) {
         if (!avoid_internal_copy) {
             data <- data.table::copy(data)
         }

@@ -39,7 +39,7 @@
 #' @import dplyr
 #' @import estimatr
 #' @importFrom stats reformulate
-#' @importFrom data.table setorderv as.data.table is.data.table .SD
+#' @importFrom data.table setorderv as.data.table is.data.table .SD copy
 #' @export
 #'
 #' @examples

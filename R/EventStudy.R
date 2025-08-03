@@ -187,7 +187,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         stop("normalize should be an integer between -(pre + overidpre + 1) and (post + overidpost).")
     }
     if (avoid_internal_copy & ! data.table::is.data.table(data)) {
-        warning("`data` is not a data.table so `avoid_internal_copy` == TRUE does not do anything.")
+        warning("`avoid_internal_copy` has no effect because dataset passed to `data` is not a `data.table`.")
     }
 
     # Check for errors in data

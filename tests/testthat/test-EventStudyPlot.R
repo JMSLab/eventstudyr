@@ -1,4 +1,9 @@
 
+get_labs <- function(x) x$labels
+if ("get_labs" %in% getNamespaceExports("ggplot2")) {
+    get_labs <- ggplot2::get_labs
+}
+
 test_that("Dimension of OLS and FHS estimation output is the same", {
 
     estimates_ols <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_smooth_m",
@@ -37,8 +42,9 @@ test_that("correctly changes x-axis and y-axis labels", {
                                xtitle     = "Event Time",
                                ytitle     = "Event-study Coefficients",)
 
-    expect_equal(p_labels$labels$x, "Event Time")
-    expect_equal(p_labels$labels$y, "Event-study Coefficients")
+    labels <- get_labs(p_labels)
+    expect_equal(labels$x, "Event Time")
+    expect_equal(labels$y, "Event-study Coefficients")
 
 })
 
@@ -99,17 +105,17 @@ test_that("sup-t bands are appropriately present or absent", {
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
-    p_supt <- EventStudyPlot(estimates = estimates,
-                             supt = .95)
+    p_supt <- get_labs(EventStudyPlot(estimates = estimates,
+                                      supt = .95))
 
-    p_no_supt <- EventStudyPlot(estimates = estimates,
-                                supt = NULL)
+    p_no_supt <- get_labs(EventStudyPlot(estimates = estimates,
+                                         supt = NULL))
 
-    expect_true(p_supt$labels$ymin    == "suptband_lower")
-    expect_true(p_no_supt$labels$ymin != "suptband_lower")
+    expect_true(p_supt$ymin    == "suptband_lower")
+    expect_true(p_no_supt$ymin != "suptband_lower")
 
-    expect_true(p_supt$labels$ymax    == "suptband_upper")
-    expect_true(p_no_supt$labels$ymax != "suptband_upper")
+    expect_true(p_supt$ymax    == "suptband_upper")
+    expect_true(p_no_supt$ymax != "suptband_upper")
 })
 
 test_that("confidence intervals are appropriately present or absent", {
@@ -118,16 +124,16 @@ test_that("confidence intervals are appropriately present or absent", {
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
-    p_ci <- EventStudyPlot(estimates = estimates,
-                           conf_level = .95, supt = NULL)
+    p_ci <- get_labs(EventStudyPlot(estimates = estimates,
+                                    conf_level = .95, supt = NULL))
 
-    p_no_ci <- EventStudyPlot(estimates = estimates,
-                              conf_level = NULL, supt = NULL)
+    p_no_ci <- get_labs(EventStudyPlot(estimates = estimates,
+                                       conf_level = NULL, supt = NULL))
 
-    expect_equal(p_ci$labels$ymin, "ci_lower")
-    expect_equal(p_ci$labels$ymax, "ci_upper")
-    expect_null(p_no_ci$labels$ymin)
-    expect_null(p_no_ci$labels$ymax)
+    expect_equal(p_ci$ymin, "ci_lower")
+    expect_equal(p_ci$ymax, "ci_upper")
+    expect_null(p_no_ci$ymin)
+    expect_null(p_no_ci$ymax)
 })
 
 test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or absent", {
@@ -136,25 +142,25 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
-    p_pre_post_caption <- EventStudyPlot(estimates       = estimates,
-                                         ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                         pre_event_coeffs  = TRUE,
-                                         post_event_coeffs = TRUE)$labels$caption
+    p_pre_post_caption <- get_labs(EventStudyPlot(estimates       = estimates,
+                                                  ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
+                                                  pre_event_coeffs  = TRUE,
+                                                  post_event_coeffs = TRUE))$caption
 
-    p_pre_caption      <- EventStudyPlot(estimates       = estimates,
-                                         ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                         pre_event_coeffs  = TRUE,
-                                         post_event_coeffs = FALSE)$labels$caption
+    p_pre_caption      <- get_labs(EventStudyPlot(estimates       = estimates,
+                                                  ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
+                                                  pre_event_coeffs  = TRUE,
+                                                  post_event_coeffs = FALSE))$caption
 
-    p_post_caption     <- EventStudyPlot(estimates       = estimates,
-                                         ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                         pre_event_coeffs  = FALSE,
-                                         post_event_coeffs = TRUE)$labels$caption
+    p_post_caption     <- get_labs(EventStudyPlot(estimates       = estimates,
+                                                  ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
+                                                  pre_event_coeffs  = FALSE,
+                                                  post_event_coeffs = TRUE))$caption
 
-    p_neither_caption   <- EventStudyPlot(estimates       = estimates,
-                                          ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
-                                          pre_event_coeffs  = FALSE,
-                                          post_event_coeffs = FALSE)$labels$caption
+    p_neither_caption   <- get_labs(EventStudyPlot(estimates       = estimates,
+                                                   ybreaks         = c(-1.5, -.5, 0, .5, 1.5),
+                                                   pre_event_coeffs  = FALSE,
+                                                   post_event_coeffs = FALSE))$caption
 
     regex_for_p_value <- "1\\.0*$|0\\.\\d+" # 1 followed by . and then zero or more 0's or 0 then . then any number
     regex_pretrends   <- "Pretrends p-value = "

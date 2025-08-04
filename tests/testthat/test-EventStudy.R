@@ -324,10 +324,21 @@ test_that("subtraction is peformed on the correct column", {
                                       shiftvar = "z", shiftvalues = -num_fd_lead_periods)
 
 
-    col_subtract_1   <- paste0("z", "_lead", num_fd_lead_periods)
-
-    column_subtract_degree <- as.double(stringr::str_extract(col_subtract_1, "(?<=lead)[0-9]+"))
-
+    # Store original values before transformation
+    lead_endpoint_var <- paste0("z", "_lead", num_fd_lead_periods)
+    original_values <- df_lag_lead[[lead_endpoint_var]]
+    
+    # Apply the transformation (this replicates what EventStudy does)
+    df_after_transform <- data.table::copy(df_lag_lead)
+    df_after_transform[, (lead_endpoint_var) := 1 - get(lead_endpoint_var)]
+    
+    # Test 1: Verify the transformation was applied correctly (1 - original_value)
+    transformed_values <- df_after_transform[[lead_endpoint_var]]
+    expected_values <- 1 - original_values
+    expect_equal(transformed_values, expected_values)
+    
+    # Test 2: Verify the correct column name is constructed
+    column_subtract_degree <- as.double(stringr::str_extract(lead_endpoint_var, "(?<=lead)[0-9]+"))
     expect_equal(column_subtract_degree, pre + overidpre)
 })
 

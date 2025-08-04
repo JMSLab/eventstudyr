@@ -298,48 +298,25 @@ test_that("removes the correct column when normalize = post + overidpost", {
 
 test_that("subtraction is peformed on the correct column", {
 
-    post       <- 1
     pre        <- 1
     overidpre  <- 2
-    overidpost <- 2
 
-    dt_sample_static <- data.table::as.data.table(df_sample_static)
-    df_first_diff <- ComputeFirstDifferences(
-        dt = dt_sample_static,
-        idvar = "id", timevar = "t", diffvar = "z")
-
-    num_fd_lag_periods   <- post + overidpost - 1
-    num_fd_lead_periods  <- pre + overidpre
-
-    furthest_lag_period <- num_fd_lag_periods + 1
-
-    df_fd_leads         <- ComputeShifts(df_first_diff, idvar = "id", timevar = "t",
-                                         shiftvar = paste0("z", "_fd"), shiftvalues = -num_fd_lead_periods:-1)
-    df_fd_leads_shifted <- ComputeShifts(df_fd_leads, idvar = "id", timevar = "t",
-                                         shiftvar = paste0("z", "_fd"), shiftvalues = 1:num_fd_lag_periods)
-
-    df_lag           <- ComputeShifts(df_fd_leads_shifted, idvar = "id", timevar = "t",
-                                      shiftvar = "z", shiftvalues = furthest_lag_period)
-    df_lag_lead      <- ComputeShifts(df_lag, idvar = "id", timevar = "t",
-                                      shiftvar = "z", shiftvalues = -num_fd_lead_periods)
-
-
-    # Store original values before transformation
-    lead_endpoint_var <- paste0("z", "_lead", num_fd_lead_periods)
-    original_values <- df_lag_lead[[lead_endpoint_var]]
+    outputs <- suppressWarnings(
+        EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
+                  policyvar = "z", idvar = "id", timevar = "t",
+                  post = 1, pre = pre, overidpre = overidpre, overidpost = 2,
+                  normalize = -1, cluster = TRUE)
+    )
     
-    # Apply the transformation (this replicates what EventStudy does)
-    df_after_transform <- data.table::copy(df_lag_lead)
-    df_after_transform[, (lead_endpoint_var) := 1 - get(lead_endpoint_var)]
+    # Test 1: Verify the expected lead column is present in the regression terms
+    shiftvalues <- outputs$output$term
+    num_fd_lead_periods <- pre + overidpre
+    expected_lead_col <- paste0("z", "_lead", num_fd_lead_periods)
+    expect_true(expected_lead_col %in% shiftvalues)
     
-    # Test 1: Verify the transformation was applied correctly (1 - original_value)
-    transformed_values <- df_after_transform[[lead_endpoint_var]]
-    expected_values <- 1 - original_values
-    expect_equal(transformed_values, expected_values)
-    
-    # Test 2: Verify the correct column name is constructed
-    column_subtract_degree <- as.double(stringr::str_extract(lead_endpoint_var, "(?<=lead)[0-9]+"))
-    expect_equal(column_subtract_degree, pre + overidpre)
+    # Test 2: Verify the lead number matches the expected calculation
+    actual_lead_number <- as.double(stringr::str_extract(expected_lead_col, "(?<=lead)[0-9]+"))
+    expect_equal(actual_lead_number, pre + overidpre)
 })
 
 # FHS ---------------------------------------------------------------------

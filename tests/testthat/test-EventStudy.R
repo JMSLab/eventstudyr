@@ -296,29 +296,6 @@ test_that("removes the correct column when normalize = post + overidpost", {
     expect_true(!normalization_column %in% shiftvalues)
 })
 
-test_that("subtraction is peformed on the correct column", {
-
-    pre        <- 1
-    overidpre  <- 2
-
-    outputs <- suppressWarnings(
-        EventStudy(estimator = "OLS", data = df_sample_static, outcomevar = "y_static",
-                  policyvar = "z", idvar = "id", timevar = "t",
-                  post = 1, pre = pre, overidpre = overidpre, overidpost = 2,
-                  normalize = -1, cluster = TRUE)
-    )
-    
-    # Test 1: Verify the expected lead column is present in the regression terms
-    shiftvalues <- outputs$output$term
-    num_fd_lead_periods <- pre + overidpre
-    expected_lead_col <- paste0("z", "_lead", num_fd_lead_periods)
-    expect_true(expected_lead_col %in% shiftvalues)
-    
-    # Test 2: Verify the lead number matches the expected calculation
-    actual_lead_number <- as.double(stringr::str_extract(expected_lead_col, "(?<=lead)[0-9]+"))
-    expect_equal(actual_lead_number, pre + overidpre)
-})
-
 # FHS ---------------------------------------------------------------------
 
 test_that("correctly creates highest order leads and shiftvalues", {

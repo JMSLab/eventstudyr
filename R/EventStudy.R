@@ -226,7 +226,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     detect_holes <- function(dt, idvar, timevar) {
         holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)
-                            ][, list(holes = any(base::diff(base::get(timevar)) != 1)),
+                         ][, list(holes = any(base::diff(base::get(timevar)) != 1)),
                             by = c(idvar)]
 
         return(any(holes_per_id$holes))

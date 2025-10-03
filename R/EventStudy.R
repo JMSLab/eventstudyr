@@ -148,7 +148,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                        allow_duplicate_id = FALSE, avoid_internal_copy = FALSE) {
 
     # Check for errors in arguments
-    if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
+    if (! estimator %in% c("OLS", 'feols', "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.data.frame(data))            {stop("data should be a data frame.")}
     for (var in c(idvar, timevar, outcomevar, policyvar)) {
         if ((! is.character(var))) {

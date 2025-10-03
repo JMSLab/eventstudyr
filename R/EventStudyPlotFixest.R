@@ -121,10 +121,7 @@ EventStudyPlotFixest <- function(estimates,
 
 # Estimation Elements -----------------------------------------------------
 
-    df_estimates_fixest      <- estimates$output # this is class lm_robust - TODO # also need to rename - this is not df
-    df_estimates_tidy <- estimatr::tidy(estimates$output) # this is class data.frame
-
-    static_model <- nrow(df_estimates_tidy) == 1
+    static_model <- length(coef(df_estimates)) == 1
     if (static_model) {
         stop("EventStudyPlot() does not support static models.")
     }
@@ -153,13 +150,15 @@ EventStudyPlotFixest <- function(estimates,
     plot_CI <- if(!is.null(conf_level)) TRUE else FALSE
 
     if (plot_CI) {
-
         df_estimates_tidy <- AddCIs(df_estimates_tidy, eventstudy_coefficients, conf_level)
     }
 
 # Optionally Test For Pretrends/Levelling-Off -----------------------------
 
-    df_test_linear <- TestLinear(estimates = estimates, pretrends = pre_event_coeffs, leveling_off = post_event_coeffs)
+    df_test_linear <- TestLinear(
+        estimates = estimates,
+        pretrends = pre_event_coeffs,
+        leveling_off = post_event_coeffs)
 
     if ((pre_event_coeffs | post_event_coeffs)) {
         pretrends_p_value   <- df_test_linear[df_test_linear["Test"] == "Pre-Trends",   "p.value"]
@@ -168,21 +167,16 @@ EventStudyPlotFixest <- function(estimates,
         text_pretrends   <- paste0("Pretrends p-value = ", round(pretrends_p_value, 2))
         text_levelingoff <- paste0("Leveling off p-value = ", round(levelingoff_p_value, 2))
 
-
         if (pre_event_coeffs & post_event_coeffs) {
             text_caption <- paste0(text_pretrends, " -- ", text_levelingoff)
-
         } else if (pre_event_coeffs & !post_event_coeffs) {
             text_caption <- text_pretrends
-
         } else if (!pre_event_coeffs & post_event_coeffs) {
             text_caption <- text_levelingoff
-
-        }
+        } # TODO: switch to `switch` for conciseness
     } else {
         text_caption <- NULL
     }
-
 
     df_plt <- PreparePlottingData(df_estimates_tidy, policyvar,
                                   post, overidpost, pre, overidpre, normalization_column, proxyIV)
@@ -269,7 +263,7 @@ EventStudyPlotFixest <- function(estimates,
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
-        covar <- AddZerosCovar(estimates$output$vcov,
+        covar <- AddZerosCovar(estimates$output$vcov, #TODO: make sure this is of class matrix / array
                                eventstudy_coefficients,
                                df_plt[df_plt$estimate==0, ]$term,
                                df_plt$term)

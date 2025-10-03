@@ -369,7 +369,7 @@ test_that("Coefficients and Standard Errors agree with base STATA", {
 
     bools <- c("TTT", "TFT", "FTF", "FTT", "FFF", "FFT")
 
-    for (i in length(bools)) {
+    for (i in 1:length(bools)) {
         bool <- bools[i]
         estimator       <-  "FHS"
         outcomevar      <- "y_base"

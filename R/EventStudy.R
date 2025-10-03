@@ -226,7 +226,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
     detect_holes <- function(dt, idvar, timevar) {
         holes_per_id <- dt[, .SD[!is.na(base::get(timevar))], by = c(idvar)
-                         ][, list(holes = any(base::diff(base::get(timevar)) != 1)),
+                            ][, list(holes = any(base::diff(base::get(timevar)) != 1)),
                             by = c(idvar)]
 
         return(any(holes_per_id$holes))
@@ -342,10 +342,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         output       <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         coefficients <- str_policy_vars
     } else if (estimator == "feols") {
-        # TODO: implement feols estimator
-        # Then adapt EventStudyPlot to use feols
-        # As well as ensure summary($output) works
-        # Building / modifying tests should be the LAST step
         formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
                                           controls, proxy, proxyIV,
                                           idvar, timevar, FE, TFE)

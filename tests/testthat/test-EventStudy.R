@@ -296,6 +296,91 @@ test_that("removes the correct column when normalize = post + overidpost", {
     expect_true(!normalization_column %in% shiftvalues)
 })
 
+# feols ---------------------------------------------------------------------
+
+test_that("feols estimator FE works", {
+
+    outputs <- suppressWarnings(
+        EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+    )
+
+    expect_true(class(outputs$output) == "fixest")
+    expect_true(all(outputs$output$fixef_vars == c("id", "t")))
+})
+
+test_that("feols estimator with no fixed effects works", {
+
+    outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = FALSE, TFE = FALSE,
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+
+    expect_true(class(outputs$output) == "fixest")
+    expect_true(is.null(outputs$output$fixef_vars))
+})
+
+test_that("feols estimator with only time fixed effects works", {
+
+    outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = FALSE, TFE = TRUE,
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+
+    expect_true(class(outputs$output) == "fixest")
+    expect_true(outputs$output$fixef_vars == "t")
+})
+
+test_that("feols estimator with only unit FE works", {
+
+    outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = FALSE,
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+
+    expect_true(class(outputs$output) == "fixest")
+    expect_true(outputs$output$fixef_vars == "id")
+})
+
+test_that("feols estimator coefficients match OLS coefficients", {
+
+    outputs_ols <- suppressWarnings(
+        EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+    )
+
+    outputs_feols <- suppressWarnings(
+        EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          controls = "x_r", FE = TRUE, TFE = TRUE,
+                          post = 2, pre = 3, overidpre = 4,
+                          overidpost = 11, normalize = - 1,
+                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+    )
+
+    coef_ols <- coef(outputs_ols$output)
+    se_ols <- outputs_ols$output$std.error
+
+    coef_feols <- coef(outputs_feols$output)
+    se_feols <- fixest::se(outputs_feols$output)
+
+    expect_true(all(abs(coef_feols - coef_ols) <= 1e-6 + 1e-6 * abs(coef_ols)))
+})
+
 # FHS ---------------------------------------------------------------------
 
 test_that("correctly creates highest order leads and shiftvalues", {

@@ -79,7 +79,7 @@ PrepareModelFormula <- function(estimator, outcomevar,
 
 
 PrepareModelFormulaFEOLS <- function(outcomevar, str_policy_vars,
-                                     controls = NULL, proxy = NULL, proxyIV = NULL,
+                                     controls = NULL,
                                      idvar = NULL, timevar = NULL, FE = FALSE, TFE = FALSE) {
     stopifnot(!is.null(idvar))
     stopifnot(!is.null(timevar))
@@ -109,6 +109,54 @@ PrepareModelFormulaFEOLS <- function(outcomevar, str_policy_vars,
             response = outcomevar,
             intercept = TRUE
         )
+    }
+    return(formula)
+}
+
+PrepareModelFormulaFEOLS_FHS <- function(outcomevar, str_policy_vars,
+                                         controls = NULL, proxy = NULL, proxyIV = NULL,
+                                         idvar = NULL, timevar = NULL, FE = FALSE, TFE = FALSE) {
+    stopifnot(!is.null(idvar))
+    stopifnot(!is.null(timevar))
+    stopifnot(!is.null(proxy))
+    stopifnot(!is.null(proxyIV))
+
+    exogenous <- c(str_policy_vars, controls)
+    exogenous <- exogenous[exogenous != proxy]
+    exogenous <- exogenous[exogenous != proxyIV]
+
+    if (FE | TFE) {
+        fes <- c()
+        if (FE) {
+            fes <- c(fes, idvar)
+        }
+        if (TFE) {
+            fes <- c(fes, timevar)
+        }
+
+        formula_str <- paste(
+            outcomevar,
+            "~",
+            paste(exogenous, collapse = " + "),
+            "|",
+            paste(fes, collapse = " + "),
+            "|",
+            proxy,
+            "~",
+            paste(c(exogenous, proxyIV), collapse = " + ")
+        )
+        formula <- stats::as.formula(formula_str)
+    } else {
+        formula_str <- paste(
+            outcomevar,
+            "~",
+            paste(exogenous, collapse = " + "),
+            "|",
+            proxy,
+            "~",
+            paste(c(exogenous, proxyIV), collapse = " + ")
+        )
+        formula <- stats::as.formula(formula_str)
     }
     return(formula)
 }

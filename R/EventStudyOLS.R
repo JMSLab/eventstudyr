@@ -127,12 +127,12 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data,
 EventStudyFEOLS <- function(formula, prepared_data,
                           idvar, timevar, FE, TFE, cluster) {
 
-    cluster = ifelse(cluster, idvar, NULL)
+    cluster_var = if(cluster) idvar else NULL
 
     ols_output <- fixest::feols(
         fml = formula,
         data = prepared_data,
-        cluster = cluster
+        cluster = cluster_var
     )
     return(ols_output)
 }

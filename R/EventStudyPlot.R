@@ -122,6 +122,7 @@ EventStudyPlot <- function(estimates,
 # Estimation Elements -----------------------------------------------------
 
     model_estimates <- estimates$output
+    model_estimates_tidy <- estimatr::tidy(estimates$output)
 
     static_model <- length(coef(model_estimates)) == 1
     if (static_model) {
@@ -145,7 +146,7 @@ EventStudyPlot <- function(estimates,
     plot_supt <- if(!is.null(supt)) TRUE else FALSE
 
     if (plot_supt) {
-        df_estimates_tidy <- AddSuptBand(model_estimates, num_sim = 1000, conf_level = supt,
+        model_estimates_tidy <- AddSuptBand(model_estimates, num_sim = 1000, conf_level = supt,
                                          eventstudy_coefficients = eventstudy_coefficients)
     }
 
@@ -153,7 +154,7 @@ EventStudyPlot <- function(estimates,
 
     if (plot_CI) {
 
-        df_estimates_tidy <- AddCIs(df_estimates_tidy, eventstudy_coefficients, conf_level)
+        model_estimates_tidy <- AddCIs(model_estimates_tidy, eventstudy_coefficients, conf_level)
     }
 
 # Optionally Test For Pretrends/Levelling-Off -----------------------------
@@ -180,7 +181,7 @@ EventStudyPlot <- function(estimates,
     }
 
     df_plt <- PreparePlottingData(
-        df_estimates_tidy, policyvar,
+        model_estimates_tidy, policyvar,
         post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
 # Construct y breaks ------------------------------------------------------

@@ -352,23 +352,33 @@ test_that("Coefficients and Standard Errors agree with STATA", {
     se_feols <- fixest::se(reg)
 
     epsilon <- 1e-6
+    epsilon_se <- 2e-2
 
-    expect_equal(unname(coef_feols["z_fd"]), df_test_STATA[df_test_STATA["term"] == "zfd",][[2]], tolerance = epsilon)
-    expect_equal(unname(coef_feols["z_fd_lead2"]), df_test_STATA[df_test_STATA["term"] == "F2.zfd",][[2]], tolerance = epsilon)
-    expect_equal(unname(coef_feols["z_fd_lead3"]), df_test_STATA[df_test_STATA["term"] == "F3.zfd",][["coef"]][1], tolerance = epsilon)
-    expect_equal(unname(coef_feols["z_fd_lag1"]), df_test_STATA[df_test_STATA["term"] == "L.zfd",][[2]], tolerance = epsilon)
-    expect_equal(unname(coef_feols["z_fd_lag2"]), df_test_STATA[df_test_STATA["term"] == "L2.zfd",][[2]], tolerance = epsilon)
-    expect_equal(unname(coef_feols["z_lead3"]), -1 * df_test_STATA[df_test_STATA["term"] == "F3.z",][["coef"]], tolerance = epsilon)
-    expect_equal(unname(coef_feols["z_lag3"]), df_test_STATA[df_test_STATA["term"] == "L3.z",][[2]], tolerance = epsilon)
-    expect_equal(unname(coef_feols["x_r"]), df_test_STATA[df_test_STATA["term"] == "x_r",][[2]], tolerance = epsilon)
+    # Define coefficient mappings: R_name -> STATA_term
+    coef_mappings <- list(
+        "z_fd" = "zfd",
+        "z_fd_lead2" = "F2.zfd",
+        "z_fd_lead3" = "F3.zfd",
+        "z_fd_lag1" = "L.zfd",
+        "z_fd_lag2" = "L2.zfd",
+        "z_lead3" = "F3.z",
+        "z_lag3" = "L3.z",
+        "x_r" = "x_r"
+    )
 
-    expect_equal(unname(se_feols["z_fd"]), df_test_STATA[df_test_STATA["term"] == "zfd",][[3]], tolerance = 2e-2)
-    expect_equal(unname(se_feols["z_fd_lead2"]), df_test_STATA[df_test_STATA["term"] == "F2.zfd",][[3]], tolerance = 2e-2)
-    expect_equal(unname(se_feols["z_fd_lead3"]), df_test_STATA[df_test_STATA["term"] == "F3.zfd",][["std_error"]][1], tolerance = 2e-2)
-    expect_equal(unname(se_feols["z_fd_lag1"]), df_test_STATA[df_test_STATA["term"] == "L.zfd",][[3]], tolerance = 2e-2)
-    expect_equal(unname(se_feols["z_fd_lag2"]), df_test_STATA[df_test_STATA["term"] == "L2.zfd",][[3]], tolerance = 2e-2)
-    expect_equal(unname(se_feols["z_lead3"]), df_test_STATA[df_test_STATA["term"] == "F3.z",][["std_error"]], tolerance = 2e-2)
-    expect_equal(unname(se_feols["z_lag3"]), df_test_STATA[df_test_STATA["term"] == "L3.z",][[3]], tolerance = 2e-2)
-    expect_equal(unname(se_feols["x_r"]), df_test_STATA[df_test_STATA["term"] == "x_r",][[3]], tolerance = 2e-2)
+    # Test coefficients
+    for (r_name in names(coef_mappings)) {
+        stata_term <- coef_mappings[[r_name]]
+        expected <- df_test_STATA[df_test_STATA["term"] == stata_term, "coef"]
+        if (r_name == "z_lead3") expected <- -1 * expected  # STATA sign convention
+        expect_equal(unname(coef_feols[r_name]), expected, tolerance = epsilon)
+    }
+
+    # Test standard errors
+    for (r_name in names(coef_mappings)) {
+        stata_term <- coef_mappings[[r_name]]
+        expected <- df_test_STATA[df_test_STATA["term"] == stata_term, "std_error"]
+        expect_equal(unname(se_feols[r_name]), expected, tolerance = epsilon_se)
+    }
 
 })

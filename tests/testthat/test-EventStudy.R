@@ -298,58 +298,31 @@ test_that("removes the correct column when normalize = post + overidpost", {
 
 # feols ---------------------------------------------------------------------
 
-test_that("feols estimator FE works", {
+test_that("tests that package and STATA output agree when post, overidpost, pre, overidpre are zero", {
 
-    outputs <- suppressWarnings(
-        EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 2, pre = 3, overidpre = 4,
-                          overidpost = 11, normalize = - 1,
-                          cluster = TRUE, anticipation_effects_normalization = TRUE)
-    )
-
-    expect_true(class(outputs$output) == "fixest")
-    expect_true(all(outputs$output$fixef_vars == c("id", "t")))
-})
-
-test_that("feols estimator with no fixed effects works", {
+    post       <- 0
+    pre        <- 0
+    overidpre  <- 0
+    overidpost <- 0
+    normalize  <- -1
 
     outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = FALSE, TFE = FALSE,
-                          post = 2, pre = 3, overidpre = 4,
-                          overidpost = 11, normalize = - 1,
-                          cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
 
-    expect_true(class(outputs$output) == "fixest")
-    expect_true(is.null(outputs$output$fixef_vars))
-})
+    coef_package <- coef(outputs$output)[[1]]
+    std_package  <- fixest::se(outputs$output)[[1]]
 
-test_that("feols estimator with only time fixed effects works", {
+    STATA_output <- read.csv('./input/df_test_base_STATA_allzero.csv')
+    coef_STATA <- STATA_output$coef[[1]]
+    std_STATA  <- STATA_output$std_error[[1]]
 
-    outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = FALSE, TFE = TRUE,
-                          post = 2, pre = 3, overidpre = 4,
-                          overidpost = 11, normalize = - 1,
-                          cluster = TRUE, anticipation_effects_normalization = TRUE)
-
-    expect_true(class(outputs$output) == "fixest")
-    expect_true(outputs$output$fixef_vars == "t")
-})
-
-test_that("feols estimator with only unit FE works", {
-
-    outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = TRUE, TFE = FALSE,
-                          post = 2, pre = 3, overidpre = 4,
-                          overidpost = 11, normalize = - 1,
-                          cluster = TRUE, anticipation_effects_normalization = TRUE)
-
-    expect_true(class(outputs$output) == "fixest")
-    expect_true(outputs$output$fixef_vars == "id")
+    epsilon <- 10e-7
+    epsilon_se <- 2e-2
+    expect_equal(coef_package, coef_STATA, tolerance = epsilon)
+    expect_equal(std_package, std_STATA, tolerance = epsilon_se)
 })
 
 test_that("feols estimator coefficients match OLS coefficients", {

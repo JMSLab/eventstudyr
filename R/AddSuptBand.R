@@ -77,7 +77,7 @@ AddSuptBand <- function(model_estimates, num_sim = 1000, conf_level = .95, event
         critical_value = t[floor(conf_level_num_sim) + 1]
     }
 
-    df_estimates_tidy <- if(fixest){estimatr::tidy(model_estimates)} else {broom::tidy(model_estimates)}
+    df_estimates_tidy <- if(fixest){broom::tidy(model_estimates)} else {estimatr::tidy(model_estimates)}
 
     df_estimates_tidy["suptband_lower"] <- df_estimates_tidy$estimate - (critical_value * df_estimates_tidy$std.error)
     df_estimates_tidy["suptband_upper"] <- df_estimates_tidy$estimate + (critical_value * df_estimates_tidy$std.error)

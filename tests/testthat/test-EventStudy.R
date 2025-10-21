@@ -320,9 +320,8 @@ test_that("tests that package and STATA output agree when post, overidpost, pre,
     std_STATA  <- STATA_output$std_error[[1]]
 
     epsilon <- 10e-7
-    epsilon_se <- 2e-2
     expect_equal(coef_package, coef_STATA, tolerance = epsilon)
-    expect_equal(std_package, std_STATA, tolerance = epsilon_se)
+    expect_equal(std_package, std_STATA, tolerance = epsilon)
 })
 
 test_that("feols estimator coefficients match OLS coefficients", {

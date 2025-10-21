@@ -127,12 +127,16 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data,
 EventStudyFEOLS <- function(formula, prepared_data,
                           idvar, timevar, FE, TFE, cluster) {
 
-    cluster_var = if(cluster) idvar else NULL
+    if (cluster) {
+        vcov_spec <- as.formula(paste0("~", idvar))
+    } else {
+        vcov_spec <- "iid"
+    }
 
     ols_output <- fixest::feols(
         fml = formula,
         data = prepared_data,
-        cluster = cluster_var
+        vcov = vcov_spec
     )
     return(ols_output)
 }
@@ -140,12 +144,16 @@ EventStudyFEOLS <- function(formula, prepared_data,
 EventStudyFEOLS_FHS <- function(formula, prepared_data,
                                 idvar, timevar, FE, TFE, cluster) {
 
-    cluster_var = if(cluster) idvar else NULL
+    if (cluster) {
+        vcov_spec <- as.formula(paste0("~", idvar))
+    } else {
+        vcov_spec <- "iid"
+    }
 
     fhs_output <- fixest::feols(
         fml = formula,
         data = prepared_data,
-        cluster = cluster_var
+        vcov = vcov_spec
     )
 
     # Apply the same standard error adjustments as EventStudyFHS

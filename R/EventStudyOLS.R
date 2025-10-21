@@ -128,15 +128,18 @@ EventStudyFEOLS <- function(formula, prepared_data,
                           idvar, timevar, FE, TFE, cluster) {
 
     if (cluster) {
-        vcov_spec <- as.formula(paste0("~", idvar))
+        vcov_fixest <- as.formula(paste0("~", idvar))
+        small_sample_correction <- fixest::ssc(K.fixef = "full")
     } else {
         vcov_spec <- "iid"
+        ssc_spec <- fixest::ssc()
     }
 
     ols_output <- fixest::feols(
         fml = formula,
         data = prepared_data,
-        vcov = vcov_spec
+        vcov = vcov_spec,
+        ssc = ssc_spec
     )
     return(ols_output)
 }

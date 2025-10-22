@@ -49,7 +49,7 @@ head(example_data)
 Here is an example using the sample data:
 
 ```{r Basic Eventstudy Example - Show Code, eval = FALSE}
-results <- EventStudy(estimator = "OLS",
+results <- EventStudy(estimator = "OLS", kernel = "estimatr",
                       data = example_data,
                       outcomevar = "y_jump_m",
                       policyvar = "z",
@@ -59,7 +59,7 @@ results <- EventStudy(estimator = "OLS",
                       pre = 0)
 ```
 ```{r Basic Eventstudy Example - Run Code, echo = FALSE}
-results <- EventStudy(estimator = "OLS",
+results <- EventStudy(estimator = "OLS", kernel = "estimatr",
                       data = example_data,
                       outcomevar = "y_jump_m",
                       policyvar = "z",
@@ -120,7 +120,7 @@ summary(results$output)
 This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function with some default settings:
 
 ```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
-eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
+eventstudy_estimates_ols <- EventStudy(estimator = "OLS", kernel = "estimatr",
                                        data = example_data,
                                        outcomevar = "y_jump_m",
                                        policyvar = "z",

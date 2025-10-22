@@ -2,7 +2,7 @@
 
 test_that("check that the correct part of vcov matrix is used", {
     suppressWarnings(
-        sample_estimation <- EventStudy(estimator = "OLS", data = example_data,
+        sample_estimation <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data,
                                     outcomevar = "y_base", policyvar = "z",
                                     idvar = "id", timevar = "t", FE = TRUE, control = "x_r",
                                     TFE = TRUE, post = 2, pre = 2, overidpre = 2,
@@ -24,7 +24,7 @@ test_that("check that the correct part of vcov matrix is used", {
 test_that("check that the correct part of vcov matrix is used", {
     data <- example_data[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
     suppressWarnings(
-        sample_estimation <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+        sample_estimation <- EventStudy(estimator = "FHS", kernel = "estimatr", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = TRUE)
     )

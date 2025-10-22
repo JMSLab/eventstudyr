@@ -6,11 +6,11 @@ if ("get_labs" %in% getNamespaceExports("ggplot2")) {
 
 test_that("Dimension of OLS and FHS estimation output is the same", {
 
-    estimates_ols <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_smooth_m",
+    estimates_ols <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_smooth_m",
                                 policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                                 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
-    estimates_fhs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_smooth_m",
+    estimates_fhs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_smooth_m",
                                 policyvar = "z", idvar = "id", timevar = "t", proxy = "eta_r", controls = "x_r",
                                 post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -33,7 +33,7 @@ test_that("Dimension of OLS and FHS estimation output is the same", {
 
 test_that("correctly changes x-axis and y-axis labels", {
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -50,7 +50,7 @@ test_that("correctly changes x-axis and y-axis labels", {
 
 test_that("x- and y-axis breaks and limits are correct", {
 
-    estimates = EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates = EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                            post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -76,7 +76,7 @@ test_that("x- and y-axis breaks and limits are correct", {
 
 test_that("correctly adds mean of outcome var", {
 
-    estimates = EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates = EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                            policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                            post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -101,7 +101,7 @@ test_that("correctly adds mean of outcome var", {
 
 test_that("sup-t bands are appropriately present or absent", {
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -120,7 +120,7 @@ test_that("sup-t bands are appropriately present or absent", {
 
 test_that("confidence intervals are appropriately present or absent", {
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -138,7 +138,7 @@ test_that("confidence intervals are appropriately present or absent", {
 
 test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or absent", {
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -197,7 +197,7 @@ test_that("Preevent Coeffs and Postevent Coeffs are appropriately present or abs
 
 test_that("Sup-t bands are wider than confidence intervals", {
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -220,7 +220,7 @@ test_that("Sup-t bands are wider than confidence intervals", {
 
 test_that("computed smoothest path for examples is within expectations", {
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3)
 
@@ -229,7 +229,7 @@ test_that("computed smoothest path for examples is within expectations", {
 
     expect_equal(p$data$smoothest_path, matrix(rep(0, nrow(p$data))))
 
-    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_smooth_m",
+    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_smooth_m",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r",
                             post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = -3)
 
@@ -255,7 +255,7 @@ test_that("computed smoothest path for examples is within expectations", {
 
 test_that("computed smoothest path for FHS has at least two coefficients almost equal to zero", {
 
-    estimates <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_jump_m",
+    estimates <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_jump_m",
                             policyvar = "z", idvar = "id", timevar = "t", controls = "x_r", proxy = "eta_r",
                             post = 3, pre = 0, overidpre = 3, overidpost = 1, normalize = -1, proxyIV = "z_fd_lead3")
 

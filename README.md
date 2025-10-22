@@ -44,6 +44,7 @@ set.seed(10) # for reproducibility of sup-t bands
 
 estimates_ols <- EventStudy(
    estimator = "OLS",
+   kernel = "fixest",
    data = example_data,   # Use package sample data
    outcomevar = "y_smooth_m",
    policyvar = "z",

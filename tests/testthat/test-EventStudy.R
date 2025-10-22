@@ -51,7 +51,7 @@ test_that("correctly creates highest order shiftvalues", {
     overidpost <- 11
 
     outputs <- suppressWarnings(
-        EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+        EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = - 1, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -77,7 +77,7 @@ test_that("correctly throws an error when normalized coefficient is outside even
     overidpost <- 7
     normalize <- 15
 
-    expect_error(EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    expect_error(EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -92,7 +92,7 @@ test_that("throws an error when post + pre + overidpre + overidpost exceeds the 
     overidpost <- 25
     normalize <- 2
 
-    expect_error(EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    expect_error(EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -107,7 +107,7 @@ test_that("removes the correct column when normalize < 0", {
     overidpost <- 7
     normalize  <- -2
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -131,7 +131,7 @@ test_that("removes the correct column when normalize = 0", {
     overidpost <- 7
     normalize  <- 0
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -153,7 +153,7 @@ test_that("does not create a first differenced variable when post, overidpost, p
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -172,7 +172,7 @@ test_that("tests that package and STATA output agree when post, overidpost, pre,
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -198,7 +198,7 @@ test_that("does not create shiftvalues of differenced variable when post + overi
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -219,7 +219,7 @@ test_that("does not create leads of differenced variable when pre + overidpre < 
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -240,7 +240,7 @@ test_that("removes the correct column when normalize > 0", {
     overidpost <- 7
     normalize  <- 2
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -262,7 +262,7 @@ test_that("removes the correct column when normalize = - (pre + overidpre + 1)",
     overidpost <- 4
     normalize  <- -4
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -283,7 +283,7 @@ test_that("removes the correct column when normalize = post + overidpost", {
     overidpost <- 4
     normalize  <- 5
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -327,7 +327,7 @@ test_that("tests that package and STATA output agree when post, overidpost, pre,
 test_that("feols estimator coefficients match OLS coefficients", {
 
     outputs_ols <- suppressWarnings(
-        EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+        EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = 2, pre = 3, overidpre = 4,
@@ -363,7 +363,7 @@ test_that("correctly creates highest order leads and shiftvalues", {
     overidpost <- 11
 
     outputs <- suppressWarnings(
-        EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+        EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost, normalize = - 1, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -389,7 +389,7 @@ test_that("correctly throws an error when normalized coefficient is outside even
     overidpost <- 7
     normalize  <- 15
 
-    expect_error(EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    expect_error(EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                             post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -404,7 +404,7 @@ test_that("throws an error when post + pre + overidpre + overidpost exceeds the 
     overidpost <- 25
     normalize  <- 2
 
-    expect_error(EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    expect_error(EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                             post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -419,7 +419,7 @@ test_that("removes the correct column when normalize < 0", {
     overidpost <- 7
     normalize  <- -2
 
-    outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -443,7 +443,7 @@ test_that("removes the correct column when normalize = 0", {
     overidpost <- 7
     normalize  <- 0
 
-    outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -467,7 +467,7 @@ test_that("FHS does not run when post, pre, overidpre, and overidpost are all 0"
 
     expect_error(
         outputs <-
-            EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+            EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                        policyvar = "z", idvar = "id", timevar = "t",
                        controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                        post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -483,7 +483,7 @@ test_that("removes the correct column when normalize > 0", {
     overidpost <- 7
     normalize  <- 2
 
-    outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -505,7 +505,7 @@ test_that("removes the correct column when normalize = - (pre + overidpre + 1)",
     overidpost <- 4
     normalize  <- -4
 
-    outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -526,7 +526,7 @@ test_that("removes the correct column when normalize = post + overidpost", {
     overidpost <- 4
     normalize  <- 5
 
-    outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -543,7 +543,7 @@ test_that("proxyIV selection works", {
 
     expect_message(
         suppressWarnings(
-            EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+            EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                    timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 2,
                    overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = TRUE)
             ),
@@ -552,7 +552,7 @@ test_that("proxyIV selection works", {
 
     expect_message(
         suppressWarnings(
-            EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+            EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                    timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                    overidpost = 2, pre = 2, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = TRUE)
             ),
@@ -561,7 +561,7 @@ test_that("proxyIV selection works", {
 
     expect_message(
         suppressWarnings(
-            EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+            EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                    timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                    overidpost = 2, pre = 6, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = TRUE)
             ),
@@ -572,7 +572,7 @@ test_that("proxyIV selection works", {
 test_that("feols_FHS yields the same results as FHS", {
 
     # Run FHS estimator
-    fhs_result <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
+    fhs_result <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                             policyvar = "z", idvar = "id", timevar = "t",
                             controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                             post = 2, pre = 1, overidpre = 2, overidpost = 3,
@@ -618,7 +618,7 @@ test_that("feols_FHS yields the same results as FHS", {
 test_that("warning with correct normalize and pre is thrown when anticpation effects are allowed and anticipation_effects_normalization is TRUE", {
 
     expect_warning(
-        EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+        EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
                policyvar = "z", idvar = "id", timevar = "t",
                controls = "x_r", FE = TRUE, TFE = TRUE,
                post = 1, pre = 1, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE, anticipation_effects_normalization = TRUE),

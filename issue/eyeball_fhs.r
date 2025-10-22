@@ -51,6 +51,7 @@ output_feols_fhs <- EventStudy(
 
 output_fhs <- EventStudy(
     estimator = 'FHS',
+    kernel = 'estimatr',
     data,
     outcomevar,
     policyvar,

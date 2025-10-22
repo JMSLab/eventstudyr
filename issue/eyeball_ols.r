@@ -52,6 +52,7 @@ estimates_feols <- EventStudy(
 
 estimates <- EventStudy(
     estimator = 'OLS',
+    kernel = 'estimatr',
     data,
     outcomevar,
     policyvar,

@@ -127,3 +127,47 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data,
   return(fhs_output)
 }
 
+
+EventStudyFEOLS_FHS <- function(formula, prepared_data,
+                                idvar, timevar, FE, TFE, cluster) {
+
+    if (cluster) {
+        vcov_fixest <- as.formula(paste0("~", idvar))
+    } else {
+        vcov_fixest <- "iid"
+    }
+
+    fhs_output <- fixest::feols(
+        fml = formula,
+        data = prepared_data,
+        vcov = vcov_fixest
+    )
+
+    # Apply the same standard error adjustments as EventStudyFHS
+    if (FE & TFE & cluster) {
+        N <- fhs_output$nobs
+        n <- fhs_output$fixef_sizes[1]  # number of clusters (unique id values)
+        # For FE & TFE, K = number of time FEs + number of structural parameters
+        # But we need to be careful - fixest nparams includes the fitted endogenous variable
+        # Let's count the actual event study coefficients (excluding fit_xxx)
+        n_event_coefs <- length(grep("^z_", names(coef(fhs_output)))) - 1  # -1 for fit_eta_m
+        K <- fhs_output$fixef_sizes[2] + n_event_coefs  # time FEs + structural params
+
+        adjustment <- sqrt((N - K) / (N - n - K + 1))
+        fhs_output$se <- fhs_output$se / adjustment
+        fhs_output$cov.scaled <- fhs_output$cov.scaled / (adjustment^2)
+
+    } else if (FE & (!TFE) & cluster) {
+        N <- fhs_output$nobs
+        n <- fhs_output$fixef_sizes[1]  # number of clusters
+        # For FE only, K = 1 (for the FE intercept?) + structural parameters
+        n_event_coefs <- length(grep("^z_", names(coef(fhs_output)))) - 1  # -1 for fit_eta_m
+        K <- 1 + n_event_coefs
+
+        adjustment <- sqrt((N - K) / (N - n - K + 1))
+        fhs_output$se <- fhs_output$se / adjustment
+        fhs_output$cov.scaled <- fhs_output$cov.scaled / (adjustment^2)
+    }
+
+    return(fhs_output)
+}

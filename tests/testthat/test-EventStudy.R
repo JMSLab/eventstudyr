@@ -306,7 +306,7 @@ test_that("tests that package and STATA output agree when post, overidpost, pre,
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", kernel = "fixest", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -336,7 +336,7 @@ test_that("feols estimator coefficients match OLS coefficients", {
     )
 
     outputs_feols <- suppressWarnings(
-        EventStudy(estimator = "feols", data = example_data, outcomevar = "y_base",
+        EventStudy(estimator = "OLS", kernel = "fixest", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = 2, pre = 3, overidpre = 4,
@@ -579,7 +579,7 @@ test_that("feols_FHS yields the same results as FHS", {
                             normalize = -2, cluster = TRUE)
 
     # Run feols_FHS estimator with same parameters
-    feols_fhs_result <- EventStudy(estimator = "feols_FHS", data = example_data, outcomevar = "y_base",
+    feols_fhs_result <- EventStudy(estimator = "FHS", kernel = "fixest", data = example_data, outcomevar = "y_base",
                                   policyvar = "z", idvar = "id", timevar = "t",
                                   controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                                   post = 2, pre = 1, overidpre = 2, overidpost = 3,

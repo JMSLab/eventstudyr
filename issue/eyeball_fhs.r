@@ -26,7 +26,8 @@ avoid_internal_copy <- FALSE
 
 
 output_feols_fhs <- EventStudy(
-    estimator = 'feols_FHS',
+    estimator = 'FHS',
+    kernel = 'fixest',
     data,
     outcomevar,
     policyvar,

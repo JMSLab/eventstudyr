@@ -3,6 +3,7 @@
 #' @description `EventStudy` uses regression methods to estimate the effect of a policy on a given outcome.
 #'
 #' @param estimator Accepts one of "OLS" or "FHS". If "OLS" is specified, implements Ordinary Least Squares. If "FHS" is specified, implements Instrumental Variables (IV) estimator proposed in [Freyaldenhoven Hansen Shapiro (FHS, 2019)](https://www.aeaweb.org/articles?id=10.1257/aer.20180609).
+#' @param kernel Accepts one of "estimatr" or "fixest". If "estimatr" is specified, uses the estimatr package for estimation. If "fixest" is specified, uses the fixest package for estimation. Defaults to "estimatr".
 #' @param data Data frame containing the variables of interest.
 #' @param outcomevar Character indicating column of outcome variable y.
 #' @param policyvar Character indicating column of policy variable z.
@@ -145,10 +146,11 @@
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
                        normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE,
-                       allow_duplicate_id = FALSE, avoid_internal_copy = FALSE) {
+                       allow_duplicate_id = FALSE, avoid_internal_copy = FALSE, kernel = "estimatr") {
 
     # Check for errors in arguments
-    if (! estimator %in% c("OLS", "feols", "FHS", "feols_FHS")) {stop("estimator should be either 'OLS', 'feols', 'FHS', or 'feols_FHS'.")}
+    if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
+    if (! kernel %in% c("estimatr", "fixest")) {stop("kernel should be either 'estimatr' or 'fixest'.")}
     if (! is.data.frame(data))            {stop("data should be a data frame.")}
     for (var in c(idvar, timevar, outcomevar, policyvar)) {
         if ((! is.character(var))) {
@@ -335,19 +337,19 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         str_policy_vars <- str_policy_vars[!(str_policy_vars %in% normalization_column)]
     }
 
-    if (estimator == "OLS") {
+    if (estimator == "OLS" && kernel == "estimatr") {
         event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
                                                    static, controls, proxy, proxyIV)
 
         output       <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         coefficients <- str_policy_vars
-    } else if (estimator == "feols") {
+    } else if (estimator == "OLS" && kernel == "fixest") {
         formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
                                           controls,
                                           idvar, timevar, FE, TFE)
         output <- EventStudyFEOLS(formula, data, idvar, timevar, FE, TFE, cluster)
         coefficients <- str_policy_vars
-    } else if (estimator == "FHS") {
+    } else if (estimator == "FHS" && kernel == "estimatr") {
 
         if (is.null(proxyIV)) {
             Fstart <- 0
@@ -370,7 +372,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
 
         output       <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
         coefficients <- dplyr::setdiff(str_policy_vars, proxyIV)
-    } else if (estimator == "feols_FHS") {
+    } else if (estimator == "FHS" && kernel == "fixest") {
 
         if (is.null(proxyIV)) {
             Fstart <- 0
@@ -413,6 +415,7 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                              "normalize"  = normalize,
                              "normalization_column"    = normalization_column,
                              "cluster"                 = cluster,
+                             "kernel"                  = kernel,
                              "eventstudy_coefficients" = coefficients)
 
     return(list("output"    = output,

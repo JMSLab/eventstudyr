@@ -27,8 +27,9 @@ avoid_internal_copy <- FALSE
 kernel <- "estimatr"
 
 
-output_feols <- EventStudy(
-    estimator = 'feols',
+estimates_feols <- EventStudy(
+    estimator = 'OLS',
+    kernel = 'fixest',
     data,
     outcomevar,
     policyvar,
@@ -49,7 +50,7 @@ output_feols <- EventStudy(
     avoid_internal_copy = FALSE
 )
 
-output <- EventStudy(
+estimates <- EventStudy(
     estimator = 'OLS',
     data,
     outcomevar,
@@ -72,5 +73,5 @@ output <- EventStudy(
 )
 
 
-EventStudyPlot(output)
-EventStudyPlot(output_feols)
+EventStudyPlot(estimates)
+EventStudyPlot(estimates_feols)

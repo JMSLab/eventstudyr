@@ -151,6 +151,8 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! kernel %in% c("estimatr", "fixest")) {stop("kernel should be either 'estimatr' or 'fixest'.")}
+    if (missing(kernel)) {warning("Argument 'kernel' was not specified; using 'estimatr' as default; we strongly recommend explicitly specifying a kernel because the default is scheduled to change.")}
+    if (kernel == "estimatr") {warning("'estimatr' selected as kernel. We no longer maintain it and will depreciate it in a future release. We recommend using 'fixest' instead.")}
     if (! is.data.frame(data))            {stop("data should be a data frame.")}
     for (var in c(idvar, timevar, outcomevar, policyvar)) {
         if ((! is.character(var))) {

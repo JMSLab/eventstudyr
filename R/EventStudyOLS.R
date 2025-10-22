@@ -131,15 +131,15 @@ EventStudyFEOLS <- function(formula, prepared_data,
         vcov_fixest <- as.formula(paste0("~", idvar))
         small_sample_correction <- fixest::ssc(K.fixef = "full")
     } else {
-        vcov_spec <- "iid"
-        ssc_spec <- fixest::ssc()
+        vcov_fixest <- "iid"
+        small_sample_correction <- fixest::ssc()
     }
 
     ols_output <- fixest::feols(
         fml = formula,
         data = prepared_data,
-        vcov = vcov_spec,
-        ssc = ssc_spec
+        vcov = vcov_fixest,
+        ssc = small_sample_correction
     )
     return(ols_output)
 }
@@ -148,15 +148,15 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
                                 idvar, timevar, FE, TFE, cluster) {
 
     if (cluster) {
-        vcov_spec <- as.formula(paste0("~", idvar))
+        vcov_fixest <- as.formula(paste0("~", idvar))
     } else {
-        vcov_spec <- "iid"
+        vcov_fixest <- "iid"
     }
 
     fhs_output <- fixest::feols(
         fml = formula,
         data = prepared_data,
-        vcov = vcov_spec
+        vcov = vcov_fixest
     )
 
     # Apply the same standard error adjustments as EventStudyFHS

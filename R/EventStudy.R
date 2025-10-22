@@ -337,20 +337,20 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
         str_policy_vars <- str_policy_vars[!(str_policy_vars %in% normalization_column)]
     }
 
-    if (estimator == "OLS" && kernel == "estimatr") {
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
-                                                   static, controls, proxy, proxyIV)
+    if (estimator == "OLS") {
+        if (kernel == "estimatr") {
+            formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                                    static, controls, proxy, proxyIV)
 
-        output       <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+            output <- EventStudyOLS(formula, data, idvar, timevar, FE, TFE, cluster)
+        } else if (kernel == "fixest") {
+            formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
+                                            controls,
+                                            idvar, timevar, FE, TFE)
+            output <- EventStudyFEOLS(formula, data, idvar, timevar, FE, TFE, cluster)
+        }
         coefficients <- str_policy_vars
-    } else if (estimator == "OLS" && kernel == "fixest") {
-        formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                          controls,
-                                          idvar, timevar, FE, TFE)
-        output <- EventStudyFEOLS(formula, data, idvar, timevar, FE, TFE, cluster)
-        coefficients <- str_policy_vars
-    } else if (estimator == "FHS" && kernel == "estimatr") {
-
+    } else if (estimator == "FHS") {
         if (is.null(proxyIV)) {
             Fstart <- 0
             str_fd_leads <- str_policy_vars[grepl("^z_fd_lead", str_policy_vars)]
@@ -367,33 +367,17 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                            ". To specify a different proxyIV use the proxyIV argument."))
         }
 
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
-                                                   static, controls, proxy, proxyIV)
+        if (kernel == "estimatr") {
+            formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                                    static, controls, proxy, proxyIV)
 
-        output       <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
-        coefficients <- dplyr::setdiff(str_policy_vars, proxyIV)
-    } else if (estimator == "FHS" && kernel == "fixest") {
-
-        if (is.null(proxyIV)) {
-            Fstart <- 0
-            str_fd_leads <- str_policy_vars[grepl("^z_fd_lead", str_policy_vars)]
-
-            for (var in str_fd_leads) {
-                lm <- lm(data = data, formula = stats::reformulate(termlabels = var, response = proxy))
-                Floop <- summary(lm)$fstatistic["value"]
-                if (Floop > Fstart) {
-                    Fstart <- Floop
-                    proxyIV <- var
-                }
-            }
-            message(paste0("Defaulting to strongest lead of differenced policy variable: proxyIV = ", proxyIV,
-                           ". To specify a different proxyIV use the proxyIV argument."))
-        }
-
-        formula <- PrepareModelFormulaFEOLS_FHS(outcomevar, str_policy_vars,
-                                             controls, proxy, proxyIV,
-                                             idvar, timevar, FE, TFE)
+            output       <- EventStudyFHS(formula, data, idvar, timevar, FE, TFE, cluster)
+        } else if (kernel == "fixest") {
+            formula <- PrepareModelFormulaFEOLS_FHS(outcomevar, str_policy_vars,
+                                        controls, proxy, proxyIV,
+                                        idvar, timevar, FE, TFE)
         output <- EventStudyFEOLS_FHS(formula, data, idvar, timevar, FE, TFE, cluster)
+        }
         coefficients <- dplyr::setdiff(str_policy_vars, proxyIV)
     }
 

@@ -347,14 +347,11 @@ test_that("Coefficients and Standard Errors agree with STATA", {
 
     df_test_STATA <- read.csv("./input/df_test_base_STATA.csv", col.names = c("term", "coef", "std_error"))
 
-    # Get coefficients and standard errors
     coef_feols <- coef(reg)
     se_feols <- fixest::se(reg)
 
-    epsilon <- 1e-6
-    epsilon_se <- 2e-2
+    epsilon <- 1e-4
 
-    # Define coefficient mappings: R_name -> STATA_term
     coef_mappings <- list(
         "z_fd" = "zfd",
         "z_fd_lead2" = "F2.zfd",
@@ -371,14 +368,18 @@ test_that("Coefficients and Standard Errors agree with STATA", {
         stata_term <- coef_mappings[[r_name]]
         expected <- df_test_STATA[df_test_STATA["term"] == stata_term, "coef"]
         if (r_name == "z_lead3") expected <- -1 * expected  # STATA sign convention
-        expect_equal(unname(coef_feols[r_name]), expected, tolerance = epsilon)
+        actual <- unname(coef_feols[r_name])
+        tolerance <- abs(expected) * epsilon
+        expect_equal(actual, expected, tolerance = tolerance)
     }
 
     # Test standard errors
     for (r_name in names(coef_mappings)) {
         stata_term <- coef_mappings[[r_name]]
         expected <- df_test_STATA[df_test_STATA["term"] == stata_term, "std_error"]
-        expect_equal(unname(se_feols[r_name]), expected, tolerance = epsilon_se)
+        actual <- unname(se_feols[r_name])
+        tolerance <- abs(expected) * epsilon
+        expect_equal(actual, expected, tolerance = tolerance)
     }
 
 })

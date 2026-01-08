@@ -30,6 +30,7 @@
 #' @import ggplot2 dplyr
 #' @import estimatr
 #' @importFrom rlang .data
+#' @importFrom broom tidy
 #' @importFrom data.table setorder
 #' @export
 #'
@@ -122,7 +123,12 @@ EventStudyPlot <- function(estimates,
 # Estimation Elements -----------------------------------------------------
 
     model_estimates <- estimates$output
-    model_estimates_tidy <- estimatr::tidy(estimates$output)
+    model_type <- class(model_estimates) 
+    if (model_type == "fixest") {
+        model_estimates_tidy <- broom::tidy(model_estimates)
+    } else {
+        model_estimates_tidy <- estimatr::tidy(model_estimates)
+    }
 
     static_model <- length(coef(model_estimates)) == 1
     if (static_model) {

@@ -397,7 +397,6 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                              "normalize"  = normalize,
                              "normalization_column"    = normalization_column,
                              "cluster"                 = cluster,
-                             "kernel"                  = kernel,
                              "eventstudy_coefficients" = coefficients)
 
     return(list("output"    = output,

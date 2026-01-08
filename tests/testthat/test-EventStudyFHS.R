@@ -332,9 +332,10 @@ test_that("feols_FHS Coefficients and Standard Errors agree with base STATA", {
         cluster <- as.logical(substring(bool, 3, 3))
 
         # Prepare the model formula for feols_FHS
-        formula <- PrepareModelFormulaFEOLS_FHS(outcomevar, str_policy_vars,
-                                               controls, proxy, proxyIV,
-                                               idvar, timevar, FE, TFE)
+        formula <- PrepareModelFormula(estimator = "FHS", outcomevar, str_policy_vars,
+                                       static = FALSE, controls = controls, proxy = proxy, proxyIV = proxyIV,
+                                       kernel = "fixest", idvar = idvar, timevar = timevar,
+                                       FE = FE, TFE = TFE)
 
         reg <- EventStudyFEOLS_FHS(formula, df_EventStudyFHS_example, idvar, timevar, FE, TFE, cluster)
 

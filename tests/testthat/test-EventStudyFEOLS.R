@@ -14,10 +14,10 @@ test_that("FE = TRUE,
     TFE     <- TRUE
     cluster <- TRUE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if (FE & TFE & cluster) {
 
@@ -54,10 +54,10 @@ test_that("FE = FALSE,
     TFE     <- TRUE
     cluster <- TRUE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if ((!FE) & TFE & cluster) {
 
@@ -94,10 +94,10 @@ test_that("FE = TRUE,
     TFE     <- FALSE
     cluster <- TRUE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if (FE & (!TFE) & cluster) {
 
@@ -134,10 +134,10 @@ test_that("FE = FALSE,
     TFE     <- FALSE
     cluster <- TRUE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if  ((!FE) & (!TFE) & cluster) {
 
@@ -173,10 +173,10 @@ test_that("FE = TRUE,
     TFE     <- TRUE
     cluster <- FALSE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if (FE & TFE & (!cluster)) {
 
@@ -213,10 +213,10 @@ test_that("FE = FALSE,
     TFE     <- TRUE
     cluster <- FALSE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if ((!FE) & TFE & (!cluster)) {
 
@@ -253,10 +253,10 @@ test_that("FE = TRUE,
     TFE     <- FALSE
     cluster <- FALSE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if (FE & (!TFE) & (!cluster))  {
 
@@ -293,10 +293,10 @@ test_that("FE = FALSE,
     TFE     <- FALSE
     cluster <- FALSE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     if ((!FE) & (!TFE) & (!cluster))  {
 
@@ -330,10 +330,10 @@ test_that("Coefficients and Standard Errors agree with STATA", {
     TFE     <- TRUE
     cluster <- TRUE
 
-    event_study_formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                                    controls = controls,
-                                                    idvar = idvar, timevar = timevar,
-                                                    FE = FE, TFE = TFE)
+    event_study_formula <- PrepareModelFormula(estimator = "OLS", outcomevar, str_policy_vars,
+                                               static = FALSE, controls = controls,
+                                               kernel = "fixest", idvar = idvar, timevar = timevar,
+                                               FE = FE, TFE = TFE)
 
     reg <- EventStudyFEOLS(
         formula = event_study_formula,

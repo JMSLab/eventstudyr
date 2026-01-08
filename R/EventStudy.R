@@ -340,15 +340,13 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (estimator == "OLS") {
+        formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                       static, controls, proxy, proxyIV,
+                                       kernel, idvar, timevar, FE, TFE)
+        
         if (kernel == "estimatr") {
-            formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
-                                                    static, controls, proxy, proxyIV)
-
             output <- EventStudyOLS(formula, data, idvar, timevar, FE, TFE, cluster)
         } else if (kernel == "fixest") {
-            formula <- PrepareModelFormulaFEOLS(outcomevar, str_policy_vars,
-                                            controls,
-                                            idvar, timevar, FE, TFE)
             output <- EventStudyFEOLS(formula, data, idvar, timevar, FE, TFE, cluster)
         }
         coefficients <- str_policy_vars
@@ -369,16 +367,14 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                            ". To specify a different proxyIV use the proxyIV argument."))
         }
 
+        formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                       static, controls, proxy, proxyIV,
+                                       kernel, idvar, timevar, FE, TFE)
+        
         if (kernel == "estimatr") {
-            formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
-                                                    static, controls, proxy, proxyIV)
-
-            output       <- EventStudyFHS(formula, data, idvar, timevar, FE, TFE, cluster)
+            output <- EventStudyFHS(formula, data, idvar, timevar, FE, TFE, cluster)
         } else if (kernel == "fixest") {
-            formula <- PrepareModelFormulaFEOLS_FHS(outcomevar, str_policy_vars,
-                                        controls, proxy, proxyIV,
-                                        idvar, timevar, FE, TFE)
-        output <- EventStudyFEOLS_FHS(formula, data, idvar, timevar, FE, TFE, cluster)
+            output <- EventStudyFEOLS_FHS(formula, data, idvar, timevar, FE, TFE, cluster)
         }
         coefficients <- dplyr::setdiff(str_policy_vars, proxyIV)
     }

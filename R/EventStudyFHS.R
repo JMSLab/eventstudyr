@@ -189,7 +189,7 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
         fhs_output <- fixest::feols(
             fml = formula,
             data = prepared_data,
-            vcov = "iid"
+            vcov = "HC1"
         )
 
     } else if ((!FE) & TFE & cluster) {
@@ -205,7 +205,7 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
         fhs_output <- fixest::feols(
             fml = formula,
             data = prepared_data,
-            vcov = "iid"
+            vcov = "HC1"
         )
 
     } else if ((!FE) & (!TFE) & cluster) {

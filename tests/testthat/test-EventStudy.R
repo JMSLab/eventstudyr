@@ -172,23 +172,35 @@ test_that("tests that package and STATA output agree when post, overidpost, pre,
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+    outputs_fixest <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
-                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE,
+                          kernel = "fixest")
+    outputs_estimatr <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
+                          policyvar = "z", idvar = "id", timevar = "t",
+                          FE = TRUE, TFE = TRUE,
+                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
+                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE,
+                          kernel = "estimatr")
 
-    coef_package <- outputs$output$coefficients[[1]]
-    std_package  <- outputs$output$std.error[[1]]
+    coef_fixest <- coef(outputs_fixest$output)[[1]]
+    std_fixest  <- fixest::se(outputs_fixest$output)[[1]]
+    coef_estimatr <- outputs_estimatr$output$coefficients[[1]]
+    std_estimatr  <- outputs_estimatr$output$std.error[[1]]
 
     STATA_output <- read.csv('./input/df_test_base_STATA_allzero.csv')
     coef_STATA <- STATA_output$coef[[1]]
     std_STATA  <- STATA_output$std_error[[1]]
 
     epsilon <- 10e-7
-    expect_equal(coef_package, coef_STATA, tolerance = epsilon)
-    expect_equal(std_package, std_STATA, tolerance = epsilon)
+    expect_equal(coef_fixest, coef_STATA, tolerance = epsilon)
+    expect_equal(std_fixest, std_STATA, tolerance = epsilon)
+    expect_equal(coef_estimatr, coef_STATA, tolerance = epsilon)
+    expect_equal(std_estimatr, std_STATA, tolerance = epsilon)
 })
+
 
 test_that("does not create shiftvalues of differenced variable when post + overidpost - 1 < 1", {
 
@@ -297,32 +309,6 @@ test_that("removes the correct column when normalize = post + overidpost", {
 })
 
 # feols ---------------------------------------------------------------------
-
-test_that("tests that package and STATA output agree when post, overidpost, pre, overidpre are zero", {
-
-    post       <- 0
-    pre        <- 0
-    overidpre  <- 0
-    overidpost <- 0
-    normalize  <- -1
-
-    outputs <- EventStudy(estimator = "OLS", kernel = "fixest", data = example_data, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          FE = TRUE, TFE = TRUE,
-                          post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
-                          normalize = normalize, cluster = TRUE, anticipation_effects_normalization = TRUE)
-
-    coef_package <- coef(outputs$output)[[1]]
-    std_package  <- fixest::se(outputs$output)[[1]]
-
-    STATA_output <- read.csv('./input/df_test_base_STATA_allzero.csv')
-    coef_STATA <- STATA_output$coef[[1]]
-    std_STATA  <- STATA_output$std_error[[1]]
-
-    epsilon <- 10e-7
-    expect_equal(coef_package, coef_STATA, tolerance = epsilon)
-    expect_equal(std_package, std_STATA, tolerance = epsilon)
-})
 
 test_that("feols estimator coefficients match OLS coefficients", {
 

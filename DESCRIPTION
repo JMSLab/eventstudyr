@@ -43,6 +43,7 @@ Imports:
     data.table,
     dplyr,
     estimatr,
+    fixest,
     ggplot2,
     MASS,
     rlang,

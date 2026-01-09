@@ -29,6 +29,7 @@
 #' @return The Event-Study plot as a ggplot2 object.
 #' @import ggplot2 dplyr
 #' @import estimatr
+#' @importFrom fixest vcov
 #' @importFrom rlang .data
 #' @importFrom broom tidy
 #' @importFrom data.table setorder

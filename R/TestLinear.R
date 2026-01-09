@@ -14,6 +14,7 @@
 #'
 #' @return A data frame containing the F-statistic and p-value for the specified test(s).
 #' @importFrom car linearHypothesis
+#' @importFrom fixest fitstat
 #' @export
 #'
 #' @examples

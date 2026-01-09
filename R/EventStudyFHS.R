@@ -13,7 +13,7 @@
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
 #' @import fixest
-#' @importFrom stats qnorm pnorm
+#' @importFrom stats qnorm pnorm coef
 #' @keywords internal
 #' @noRd
 #'
@@ -148,20 +148,21 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
             data = prepared_data,
             vcov = as.formula(paste0("~", idvar))
         )
+        coefs <- coef(fhs_output)
 
         N <- fhs_output$nobs
         n <- length(unique(prepared_data[[idvar]]))
-        K <- fhs_output$fixef_sizes[[timevar]] + length(coef(fhs_output))
+        K <- fhs_output$fixef_sizes[[timevar]] + length(coefs)
 
         adjustment_factor <- (N - K) / (N - n - K + 1)
         fhs_output$se <- fhs_output$se / sqrt(adjustment_factor)
         fhs_output$cov.scaled <- fhs_output$cov.scaled / adjustment_factor
 
         # Recalculate statistical inference
-        fhs_output$tstat <- coef(fhs_output) / fhs_output$se
+        fhs_output$tstat <- coefs / fhs_output$se
         fhs_output$pvalue <- 2 * stats::pnorm(abs(fhs_output$tstat), lower.tail = FALSE)
-        fhs_output$conf.low <- coef(fhs_output) - stats::qnorm(0.975) * fhs_output$se
-        fhs_output$conf.high <- coef(fhs_output) + stats::qnorm(0.975) * fhs_output$se
+        fhs_output$conf.low <- coefs - stats::qnorm(0.975) * fhs_output$se
+        fhs_output$conf.high <- coefs + stats::qnorm(0.975) * fhs_output$se
 
     } else if (FE & (!TFE) & cluster) {
 
@@ -173,17 +174,17 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
 
         N <- fhs_output$nobs
         n <- length(unique(prepared_data[[idvar]]))
-        K <- 1 + length(coef(fhs_output))
+        K <- 1 + length(coefs)
 
         adjustment_factor <- (N - K) / (N - n - K + 1)
         fhs_output$se <- fhs_output$se / sqrt(adjustment_factor)
         fhs_output$cov.scaled <- fhs_output$cov.scaled / adjustment_factor
 
         # Recalculate statistical inference
-        fhs_output$tstat <- coef(fhs_output) / fhs_output$se
+        fhs_output$tstat <- coefs / fhs_output$se
         fhs_output$pvalue <- 2 * stats::pnorm(abs(fhs_output$tstat), lower.tail = FALSE)
-        fhs_output$conf.low <- coef(fhs_output) - stats::qnorm(0.975) * fhs_output$se
-        fhs_output$conf.high <- coef(fhs_output) + stats::qnorm(0.975) * fhs_output$se
+        fhs_output$conf.low <- coefs - stats::qnorm(0.975) * fhs_output$se
+        fhs_output$conf.high <- coefs + stats::qnorm(0.975) * fhs_output$se
 
     } else if ((!FE) & TFE & (!cluster)) {
 

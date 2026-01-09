@@ -29,7 +29,7 @@
 #' @return The Event-Study plot as a ggplot2 object.
 #' @import ggplot2 dplyr
 #' @import estimatr
-#' @importFrom fixest vcov
+#' @importFrom stats vcov
 #' @importFrom rlang .data
 #' @importFrom broom tidy
 #' @importFrom data.table setorder
@@ -269,7 +269,7 @@ EventStudyPlot <- function(estimates,
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
-        vcov <- if(is_fixest) {fixest::vcov(estimates$output)} else {estimates$output$vcov}
+        vcov <- if(is_fixest) {vcov(estimates$output)} else {estimates$output$vcov}
         covar <- AddZerosCovar(
           vcov,
           eventstudy_coefficients,

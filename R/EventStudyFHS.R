@@ -12,7 +12,7 @@
 #'
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
-#' @import fixest
+#' @importFrom fixest feols
 #' @importFrom stats qnorm pnorm coef
 #' @keywords internal
 #' @noRd

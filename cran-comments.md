@@ -15,4 +15,4 @@ We checked 0 reverse dependencies, comparing R CMD check results across CRAN and
 
 ## Package changes
 
- * Implemented patch updates for compatibility with `ggplot2` 3.6.0
+ * Added support for `fixest` as the regression kernel. `fixest` will replace `estimatr` as the default kernel in a future release.

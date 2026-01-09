@@ -44,6 +44,7 @@ Imports:
     dplyr,
     estimatr,
     fixest,
+    broom,
     ggplot2,
     MASS,
     rlang,

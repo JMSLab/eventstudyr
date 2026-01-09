@@ -34,7 +34,7 @@
 #' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.
 #' @param allow_duplicate_id If TRUE, the function estimates a regression where duplicated ID-time rows are weighted by their duplication count. If FALSE, the function raises an error if duplicate unit-time keys exist in the input data. Default is FALSE.
 #' @param avoid_internal_copy If TRUE, the function avoids making an internal deep copy of the input data, and instead directly modifies the input data.table. Default is FALSE.
-#' @param kernel Accepts one of "estimatr" or "fixest". If "estimatr" is specified, uses the estimatr package for estimation. If "fixest" is specified, uses the fixest package for estimation. Defaults to "estimatr".
+#' @param kernel Accepts one of "estimatr" or "fixest". If "estimatr" is specified, uses the estimatr package for estimation. If "fixest" is specified, uses the fixest package for estimation. Defaults to "estimatr" (deprecated - will change to "fixest" in a future release).
 #'
 #' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
@@ -64,7 +64,8 @@
 #' summary(eventstudy_model$output)
 #'
 #' ### data.frame of estimates
-#' estimatr::tidy(eventstudy_model$output)
+#' estimatr::tidy(eventstudy_model$output) # for kernel='estimatr'
+#' broom::tidy(eventstudy_model$output) # for kernel='fixest'
 #'
 #' ### Access arguments
 #' eventstudy_model$arguments

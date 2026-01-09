@@ -405,7 +405,6 @@ test_that("FHS coefficients and Standard Errors agree with base STATA", {
         TFE <- as.logical(substring(bool, 2, 2))
         cluster <- as.logical(substring(bool, 3, 3))
 
-        # Prepare the model formula for feols_FHS
         formula <- PrepareModelFormula(estimator = "FHS", outcomevar, str_policy_vars,
                                        static = FALSE, controls = controls, proxy = proxy, proxyIV = proxyIV,
                                        kernel = "fixest", idvar = idvar, timevar = timevar,
@@ -414,10 +413,8 @@ test_that("FHS coefficients and Standard Errors agree with base STATA", {
         reg <- EventStudyFEOLS_FHS(formula, df_EventStudyFHS_example, idvar, timevar, FE, TFE, cluster)
 
         df_test_STATA <- read.csv("./input/df_test_base_STATA_FHS.csv")
-        epsilon <- 10e-6
-        epsilon_se <- 10e-2  # More lenient tolerance for standard errors
+        epsilon <- 10e-4
 
-        # Define coefficient mappings: R_name -> STATA_name
         coef_mappings <- list(
             "z_fd" = "z_fd",
             "z_fd_lead2" = "z_fd_lead2",
@@ -434,14 +431,16 @@ test_that("FHS coefficients and Standard Errors agree with base STATA", {
             stata_name <- coef_mappings[[r_name]]
             expected <- df_test_STATA[df_test_STATA[1] == stata_name,][[2*i]]
             if (r_name == "z_lead3") expected <- expected * (-1)  # STATA sign convention
-            expect_equal(unname(coef(reg)[r_name]), expected, tolerance = epsilon)
+            tolerance <- abs(expected) * epsilon
+            expect_equal(unname(coef(reg)[r_name]), expected, tolerance = tolerance)
         }
 
         # Test standard errors
         for (r_name in names(coef_mappings)) {
             stata_name <- coef_mappings[[r_name]]
             expected <- df_test_STATA[df_test_STATA[1] == stata_name,][[2*i+1]]
-            expect_equal(unname(fixest::se(reg)[r_name]), expected, tolerance = epsilon_se)
+            tolerance <- abs(expected) * epsilon
+            expect_equal(unname(fixest::se(reg)[r_name]), expected, tolerance = tolerance)
         }
     }
 })

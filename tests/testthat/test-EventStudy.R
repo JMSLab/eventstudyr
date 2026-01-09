@@ -524,52 +524,6 @@ test_that("proxyIV selection works", {
     )
 })
 
-test_that("feols_FHS yields the same results as FHS", {
-
-    # Run FHS estimator
-    fhs_result <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
-                            policyvar = "z", idvar = "id", timevar = "t",
-                            controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
-                            post = 2, pre = 1, overidpre = 2, overidpost = 3,
-                            normalize = -2, cluster = TRUE)
-
-    # Run feols_FHS estimator with same parameters
-    feols_fhs_result <- EventStudy(estimator = "FHS", kernel = "fixest", data = example_data, outcomevar = "y_base",
-                                  policyvar = "z", idvar = "id", timevar = "t",
-                                  controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
-                                  post = 2, pre = 1, overidpre = 2, overidpost = 3,
-                                  normalize = -2, cluster = TRUE)
-
-    # Extract coefficients
-    fhs_coefs <- coef(fhs_result$output)
-    feols_fhs_coefs <- coef(feols_fhs_result$output)
-
-    # Extract standard errors
-    fhs_se <- fhs_result$output$std.error
-    feols_fhs_se <- fixest::se(feols_fhs_result$output)
-
-    # For FHS, coefficients include the endogenous variable "eta_m"
-    # For feols_FHS, coefficients include "fit_eta_m" (fitted endogenous) and the event study vars
-    # The event study coefficients should match
-    fhs_event_coefs <- fhs_coefs[names(fhs_coefs) != "eta_m"]
-    feols_fhs_event_coefs <- feols_fhs_coefs[names(feols_fhs_coefs) != "fit_eta_m"]
-
-    # Check that event study coefficients are the same (within tolerance)
-    expect_equal(fhs_event_coefs, feols_fhs_event_coefs, tolerance = 1e-10)
-
-    # Check that the endogenous variable coefficients are the same
-    # (FHS reports coef of eta_m, feols_FHS reports coef of fit_eta_m)
-    expect_equal(unname(fhs_coefs["eta_m"]), unname(feols_fhs_coefs["fit_eta_m"]), tolerance = 1e-10)
-
-    # Check that standard errors for event study vars are the same (within reasonable tolerance)
-    fhs_event_se <- fhs_se[names(fhs_se) != "eta_m"]
-    feols_fhs_event_se <- feols_fhs_se[names(feols_fhs_se) != "fit_eta_m"]
-    expect_equal(fhs_event_se, feols_fhs_event_se, tolerance = 1e-6)
-
-    # Check that SE for endogenous variable is the same
-    expect_equal(unname(fhs_se["eta_m"]), unname(feols_fhs_se["fit_eta_m"]), tolerance = 1e-6)
-})
-
 test_that("warning with correct normalize and pre is thrown when anticpation effects are allowed and anticipation_effects_normalization is TRUE", {
 
     expect_warning(

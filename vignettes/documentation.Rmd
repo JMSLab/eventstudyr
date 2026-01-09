@@ -49,24 +49,24 @@ head(example_data)
 Here is an example using the sample data:
 
 ```{r Basic Eventstudy Example - Show Code, eval = FALSE}
-results <- EventStudy(estimator = "OLS", kernel = "estimatr",
+results <- EventStudy(estimator = "OLS",
                       data = example_data,
                       outcomevar = "y_jump_m",
                       policyvar = "z",
                       idvar = "id",
                       timevar = "t",
-                      post = 3,
-                      pre = 0)
+                      post = 3, pre = 0,
+                      kernel = "estimatr")
 ```
 ```{r Basic Eventstudy Example - Run Code, echo = FALSE}
-results <- EventStudy(estimator = "OLS", kernel = "estimatr",
+results <- EventStudy(estimator = "OLS",
                       data = example_data,
                       outcomevar = "y_jump_m",
                       policyvar = "z",
                       idvar = "id",
                       timevar = "t",
-                      post = 3,
-                      pre = 0)
+                      post = 3, pre = 0,
+                      kernel = "estimatr")
 ```
 ```{r Basic Eventstudy Example - Show Results 1, echo=TRUE, eval=TRUE}
 summary(results$output)
@@ -120,14 +120,14 @@ summary(results$output)
 This function is designed to use the output of the `EventStudy()` and returns a ggplot object. Here is an example of using the function with some default settings:
 
 ```{r EventStudyPlot example 1, fig.dim = c(7, 5)}
-eventstudy_estimates_ols <- EventStudy(estimator = "OLS", kernel = "estimatr",
+eventstudy_estimates_ols <- EventStudy(estimator = "OLS",
                                        data = example_data,
                                        outcomevar = "y_jump_m",
                                        policyvar = "z",
                                        idvar = "id",
                                        timevar = "t",
-                                       post = 3,
-                                       pre = 0)
+                                       post = 3, pre = 0,
+                                       kernel = "estimatr")
  
 EventStudyPlot(estimates = eventstudy_estimates_ols,
                xtitle = "Event time",

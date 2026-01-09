@@ -123,12 +123,8 @@ EventStudyPlot <- function(estimates,
 # Estimation Elements -----------------------------------------------------
 
     model_estimates <- estimates$output
-    model_type <- class(model_estimates) 
-    if (model_type == "fixest") {
-        model_estimates_tidy <- broom::tidy(model_estimates)
-    } else {
-        model_estimates_tidy <- estimatr::tidy(model_estimates)
-    }
+    is_fixest <- class(model_estimates) == "fixest"
+    model_estimates_tidy <- if(is_fixest) {broom::tidy(model_estimates)} else {estimatr::tidy(model_estimates)}
 
     static_model <- length(coef(model_estimates)) == 1
     if (static_model) {
@@ -272,7 +268,6 @@ EventStudyPlot <- function(estimates,
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
-        is_fixest <- class(model_estimates) == "fixest"
         vcov <- if(is_fixest) {fixest::vcov(estimates$output)} else {estimates$output$vcov}
         covar <- AddZerosCovar(
           vcov,

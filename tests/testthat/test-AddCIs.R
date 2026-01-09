@@ -16,7 +16,7 @@ test_that("correctly calculates conf_level at 0.95", {
 # OLS ------------------------------------------
 
 test_that("correctly recognizes wrong class for estimate argument", {
-    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -28,7 +28,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
 })
 
 test_that("correctly recognizes missing columns in estimates argument", {
-    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -47,7 +47,7 @@ test_that("correctly recognizes missing columns in estimates argument", {
 })
 
 test_that("correctly recognizes wrong inputs for conf_level argument", {
-    estimates <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+    estimates <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                      policyvar = "z", idvar = "id", timevar = "t",
                      controls = "x_r", FE = TRUE, TFE = TRUE,
                      post = 3, pre = 2, overidpre = 4, overidpost = 5, normalize = - 3, cluster = TRUE, anticipation_effects_normalization = TRUE)
@@ -65,7 +65,7 @@ test_that("correctly recognizes wrong inputs for conf_level argument", {
 
 test_that("correctly recognizes wrong class for estimate argument", {
     data <- example_data[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
-    estimates <- EventStudy(estimator = "FHS", kernel = "estimatr", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+    estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
@@ -76,7 +76,7 @@ test_that("correctly recognizes wrong class for estimate argument", {
 
 test_that("correctly recognizes missing columns in estimates argument", {
     data <- example_data[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
-    estimates <- EventStudy(estimator = "FHS", kernel = "estimatr", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+    estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 
@@ -95,7 +95,7 @@ test_that("correctly recognizes missing columns in estimates argument", {
 
 test_that("correctly recognizes wrong inputs for conf_level argument", {
     data <- example_data[, c("y_base", "z", "id", "t", "x_r", "eta_m")]
-    estimates <- EventStudy(estimator = "FHS", kernel = "estimatr", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
+    estimates <- EventStudy(estimator = "FHS", data = data, outcomevar = "y_base", policyvar = "z", idvar = "id",
                             timevar = "t", controls = "x_r", proxy = "eta_m", FE = TRUE, TFE = TRUE, post = 1,
                             overidpost = 2, pre = 1, overidpre = 2, normalize = -1, cluster = TRUE, anticipation_effects_normalization = FALSE)
 

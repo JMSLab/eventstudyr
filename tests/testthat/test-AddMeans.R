@@ -1,6 +1,6 @@
 test_that("means are computed correctly when a first differenced variable is normalized", {
     suppressWarnings(
-        sample_estimation <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data,
+        sample_estimation <- EventStudy(estimator = "OLS", data = example_data,
                                     outcomevar = "y_base", policyvar = "z",
                                     idvar = "id", timevar = "t", FE = TRUE,
                                     TFE = TRUE, post = 2, pre = 2, overidpre = 2,
@@ -20,7 +20,7 @@ test_that("means are computed correctly when a first differenced variable is nor
 })
 
 test_that("means are computed correctly when the furthest lead is normalized", {
-    sample_estimation <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data,
+    sample_estimation <- EventStudy(estimator = "OLS", data = example_data,
                                     outcomevar = "y_base", policyvar = "z",
                                     idvar = "id", timevar = "t", FE = TRUE,
                                     TFE = TRUE, post = 2, pre = 2, overidpre = 2,

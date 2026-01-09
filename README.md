@@ -44,14 +44,14 @@ set.seed(10) # for reproducibility of sup-t bands
 
 estimates_ols <- EventStudy(
    estimator = "OLS",
-   kernel = "fixest",
    data = example_data,   # Use package sample data
    outcomevar = "y_smooth_m",
    policyvar = "z",
    idvar = "id",
    timevar = "t",
    controls = "x_r",
-   pre = 0,  post = 4
+   pre = 0,  post = 4,
+   kernel = "fixest"
 )
 
 plt <- EventStudyPlot(estimates = estimates_ols)

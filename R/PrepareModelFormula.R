@@ -13,8 +13,8 @@
 #' @param kernel Character indicating the estimation kernel. Accepts "estimatr" or "fixest". Defaults to "estimatr".
 #' @param idvar Character indicating the identifier variable for fixed effects. Required when kernel = "fixest".
 #' @param timevar Character indicating the time variable for fixed effects. Required when kernel = "fixest".
-#' @param FE Logical indicating whether to include unit fixed effects. Defaults to FALSE.
-#' @param TFE Logical indicating whether to include time fixed effects. Defaults to FALSE.
+#' @param FE Logical indicating whether to include unit fixed effects. Required when kernel = "fixest". Defaults to FALSE.
+#' @param TFE Logical indicating whether to include time fixed effects. Required when kernel = "fixest". Defaults to FALSE.
 #' @return A formula object to be passed to EventStudy
 #'
 #' @importFrom stats reformulate as.formula

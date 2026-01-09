@@ -171,6 +171,7 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
             data = prepared_data,
             vcov = as.formula(paste0("~", idvar))
         )
+        coefs <- coef(fhs_output)
 
         N <- fhs_output$nobs
         n <- length(unique(prepared_data[[idvar]]))

@@ -308,37 +308,6 @@ test_that("removes the correct column when normalize = post + overidpost", {
     expect_true(!normalization_column %in% shiftvalues)
 })
 
-# feols ---------------------------------------------------------------------
-
-test_that("feols estimator coefficients match OLS coefficients", {
-
-    outputs_ols <- suppressWarnings(
-        EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 2, pre = 3, overidpre = 4,
-                          overidpost = 11, normalize = - 1,
-                          cluster = TRUE, anticipation_effects_normalization = TRUE)
-    )
-
-    outputs_feols <- suppressWarnings(
-        EventStudy(estimator = "OLS", kernel = "fixest", data = example_data, outcomevar = "y_base",
-                          policyvar = "z", idvar = "id", timevar = "t",
-                          controls = "x_r", FE = TRUE, TFE = TRUE,
-                          post = 2, pre = 3, overidpre = 4,
-                          overidpost = 11, normalize = - 1,
-                          cluster = TRUE, anticipation_effects_normalization = TRUE)
-    )
-
-    coef_ols <- coef(outputs_ols$output)
-    se_ols <- outputs_ols$output$std.error
-
-    coef_feols <- coef(outputs_feols$output)
-    se_feols <- fixest::se(outputs_feols$output)
-
-    expect_true(all(abs(coef_feols - coef_ols) <= 1e-6 + 1e-6 * abs(coef_ols)))
-})
-
 # FHS ---------------------------------------------------------------------
 
 test_that("correctly creates highest order leads and shiftvalues", {

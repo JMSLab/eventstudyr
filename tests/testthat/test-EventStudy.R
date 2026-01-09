@@ -219,7 +219,7 @@ test_that("does not create leads of differenced variable when pre + overidpre < 
     overidpost <- 0
     normalize  <- -1
 
-    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -240,7 +240,7 @@ test_that("removes the correct column when normalize > 0", {
     overidpost <- 7
     normalize  <- 2
 
-    outputs <- EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE,
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -467,7 +467,7 @@ test_that("FHS does not run when post, pre, overidpre, and overidpost are all 0"
 
     expect_error(
         outputs <-
-            EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+            EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
                        policyvar = "z", idvar = "id", timevar = "t",
                        controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                        post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -483,7 +483,7 @@ test_that("removes the correct column when normalize > 0", {
     overidpost <- 7
     normalize  <- 2
 
-    outputs <- EventStudy(estimator = "FHS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+    outputs <- EventStudy(estimator = "FHS", data = example_data, outcomevar = "y_base",
                           policyvar = "z", idvar = "id", timevar = "t",
                           controls = "x_r", FE = TRUE, TFE = TRUE, proxy = "eta_m",
                           post = post, pre = pre, overidpre = overidpre, overidpost = overidpost,
@@ -618,7 +618,7 @@ test_that("feols_FHS yields the same results as FHS", {
 test_that("warning with correct normalize and pre is thrown when anticpation effects are allowed and anticipation_effects_normalization is TRUE", {
 
     expect_warning(
-        EventStudy(estimator = "OLS", kernel = "estimatr", data = example_data, outcomevar = "y_base",
+        EventStudy(estimator = "OLS", data = example_data, outcomevar = "y_base",
                policyvar = "z", idvar = "id", timevar = "t",
                controls = "x_r", FE = TRUE, TFE = TRUE,
                post = 1, pre = 1, overidpre = 4, overidpost = 5, normalize = - 1, cluster = TRUE, anticipation_effects_normalization = TRUE),

@@ -55,7 +55,8 @@
 #'     idvar = "id",
 #'     timevar = "t",
 #'     pre = 0, post = 3,
-#'     normalize = -1
+#'     normalize = -1,
+#'     kernel = "fixest"
 #'   )
 #'
 #' ### Access estimated model
@@ -85,6 +86,7 @@
 #'     pre  = 2, overidpre  = 4,
 #'     normalize = - 3,
 #'     cluster = TRUE,
+#'     kernel = "fixest",
 #'     anticipation_effects_normalization = TRUE
 #'   )
 #'
@@ -102,7 +104,8 @@
 #'     FE = TRUE, TFE = TRUE,
 #'     post = 0, overidpost = 0,
 #'     pre  = 0, overidpre  = 0,
-#'     cluster = TRUE
+#'     cluster = TRUE,
+#'     kernel = "fixest"
 #'   )
 #'
 #' summary(eventstudy_model_static$output)
@@ -119,7 +122,8 @@
 #'     idvar = "id",
 #'     timevar = "t",
 #'     pre = 0, post = 3,
-#'     normalize = -1
+#'     normalize = -1,
+#'     kernel = "fixest"
 #'   )
 #'
 #' summary(eventstudy_model_unbal$output)
@@ -138,7 +142,8 @@
 #'     post = 2, overidpost = 1,
 #'     pre  = 0, overidpre  = 3,
 #'     normalize = -1,
-#'     cluster = TRUE
+#'     cluster = TRUE,
+#'     kernel = "fixest"
 #'   )
 #'
 #' summary(eventstudy_model_iv$output)

@@ -66,7 +66,7 @@
 #'
 #' ### data.frame of estimates
 #' estimatr::tidy(eventstudy_model$output) # for kernel='estimatr'
-#' as.data.frame(fixest::coeftable(eventstudy_model$output)) # for kernel='fixest'
+#' fixest::coeftable(eventstudy_model$output) # for kernel='fixest'
 #'
 #' ### Access arguments
 #' eventstudy_model$arguments

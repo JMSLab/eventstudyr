@@ -141,83 +141,37 @@ EventStudyFEOLS_FHS <- function(formula, prepared_data,
     if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
     if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
 
-    if (FE & TFE & cluster) {
+    if (cluster) {
+        vcov_arg <- as.formula(paste0("~", idvar))
+    } else {
+        vcov_arg <- "HC1"
+    }
 
-        fhs_output <- fixest::feols(
-            fml = formula,
-            data = prepared_data,
-            vcov = as.formula(paste0("~", idvar))
-        )
+    fhs_output <- fixest::feols(
+        fml = formula,
+        data = prepared_data,
+        vcov = vcov_arg
+    )
+
+    if (FE & cluster) {
         coefs <- coef(fhs_output)
-
         N <- fhs_output$nobs
         n <- length(unique(prepared_data[[idvar]]))
-        K <- fhs_output$fixef_sizes[[timevar]] + length(coefs)
+        
+        if (TFE) {
+            K <- fhs_output$fixef_sizes[[timevar]] + length(coefs)
+        } else {
+            K <- 1 + length(coefs)
+        }
 
         adjustment_factor <- (N - K) / (N - n - K + 1)
         fhs_output$se <- fhs_output$se / sqrt(adjustment_factor)
         fhs_output$cov.scaled <- fhs_output$cov.scaled / adjustment_factor
 
-        # Recalculate statistical inference
         fhs_output$tstat <- coefs / fhs_output$se
         fhs_output$pvalue <- 2 * stats::pnorm(abs(fhs_output$tstat), lower.tail = FALSE)
         fhs_output$conf.low <- coefs - stats::qnorm(0.975) * fhs_output$se
         fhs_output$conf.high <- coefs + stats::qnorm(0.975) * fhs_output$se
-
-    } else if (FE & (!TFE) & cluster) {
-
-        fhs_output <- fixest::feols(
-            fml = formula,
-            data = prepared_data,
-            vcov = as.formula(paste0("~", idvar))
-        )
-        coefs <- coef(fhs_output)
-
-        N <- fhs_output$nobs
-        n <- length(unique(prepared_data[[idvar]]))
-        K <- 1 + length(coefs)
-
-        adjustment_factor <- (N - K) / (N - n - K + 1)
-        fhs_output$se <- fhs_output$se / sqrt(adjustment_factor)
-        fhs_output$cov.scaled <- fhs_output$cov.scaled / adjustment_factor
-
-        # Recalculate statistical inference
-        fhs_output$tstat <- coefs / fhs_output$se
-        fhs_output$pvalue <- 2 * stats::pnorm(abs(fhs_output$tstat), lower.tail = FALSE)
-        fhs_output$conf.low <- coefs - stats::qnorm(0.975) * fhs_output$se
-        fhs_output$conf.high <- coefs + stats::qnorm(0.975) * fhs_output$se
-
-    } else if ((!FE) & TFE & (!cluster)) {
-
-        fhs_output <- fixest::feols(
-            fml = formula,
-            data = prepared_data,
-            vcov = "HC1"
-        )
-
-    } else if ((!FE) & TFE & cluster) {
-
-        fhs_output <- fixest::feols(
-            fml = formula,
-            data = prepared_data,
-            vcov = as.formula(paste0("~", idvar))
-        )
-
-    } else if ((!FE) & (!TFE) & (!cluster)) {
-
-        fhs_output <- fixest::feols(
-            fml = formula,
-            data = prepared_data,
-            vcov = "HC1"
-        )
-
-    } else if ((!FE) & (!TFE) & cluster) {
-
-        fhs_output <- fixest::feols(
-            fml = formula,
-            data = prepared_data,
-            vcov = as.formula(paste0("~", idvar))
-        )
     }
 
     return(fhs_output)

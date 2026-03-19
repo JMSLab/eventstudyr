@@ -101,7 +101,8 @@ eventstudy_model <-
     idvar = "id",
     timevar = "t",
     pre = 0, post = 3,
-    normalize = -1
+    normalize = -1,
+    kernel = "fixest"
   )
 
 ### Access estimated model
@@ -131,6 +132,7 @@ eventstudy_model_dyn <-
     pre  = 2, overidpre  = 4,
     normalize = - 3,
     cluster = TRUE,
+    kernel = "fixest",
     anticipation_effects_normalization = TRUE
   )
 
@@ -148,7 +150,8 @@ eventstudy_model_static <-
     FE = TRUE, TFE = TRUE,
     post = 0, overidpost = 0,
     pre  = 0, overidpre  = 0,
-    cluster = TRUE
+    cluster = TRUE,
+    kernel = "fixest"
   )
 
 summary(eventstudy_model_static$output)
@@ -165,7 +168,8 @@ eventstudy_model_unbal <-
     idvar = "id",
     timevar = "t",
     pre = 0, post = 3,
-    normalize = -1
+    normalize = -1,
+    kernel = "fixest"
   )
 
 summary(eventstudy_model_unbal$output)
@@ -184,7 +188,8 @@ eventstudy_model_iv <-
     post = 2, overidpost = 1,
     pre  = 0, overidpre  = 3,
     normalize = -1,
-    cluster = TRUE
+    cluster = TRUE,
+    kernel = "fixest"
   )
 
 summary(eventstudy_model_iv$output)

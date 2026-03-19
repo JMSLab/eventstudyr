@@ -132,8 +132,7 @@ EventStudyPlot <- function(estimates,
         as.data.frame()
         coef_table$term <- rownames(coef_table)
         coef_table |> 
-        dplyr::rename(estimate = Estimate, std.error = `Std. Error`) |>
-        dplyr::select(term, estimate, std.error)
+        dplyr::rename(estimate = Estimate, std.error = `Std. Error`)
     } else {estimatr::tidy(model_estimates)}
 
     static_model <- length(coef(model_estimates)) == 1

@@ -31,7 +31,8 @@
 #' @import estimatr
 #' @importFrom stats vcov
 #' @importFrom rlang .data
-#' @importFrom broom tidy
+#' @importFrom fixest coeftable
+#' @importFrom dplyr rename
 #' @importFrom data.table setorder
 #' @export
 #'
@@ -125,7 +126,12 @@ EventStudyPlot <- function(estimates,
 
     model_estimates <- estimates$output
     is_fixest <- class(model_estimates) == "fixest"
-    model_estimates_tidy <- if(is_fixest) {broom::tidy(model_estimates)} else {estimatr::tidy(model_estimates)}
+    model_estimates_tidy <- if(is_fixest) {
+        model_estimates |> 
+        fixest::coeftable() |> 
+        as.data.frame() |> 
+        dplyr::rename(estimate = Estimate, std.error = `Std. Error`)
+    } else {estimatr::tidy(model_estimates)}
 
     static_model <- length(coef(model_estimates)) == 1
     if (static_model) {

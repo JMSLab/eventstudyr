@@ -111,7 +111,7 @@ summary(eventstudy_model$output)
 
 ### data.frame of estimates
 estimatr::tidy(eventstudy_model$output) # for kernel='estimatr'
-broom::tidy(eventstudy_model$output) # for kernel='fixest'
+as.data.frame(fixest::coeftable(eventstudy_model$output)) # for kernel='fixest'
 
 ### Access arguments
 eventstudy_model$arguments

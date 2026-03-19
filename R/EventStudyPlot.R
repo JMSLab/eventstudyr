@@ -32,7 +32,7 @@
 #' @importFrom stats vcov
 #' @importFrom rlang .data
 #' @importFrom fixest coeftable
-#' @importFrom dplyr rename
+#' @importFrom dplyr rename select
 #' @importFrom data.table setorder
 #' @export
 #'
@@ -132,7 +132,8 @@ EventStudyPlot <- function(estimates,
         as.data.frame()
         coef_table$term <- rownames(coef_table)
         coef_table |> 
-        dplyr::rename(estimate = Estimate, std.error = `Std. Error`)
+        dplyr::rename(estimate = Estimate, std.error = `Std. Error`) |> 
+        dplyr::select(term, estimate, std.error)
     } else {estimatr::tidy(model_estimates)}
 
     static_model <- length(coef(model_estimates)) == 1

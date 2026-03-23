@@ -1,5 +1,5 @@
 
-#' Prepares a formula object for use in [EventStudyOLS()] or [EventStudyFHS()]
+#' Prepares a formula object for use in `EventStudyOLS()` or `EventStudyFHS()`
 
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
 #' @param outcomevar Character indicating column of outcome variable.

@@ -127,13 +127,12 @@ EventStudyPlot <- function(estimates,
     model_estimates <- estimates$output
     is_fixest <- class(model_estimates) == "fixest"
     model_estimates_tidy <- if(is_fixest) {
-        coef_table <- model_estimates |> 
-        fixest::coeftable() |> 
-        as.data.frame()
+        coef_table <- as.data.frame(fixest::coeftable(model_estimates))
         coef_table$term <- rownames(coef_table)
-        coef_table |> 
-        dplyr::rename(estimate = Estimate, std.error = `Std. Error`) |> 
-        dplyr::select(term, estimate, std.error)
+        names(coef_table)[names(coef_table) == "Estimate"] <- "estimate"
+        names(coef_table)[names(coef_table) == "Std. Error"] <- "std.error"
+        coef_table <- coef_table[, c("term", "estimate", "std.error")]
+        coef_table
     } else {estimatr::tidy(model_estimates)}
 
     static_model <- length(coef(model_estimates)) == 1

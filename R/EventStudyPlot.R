@@ -29,7 +29,10 @@
 #' @return The Event-Study plot as a ggplot2 object.
 #' @import ggplot2 dplyr
 #' @import estimatr
+#' @importFrom stats vcov
 #' @importFrom rlang .data
+#' @importFrom fixest coeftable
+#' @importFrom dplyr rename select
 #' @importFrom data.table setorder
 #' @export
 #'
@@ -121,10 +124,19 @@ EventStudyPlot <- function(estimates,
 
 # Estimation Elements -----------------------------------------------------
 
-    df_estimates      <- estimates$output
-    df_estimates_tidy <- estimatr::tidy(estimates$output)
+    model_estimates <- estimates$output
+    is_fixest <- class(model_estimates) == "fixest"
+    model_estimates_tidy <- if(is_fixest) {
+        coef_table <- model_estimates |> 
+        fixest::coeftable() |> 
+        as.data.frame()
+        coef_table$term <- rownames(coef_table)
+        coef_table |> 
+        dplyr::rename(estimate = Estimate, std.error = `Std. Error`) |> 
+        dplyr::select(term, estimate, std.error)
+    } else {estimatr::tidy(model_estimates)}
 
-    static_model <- nrow(df_estimates_tidy) == 1
+    static_model <- length(coef(model_estimates)) == 1
     if (static_model) {
         stop("EventStudyPlot() does not support static models.")
     }
@@ -146,7 +158,7 @@ EventStudyPlot <- function(estimates,
     plot_supt <- if(!is.null(supt)) TRUE else FALSE
 
     if (plot_supt) {
-        df_estimates_tidy <- AddSuptBand(df_estimates, num_sim = 1000, conf_level = supt,
+        model_estimates_tidy <- AddSuptBand(model_estimates, num_sim = 1000, conf_level = supt,
                                          eventstudy_coefficients = eventstudy_coefficients)
     }
 
@@ -154,7 +166,7 @@ EventStudyPlot <- function(estimates,
 
     if (plot_CI) {
 
-        df_estimates_tidy <- AddCIs(df_estimates_tidy, eventstudy_coefficients, conf_level)
+        model_estimates_tidy <- AddCIs(model_estimates_tidy, eventstudy_coefficients, conf_level)
     }
 
 # Optionally Test For Pretrends/Levelling-Off -----------------------------
@@ -171,21 +183,18 @@ EventStudyPlot <- function(estimates,
 
         if (pre_event_coeffs & post_event_coeffs) {
             text_caption <- paste0(text_pretrends, " -- ", text_levelingoff)
-
         } else if (pre_event_coeffs & !post_event_coeffs) {
             text_caption <- text_pretrends
-
         } else if (!pre_event_coeffs & post_event_coeffs) {
             text_caption <- text_levelingoff
-
         }
     } else {
         text_caption <- NULL
     }
 
-
-    df_plt <- PreparePlottingData(df_estimates_tidy, policyvar,
-                                  post, overidpost, pre, overidpre, normalization_column, proxyIV)
+    df_plt <- PreparePlottingData(
+        model_estimates_tidy, policyvar,
+        post, overidpost, pre, overidpre, normalization_column, proxyIV)
 
 # Construct y breaks ------------------------------------------------------
 
@@ -269,10 +278,13 @@ EventStudyPlot <- function(estimates,
         coefficients <- df_plt$estimate
 
         # Add column and row in matrix of coefficients in index of norm columns
-        covar <- AddZerosCovar(estimates$output$vcov,
-                               eventstudy_coefficients,
-                               df_plt[df_plt$estimate==0, ]$term,
-                               df_plt$term)
+        vcov <- if(is_fixest) {vcov(estimates$output)} else {estimates$output$vcov}
+        covar <- AddZerosCovar(
+          vcov,
+          eventstudy_coefficients,
+          df_plt[df_plt$estimate == 0, ]$term,
+          df_plt$term
+        )
 
         inv_covar <- pracma::pinv(covar)
 

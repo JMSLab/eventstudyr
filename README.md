@@ -50,7 +50,8 @@ estimates_ols <- EventStudy(
    idvar = "id",
    timevar = "t",
    controls = "x_r",
-   pre = 0,  post = 4
+   pre = 0,  post = 4,
+   kernel = "fixest"
 )
 
 plt <- EventStudyPlot(estimates = estimates_ols)

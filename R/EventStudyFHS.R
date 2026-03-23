@@ -12,7 +12,8 @@
 #'
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
-#' @importFrom stats qnorm pnorm
+#' @importFrom fixest feols
+#' @importFrom stats qnorm pnorm coef
 #' @keywords internal
 #' @noRd
 #'
@@ -127,3 +128,51 @@ EventStudyFHS <- function(prepared_model_formula, prepared_data,
   return(fhs_output)
 }
 
+
+EventStudyFEOLS_FHS <- function(formula, prepared_data,
+                                idvar, timevar, FE, TFE, cluster) {
+
+    if (! inherits(formula, "formula")) {stop("formula should be a formula")}
+    if (! is.data.frame(prepared_data)) {stop("data should be a data frame.")}
+    if (! is.character(idvar)) {stop("idvar should be a character.")}
+    if (! is.character(timevar)) {stop("timevar should be a character.")}
+    if (! is.logical(FE)) {stop("FE should be either TRUE or FALSE.")}
+    if (! is.logical(TFE)) {stop("TFE should be either TRUE or FALSE.")}
+    if (! is.logical(cluster)) {stop("cluster should be either TRUE or FALSE.")}
+    if (FE & !cluster) {stop("cluster=TRUE required when FE=TRUE.")}
+
+    if (cluster) {
+        vcov_arg <- as.formula(paste0("~", idvar))
+    } else {
+        vcov_arg <- "HC1"
+    }
+
+    fhs_output <- fixest::feols(
+        fml = formula,
+        data = prepared_data,
+        vcov = vcov_arg
+    )
+
+    if (FE & cluster) {
+        coefs <- coef(fhs_output)
+        N <- fhs_output$nobs
+        n <- length(unique(prepared_data[[idvar]]))
+        
+        if (TFE) {
+            K <- fhs_output$fixef_sizes[[timevar]] + length(coefs)
+        } else {
+            K <- 1 + length(coefs)
+        }
+
+        adjustment_factor <- (N - K) / (N - n - K + 1)
+        fhs_output$se <- fhs_output$se / sqrt(adjustment_factor)
+        fhs_output$cov.scaled <- fhs_output$cov.scaled / adjustment_factor
+
+        fhs_output$tstat <- coefs / fhs_output$se
+        fhs_output$pvalue <- 2 * stats::pnorm(abs(fhs_output$tstat), lower.tail = FALSE)
+        fhs_output$conf.low <- coefs - stats::qnorm(0.975) * fhs_output$se
+        fhs_output$conf.high <- coefs + stats::qnorm(0.975) * fhs_output$se
+    }
+
+    return(fhs_output)
+}

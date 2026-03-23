@@ -1,5 +1,5 @@
 
-#' Prepares a formula object for use in [EventStudyOLS()] or [EventStudyFHS()]
+#' Prepares a formula object for use in `EventStudyOLS()` or `EventStudyFHS()`
 
 #' @param estimator Accepts one of "OLS" or "FHS". If "FHS" is specified, implements IV estimator in Freyaldenhoven et al. 2019.
 #' @param outcomevar Character indicating column of outcome variable.
@@ -10,6 +10,11 @@
 #' @param proxyIV Character of column to be used as an instrument. Should be specified if and only if estimator is specified as "FHS".
 #' If NULL, defaults to the strongest lead of the policy variable based on the first stage.
 #' @param static Indicates whether the model to be estimated is static. Defaults to FALSE.
+#' @param kernel Character indicating the estimation kernel. Accepts "estimatr" or "fixest". Defaults to "estimatr".
+#' @param idvar Character indicating the identifier variable for fixed effects. Required when kernel = "fixest".
+#' @param timevar Character indicating the time variable for fixed effects. Required when kernel = "fixest".
+#' @param FE Logical indicating whether to include unit fixed effects. Required when kernel = "fixest". Defaults to FALSE.
+#' @param TFE Logical indicating whether to include time fixed effects. Required when kernel = "fixest". Defaults to FALSE.
 #' @return A formula object to be passed to EventStudy
 #'
 #' @importFrom stats reformulate as.formula
@@ -39,7 +44,9 @@
 
 PrepareModelFormula <- function(estimator, outcomevar,
                                 str_policy_vars, static = FALSE,
-                                controls = NULL, proxy = NULL, proxyIV = NULL) {
+                                controls = NULL, proxy = NULL, proxyIV = NULL,
+                                kernel = "estimatr", idvar = NULL, timevar = NULL,
+                                FE = FALSE, TFE = FALSE) {
 
     if (! estimator %in% c("OLS", "FHS"))      {stop("estimator should be either 'OLS' or 'FHS'.")}
     if (! is.character(outcomevar))            {stop("outcomevar should be a character.")}
@@ -53,26 +60,105 @@ PrepareModelFormula <- function(estimator, outcomevar,
     if (! static & length(str_policy_vars) <= 1) {stop("str_policy_vars must have more than one variable with static = FALSE.")}
     if (  static & !is.null(proxyIV))            {stop("static model is not compatible with FHS estimator.")}
 
-    if (estimator == "OLS") {
-        reg_formula <- stats::reformulate(
-            termlabels = c(str_policy_vars, controls),
-            response = outcomevar,
-            intercept = FALSE
-        )
+    if (! kernel %in% c("estimatr", "fixest")) {stop("kernel should be either 'estimatr' or 'fixest'.")}
+    if (kernel == "fixest") {
+        if (is.null(idvar) | !is.character(idvar)) {stop("idvar must be specified as a character when kernel is 'fixest'.")}
+        if (is.null(timevar) | !is.character(timevar)) {stop("timevar must be specified as a character when kernel is 'fixest'.")}
+        if (! is.logical(FE)) {stop("FE should be a logical.")}
+        if (! is.logical(TFE)) {stop("TFE should be a logical.")}
     }
 
-    if (estimator == "FHS") {
-        exogenous <- c(str_policy_vars, controls)
-        exogenous <- exogenous[exogenous != proxy]
-        exogenous <- exogenous[exogenous != proxyIV]
+    if (kernel == "estimatr") {
+        if (estimator == "OLS") {
+            reg_formula <- stats::reformulate(
+                termlabels = c(str_policy_vars, controls),
+                response = outcomevar,
+                intercept = FALSE
+            )
+        }
 
-        reg_formula <- stats::as.formula(
-            paste(outcomevar, "~",
-            paste(c(exogenous, proxy), collapse="+"),
-            "|",
-            paste(c(exogenous, proxyIV), collapse="+"))
-        )
+        if (estimator == "FHS") {
+            exogenous <- c(str_policy_vars, controls)
+            exogenous <- exogenous[exogenous != proxy]
+            exogenous <- exogenous[exogenous != proxyIV]
+
+            reg_formula <- stats::as.formula(
+                paste(outcomevar, "~",
+                paste(c(exogenous, proxy), collapse="+"),
+                "|",
+                paste(c(exogenous, proxyIV), collapse="+"))
+            )
+        }
+    } else if (kernel == "fixest") {
+        regressors <- c(str_policy_vars, controls)
+
+        if (estimator == "OLS") {
+            if (FE | TFE) {
+                fes <- c()
+                if (FE) {
+                    fes <- c(fes, idvar)
+                }
+                if (TFE) {
+                    fes <- c(fes, timevar)
+                }
+
+                formula_str <- paste(
+                    outcomevar,
+                    "~",
+                    paste(regressors, collapse = " + "),
+                    "|",
+                    paste(fes, collapse = " + ")
+                )
+                reg_formula <- stats::as.formula(formula_str)
+            } else {
+                reg_formula <- stats::reformulate(
+                    termlabels = regressors,
+                    response = outcomevar,
+                    intercept = TRUE
+                )
+            }
+        } else if (estimator == "FHS") {
+            exogenous <- c(str_policy_vars, controls)
+            exogenous <- exogenous[exogenous != proxy]
+            exogenous <- exogenous[exogenous != proxyIV]
+
+            if (FE | TFE) {
+                fes <- c()
+                if (FE) {
+                    fes <- c(fes, idvar)
+                }
+                if (TFE) {
+                    fes <- c(fes, timevar)
+                }
+
+                formula_str <- paste(
+                    outcomevar,
+                    "~",
+                    paste(exogenous, collapse = " + "),
+                    "|",
+                    paste(fes, collapse = " + "),
+                    "|",
+                    proxy,
+                    "~",
+                    paste(c(exogenous, proxyIV), collapse = " + ")
+                )
+                reg_formula <- stats::as.formula(formula_str)
+            } else {
+                formula_str <- paste(
+                    outcomevar,
+                    "~",
+                    paste(exogenous, collapse = " + "),
+                    "|",
+                    proxy,
+                    "~",
+                    paste(c(exogenous, proxyIV), collapse = " + ")
+                )
+                reg_formula <- stats::as.formula(formula_str)
+            }
+        }
     }
 
     return(reg_formula)
 }
+
+

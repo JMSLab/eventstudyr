@@ -14,6 +14,7 @@
 #'
 #' @return A data frame containing the F-statistic and p-value for the specified test(s).
 #' @importFrom car linearHypothesis
+#' @importFrom fixest fitstat
 #' @export
 #'
 #' @examples
@@ -36,7 +37,7 @@
 TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends = TRUE, leveling_off = TRUE){
     if (! is.list(estimates) | length(estimates) != 2){
         stop("estimates should be a list of length two, an output of EventStudy()")}
-    if ((! class(estimates$output) %in% c("lm_robust", "iv_robust")) | ! is.list(estimates$output)) {
+    if ((! class(estimates$output) %in% c("lm_robust", "iv_robust", "fixest")) | ! is.list(estimates$output)) {
         stop("The first element of estimates should be a list of class 'lm_robust' with coefficient estimates and standard errors")
     }
     if (! is.list(estimates$arguments) | ! is.list(estimates$arguments)) {
@@ -46,10 +47,14 @@ TestLinear <- function(estimates, test = NA, test_name = "User Test", pretrends 
     if (! is.logical(pretrends)) {stop("pretrends should be a logical. Default value is TRUE")}
     if (! is.logical(leveling_off)) {stop("leveling_off should be a logical. Default value is TRUE")}
 
+    fixest = class(estimates$output) == "fixest"
+
     if(estimates$arguments$cluster == TRUE){
 
-        estimates$output$df.residual <- estimates$output$nclusters - 1
-
+        estimates$output$df.residual <- ifelse(
+            fixest,
+            as.integer(fixest::fitstat(estimates$output, "g")),
+            estimates$output$nclusters) - 1
     }
 
     coefficients <- estimates$arguments$eventstudy_coefficients

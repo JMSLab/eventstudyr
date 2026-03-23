@@ -1,9 +1,9 @@
 # Add zero where normalized coefficient(s) should be in covar matrix
-AddZerosCovar <- function(vcov_matrix_all, eventstudy_coeffs, norm_column,
+AddZerosCovar <- function(vcov, eventstudy_coeffs, norm_column,
                           coeffs_order) {
 
-    v_terms_to_keep <- colnames(vcov_matrix_all) %in% eventstudy_coeffs
-    covar           <- vcov_matrix_all[v_terms_to_keep, v_terms_to_keep]
+    v_terms_to_keep <- colnames(vcov) %in% eventstudy_coeffs
+    covar           <- vcov[v_terms_to_keep, v_terms_to_keep]
 
     n_coefs      = length(coeffs_order)
     needed_zeros = length(norm_column)

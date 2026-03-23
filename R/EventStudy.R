@@ -34,6 +34,7 @@
 #' when there are anticipation effects. If set to FALSE, does not make the switch. Defaults to TRUE.
 #' @param allow_duplicate_id If TRUE, the function estimates a regression where duplicated ID-time rows are weighted by their duplication count. If FALSE, the function raises an error if duplicate unit-time keys exist in the input data. Default is FALSE.
 #' @param avoid_internal_copy If TRUE, the function avoids making an internal deep copy of the input data, and instead directly modifies the input data.table. Default is FALSE.
+#' @param kernel Accepts one of "estimatr" or "fixest". If "estimatr" is specified, uses the estimatr package for estimation. If "fixest" is specified, uses the fixest package for estimation. Defaults to "estimatr" (deprecated - will change to "fixest" in a future release).
 #'
 #' @return A list that contains, under "output", the estimation output as an lm_robust object, and under "arguments", the arguments passed to the function.
 #' @import dplyr
@@ -54,7 +55,8 @@
 #'     idvar = "id",
 #'     timevar = "t",
 #'     pre = 0, post = 3,
-#'     normalize = -1
+#'     normalize = -1,
+#'     kernel = "fixest"
 #'   )
 #'
 #' ### Access estimated model
@@ -63,7 +65,8 @@
 #' summary(eventstudy_model$output)
 #'
 #' ### data.frame of estimates
-#' estimatr::tidy(eventstudy_model$output)
+#' fixest::coeftable(eventstudy_model$output) # for kernel='fixest'
+#' # estimatr::tidy(eventstudy_model$output) # for kernel='estimatr'
 #'
 #' ### Access arguments
 #' eventstudy_model$arguments
@@ -83,6 +86,7 @@
 #'     pre  = 2, overidpre  = 4,
 #'     normalize = - 3,
 #'     cluster = TRUE,
+#'     kernel = "fixest",
 #'     anticipation_effects_normalization = TRUE
 #'   )
 #'
@@ -100,7 +104,8 @@
 #'     FE = TRUE, TFE = TRUE,
 #'     post = 0, overidpost = 0,
 #'     pre  = 0, overidpre  = 0,
-#'     cluster = TRUE
+#'     cluster = TRUE,
+#'     kernel = "fixest"
 #'   )
 #'
 #' summary(eventstudy_model_static$output)
@@ -117,7 +122,8 @@
 #'     idvar = "id",
 #'     timevar = "t",
 #'     pre = 0, post = 3,
-#'     normalize = -1
+#'     normalize = -1,
+#'     kernel = "fixest"
 #'   )
 #'
 #' summary(eventstudy_model_unbal$output)
@@ -136,7 +142,8 @@
 #'     post = 2, overidpost = 1,
 #'     pre  = 0, overidpre  = 3,
 #'     normalize = -1,
-#'     cluster = TRUE
+#'     cluster = TRUE,
+#'     kernel = "fixest"
 #'   )
 #'
 #' summary(eventstudy_model_iv$output)
@@ -145,10 +152,13 @@
 EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, controls = NULL,
                        proxy = NULL, proxyIV = NULL, FE = TRUE, TFE = TRUE, post, overidpost = 1, pre, overidpre = post + pre,
                        normalize = -1 * (pre + 1), cluster = TRUE, anticipation_effects_normalization = TRUE,
-                       allow_duplicate_id = FALSE, avoid_internal_copy = FALSE) {
+                       allow_duplicate_id = FALSE, avoid_internal_copy = FALSE, kernel = "estimatr") {
 
     # Check for errors in arguments
     if (! estimator %in% c("OLS", "FHS")) {stop("estimator should be either 'OLS' or 'FHS'.")}
+    if (! kernel %in% c("estimatr", "fixest")) {stop("kernel should be either 'estimatr' or 'fixest'.")}
+    if (missing(kernel)) {warning("Argument 'kernel' was not specified; using 'estimatr' as default; we strongly recommend explicitly specifying a kernel because the default is scheduled to change.")}
+    if (kernel == "estimatr") {warning("'estimatr' selected as kernel. We no longer maintain it and will depreciate it in a future release. We recommend using 'fixest' instead.")}
     if (! is.data.frame(data))            {stop("data should be a data frame.")}
     for (var in c(idvar, timevar, outcomevar, policyvar)) {
         if ((! is.character(var))) {
@@ -336,14 +346,17 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
     }
 
     if (estimator == "OLS") {
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
-                                                   static, controls, proxy, proxyIV)
-
-        output       <- EventStudyOLS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+        formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                       static, controls, proxy, proxyIV,
+                                       kernel, idvar, timevar, FE, TFE)
+        
+        if (kernel == "estimatr") {
+            output <- EventStudyOLS(formula, data, idvar, timevar, FE, TFE, cluster)
+        } else if (kernel == "fixest") {
+            output <- EventStudyFEOLS(formula, data, idvar, timevar, FE, TFE, cluster)
+        }
         coefficients <- str_policy_vars
-    }
-    if (estimator == "FHS") {
-
+    } else if (estimator == "FHS") {
         if (is.null(proxyIV)) {
             Fstart <- 0
             str_fd_leads <- str_policy_vars[grepl("^z_fd_lead", str_policy_vars)]
@@ -360,10 +373,15 @@ EventStudy <- function(estimator, data, outcomevar, policyvar, idvar, timevar, c
                            ". To specify a different proxyIV use the proxyIV argument."))
         }
 
-        event_study_formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
-                                                   static, controls, proxy, proxyIV)
-
-        output       <- EventStudyFHS(event_study_formula, data, idvar, timevar, FE, TFE, cluster)
+        formula <- PrepareModelFormula(estimator, outcomevar, str_policy_vars,
+                                       static, controls, proxy, proxyIV,
+                                       kernel, idvar, timevar, FE, TFE)
+        
+        if (kernel == "estimatr") {
+            output <- EventStudyFHS(formula, data, idvar, timevar, FE, TFE, cluster)
+        } else if (kernel == "fixest") {
+            output <- EventStudyFEOLS_FHS(formula, data, idvar, timevar, FE, TFE, cluster)
+        }
         coefficients <- dplyr::setdiff(str_policy_vars, proxyIV)
     }
 

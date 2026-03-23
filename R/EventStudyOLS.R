@@ -1,6 +1,6 @@
 #' Runs Ordinary Least Squares (OLS) with optional fixed effects and clustering
 #'
-#' @param prepared_model_formula A formula object created in [PrepareModelFormula()] that is passed to [EventStudy()].
+#' @param prepared_model_formula A formula object created in `PrepareModelFormula()` that is passed to [EventStudy()].
 #' @param prepared_data Data frame containing all of the parameters required for [EventStudy()] plus leads and
 #' lags of the first differenced policy variable and leads and lags of the policy variable.
 #' @param idvar Character indicating column of units.
@@ -12,6 +12,7 @@
 #'
 #' @return A data.frame that contains the estimates for the event study coefficients.
 #' @import estimatr
+#' @importFrom fixest feols ssc
 #' @keywords internal
 #' @noRd
 #'
@@ -121,5 +122,25 @@ EventStudyOLS <- function(prepared_model_formula, prepared_data,
         )
     }
 
+    return(ols_output)
+}
+
+EventStudyFEOLS <- function(formula, prepared_data,
+                          idvar, timevar, FE, TFE, cluster) {
+
+    if (cluster) {
+        vcov_fixest <- as.formula(paste0("~", idvar))
+        small_sample_correction <- fixest::ssc(K.fixef = "full")
+    } else {
+        vcov_fixest <- "iid"
+        small_sample_correction <- fixest::ssc()
+    }
+
+    ols_output <- fixest::feols(
+        fml = formula,
+        data = prepared_data,
+        vcov = vcov_fixest,
+        ssc = small_sample_correction
+    )
     return(ols_output)
 }

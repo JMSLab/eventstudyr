@@ -80,13 +80,11 @@ AddSuptBand <- function(model_estimates, num_sim = 1000, conf_level = .95, event
     }
 
     df_estimates_tidy <- if(fixest){
-        coef_table <- model_estimates |> 
-        fixest::coeftable() |> 
-        as.data.frame()
+        coef_table <- as.data.frame(fixest::coeftable(model_estimates))
         coef_table$term <- rownames(coef_table)
-        coef_table |> 
-        dplyr::rename(estimate = Estimate, std.error = `Std. Error`) |> 
-        dplyr::select(term, estimate, std.error)
+        names(coef_table)[names(coef_table) == "Estimate"] <- "estimate"
+        names(coef_table)[names(coef_table) == "Std. Error"] <- "std.error"
+        coef_table <- coef_table[, c("term", "estimate", "std.error")]
     } else {estimatr::tidy(model_estimates)}
 
     df_estimates_tidy["suptband_lower"] <- df_estimates_tidy$estimate - (critical_value * df_estimates_tidy$std.error)

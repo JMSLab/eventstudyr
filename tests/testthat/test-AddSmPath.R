@@ -36,3 +36,15 @@ test_that("AddZerosCovar correctly adds zeros where normalized coefficient shoul
 
     expect_equal(covar, expected_matrix)
 })
+
+test_that("AddSmPath keeps a matrix column for data frames and tibbles", {
+    coefficients <- c(0, 0.1, -0.1)
+    input <- data.frame(estimate = coefficients)
+
+    for (df in list(input, dplyr::as_tibble(input))) {
+        result <- AddSmPath(df, coefficients, diag(100, 3))
+
+        expect_identical(dim(result$smoothest_path), c(3L, 1L))
+        expect_equal(as.vector(result$smoothest_path), rep(0, 3))
+    }
+})

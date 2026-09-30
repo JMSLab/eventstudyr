@@ -85,7 +85,7 @@ AddSuptBand <- function(model_estimates, num_sim = 1000, conf_level = .95, event
         names(coef_table)[names(coef_table) == "Estimate"] <- "estimate"
         names(coef_table)[names(coef_table) == "Std. Error"] <- "std.error"
         coef_table <- coef_table[, c("term", "estimate", "std.error")]
-    } else {estimatr::tidy(model_estimates)}
+    } else {as.data.frame(estimatr::tidy(model_estimates))}
 
     df_estimates_tidy["suptband_lower"] <- df_estimates_tidy$estimate - (critical_value * df_estimates_tidy$std.error)
     df_estimates_tidy["suptband_upper"] <- df_estimates_tidy$estimate + (critical_value * df_estimates_tidy$std.error)

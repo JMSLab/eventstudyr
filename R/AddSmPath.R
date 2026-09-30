@@ -76,6 +76,6 @@ AddSmPath <- function(df, coefficients, inv_covar,
     sm_path = Fmat %*% vstar
     Woptim  = (t(sm_path - coefficients)%*%inv_covar)%*%(sm_path - coefficients)
 
-    df["smoothest_path"] = sm_path
+    df[["smoothest_path"]] <- sm_path
     return(df)
 }

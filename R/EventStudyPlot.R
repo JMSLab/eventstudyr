@@ -133,7 +133,7 @@ EventStudyPlot <- function(estimates,
         names(coef_table)[names(coef_table) == "Std. Error"] <- "std.error"
         coef_table <- coef_table[, c("term", "estimate", "std.error")]
         coef_table
-    } else {estimatr::tidy(model_estimates)}
+    } else {as.data.frame(estimatr::tidy(model_estimates))}
 
     static_model <- length(coef(model_estimates)) == 1
     if (static_model) {

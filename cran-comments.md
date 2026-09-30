@@ -1,18 +1,14 @@
 ## Notes
 
-Re-submission of the package with patch update.
+Version 1.2.1 is a patch release for compatibility with estimatr 2.0.0. No estimation code changed.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+Duration: 1m 16s
 
-## revdepcheck results
-
-We checked 0 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
-
- * We saw 0 new problems
- * We failed to check 0 packages
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 ## Package changes
 
- * Added support for `fixest` as the regression kernel. `fixest` will replace `estimatr` as the default kernel in a future release.
+ * Preserved the matrix-valued smoothest path when estimatr 2.0.0 returns a tibble from `tidy()`.
+ * Updated the one-way fixed-effects tests to work with the `felevels` names from both old estimatr versions and the new estimatr 2.0.0.

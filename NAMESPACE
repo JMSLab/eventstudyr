@@ -9,30 +9,40 @@ import(ggplot2)
 import(stringr)
 importFrom(MASS,mvrnorm)
 importFrom(car,linearHypothesis)
-importFrom(data.table,":=")
-importFrom(data.table,.SD)
-importFrom(data.table,CJ)
-importFrom(data.table,as.data.table)
-importFrom(data.table,copy)
-importFrom(data.table,is.data.table)
-importFrom(data.table,setnames)
-importFrom(data.table,setorder)
-importFrom(data.table,setorderv)
-importFrom(data.table,shift)
-importFrom(dplyr,rename)
-importFrom(dplyr,select)
-importFrom(fixest,coeftable)
-importFrom(fixest,feols)
-importFrom(fixest,fitstat)
-importFrom(fixest,ssc)
-importFrom(pracma,inv)
-importFrom(pracma,pinv)
+importFrom(data.table,
+  ":=",
+  .SD,
+  CJ,
+  as.data.table,
+  copy,
+  is.data.table,
+  setnames,
+  setorder,
+  setorderv,
+  shift
+)
+importFrom(dplyr,
+  rename,
+  select
+)
+importFrom(fixest,
+  coeftable,
+  feols,
+  fitstat,
+  ssc
+)
+importFrom(pracma,
+  inv,
+  pinv
+)
 importFrom(rlang,.data)
-importFrom(stats,as.formula)
-importFrom(stats,coef)
-importFrom(stats,pnorm)
-importFrom(stats,qchisq)
-importFrom(stats,qnorm)
-importFrom(stats,reformulate)
-importFrom(stats,setNames)
-importFrom(stats,vcov)
+importFrom(stats,
+  as.formula,
+  coef,
+  pnorm,
+  qchisq,
+  qnorm,
+  reformulate,
+  setNames,
+  vcov
+)

@@ -54,7 +54,6 @@ VignetteBuilder:
     knitr
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Suggests: 
     rmarkdown,
     knitr,
@@ -64,3 +63,4 @@ Depends:
     R (>= 3.5.0)
 URL: https://github.com/JMSLab/eventstudyr
 BugReports: https://github.com/JMSLab/eventstudyr/issues
+Config/roxygen2/version: 8.1.0
